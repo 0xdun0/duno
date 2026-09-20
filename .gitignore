@@ -11,6 +11,8 @@ build/
 # Env
 .env
 *.env
+.venv/
+venv/
 
 # Database — nunca commitar o db
 data/*.db

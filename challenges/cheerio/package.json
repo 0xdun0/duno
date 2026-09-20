@@ -1,0 +1,15 @@
+{
+  "name": "webpage-title-retriever",
+  "version": "1.0.0",
+  "description": "A simple web application that retrieves the title of a webpage given its URL",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"No tests yet\""
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "cheerio": "^1.0.0-rc.10",
+    "request": "^2.88.2"
+  }
+}

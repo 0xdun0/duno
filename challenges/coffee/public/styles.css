@@ -1,0 +1,96 @@
+/* Background */
+body {
+  background-image: url('https://www.geocities.ws/sachith/Graphics/Backgrounds/spacebg.gif');
+  background-repeat: repeat;
+  background-color: #000000;
+}
+
+/* Header */
+h1 {
+  font-size: 50px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: #ff00ff;
+  text-shadow: 2px 2px #000000;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form */
+form {
+  background-color: #00ff00;
+  padding: 20px;
+  border: 5px dashed #ff00ff;
+  width: 500px;
+  margin: 0 auto;
+}
+
+form label {
+  display: block;
+  font-size: 20px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+form input[type="text"],
+form input[type="password"] {
+  display: block;
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 20px;
+  border: 2px solid #000000;
+}
+
+form button[type="submit"] {
+  display: block;
+  padding: 10px 20px;
+  margin: 0 auto;
+  background-color: #0000ff;
+  color: #ffffff;
+  border: none;
+  font-size: 20px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  cursor: pointer;
+  text-shadow: 1px 1px #ff00ff;
+  box-shadow: 2px 2px #000000;
+}
+
+form button[type="submit"]:hover {
+  background-color: #ff00ff;
+  text-shadow: 1px 1px #ffffff;
+  box-shadow: 2px 2px #000000;
+}
+
+.geocities-button {
+  background-color: #F8D898;
+  color: #3D3D3D;
+  padding: 5px 10px;
+  border: 2px solid #3D3D3D;
+  text-shadow: 1px 1px #FFF;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 5px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #999;
+}
+
+.grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dashboard-title {
+  color: hotpink;
+}
+
+pre {
+  color: yellow;
+}
+

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Kilo] Notification Examples - EverSec</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .example h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Notification Examples</h1>
+            <p>Sample notifications created with the EverSec Notification Builder</p>
+        </div>
+
+        <div class="card">
+            <h2>Welcome Notification</h2>
+
+            <div class="example">
+                <h3>New Employee Onboarding</h3>
+                <p>A standard welcome notification for new hires:</p>
+                <div class="code-block">Greeting: Welcome
+Name: Sarah Johnson
+Company: EverSec Security Solutions
+Message: We're excited to have you join the team. Your onboarding session is scheduled for Monday at 9 AM.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Client Communication</h2>
+
+            <div class="example">
+                <h3>Service Update</h3>
+                <p>Notify clients about scheduled maintenance:</p>
+                <div class="code-block">Greeting: Dear
+Name: Acme Corp Security Team
+Company: EverSec Operations
+Message: We will be performing scheduled maintenance on Saturday from 2 AM to 6 AM EST. All monitoring services will remain active during this window.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Internal Alert</h2>
+
+            <div class="example">
+                <h3>Security Incident</h3>
+                <p>Internal notification for security events:</p>
+                <div class="code-block">Greeting: URGENT -
+Name: SOC Team
+Company: EverSec Incident Response
+Message: A potential security incident has been detected in the production environment. Please review the attached logs and escalate as needed.</div>
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="/">&larr; Back to Home</a> |
+            <a href="/generator">Notification Builder</a> |
+            <a href="/api/docs">API Documentation</a>
+        </div>
+    </div>
+</body>
+</html>

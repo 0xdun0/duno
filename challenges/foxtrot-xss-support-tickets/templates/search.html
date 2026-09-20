@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Search Tickets - EverSec{% endblock %}
+
+{% block extra_css %}
+<style>
+    .search-box {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+
+    .search-box input {
+        flex: 1;
+        padding: 12px;
+        border: 2px solid #e2e8f0;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+
+    .search-box input:focus {
+        outline: none;
+        border-color: #667eea;
+    }
+
+    .search-results {
+        background: #f7fafc;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .result-item {
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .result-title {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .result-description {
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .success-box {
+        background: #d4edda;
+        border-left: 4px solid #28a745;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 5px;
+    }
+
+    .flag {
+        background: #2d3748;
+        color: #4fd1c5;
+        padding: 15px;
+        border-radius: 5px;
+        font-family: 'Courier New', monospace;
+        font-size: 1.2em;
+        text-align: center;
+        margin-top: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>🔍 Search Tickets</h1>
+
+<form action="{{ url_for('search') }}" method="GET">
+    <div class="search-box">
+        <input type="text" name="q" placeholder="Search tickets..." value="{{ query }}">
+        <button type="submit" class="btn">Search</button>
+    </div>
+</form>
+
+{% if query %}
+<div class="search-results">
+    <h2>Search Results for: {{ query|safe }}</h2>
+
+    {% if tickets %}
+        <p style="color: #666; margin-bottom: 20px;">Found {{ tickets|length }} ticket(s)</p>
+
+        {% for ticket in tickets %}
+        <div class="result-item">
+            <div class="result-title">{{ ticket.title }}</div>
+            <div class="result-description">{{ ticket.description }}</div>
+            <a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}" class="btn btn-secondary">View Ticket</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="color: #666;">No tickets found matching your search.</p>
+    {% endif %}
+
+    <!-- XSS detection marker - hidden div that only becomes visible via XSS -->
+    <div id="xss-detector" style="display:none;" data-flag="{{ flag1 }}"></div>
+    <script>
+        // Helper function to display the flag when XSS is successful
+        // Participants must call this function via XSS to reveal the flag
+        function showFlag() {
+            var detector = document.getElementById('xss-detector');
+            var flag = detector.getAttribute('data-flag');
+
+            var successBox = document.createElement('div');
+            successBox.style.cssText = 'background:#d4edda;border-left:4px solid #28a745;padding:20px;margin:20px 0;border-radius:5px;';
+            successBox.innerHTML = '<h3 style="margin:0 0 10px 0;color:#333;">🎉 XSS Detected!</h3>' +
+                                   '<p style="margin:0 0 10px 0;color:#666;">Congratulations! You\'ve successfully executed JavaScript in the context of this page.</p>' +
+                                   '<div style="background:#2d3748;color:#4fd1c5;padding:15px;border-radius:5px;font-family:monospace;font-size:1.2em;text-align:center;">' + flag + '</div>';
+
+            detector.style.display = 'block';
+            detector.appendChild(successBox);
+        }
+    </script>
+</div>
+{% endif %}
+
+{% endblock %}

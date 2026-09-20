@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Yankee] Search Events — EverSec Log Analysis Platform</title>
+  <!-- EverSec Audit Logger v2.0 - Apache Log4j 2.14.1 backend -->
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0d1117; color: #c9d1d9; font-family: 'Courier New', monospace; min-height: 100vh; }
+    .topbar { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+    .topbar .logo { color: #58a6ff; font-size: 18px; font-weight: bold; letter-spacing: 1px; }
+    .topbar .logo span { color: #f78166; }
+    .topbar nav a { color: #8b949e; text-decoration: none; margin-left: 20px; font-size: 14px; }
+    .topbar nav a:hover { color: #c9d1d9; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .search-box { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 20px; margin-bottom: 24px; }
+    .search-box h2 { font-size: 16px; color: #c9d1d9; margin-bottom: 16px; }
+    .search-row { display: flex; gap: 12px; }
+    .search-row input { flex: 1; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 10px 14px; color: #c9d1d9; font-family: 'Courier New', monospace; font-size: 14px; outline: none; }
+    .search-row input:focus { border-color: #58a6ff; }
+    .search-row button { background: #1f6feb; border: none; border-radius: 6px; padding: 10px 20px; color: #fff; font-family: 'Courier New', monospace; font-size: 14px; cursor: pointer; }
+    .search-row button:hover { background: #388bfd; }
+    .results-panel { background: #161b22; border: 1px solid #30363d; border-radius: 6px; overflow: hidden; }
+    .results-header { padding: 14px 20px; border-bottom: 1px solid #30363d; font-size: 14px; color: #8b949e; }
+    .results-header .count { color: #58a6ff; font-weight: bold; }
+    .event-row { display: flex; align-items: flex-start; padding: 14px 20px; border-bottom: 1px solid #21262d; font-size: 13px; }
+    .event-row:last-child { border-bottom: none; }
+    .event-row:hover { background: #1c2128; }
+    .badge { font-size: 11px; padding: 2px 8px; border-radius: 3px; margin-right: 12px; min-width: 48px; text-align: center; display: inline-block; flex-shrink: 0; margin-top: 2px; }
+    .badge.crit  { background: #3d1c1c; color: #f78166; border: 1px solid #6e2b2b; }
+    .badge.warn  { background: #2d2208; color: #e3b341; border: 1px solid #5a4400; }
+    .badge.info  { background: #0c2d50; color: #58a6ff; border: 1px solid #1b4677; }
+    .event-time { color: #8b949e; margin-right: 16px; min-width: 155px; flex-shrink: 0; }
+    .event-msg  { flex: 1; color: #c9d1d9; }
+    .no-results { padding: 40px 20px; text-align: center; color: #484f58; }
+    .footer { text-align: center; color: #484f58; font-size: 12px; padding: 32px 0 16px; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Ever<span>Sec</span> &nbsp;// Log Analysis Platform</div>
+  <nav>
+    <a href="/">Dashboard</a>
+    <a href="/search">Search Events</a>
+    <a href="/api/status">API Status</a>
+  </nav>
+</div>
+
+<div class="container">
+
+  <div class="search-box">
+    <h2>Search Security Events</h2>
+    <form action="/search" method="get">
+      <div class="search-row">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search events, IPs, hostnames, alert IDs..." autocomplete="off">
+        <button type="submit">Search</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="results-panel">
+    {% if query %}
+      <div class="results-header">
+        Showing <span class="count">{{ results|length }}</span> result(s) for <strong>{{ query }}</strong>
+      </div>
+      {% if results %}
+        {% for r in results %}
+        <div class="event-row">
+          <span class="badge {{ r.level|lower }}">{{ r.level }}</span>
+          <span class="event-time">{{ r.time }}</span>
+          <span class="event-msg">{{ r.event }}</span>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="no-results">No events found matching "{{ query }}"</div>
+      {% endif %}
+    {% else %}
+      <div class="no-results">Enter a search term above to query security events.</div>
+    {% endif %}
+  </div>
+
+</div>
+
+<div class="footer">EverSec Log Analysis Platform v2.0 &mdash; Internal Use Only &mdash; All access is monitored and logged</div>
+
+</body>
+</html>

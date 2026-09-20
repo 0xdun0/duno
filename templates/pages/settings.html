@@ -1,195 +1,589 @@
 {% extends "base.html" %}
-{% block title %}LAB CONTROL — DUNO{% endblock %}
+{% block title %}COMMAND CENTER — DUNO{% endblock %}
 
 {% block content %}
-<div class="settings-page-wrapper">
-  <div class="settings-container">
+{% set stats = user_machine_stats if (user_machine_stats is defined and user_machine_stats) else {'total': 0, 'published': 0, 'in_review': 0, 'draft': 0} %}
+{% set pend_count = admin_pending_count if (admin_pending_count is defined and admin_pending_count) else 0 %}
+{% set subs = user_submissions if (user_submissions is defined and user_submissions) else [] %}
+{% set admin_subs = admin_pending_submissions if (admin_pending_submissions is defined and admin_pending_submissions) else [] %}
+{% set m_logs = machine_audit_logs if (machine_audit_logs is defined and machine_audit_logs) else [] %}
+
+<div class="settings-page-wrapper cc-wrapper">
+  <div class="settings-container cc-container">
 
     <!-- Top Breadcrumb / Kicker -->
-    <div class="settings-kicker-brand">DUNO // LABORATORY CONTROL</div>
+    <div class="settings-kicker-brand">DUNO // COMMAND CENTER</div>
 
     <!-- Hero Header -->
-    <header class="settings-hero">
-      <h1 class="settings-title">LAB CONTROL</h1>
-      <p class="settings-subtitle">Configure and inspect your DUNO laboratory environment.</p>
+    <header class="settings-hero cc-hero">
+      <div class="cc-hero-main">
+        <h1 class="settings-title cc-title">COMMAND CENTER</h1>
+        <p class="settings-subtitle cc-subtitle">
+          Centro integrado de operações: controle de máquinas da comunidade, parâmetros de segurança, governança e telemetria.
+        </p>
+      </div>
+
+      <!-- Quick Telemetry Chips (HUD) -->
+      <div class="cc-hud-chips">
+        <div class="cc-hud-chip">
+          <span class="cc-hud-dot status-pulse-dot"></span>
+          <span class="cc-hud-label">AMBIENTE</span>
+          <span class="cc-hud-val">ONLINE</span>
+        </div>
+        <div class="cc-hud-chip">
+          <span class="cc-hud-label">BASELINE</span>
+          <span class="cc-hud-val font-mono" id="hud-level-val">{{ current_default_level|upper if current_default_level is defined else 'LOW' }}</span>
+        </div>
+        <div class="cc-hud-chip">
+          <span class="cc-hud-label">SUAS MÁQUINAS</span>
+          <span class="cc-hud-val font-mono">{{ stats.total }}</span>
+        </div>
+        {% if user and user.role == 'admin' %}
+        <div class="cc-hud-chip cc-hud-chip-admin">
+          <span class="cc-hud-label">FILA DE REVISÃO</span>
+          <span class="cc-hud-val font-mono {% if pend_count > 0 %}text-warn{% endif %}">
+            {{ pend_count }} PENDENTE{{ 'S' if pend_count != 1 else '' }}
+          </span>
+        </div>
+        {% endif %}
+      </div>
     </header>
 
-    <div class="settings-divider"></div>
+    <!-- Navigation Tabs Bar -->
+    <nav class="cc-tabs-bar" role="tablist" aria-label="Command Center Tabs">
+      <button type="button" class="cc-tab-btn active" data-tab="overview" onclick="switchCCTab('overview')" id="tab-btn-overview">
+        <i class="nf nf-fa-bolt cc-tab-icon" aria-hidden="true"></i>
+        <span class="cc-tab-label">Visão Geral</span>
+      </button>
+      <button type="button" class="cc-tab-btn" data-tab="machines" onclick="switchCCTab('machines')" id="tab-btn-machines">
+        <i class="nf nf-md-rocket_launch cc-tab-icon" aria-hidden="true"></i>
+        <span class="cc-tab-label">Máquinas &amp; Contribuições</span>
+        {% if stats.total > 0 %}
+        <span class="cc-tab-badge">{{ stats.total }}</span>
+        {% endif %}
+      </button>
+      {% if user and user.role == 'admin' %}
+      <button type="button" class="cc-tab-btn" data-tab="moderation" onclick="switchCCTab('moderation')" id="tab-btn-moderation">
+        <i class="nf nf-md-shield_check cc-tab-icon" aria-hidden="true"></i>
+        <span class="cc-tab-label">Moderação &amp; Auditoria</span>
+        {% if pend_count > 0 %}
+        <span class="cc-tab-badge cc-badge-alert">{{ pend_count }}</span>
+        {% endif %}
+      </button>
+      {% endif %}
+      <button type="button" class="cc-tab-btn" data-tab="system" onclick="switchCCTab('system')" id="tab-btn-system">
+        <i class="nf nf-md-cog cc-tab-icon" aria-hidden="true"></i>
+        <span class="cc-tab-label">Sistema &amp; Segurança</span>
+      </button>
+      <button type="button" class="cc-tab-btn" data-tab="database" onclick="switchCCTab('database')" id="tab-btn-database">
+        <i class="nf nf-md-database cc-tab-icon" aria-hidden="true"></i>
+        <span class="cc-tab-label">Dados &amp; Manutenção</span>
+      </button>
+    </nav>
 
-    <!-- SECTION 1: ACCOUNT -->
-    <section class="settings-section" id="section-account">
-      <div class="settings-section-header">
-        <h2 class="settings-section-title">ACCOUNT</h2>
-      </div>
-
-      <div class="settings-section-content">
-        <div class="settings-account-card">
-          <div class="settings-account-badge">{{ user.role|upper if user else 'ADMIN' }}</div>
-          <div class="settings-account-role">Operador de Laboratório</div>
-          <div class="settings-account-username"><code>{{ user.username if user else 'admin' }}</code></div>
-        </div>
-
-        <div class="settings-kv-grid">
-          <div class="settings-kv-row">
-            <span class="settings-kv-label">Username</span>
-            <span class="settings-kv-value font-mono">{{ user.username if user else 'admin' }}</span>
+    <!-- ============================================================== -->
+    <!-- TAB 1: VISÃO GERAL (OVERVIEW)                                  -->
+    <!-- ============================================================== -->
+    <div class="cc-tab-pane active" id="pane-overview">
+      <!-- Quick Action Cards Grid -->
+      <div class="cc-action-cards-grid">
+        <div class="cc-action-card">
+          <div class="cc-card-top">
+            <i class="nf nf-md-rocket_launch cc-card-icon" aria-hidden="true"></i>
+            <span class="cc-card-kicker">MÁQUINAS</span>
           </div>
-          <div class="settings-kv-row">
-            <span class="settings-kv-label">Role</span>
-            <span class="settings-kv-value">Laboratory Operator ({{ user.role if user else 'admin' }})</span>
-          </div>
-          <div class="settings-kv-row">
-            <span class="settings-kv-label">Access Scope</span>
-            <span class="settings-kv-value">Full Laboratory Control &amp; Source Inspection</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="settings-divider"></div>
-
-    <!-- SECTION 2: SYSTEM (Em vez de: Informações do sistema) -->
-    <section class="settings-section" id="section-system">
-      <div class="settings-section-header">
-        <h2 class="settings-section-title">SYSTEM</h2>
-      </div>
-
-      <div class="settings-section-content">
-        <div class="settings-kv-grid">
-          <div class="settings-kv-row">
-            <span class="settings-kv-label">Environment</span>
-            <span class="settings-kv-value">Local Laboratory</span>
-          </div>
-          <div class="settings-kv-row">
-            <span class="settings-kv-label">Status</span>
-            <span class="settings-kv-value status-running">
-              <span class="status-pulse-dot"></span> Running
-            </span>
-          </div>
-          <div class="settings-kv-row">
-            <span class="settings-kv-label">Database Engine</span>
-            <span class="settings-kv-value">SQLite 3</span>
-          </div>
-          <div class="settings-kv-row">
-            <span class="settings-kv-label">Application</span>
-            <span class="settings-kv-value">DUNO v2</span>
+          <h3 class="cc-card-title">Enviar Nova Máquina</h3>
+          <p class="cc-card-desc">Empacote desafios com Dockerfile, flags e manifest.yml para a comunidade.</p>
+          <div class="cc-card-footer">
+            <a href="{{ url_for('submissions.submit_page') }}" class="btn-cc-action">
+              <span>+ Enviar Máquina</span>
+              <span class="btn-arrow">→</span>
+            </a>
           </div>
         </div>
 
-        <!-- System Preferences: Default Security Level -->
-        <div class="settings-preference-group" style="margin-top: 2rem;">
-          <div class="settings-pref-info">
-            <h3 class="settings-pref-title">Default Security Level</h3>
-            <p class="settings-pref-desc">
-              Define o nível de proteção global para todos os 20 módulos do laboratório. Alterar este valor atualiza simultaneamente a dificuldade em toda a plataforma.
-            </p>
+        <div class="cc-action-card">
+          <div class="cc-card-top">
+            <i class="nf nf-md-package_variant cc-card-icon" aria-hidden="true"></i>
+            <span class="cc-card-kicker">CONTRIBUIÇÕES</span>
           </div>
-
-          <!-- Level Switcher Buttons -->
-          <div class="settings-level-selector" role="group" aria-label="Default Security Level">
-            <form method="POST" action="{{ url_for('settings') }}" class="settings-level-form" id="settings-level-form">
-              <input type="hidden" name="action" value="set_level" />
-              <input type="hidden" name="level" id="input-selected-level" value="{{ current_default_level }}" />
-
-              {% for lvl in valid_levels %}
-              <button type="button" 
-                      class="btn-level-pill {% if current_default_level == lvl %}active{% endif %}" 
-                      data-level="{{ lvl }}"
-                      onclick="setLabDefaultLevel('{{ lvl }}')">
-                [ {{ lvl|upper }} ]
-              </button>
-              {% endfor %}
-            </form>
-          </div>
-
-          <div id="level-status-feedback" class="settings-feedback-message" style="display:none;">
-            ✓ Nível padrão atualizado para <strong id="feedback-level-name">{{ current_default_level|upper }}</strong> em todos os módulos.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="settings-divider"></div>
-
-    <!-- SECTION 3: DATABASE (Em vez de: Dados do laboratório) -->
-    <section class="settings-section" id="section-database">
-      <div class="settings-section-header">
-        <h2 class="settings-section-title">DATABASE</h2>
-      </div>
-
-      <div class="settings-section-content">
-        <div class="settings-kv-grid">
-          <div class="settings-kv-row">
-            <span class="settings-kv-label">Database File</span>
-            <span class="settings-kv-value font-mono">{{ db_filename }}</span>
-          </div>
-          <div class="settings-kv-row">
-            <span class="settings-kv-label">Allocated Size</span>
-            <span class="settings-kv-value font-mono">{{ db_size_formatted }}</span>
-          </div>
-          <div class="settings-kv-row">
-            <span class="settings-kv-label">Active Schema Tables</span>
-            <span class="settings-kv-value font-mono">{{ table_count }} tables</span>
-          </div>
-          <div class="settings-kv-row">
-            <span class="settings-kv-label">Last Reset</span>
-            <span class="settings-kv-value">{{ last_reset }}</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="settings-divider"></div>
-
-    <!-- SECTION 4: ACTIVITY (Em vez de: Histórico) -->
-    <section class="settings-section" id="section-activity">
-      <div class="settings-section-header">
-        <h2 class="settings-section-title">ACTIVITY</h2>
-      </div>
-
-      <div class="settings-section-content">
-        <div class="settings-activity-list">
-          {% for act in activities %}
-          <div class="settings-activity-item">
-            <div class="activity-left">
-              <span class="activity-bullet">▸</span>
-              <span class="activity-action">{{ act.action }}</span>
-            </div>
-            <div class="activity-meta">
-              <span class="activity-ip font-mono">{{ act.ip }}</span>
-              <span class="activity-ts">{{ act.ts }}</span>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-
-    <div class="settings-divider"></div>
-
-    <!-- SECTION 5: DANGER ZONE (Em vez de: Ações perigosas) -->
-    <section class="settings-section settings-danger-zone" id="section-danger">
-      <div class="settings-section-header">
-        <h2 class="settings-section-title danger-title">DANGER ZONE</h2>
-      </div>
-
-      <div class="settings-section-content">
-        <div class="settings-danger-card">
-          <div class="settings-danger-info">
-            <h3 class="settings-danger-heading">Reset all laboratory data</h3>
-            <p class="settings-danger-desc">
-              Restore the laboratory database to its initial state. Limpa payloads persistidos, sessões salvas e reestabelece os seeds originais.
-            </p>
-          </div>
-
-          <div class="settings-danger-action">
-            <button type="button" class="btn-danger-action" onclick="openResetConfirmModal()">
-              [ Reset Database ]
+          <h3 class="cc-card-title">Minhas Contribuições</h3>
+          <p class="cc-card-desc">
+            Você possui <strong>{{ stats.total }}</strong> máquina(s) criada(s) • 
+            <strong>{{ stats.published }}</strong> publicada(s).
+          </p>
+          <div class="cc-card-footer">
+            <button type="button" class="btn-cc-action btn-cc-secondary" onclick="switchCCTab('machines')">
+              <span>Ver Minhas Máquinas</span>
+              <span class="btn-arrow">→</span>
             </button>
           </div>
         </div>
+
+        {% if user and user.role == 'admin' %}
+        <div class="cc-action-card cc-action-card-admin">
+          <div class="cc-card-top">
+            <i class="nf nf-md-shield_check cc-card-icon" aria-hidden="true"></i>
+            <span class="cc-card-kicker">ADMINISTRAÇÃO</span>
+          </div>
+          <h3 class="cc-card-title">Fila de Moderação</h3>
+          <p class="cc-card-desc">
+            <strong>{{ pend_count }}</strong> submissão(ões) aguardando varredura ou revisão manual de segurança.
+          </p>
+          <div class="cc-card-footer">
+            <button type="button" class="btn-cc-action btn-cc-accent" onclick="switchCCTab('moderation')">
+              <span>Acessar Moderação</span>
+              <span class="btn-arrow">→</span>
+            </button>
+          </div>
+        </div>
+        {% else %}
+        <div class="cc-action-card">
+          <div class="cc-card-top">
+            <i class="nf nf-md-cog cc-card-icon" aria-hidden="true"></i>
+            <span class="cc-card-kicker">SEGURANÇA</span>
+          </div>
+          <h3 class="cc-card-title">Nível do Laboratório</h3>
+          <p class="cc-card-desc">
+            Baseline de dificuldade configurada em <strong class="font-mono text-orange">[{{ current_default_level|upper }}]</strong>.
+          </p>
+          <div class="cc-card-footer">
+            <button type="button" class="btn-cc-action btn-cc-secondary" onclick="switchCCTab('system')">
+              <span>Alterar Parâmetros</span>
+              <span class="btn-arrow">→</span>
+            </button>
+          </div>
+        </div>
+        {% endif %}
       </div>
-    </section>
+
+      <div class="settings-divider"></div>
+
+      <!-- SECTION: OPERADOR & ESCOPO -->
+      <section class="settings-section">
+        <div class="settings-section-header">
+          <h2 class="settings-section-title">OPERADOR DO SISTEMA</h2>
+        </div>
+        <div class="settings-section-content">
+          <div class="settings-account-card">
+            <div class="settings-account-badge">{{ user.role|upper if user else 'OPERATOR' }}</div>
+            <div class="settings-account-role">Operador de Laboratório Autenticado</div>
+            <div class="settings-account-username"><code>{{ user.username if user else 'operator' }}</code></div>
+          </div>
+
+          <div class="settings-kv-grid">
+            <div class="settings-kv-row">
+              <span class="settings-kv-label">Identificador</span>
+              <span class="settings-kv-value font-mono">{{ user.username if user else 'operator' }}</span>
+            </div>
+            <div class="settings-kv-row">
+              <span class="settings-kv-label">Privilégios</span>
+              <span class="settings-kv-value">
+                {% if user and user.role == 'admin' %}
+                Administrador Global • Revisão, Auditoria e Publicação de Máquinas
+                {% else %}
+                Usuário / Autor de Desafios • Submissão e Teste de Máquinas
+                {% endif %}
+              </span>
+            </div>
+            <div class="settings-kv-row">
+              <span class="settings-kv-label">Escopo de Execução</span>
+              <span class="settings-kv-value">Sandbox Isolado com Docker Engine &amp; Rede Challenge-Net</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="settings-divider"></div>
+
+      <!-- SECTION: HISTÓRICO DE ATIVIDADES -->
+      <section class="settings-section">
+        <div class="settings-section-header">
+          <h2 class="settings-section-title">LOG DE ATIVIDADES DO LABORATÓRIO</h2>
+        </div>
+        <div class="settings-section-content">
+          <div class="settings-activity-list">
+            {% for act in activities %}
+            <div class="settings-activity-item">
+              <div class="activity-left">
+                <span class="activity-bullet">▸</span>
+                <span class="activity-action">{{ act.action }}</span>
+              </div>
+              <div class="activity-meta">
+                <span class="activity-ip font-mono">{{ act.ip }}</span>
+                <span class="activity-ts">{{ (act.ts|string)[:16] }}</span>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: MÁQUINAS & CONTRIBUIÇÕES (MACHINES)                    -->
+    <!-- ============================================================== -->
+    <div class="cc-tab-pane" id="pane-machines">
+      <div class="cc-section-toolbar">
+        <div class="cc-toolbar-info">
+          <h2 class="cc-pane-heading">MINHAS MÁQUINAS &amp; DESAFIOS</h2>
+          <p class="cc-pane-desc">
+            Crie, teste em sandbox e envie desafios no formato de container para a comunidade do DUNO.
+          </p>
+        </div>
+        <div class="cc-toolbar-actions">
+          <a href="{{ url_for('submissions.submit_page') }}" class="btn-primary-action">
+            <span>+ Enviar Nova Máquina</span>
+          </a>
+        </div>
+      </div>
+
+      {% if subs %}
+      <div class="cc-table-responsive">
+        <table class="cc-data-table">
+          <thead>
+            <tr>
+              <th>MÁQUINA / SLUG</th>
+              <th>VERSÃO</th>
+              <th>DIFICULDADE</th>
+              <th>STATUS</th>
+              <th>CRIADA EM</th>
+              <th class="text-right">AÇÕES</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sub in subs %}
+            <tr>
+              <td>
+                <div class="table-machine-name">
+                  <strong>{{ sub.title }}</strong>
+                  <span class="table-machine-slug font-mono">{{ sub.slug }}</span>
+                </div>
+              </td>
+              <td>
+                <span class="table-version-badge font-mono">v{{ sub.latest_version or '1.0.0' }}</span>
+              </td>
+              <td>
+                {% set diff = sub.difficulty|lower %}
+                <span class="status-pill diff-{{ diff }}">
+                  {{ sub.difficulty|upper }}
+                </span>
+              </td>
+              <td>
+                {% set st = sub.status|lower %}
+                <span class="status-pill status-{{ st }}">
+                  {{ sub.status|replace('_', ' ')|upper }}
+                </span>
+              </td>
+              <td class="font-mono text-muted">
+                {{ (sub.created_at|string)[:16] }}
+              </td>
+              <td class="text-right">
+                <a href="{{ url_for('submissions.submission_detail', submission_id=sub.id) }}" class="btn-table-action">
+                  <span>Ver Pipeline</span>
+                  <span class="btn-arrow">→</span>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="cc-empty-state">
+        <div class="cc-empty-icon"><i class="nf nf-md-package_variant_closed" aria-hidden="true"></i></div>
+        <h3 class="cc-empty-title">Nenhuma máquina submetida ainda</h3>
+        <p class="cc-empty-text">
+          Você ainda não enviou nenhum desafio de máquina para a plataforma.
+          Crie um pacote <code>.zip</code> ou <code>.tar.gz</code> contendo seu <code>manifest.yml</code> e <code>Dockerfile</code> e faça o upload para validação automatizada.
+        </p>
+        <div class="cc-empty-cta">
+          <a href="{{ url_for('submissions.submit_page') }}" class="btn-primary-action">
+            <span>Enviar sua Primeira Máquina</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="settings-divider"></div>
+
+      <!-- Guia rápido de pacotes -->
+      <div class="cc-info-box">
+        <div class="cc-info-box-header">
+          <i class="nf nf-md-information_outline cc-info-icon" aria-hidden="true"></i>
+          <span class="cc-info-title">ESTRUTURA DO PACOTE DE MÁQUINA</span>
+        </div>
+        <div class="cc-info-box-body">
+          <p>O pacote enviado passa por 5 etapas automatizadas antes da aprovação:</p>
+          <div class="cc-steps-mini">
+            <div class="cc-step-mini"><strong>1. Validação:</strong> Estrutura de arquivos, anti-ZipSlip e schema do <code>manifest.yml</code></div>
+            <div class="cc-step-mini"><strong>2. Static Scan:</strong> Verificação de comandos perigosos, volumes sensíveis e binds de portas</div>
+            <div class="cc-step-mini"><strong>3. Sandbox Build:</strong> Criação da imagem Docker em ambiente isolado (1 CPU / 1024MB RAM)</div>
+            <div class="cc-step-mini"><strong>4. Dynamic Test:</strong> Healthcheck de porta e teste determinístico de captura de flag</div>
+            <div class="cc-step-mini"><strong>5. Revisão &amp; Publicação:</strong> Validação pela moderação e liberação no catálogo geral</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if user and user.role == 'admin' %}
+    <!-- ============================================================== -->
+    <!-- TAB 3: MODERAÇÃO & AUDITORIA (MODERATION - ADMIN ONLY)        -->
+    <!-- ============================================================== -->
+    <div class="cc-tab-pane" id="pane-moderation">
+      <div class="cc-section-toolbar">
+        <div class="cc-toolbar-info">
+          <h2 class="cc-pane-heading">GOVERNANÇA &amp; REVISÃO DE MÁQUINAS</h2>
+          <p class="cc-pane-desc">
+            Fila de revisão para aprovação de desafios comunitários, inspeção de builds e logs de auditoria.
+          </p>
+        </div>
+        <div class="cc-toolbar-actions">
+          <a href="{{ url_for('submissions_admin.admin_dashboard') }}" class="btn-secondary-action">
+            <span>Painel Completo de Moderação →</span>
+          </a>
+          <a href="{{ url_for('submissions_admin.audit_logs') }}" class="btn-secondary-action">
+            <span>Log Completo de Auditoria →</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Submissões Pendentes -->
+      <div class="cc-admin-subblock">
+        <div class="cc-subblock-header">
+          <h3 class="cc-subblock-title">
+            FILA DE SUBMISSÕES AGUARDANDO REVISÃO
+            {% if pend_count > 0 %}
+            <span class="cc-count-pill alert-pill">{{ pend_count }} pendentes</span>
+            {% else %}
+            <span class="cc-count-pill success-pill">Zerar</span>
+            {% endif %}
+          </h3>
+        </div>
+
+        {% if admin_subs %}
+        <div class="cc-table-responsive">
+          <table class="cc-data-table">
+            <thead>
+              <tr>
+                <th>MÁQUINA</th>
+                <th>AUTOR</th>
+                <th>DIFICULDADE</th>
+                <th>STATUS ATUAL</th>
+                <th>DATA</th>
+                <th class="text-right">AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for sub in admin_subs %}
+              <tr>
+                <td>
+                  <div class="table-machine-name">
+                    <strong>{{ sub.title }}</strong>
+                    <span class="table-machine-slug font-mono">{{ sub.slug }} (v{{ sub.latest_version or '1.0.0' }})</span>
+                  </div>
+                </td>
+                <td>
+                  <span class="font-mono">{{ sub.author_username }}</span>
+                </td>
+                <td>
+                  {% set diff = sub.difficulty|lower %}
+                  <span class="status-pill diff-{{ diff }}">{{ sub.difficulty|upper }}</span>
+                </td>
+                <td>
+                  {% set st = sub.status|lower %}
+                  <span class="status-pill status-{{ st }}">{{ sub.status|replace('_', ' ')|upper }}</span>
+                </td>
+                <td class="font-mono text-muted">
+                  {{ (sub.created_at|string)[:16] }}
+                </td>
+                <td class="text-right">
+                  <a href="{{ url_for('submissions_admin.review_machine', submission_id=sub.id) }}" class="btn-table-action btn-table-action-accent">
+                    <span>Revisar &amp; Inspecionar →</span>
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="cc-success-box">
+          <i class="nf nf-md-check_circle cc-success-icon" aria-hidden="true"></i>
+          <span>Fila de moderação em dia. Nenhuma submissão aguardando revisão manual no momento.</span>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="settings-divider"></div>
+
+      <!-- Logs Recentes de Auditoria de Máquinas -->
+      <div class="cc-admin-subblock">
+        <div class="cc-subblock-header">
+          <h3 class="cc-subblock-title">LOGS RECENTES DE AUDITORIA DE MÁQUINAS</h3>
+        </div>
+
+        {% if m_logs %}
+        <div class="cc-table-responsive">
+          <table class="cc-data-table table-compact font-mono">
+            <thead>
+              <tr>
+                <th>DATA/HORA</th>
+                <th>OPERADOR</th>
+                <th>AÇÃO</th>
+                <th>RECURSO</th>
+                <th>STATUS</th>
+                <th>IP</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for log in m_logs %}
+              <tr>
+                <td class="text-muted">{{ (log.created_at|string)[:16] }}</td>
+                <td><strong>{{ log.username or 'SYSTEM' }}</strong></td>
+                <td><span class="log-action-tag">{{ log.action }}</span></td>
+                <td>{{ log.resource }}:{{ log.resource_id or 'all' }}</td>
+                <td>
+                  <span class="status-pill {% if log.status == 'SUCCESS' %}status-approved{% else %}status-rejected{% endif %}">
+                    {{ log.status }}
+                  </span>
+                </td>
+                <td class="text-muted">{{ log.ip or '-' }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="text-muted font-mono" style="font-size:13px;">Nenhum registro de auditoria gerado ainda.</p>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: SISTEMA & SEGURANÇA (SYSTEM)                            -->
+    <!-- ============================================================== -->
+    <div class="cc-tab-pane" id="pane-system">
+      <section class="settings-section">
+        <div class="settings-section-header">
+          <h2 class="settings-section-title">PARÂMETROS DO LABORATÓRIO</h2>
+        </div>
+
+        <div class="settings-section-content">
+          <div class="settings-kv-grid">
+            <div class="settings-kv-row">
+              <span class="settings-kv-label">Ambiente de Execução</span>
+              <span class="settings-kv-value">Local Sandbox Containerized</span>
+            </div>
+            <div class="settings-kv-row">
+              <span class="settings-kv-label">Estado Operacional</span>
+              <span class="settings-kv-value status-running">
+                <span class="status-pulse-dot"></span> Operacional (Online)
+              </span>
+            </div>
+            <div class="settings-kv-row">
+              <span class="settings-kv-label">Motor de Banco de Dados</span>
+              <span class="settings-kv-value">SQLite 3 (WAL Mode &amp; PARSE_DECLTYPES)</span>
+            </div>
+            <div class="settings-kv-row">
+              <span class="settings-kv-label">Plataforma</span>
+              <span class="settings-kv-value">DUNO Core v2.4</span>
+            </div>
+          </div>
+
+          <!-- Preferência Global de Dificuldade -->
+          <div class="settings-preference-group" style="margin-top: 2.5rem;">
+            <div class="settings-pref-info">
+              <h3 class="settings-pref-title">Nível Padrão Global de Segurança</h3>
+              <p class="settings-pref-desc">
+                Define o nível de proteção baseline para todos os 20 módulos práticos e desafios do laboratório. Alterar este valor sincroniza simultaneamente todos os módulos do operador.
+              </p>
+            </div>
+
+            <!-- Level Switcher Buttons -->
+            <div class="settings-level-selector" role="group" aria-label="Default Security Level">
+              <form method="POST" action="{{ url_for('settings') }}" class="settings-level-form" id="settings-level-form">
+                <input type="hidden" name="action" value="set_level" />
+                <input type="hidden" name="level" id="input-selected-level" value="{{ current_default_level }}" />
+
+                {% for lvl in valid_levels %}
+                <button type="button" 
+                        class="btn-level-pill {% if current_default_level == lvl %}active{% endif %}" 
+                        data-level="{{ lvl }}"
+                        onclick="setLabDefaultLevel('{{ lvl }}')">
+                  [ {{ lvl|upper }} ]
+                </button>
+                {% endfor %}
+              </form>
+            </div>
+
+            <div id="level-status-feedback" class="settings-feedback-message" style="display:none;">
+              ✓ Nível padrão global atualizado para <strong id="feedback-level-name">{{ current_default_level|upper }}</strong>.
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 5: DADOS & MANUTENÇÃO (DATABASE & DANGER ZONE)             -->
+    <!-- ============================================================== -->
+    <div class="cc-tab-pane" id="pane-database">
+      <section class="settings-section">
+        <div class="settings-section-header">
+          <h2 class="settings-section-title">TELEMETRIA DA BASE DE DADOS</h2>
+        </div>
+
+        <div class="settings-section-content">
+          <div class="settings-kv-grid">
+            <div class="settings-kv-row">
+              <span class="settings-kv-label">Arquivo de Persistência</span>
+              <span class="settings-kv-value font-mono">{{ db_filename }}</span>
+            </div>
+            <div class="settings-kv-row">
+              <span class="settings-kv-label">Espaço Alocado em Disco</span>
+              <span class="settings-kv-value font-mono">{{ db_size_formatted }}</span>
+            </div>
+            <div class="settings-kv-row">
+              <span class="settings-kv-label">Tabelas Ativas no Schema</span>
+              <span class="settings-kv-value font-mono">{{ table_count }} tabelas</span>
+            </div>
+            <div class="settings-kv-row">
+              <span class="settings-kv-label">Último Reset / Seed</span>
+              <span class="settings-kv-value">{{ last_reset }}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="settings-divider"></div>
+
+      <!-- DANGER ZONE: RESET DATABASE -->
+      <section class="settings-section settings-danger-zone" id="section-danger">
+        <div class="settings-section-header">
+          <h2 class="settings-section-title danger-title">ZONA DE PERIGO (DANGER ZONE)</h2>
+        </div>
+
+        <div class="settings-section-content">
+          <div class="settings-danger-card">
+            <div class="settings-danger-info">
+              <h3 class="settings-danger-heading">Redefinir Base de Dados do Laboratório</h3>
+              <p class="settings-danger-desc">
+                Restaura o banco de dados para os seeds iniciais da instalação. Limpa payloads injetados, sessões de teste e restaura as credenciais padrão do sistema.
+              </p>
+            </div>
+
+            <div class="settings-danger-action">
+              <button type="button" class="btn-danger-action" onclick="openResetConfirmModal()">
+                [ Reset Database ]
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
   </div>
 </div>
@@ -197,6 +591,49 @@
 
 {% block scripts %}
 <script>
+  // Tab Switching Engine
+  function switchCCTab(tabId) {
+    // 1. Alterna estado ativo dos botões
+    document.querySelectorAll('.cc-tab-btn').forEach(btn => {
+      if (btn.getAttribute('data-tab') === tabId) {
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+      } else {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      }
+    });
+
+    // 2. Alterna visibilidade dos painéis
+    document.querySelectorAll('.cc-tab-pane').forEach(pane => {
+      if (pane.id === 'pane-' + tabId) {
+        pane.classList.add('active');
+      } else {
+        pane.classList.remove('active');
+      }
+    });
+
+    // 3. Atualiza hash na URL sem scroll jump
+    if (history.pushState) {
+      history.pushState(null, null, '#' + tabId);
+    } else {
+      location.hash = '#' + tabId;
+    }
+  }
+
+  // Inicializa a aba com base no hash da URL ou default para overview
+  document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.replace('#', '');
+    const validTabs = ['overview', 'machines', 'moderation', 'system', 'database'];
+    if (hash && validTabs.includes(hash)) {
+      const btn = document.getElementById('tab-btn-' + hash);
+      if (btn) {
+        switchCCTab(hash);
+      }
+    }
+  });
+
+  // Atualização de Nível Padrão Global de Segurança
   function setLabDefaultLevel(level) {
     const input = document.getElementById('input-selected-level');
     if (input) input.value = level;
@@ -226,6 +663,8 @@
     .then(data => {
       const feedback = document.getElementById('level-status-feedback');
       const lvlName = document.getElementById('feedback-level-name');
+      const hudLvl = document.getElementById('hud-level-val');
+      if (hudLvl) hudLvl.textContent = level.toUpperCase();
       if (feedback && lvlName) {
         lvlName.textContent = level.toUpperCase();
         feedback.style.display = 'block';

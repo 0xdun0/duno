@@ -1,0 +1,401 @@
+{% extends "kids/base_kids.html" %}
+
+{% block kids_title %}{{ lesson.title }} — Duno Kids{% endblock %}
+
+{% block kids_breadcrumb %}
+<span class="breadcrumb-sep">›</span>
+<a href="{{ url_for('kids.dashboard') }}">Trilha</a>
+<span class="breadcrumb-sep">›</span>
+<span>{{ lesson.title }}</span>
+{% endblock %}
+
+{% block kids_content %}
+<div class="kids-mission-container" data-lesson-id="{{ lesson.id }}">
+
+  <!-- Top Navigation & Progress Bar -->
+  <header class="kids-mission-header">
+    <div class="kids-mission-header-left">
+      <a href="{{ url_for('kids.dashboard') }}" class="btn btn-outline btn-sm" title="Voltar para a Trilha">
+        <span class="btn-arrow">←</span> Sair
+      </a>
+      <div class="kids-mission-title-wrap">
+        <span class="kids-mission-kicker">{{ lesson.subtitle }}</span>
+        <h1 class="kids-mission-title">{{ lesson.title }}</h1>
+      </div>
+    </div>
+
+    <!-- Stepper de Fases: 1. Teoria -> 2. Lab Prático -> 3. Checkpoint -->
+    <div class="kids-phase-stepper" aria-label="Etapas da Missão">
+      <button type="button" class="kids-phase-step active" id="step-btn-theory" data-phase="theory">
+        <span class="kids-step-num">1</span>
+        <span class="kids-step-text">Teoria com o Tux</span>
+      </button>
+      <span class="kids-step-divider">›</span>
+      <button type="button" class="kids-phase-step" id="step-btn-lab" data-phase="lab">
+        <span class="kids-step-num">2</span>
+        <span class="kids-step-text">Laboratório Prático</span>
+      </button>
+      <span class="kids-step-divider">›</span>
+      <button type="button" class="kids-phase-step" id="step-btn-quiz" data-phase="quiz">
+        <span class="kids-step-num">3</span>
+        <span class="kids-step-text">Desafio Checkpoint</span>
+      </button>
+    </div>
+
+    <div class="kids-mission-header-right">
+      <div class="kids-meter-track" style="width: 80px; height: 8px; margin: 0 8px;" title="Progresso da Missão">
+        <div class="kids-meter-fill" id="quiz-progress-bar" style="width: 33%;"></div>
+      </div>
+      <div class="platform-pill" title="Vidas restantes">
+        <i class="nf nf-md-heart" style="color: #ef4444;" aria-hidden="true"></i>
+        <span id="quiz-lives-count" style="font-weight: 700; color: var(--ink);">{{ stats.lives if stats else 5 }}</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════
+       FASE 1: TEORIA INTERATIVA COM O TUX (Cards explicativos com analogias)
+       ════════════════════════════════════════════════════════════════════════════ -->
+  <section class="kids-phase-section" id="phase-theory" style="display: block;">
+    <div class="kids-theory-layout">
+
+      <!-- Coluna da Esquerda: Mascote Tux Estudando com Balão de Fala Animado -->
+      <aside class="kids-theory-mascot-dock">
+        <div class="tux-interactive-guide-box">
+          <div class="tux-bubble-editorial">
+            <span class="tux-bubble-author">TUX GUIA:</span>
+            <p class="tux-bubble-editorial-text" id="theory-mascot-speech">
+              {{ interactive_data.theory_slides[0].tux_speech if interactive_data.theory_slides else 'Vamos aprender juntos!' }}
+            </p>
+          </div>
+          <div class="tux-guide-sprite-wrap">
+            <div class="tux-guide-icon-badge" id="theory-mascot-badge">
+              <i class="nf nf-md-book_open_page_variant tux-guide-icon" id="theory-mascot-img"></i>
+            </div>
+            <div class="tux-pixel-shadow"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Coluna da Direita: Slides de Conceito e Analogias Lúdicas -->
+      <main class="kids-theory-content-card">
+        {% for slide in interactive_data.theory_slides %}
+        <div class="js-theory-slide" data-slide-idx="{{ loop.index0 }}" {% if not loop.first %}style="display: none;"{% endif %}>
+          <div class="kids-slide-header">
+            <span class="card-category-tag">{{ slide.badge }}</span>
+            <span class="kids-slide-counter">Slide {{ loop.index }} de {{ interactive_data.theory_slides|length }}</span>
+          </div>
+
+          <h2 class="kids-slide-title">{{ slide.title }}</h2>
+
+          <!-- Analogia do Tux com destaque -->
+          <div class="kids-analogy-callout">
+            <div class="kids-analogy-icon">
+              <i class="nf nf-md-lightbulb_on"></i>
+            </div>
+            <div class="kids-analogy-body">
+              <strong>Como o Tux imagina:</strong>
+              <p>{{ slide.analogy }}</p>
+            </div>
+          </div>
+
+          <!-- Pontos Chave -->
+          <div class="kids-slide-bullets">
+            {% for pt in slide.points %}
+            <div class="kids-bullet-item">
+              <i class="nf nf-md-check_circle" style="color: var(--orange);"></i>
+              <span>{{ pt }}</span>
+            </div>
+            {% endfor %}
+          </div>
+
+          <!-- Bloco Visual ou Código -->
+          {% if slide.code_preview %}
+          <div class="kids-code-box">
+            <div class="kids-code-header">
+              <span>VISUALIZAÇÃO / EXEMPLO</span>
+            </div>
+            <pre class="kids-code-content"><code>{{ slide.code_preview }}</code></pre>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+
+        <!-- Navegação dos Slides -->
+        <footer class="kids-slide-footer">
+          <button type="button" class="btn btn-outline" id="btn-prev-slide" style="display: none;">
+            <span class="btn-arrow">←</span> Anterior
+          </button>
+          
+          <div style="flex: 1;"></div>
+
+          <button type="button" class="btn btn-outline" id="btn-next-slide">
+            <span>Próximo Conceito</span>
+            <span class="btn-arrow">→</span>
+          </button>
+
+          <button type="button" class="btn btn-primary" id="btn-start-lab" style="display: none;">
+            <span>Ir para o Laboratório Prático</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </footer>
+      </main>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════
+       FASE 2: MINI-LABORATÓRIO PRÁTICO INTERATIVO (Terminal / Sequência / Inspetor)
+       ════════════════════════════════════════════════════════════════════════════ -->
+  <section class="kids-phase-section" id="phase-lab" style="display: none;">
+    <div class="kids-lab-container">
+
+      <!-- Lab Header com Orientação do Tux -->
+      <div class="kids-lab-header-banner">
+        <div class="kids-lab-mascot-inline">
+          <div class="tux-lab-icon-badge" id="lab-mascot-badge">
+            <i class="nf nf-md-console_network tux-lab-icon" id="lab-mascot-img"></i>
+          </div>
+        </div>
+        <div class="kids-lab-instruction-box">
+          <div class="kids-lab-instruction-kicker">
+            <i class="nf nf-oct-terminal"></i>
+            <span>{{ interactive_data.lab.title }}</span>
+          </div>
+          <p class="kids-lab-instruction-text" id="lab-instruction-text">
+            {{ interactive_data.lab.instruction }}
+          </p>
+        </div>
+      </div>
+
+      <!-- LAB TIPO 1: TERMINAL LINUX CRT SIMULADO -->
+      {% if interactive_data.lab.type == 'terminal' %}
+      <div class="kids-terminal-window">
+        <div class="kids-terminal-bar">
+          <div class="kids-terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <div class="kids-terminal-title">aluno@duno-kids: ~/laboratorio (bash)</div>
+          <div class="kids-terminal-status">ONLINE</div>
+        </div>
+
+        <div class="kids-terminal-body" id="lab-terminal-output">
+          <div class="term-line term-system">Bem-vindo ao Shell Interativo DUNO Kids!</div>
+          <div class="term-line term-hint">Digite o comando indicado ou clique nos atalhos rápidos abaixo.</div>
+          <div class="term-line term-prompt">
+            <span class="prompt-user">aluno@duno-kids</span>:<span class="prompt-dir">~</span>$ 
+            <span class="term-hint-cmd"># Aguardando sua instrução...</span>
+          </div>
+        </div>
+
+        <form class="kids-terminal-input-row" id="lab-terminal-form" autocomplete="off">
+          <span class="prompt-user">aluno@duno-kids</span>:<span class="prompt-dir">~</span>$&nbsp;
+          <input type="text" 
+                 class="kids-term-input" 
+                 id="lab-terminal-input" 
+                 placeholder="Digite o comando aqui..." 
+                 autocapitalize="off" 
+                 autocorrect="off" 
+                 spellcheck="false">
+          <button type="submit" class="btn btn-primary btn-sm">Executar ↵</button>
+        </form>
+
+        <!-- Atalhos rápidos de comando para facilitar em touch/mobile -->
+        {% if interactive_data.lab.quick_buttons %}
+        <div class="kids-quick-commands">
+          <span class="kids-quick-label">Comandos rápidos:</span>
+          {% for btn_cmd in interactive_data.lab.quick_buttons %}
+          <button type="button" class="kids-quick-btn js-quick-cmd" data-cmd="{{ btn_cmd }}">
+            <code>{{ btn_cmd }}</code>
+          </button>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <!-- LAB TIPO 2: MONTAGEM DE SEQUÊNCIA LÓGICA -->
+      {% if interactive_data.lab.type == 'sequence' %}
+      <div class="kids-sequence-card">
+        <h3 style="font-size: 1.1rem; color: var(--ink); margin-bottom: 0.5rem;">Monte os passos na ordem de execução correta:</h3>
+        <p style="font-size: 0.88rem; color: var(--ink-2); margin-bottom: 1.25rem;">
+          Clique nas opções para adicioná-las à sequência planejada.
+        </p>
+
+        <!-- Slots selecionados -->
+        <div class="kids-sequence-target-slots" id="seq-target-area">
+          <div class="seq-empty-hint">Clique nos blocos abaixo na ordem desejada...</div>
+        </div>
+
+        <!-- Opções disponíveis -->
+        <div class="kids-sequence-options" id="seq-options-area">
+          {% for opt in interactive_data.lab.options %}
+          <button type="button" class="kids-seq-btn js-seq-opt" data-value="{{ opt }}">
+            <i class="nf nf-md-drag_vertical"></i>
+            <span>{{ opt }}</span>
+          </button>
+          {% endfor %}
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-outline btn-sm" id="btn-reset-seq">Recomeçar Ordem</button>
+          <button type="button" class="btn btn-primary btn-sm" id="btn-check-seq">Verificar Sequência</button>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- LAB TIPO 3: INSPETOR DE SEGURANÇA -->
+      {% if interactive_data.lab.type == 'inspector' %}
+      <div class="kids-inspector-card">
+        <h3 style="font-size: 1.1rem; color: var(--ink); margin-bottom: 0.75rem;">Inspecione as opções e selecione o alvo correto:</h3>
+        <div class="kids-inspector-grid">
+          {% for opt in interactive_data.lab.options %}
+          <button type="button" class="kids-inspector-opt js-inspector-btn" data-answer="{{ opt }}">
+            <i class="nf nf-md-magnify"></i>
+            <span>{{ opt }}</span>
+          </button>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Feedback e Avanço do Lab -->
+      <div class="kids-lab-footer" id="lab-success-footer" style="display: none;">
+        <div class="kids-lab-success-msg">
+          <i class="nf nf-md-check_circle" style="color: #10b981; font-size: 1.5rem;"></i>
+          <div>
+            <div style="font-weight: 750; color: var(--ink);">Laboratório Concluído com Sucesso!</div>
+            <div id="lab-success-detail" style="font-size: 0.85rem; color: var(--ink-2);">O Tux aprovou suas habilidades práticas.</div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary btn-lg" id="btn-go-to-quiz">
+          <span>Avançar para o Desafio Checkpoint</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════
+       FASE 3: DESAFIO CHECKPOINT (Fixação pedagógica com feedback direto do Tux)
+       ════════════════════════════════════════════════════════════════════════════ -->
+  <section class="kids-phase-section" id="phase-quiz" style="display: none;">
+    <div class="kids-quiz-layout">
+
+      <!-- Mascote Tux Acompanhando o Checkpoint -->
+      <div class="kids-checkpoint-mascot-card">
+        <div class="tux-checkpoint-avatar">
+          <div class="tux-mentor-icon-badge" id="quiz-mascot-badge">
+            <i class="nf nf-md-help_network tux-mentor-icon" id="quiz-mascot-img"></i>
+          </div>
+        </div>
+        <div class="tux-mentor-info">
+          <span class="tux-bubble-author">TUX SEMPRE COM VOCÊ:</span>
+          <p id="tux-checkpoint-speech">
+            Chegou a hora de validar o que você aprendeu! Leia a questão com calma.
+          </p>
+          <button type="button" class="kids-hint-pill-btn" id="btn-ask-tux-hint">
+            <i class="nf nf-md-lightbulb_outline"></i> Pedir Dica ao Tux
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Cards -->
+      {% for q in quizzes %}
+      <div class="js-quiz-question-box" data-index="{{ loop.index0 }}" {% if not loop.first %}style="display: none;"{% endif %}>
+        <div class="kids-quiz-card">
+          <div class="kids-quiz-badge">
+            <i class="nf nf-md-help_circle" aria-hidden="true"></i>
+            <span>Pergunta {{ loop.index }} de {{ total_questions }}</span>
+          </div>
+
+          <h2 class="kids-quiz-question">{{ q.question }}</h2>
+
+          <!-- 4 Response Options (DUNO card style) -->
+          <div class="kids-quiz-options">
+            <button type="button" class="kids-quiz-opt js-option-btn" data-quiz-id="{{ q.id }}" data-option="A">
+              <span class="kids-opt-letter">A</span>
+              <span>{{ q.option_a }}</span>
+            </button>
+
+            <button type="button" class="kids-quiz-opt js-option-btn" data-quiz-id="{{ q.id }}" data-option="B">
+              <span class="kids-opt-letter">B</span>
+              <span>{{ q.option_b }}</span>
+            </button>
+
+            <button type="button" class="kids-quiz-opt js-option-btn" data-quiz-id="{{ q.id }}" data-option="C">
+              <span class="kids-opt-letter">C</span>
+              <span>{{ q.option_c }}</span>
+            </button>
+
+            <button type="button" class="kids-quiz-opt js-option-btn" data-quiz-id="{{ q.id }}" data-option="D">
+              <span class="kids-opt-letter">D</span>
+              <span>{{ q.option_d }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      <!-- Bottom Feedback Drawer -->
+      <div class="kids-quiz-footer" id="quiz-drawer" style="display: none;">
+        <div class="kids-feedback-area">
+          <div class="kids-feedback-icon" id="feedback-status-icon">
+            <i class="nf nf-md-check"></i>
+          </div>
+          <div>
+            <div class="js-feedback-title" style="color: var(--ink); font-weight: 750;">Muito bem!</div>
+            <div class="js-feedback-expl" style="font-size: 0.82rem; color: var(--ink-2); font-weight: 400; margin-top: 2px;">
+              Explicação técnica da resposta.
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" id="quiz-next-btn">
+          <span>Continuar</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Modal de Conclusão da Lição com o Tux Animado Comemorando -->
+  <div class="kids-modal-overlay" id="quiz-finish-modal" style="display: none;">
+    <div class="kids-modal-card">
+      <div class="tux-celebrate-wrap">
+        <div class="tux-celebrate-icon-badge">
+          <i class="nf nf-md-trophy tux-celebrate-icon"></i>
+        </div>
+      </div>
+      <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--ink); margin-bottom: 0.5rem;">
+        Missão Concluída!
+      </h2>
+      <p style="color: var(--ink-2); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem;">
+        Você desvendou toda a teoria, o laboratório prático e o teste de <strong>{{ lesson.title }}</strong>!
+      </p>
+
+      <div class="js-modal-stars" style="margin-bottom: 1.5rem;"></div>
+
+      <div style="display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 1.75rem;">
+        <div class="platform-pill" style="padding: 6px 14px;">
+          <i class="nf nf-md-lightning_bolt" style="color: var(--orange);"></i>
+          <span style="font-weight: 700;">+{{ lesson.xp_reward }} XP</span>
+        </div>
+        <div class="platform-pill" style="padding: 6px 14px;">
+          <i class="nf nf-md-circle_multiple" style="color: #eab308;"></i>
+          <span style="font-weight: 700;">+{{ lesson.coins_reward }} Moedas</span>
+        </div>
+      </div>
+
+      <a href="{{ url_for('kids.dashboard') }}" class="btn btn-primary btn-full">
+        <span>Voltar para a Trilha</span>
+        <span class="btn-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

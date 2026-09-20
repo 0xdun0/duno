@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Central de Ajuda & Documentação Técnica — DUNO{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/docs.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="docs-hub-page">
+
+  <!-- ═══ HERO SECTION: HOW CAN WE HELP? (DOCKER DOCS STYLE) ═══ -->
+  <section class="docs-hero">
+    <div class="docs-hero-inner">
+      <h1 class="docs-hero-title">How can we help?</h1>
+
+      <!-- Central Search Box with Live Results -->
+      <div class="docs-search-box-wrap">
+        <form id="docs-search-form" class="docs-search-bar" autocomplete="off">
+          <!-- Robô Assistente NerdFont (nf-fa-robot em #9d9c9b) -->
+          <div class="docs-robot-wrapper" id="docs-search-robot" title="Assistente DUNO Docs">
+            <svg class="docs-robot-svg" viewBox="0 0 640 512" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DUNO Bot (nf-fa-robot)">
+              <!-- Corpo e cabeça completos do nf-fa-robot em #9d9c9b -->
+              <path d="M320 0c17.7 0 32 14.3 32 32l0 64 120 0c39.8 0 72 32.2 72 72l0 272c0 39.8-32.2 72-72 72l-304 0c-39.8 0-72-32.2-72-72l0-272c0-39.8 32.2-72 72-72l120 0 0-64c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zM48 224l16 0 0 192-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0 0-192 16 0z" fill="#9d9c9b" />
+              <!-- Olhos padrão do nf-fa-robot que abrem/fecham ao passar o mouse ou digitar -->
+              <ellipse class="robot-eye robot-eye-left" cx="224" cy="256" rx="40" ry="40" fill="var(--bg-card, #161b22)" />
+              <ellipse class="robot-eye robot-eye-right" cx="416" cy="256" rx="40" ry="40" fill="var(--bg-card, #161b22)" />
+            </svg>
+          </div>
+          <input type="text" id="docs-search-input" class="docs-search-input" 
+                 placeholder="Ask anything about DUNO and get instant answers..." 
+                 aria-label="Buscar na documentação">
+          <button type="submit" class="docs-search-btn" aria-label="Executar busca">
+            <i class="nf nf-md-arrow_right"></i>
+          </button>
+        </form>
+
+        <!-- Dropdown com Resultados Instantâneos -->
+        <div id="docs-search-dropdown" class="docs-search-dropdown"></div>
+      </div>
+
+      <!-- Suggested Search Pills -->
+      <div class="docs-pills-container">
+        {% for pill in search_suggestions %}
+        <button type="button" class="docs-pill js-docs-pill" data-query="{{ pill.query }}">
+          {{ pill.label }}
+        </button>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <div class="docs-container">
+
+    <!-- ═══ 4 CATEGORY CARDS GRID (COMPACT DOCKER DOCS STYLE) ═══ -->
+    <section class="docs-cards-grid">
+      {% for cat in categories %}
+      <a href="{{ url_for('documentation_doc', slug=cat.articles[0].slug) if cat.articles else '#' }}" 
+         class="docs-cat-card" 
+         style="--card-color: {{ cat.badge_color }};"
+         title="Explorar {{ cat.title }}">
+        <div class="docs-cat-icon-box">
+          <i class="nf {{ cat.icon }}"></i>
+        </div>
+        <div class="docs-cat-body">
+          <h2 class="docs-cat-title">{{ cat.title }}</h2>
+          <p class="docs-cat-desc">{{ cat.subtitle }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </section>
+
+    <!-- ═══ WHAT'S NEW TIMELINE (IGUAL DOCKER DOCS SCREENSHOT 2) ═══ -->
+    <section class="docs-whats-new-section">
+      <div class="docs-section-header">
+        <h2 class="docs-section-title">What's new</h2>
+        <a href="{{ url_for('documentation_doc', slug='changelog') }}" class="docs-section-link">
+          <span>Ver histórico completo</span>
+          <i class="nf nf-md-arrow_right"></i>
+        </a>
+      </div>
+
+      <div class="docs-timeline">
+        {% for item in whats_new %}
+        <div class="docs-timeline-row">
+          <!-- Data -->
+          <div class="docs-timeline-date">{{ item.date }}</div>
+
+          <!-- Ponto / Marcador da Linha -->
+          <div class="docs-timeline-marker"></div>
+
+          <!-- Conteúdo -->
+          <div class="docs-timeline-content">
+            <span class="docs-timeline-badge">{{ item.tag }}</span>
+            <a href="{{ url_for('documentation_doc', slug=item.slug) }}" class="docs-timeline-title-link">
+              <span>{{ item.title }}</span>
+              <i class="nf nf-md-arrow_right"></i>
+            </a>
+            <p class="docs-timeline-summary">{{ item.summary }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/docs.js') }}"></script>
+{% endblock %}

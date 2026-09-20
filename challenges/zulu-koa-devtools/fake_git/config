@@ -1,0 +1,14 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[user]
+	name = EverSec Dev Team
+	email = dev@eversec.io
+[remote "origin"]
+	url = git@github.com:eversec-internal/devtools-portal.git
+	fetch = +refs/heads/*:refs/heads/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main

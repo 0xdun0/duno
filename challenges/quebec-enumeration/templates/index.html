@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Quebec] EverSec - Elite Cybersecurity Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+        }
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature {
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .feature h3 {
+            margin: 20px 0 10px;
+            color: #667eea;
+        }
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <!-- FLAG 10: {{ flag_comment }} -->
+    <!-- TODO: Remove flag from HTML comments before deploying to production -->
+    <!-- Our intern said "comments are invisible" so this should be fine, right? -->
+
+    <header>
+        <nav>
+            <div class="logo">🛡️ EverSec</div>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>Elite Cybersecurity Solutions</h1>
+        <p>Protecting your digital assets with cutting-edge security technology</p>
+        <a href="/contact" class="btn">Get Started</a>
+    </div>
+
+    <div class="container">
+        <h2>Why Choose EverSec?</h2>
+        <div class="features">
+            <div class="feature">
+                <div style="font-size: 48px;">🔒</div>
+                <h3>Bank-Grade Security</h3>
+                <p>Military-grade encryption and security protocols to keep your data safe.</p>
+            </div>
+            <div class="feature">
+                <div style="font-size: 48px;">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Our optimized infrastructure ensures maximum performance and uptime.</p>
+            </div>
+            <div class="feature">
+                <div style="font-size: 48px;">🎯</div>
+                <h3>24/7 Support</h3>
+                <p>Round-the-clock monitoring and support from our expert security team.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 EverSec Security Solutions. All rights reserved.</p>
+        <p style="font-size: 12px; color: #7f8c8d; margin-top: 10px;">
+            Version 2.0.1 | Server: Apache/2.4.41 | Powered by Flask
+        </p>
+    </footer>
+</body>
+</html>

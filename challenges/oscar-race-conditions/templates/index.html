@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Oscar] EverSec Gift Card System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            color: white;
+            text-align: center;
+        }
+
+        .balance-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .balance-amount {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .balance-subtext {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .coupon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .coupon-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .coupon-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .coupon-code {
+            font-family: monospace;
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .coupon-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .coupon-usage {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .redeem-btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .redeem-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .redeem-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .manual-redeem {
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+        }
+
+        .manual-redeem h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .input-group button {
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .redemption-history {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .redemption-item {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .redemption-item:last-child {
+            border-bottom: none;
+        }
+
+        .flag-container {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            color: white;
+        }
+
+        .flag-item {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+
+        .flag-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .reset-btn {
+            padding: 12px 25px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🎁</div>
+            <h1>EverSec Gift Card System</h1>
+            <p class="subtitle">Redeem gift cards and earn rewards</p>
+            <p class="subtitle" style="margin-top: 8px; color: #888; font-size: 12px;">Each browser session is a separate player account. Clear cookies or use incognito to reset your balance.</p>
+        </div>
+
+        <div class="balance-card">
+            <div class="balance-label">Your Balance</div>
+            <div class="balance-amount" id="balanceAmount">$0</div>
+            <div class="balance-subtext">Redeem coupons to increase your balance</div>
+        </div>
+
+        <div id="flagContainer" style="display: none;"></div>
+
+        <div class="section">
+            <h2>💳 Available Coupons</h2>
+            <p style="color: #888; font-size: 13px; margin-bottom: 12px;">Redemptions are validated by our fraud detection pipeline — processing may take a moment under high transaction volume.</p>
+            <div id="message" class="message"></div>
+            <div class="coupon-grid" id="couponGrid"></div>
+
+            <div class="manual-redeem">
+                <h3>Or enter a coupon code manually:</h3>
+                <div class="input-group">
+                    <input type="text" id="manualCode" placeholder="Enter coupon code" />
+                    <button onclick="redeemManual()">Redeem</button>
+                </div>
+            </div>
+
+            <button class="reset-btn" onclick="resetAccount()">Reset Account</button>
+        </div>
+
+        <div class="section">
+            <h2>📜 Redemption History</h2>
+            <div class="redemption-history" id="redemptionHistory">
+                <p style="text-align: center; color: #999; padding: 20px;">No redemptions yet</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let coupons = [];
+
+        async function loadCoupons() {
+            const response = await fetch('/coupons');
+            const data = await response.json();
+            coupons = data.coupons;
+            renderCoupons();
+        }
+
+        function renderCoupons() {
+            const grid = document.getElementById('couponGrid');
+            grid.innerHTML = '';
+
+            coupons.forEach(coupon => {
+                const card = document.createElement('div');
+                card.className = 'coupon-card';
+                card.innerHTML = `
+                    <div class="coupon-code">${coupon.code}</div>
+                    <div class="coupon-value">$${coupon.value}</div>
+                    <div class="coupon-usage">
+                        Used: ${coupon.current_redemptions}/${coupon.max_redemptions}
+                    </div>
+                    <button
+                        class="redeem-btn"
+                        onclick="redeemCoupon('${coupon.code}')"
+                        ${coupon.remaining <= 0 ? 'disabled' : ''}
+                    >
+                        ${coupon.remaining > 0 ? 'Redeem Now' : 'Fully Redeemed'}
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        async function redeemCoupon(code) {
+            try {
+                const response = await fetch('/redeem', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: code })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage(data.message, 'success');
+                    await updateBalance();
+                    await loadCoupons();
+                    await loadRedemptions();
+                } else {
+                    showMessage(data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('Network error: ' + error.message, 'error');
+            }
+        }
+
+        async function redeemManual() {
+            const code = document.getElementById('manualCode').value.trim();
+            if (code) {
+                await redeemCoupon(code);
+                document.getElementById('manualCode').value = '';
+            }
+        }
+
+        async function updateBalance() {
+            const response = await fetch('/balance');
+            const data = await response.json();
+
+            document.getElementById('balanceAmount').textContent = `$${data.balance}`;
+
+            // Show flags if earned
+            if (data.flags && data.flags.length > 0) {
+                const container = document.getElementById('flagContainer');
+                container.style.display = 'block';
+                container.className = 'flag-container';
+                container.innerHTML = '<h3>🎉 Flags Captured!</h3>';
+
+                data.flags.forEach(flagData => {
+                    const flagDiv = document.createElement('div');
+                    flagDiv.className = 'flag-item';
+                    flagDiv.innerHTML = `
+                        <strong>${flagData.flag}</strong><br>
+                        <small>${flagData.message}</small>
+                    `;
+                    container.appendChild(flagDiv);
+                });
+            }
+        }
+
+        async function loadRedemptions() {
+            const response = await fetch('/redemptions');
+            const data = await response.json();
+
+            const container = document.getElementById('redemptionHistory');
+
+            if (data.redemptions.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">No redemptions yet</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            data.redemptions.forEach(redemption => {
+                const item = document.createElement('div');
+                item.className = 'redemption-item';
+                item.innerHTML = `
+                    <div>
+                        <strong>${redemption.code}</strong>: $${redemption.amount}
+                    </div>
+                    <div style="font-size: 12px; color: #999;">
+                        ${new Date(redemption.redeemed_at).toLocaleString()}
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        async function resetAccount() {
+            if (!confirm('Are you sure you want to reset your account? This will clear your balance and redemption history.')) {
+                return;
+            }
+
+            const response = await fetch('/reset', { method: 'POST' });
+            const data = await response.json();
+
+            if (response.ok) {
+                showMessage(data.message, 'success');
+                await updateBalance();
+                await loadCoupons();
+                await loadRedemptions();
+                document.getElementById('flagContainer').style.display = 'none';
+            } else {
+                showMessage(data.error || 'Reset failed', 'error');
+            }
+        }
+
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message ${type}`;
+            msg.style.display = 'block';
+
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 5000);
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateBalance();
+            loadCoupons();
+            loadRedemptions();
+
+            // Refresh balance every 2 seconds
+            setInterval(updateBalance, 2000);
+            setInterval(loadCoupons, 2000);
+        });
+    </script>
+</body>
+</html>

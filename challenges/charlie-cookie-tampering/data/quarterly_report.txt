@@ -1,0 +1,90 @@
+=========================================================
+  EverSec Security Solutions - Q4 2025 Quarterly Report
+  CONFIDENTIAL - Internal Distribution Only
+=========================================================
+
+EXECUTIVE SUMMARY
+-----------------
+Q4 2025 closed with strong performance across all business
+units. Total revenue reached $12.4M, up 18% from Q3. The
+managed security services division drove the majority of
+new contract wins, with 14 new enterprise clients onboarded
+during the quarter.
+
+Client retention remained at 96%, above industry average.
+The engineering team completed 3 major platform releases
+and resolved 847 support tickets with an average response
+time of 2.1 hours.
+
+
+REVENUE BREAKDOWN
+-----------------
+  Managed Security Services    $6.2M  (+22% QoQ)
+  Consulting & Assessments     $3.1M  (+12% QoQ)
+  Product Licensing             $2.0M  (+8% QoQ)
+  Training & Certification     $1.1M  (+31% QoQ)
+  -------------------------------------------
+  TOTAL                       $12.4M  (+18% QoQ)
+
+
+KEY METRICS
+-----------
+  New Clients:           14
+  Active Engagements:    87
+  SOC Alerts Processed:  1.2M
+  Incidents Escalated:   342
+  Mean Time to Detect:   4.2 minutes
+  Mean Time to Respond:  18.7 minutes
+
+
+DEPARTMENT UPDATES
+------------------
+
+Engineering:
+  - Completed migration to Kubernetes orchestration
+  - Shipped v3.2 of the EverSec Sentinel platform
+  - Reduced false positive rate by 34%
+  - Hired 3 senior engineers (total headcount: 12)
+
+Sales:
+  - Closed 14 new enterprise contracts
+  - Pipeline value for Q1 2026: $8.7M
+  - Expanded into healthcare vertical
+  - Regional expansion into Southeast market
+
+Marketing:
+  - Launched new brand identity
+  - Published 12 threat intelligence reports
+  - Hosted 3 webinars (avg attendance: 340)
+  - Website traffic up 45%
+
+
+SECURITY AUDIT & COMPLIANCE
+----------------------------
+Internal security assessment completed December 2025.
+All findings remediated within SLA.
+
+  Audit Reference Codes:
+    Project Athena:    SEC-2025-0441
+    Project Mercury:   SEC-2025-0892
+    Compliance Ref:    3xp0rt_d4t4_l34k3d
+    Project Orion:     SEC-2025-1203
+    Project Titan:     SEC-2025-1567
+
+Certifications renewed: SOC 2 Type II, ISO 27001,
+PCI DSS Level 1.
+
+
+OUTLOOK - Q1 2026
+------------------
+Projected revenue: $14.1M (+14% QoQ)
+Planned hires: 8 across engineering and sales
+Key initiative: Launch of AI-powered threat detection
+module (codename: Sentinel AI)
+
+
+=========================================================
+  Report prepared by: Finance & Operations
+  Distribution: Senior Leadership, Department Heads
+  Classification: CONFIDENTIAL
+=========================================================

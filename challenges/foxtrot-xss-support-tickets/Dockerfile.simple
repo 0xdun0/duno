@@ -1,0 +1,32 @@
+FROM python:3.11-alpine
+
+WORKDIR /app
+
+# Copy requirements (without selenium for now)
+COPY requirements.txt .
+RUN pip install --no-cache-dir Flask==3.0.0 Werkzeug==3.0.1
+
+# Copy application files
+COPY app.py .
+COPY templates/ templates/
+
+# Set flags as environment variables
+ARG FLAG1=xss_st0l3_my_c00k13
+ARG FLAG2=4dm1n_c00k13_c4ptur3d
+ENV FLAG1=${FLAG1}
+ENV FLAG2=${FLAG2}
+
+# Run as non-root user
+RUN adduser -D -u 1000 ctfuser && \
+    chown -R ctfuser:ctfuser /app
+USER ctfuser
+
+# Expose port
+EXPOSE 4002
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:4002/').read()" || exit 1
+
+# Run the application
+CMD ["python", "app.py"]

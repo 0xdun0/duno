@@ -1,0 +1,45 @@
+# data/flags.yaml — Mapeamento de flags aceitas por desafio (CTF DUNO)
+# Formato padrão: lista de strings aceitas por desafio
+
+hotel-junior-dev-challenge:
+  - "FLAG{k3y_r0t4t10n_m4st3r}"
+
+golf-static-analysis-config:
+  - "FLAG{s0urc3_m4ps_t3ll_s3cr3ts}"
+  - "FLAG{4p1_k3y_1n_s0urc3_c0d3}"
+  - "FLAG{g1t_h1st0ry_r3v34ls_s3cr3ts}"
+  - "FLAG{3nv_f1l3_s3cr3ts_3xp0s3d}"
+  - "FLAG{b4ckup_c0nf1g_l34k3d}"
+
+delta-idor-document-vault:
+  - "FLAG{1d0r_bur1ed_tr34sur3}"
+  - "FLAG{3num3r4t3_4ll_th3_th1ngs}"
+  - "FLAG{d3l3t3d_but_n0t_g0n3}"
+  - "FLAG{1d0r_us3r_pr0f1l3_pwn3d}"
+
+juliet-xxe-injection:
+  - "FLAG{xxe_d1sc0v3r3d}"
+  - "FLAG{f1l3_r34d_succ3ss}"
+  - "FLAG{ssrf_t0_1nt3rn4l}"
+  - "FLAG{xxe_rc3_ch41n3d}"
+  - "FLAG{f1nd_pr1v_3sc_r00t}"
+
+alpha-sqli-basics:
+  - "sql1_b4s1c_byp4ss"
+  - "un10n_d4t4_3xtr4ct"
+  - "4dm1n_p4n3l_4cc3ss"
+  - "c0mm4nd_1nj3ct10n_rc3"
+  - "pr1v3sc_t0_r00t"
+  - "FLAG{sql1_b4s1c_byp4ss}"
+  - "FLAG{un10n_d4t4_3xtr4ct}"
+  - "FLAG{4dm1n_p4n3l_4cc3ss}"
+  - "FLAG{c0mm4nd_1nj3ct10n_rc3}"
+  - "FLAG{pr1v3sc_t0_r00t}"
+
+bravo:
+  - "DUNO{5d41402abc4b2a76b9719d911017c592}"
+  - "DUNO{7c6a180b36896a0a8c02787eeafb0e4c}"
+  - "DUNO{9e107d9d372bb6826bd81d3542a419d6}"
+  - "5d41402abc4b2a76b9719d911017c592"
+  - "7c6a180b36896a0a8c02787eeafb0e4c"
+  - "9e107d9d372bb6826bd81d3542a419d6"

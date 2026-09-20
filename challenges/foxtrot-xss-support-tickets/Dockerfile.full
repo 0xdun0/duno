@@ -1,0 +1,54 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install Chrome and ChromeDriver dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    gnupg \
+    unzip \
+    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install ChromeDriver
+RUN CHROMEDRIVER_VERSION=$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
+    wget -q https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip && \
+    unzip chromedriver_linux64.zip && \
+    mv chromedriver /usr/bin/chromedriver && \
+    chmod +x /usr/bin/chromedriver && \
+    rm chromedriver_linux64.zip
+
+# Copy requirements and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application files
+COPY app.py .
+COPY templates/ templates/
+
+# Set flags as environment variables
+ARG FLAG1=xss_st0l3_my_c00k13
+ARG FLAG2=4dm1n_c00k13_c4ptur3d
+ENV FLAG1=${FLAG1}
+ENV FLAG2=${FLAG2}
+
+# Run as non-root user (but Chrome needs some permissions)
+RUN useradd -m -u 1000 ctfuser && \
+    chown -R ctfuser:ctfuser /app && \
+    mkdir -p /home/ctfuser/.local/share && \
+    chown -R ctfuser:ctfuser /home/ctfuser
+
+USER ctfuser
+
+# Expose port
+EXPOSE 4002
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:4002/').read()" || exit 1
+
+# Run the application
+CMD ["python", "app.py"]

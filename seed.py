@@ -57,6 +57,38 @@ CREATE TABLE IF NOT EXISTS audit_log (
     ip TEXT,
     ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS challenge_instances (
+    id TEXT PRIMARY KEY,
+    challenge_id TEXT NOT NULL,
+    user_id INTEGER NOT NULL,
+    container_ref TEXT,
+    status TEXT NOT NULL CHECK(status IN ('starting','running','stopping','stopped','failed','expired')),
+    endpoint TEXT,
+    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NOT NULL,
+    stopped_at TIMESTAMP,
+    last_error TEXT,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS challenge_solves (
+    id TEXT PRIMARY KEY,
+    challenge_id TEXT NOT NULL,
+    user_id INTEGER NOT NULL,
+    instance_id TEXT,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    points_awarded INTEGER NOT NULL,
+    UNIQUE(user_id, challenge_id),
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(instance_id) REFERENCES challenge_instances(id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_instances_user ON challenge_instances(user_id);
+CREATE INDEX IF NOT EXISTS idx_instances_challenge ON challenge_instances(challenge_id);
+CREATE INDEX IF NOT EXISTS idx_instances_status ON challenge_instances(status);
+CREATE INDEX IF NOT EXISTS idx_instances_expires ON challenge_instances(expires_at);
+CREATE INDEX IF NOT EXISTS idx_solves_user ON challenge_solves(user_id);
 """
 
 

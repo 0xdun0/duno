@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Romeo] EverSec IR Evidence Locker</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #1a1a1a;
+            color: #00ff00;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        h1 {
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #00ff00;
+            margin-top: 30px;
+        }
+        .case-header {
+            background-color: #2a2a2a;
+            border: 1px solid #00ff00;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .case-header p {
+            margin: 4px 0;
+        }
+        .tier {
+            margin: 25px 0;
+            padding: 15px;
+            background-color: #2a2a2a;
+            border-left: 4px solid #00ff00;
+        }
+        .tier.easy { border-left-color: #00cc00; }
+        .tier.medium { border-left-color: #ccaa00; }
+        .tier.hard { border-left-color: #cc3300; }
+        .tier h3 {
+            margin-top: 0;
+        }
+        .tier h3 .difficulty {
+            font-size: 0.8em;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+        .tier.easy h3 .difficulty { background-color: #004400; color: #00cc00; }
+        .tier.medium h3 .difficulty { background-color: #443300; color: #ccaa00; }
+        .tier.hard h3 .difficulty { background-color: #440000; color: #cc3300; }
+        .tier a {
+            color: #00ff00;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .tier a:hover {
+            text-decoration: underline;
+        }
+        .points {
+            color: #888;
+            float: right;
+        }
+        .description {
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+        .flags {
+            color: #888;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+        .note {
+            color: #666;
+            font-size: 0.85em;
+            border-top: 1px solid #333;
+            margin-top: 30px;
+            padding-top: 15px;
+        }
+        .tools {
+            color: #888;
+            margin-top: 10px;
+        }
+        .warning {
+            color: #cc3300;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>EverSec IR Evidence Locker</h1>
+    <p>Classification: TLP:RED / RESTRICTED ACCESS</p>
+
+    <div class="case-header">
+        <p><strong>CASE #2026-0417: Operation Midnight Raven</strong></p>
+        <p>Incident Type: Multi-stage corporate breach</p>
+        <p>Duration: 3 days (2026-03-15 through 2026-03-17)</p>
+        <p>Affected Systems: 3 workstations</p>
+        <p>Lead Analyst: M. Chen</p>
+        <p>Status: ACTIVE INVESTIGATION</p>
+    </div>
+
+    <p>EverSec SOC detected a three-day breach across three corporate workstations.
+    A senior forensic analyst captured memory from each system and processed the
+    evidence. Your job is to analyze the artifacts and reconstruct what happened.</p>
+
+    <h2>Evidence Archives</h2>
+
+    <div class="tier easy">
+        <h3>Day 1: Patient Zero (WS-RECEPTION-01) <span class="difficulty">EASY</span></h3>
+        <span class="points">600 points</span>
+        <a href="romeo-easy-patient-zero.raw.gz">romeo-easy-patient-zero.raw.gz</a>
+        <div class="description">
+            A phishing email delivered malware to the reception desk workstation.
+            The attacker established an initial foothold. This is a <strong>Linux
+            memory dump</strong>. Analyze it with <code>strings</code> and <code>grep</code>
+            — no special tooling required.
+        </div>
+        <div class="flags">3 flags &mdash; Identify the suspicious process, decode the payload, find the C2 callback</div>
+    </div>
+
+    <div class="tier medium">
+        <h3>Day 2: Lateral Move (WS-DEVOPS-01) <span class="difficulty">MEDIUM</span></h3>
+        <span class="points">1,450 points</span>
+        <a href="romeo-medium-lateral-move.tar.gz">romeo-medium-lateral-move.tar.gz</a>
+        <div class="description">
+            The attacker moved laterally to a DevOps engineer's workstation, harvested
+            credentials, and established persistence. This archive contains
+            <strong>pre-extracted Volatility 3 output</strong> from a Windows memory image
+            plus extracted artifacts.
+        </div>
+        <div class="flags">4 flags &mdash; Network analysis, persistence, registry forensics, credential recovery</div>
+    </div>
+
+    <div class="tier hard">
+        <h3>Day 3: Exfil and Burn (WS-FINANCE-01) <span class="difficulty">HARD</span></h3>
+        <span class="points">2,000 points</span>
+        <a href="romeo-hard-exfil-burn.tar.gz">romeo-hard-exfil-burn.tar.gz</a>
+        <div class="description">
+            The attacker targeted a senior financial analyst's workstation, staged
+            sensitive data for exfiltration via a covert DNS channel, and attempted
+            to cover their tracks with anti-forensics techniques. This archive contains
+            <strong>pre-extracted Volatility 3 output</strong> requiring multi-file
+            cross-referencing and decoding.
+        </div>
+        <div class="flags">4 flags &mdash; XOR decoding, data recovery, timestomping detection, DNS exfil reconstruction</div>
+    </div>
+
+    <div class="note">
+        <p><strong>Total Points:</strong> 4,050 (11 flags across 3 tiers)</p>
+        <p class="tools">
+            <strong>Tools Recommended:</strong> strings, grep, base64, python3, CyberChef, Volatility 3<br>
+            <strong>Techniques:</strong> Process analysis, network forensics, registry analysis, credential recovery,
+            XOR decoding, base32/base64, timeline analysis, DNS exfiltration
+        </p>
+        <p>The Easy tier is a real compressed memory dump. Decompress with <code>gunzip</code> or <code>gzip -d</code>
+        before analysis. The Medium and Hard tiers are tar.gz archives &mdash; extract with <code>tar xzf</code>.</p>
+    </div>
+</body>
+</html>

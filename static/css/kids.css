@@ -1,0 +1,1885 @@
+/* ════════════════════════════════════════════════════════════════════════════════
+   kids.css — DUNO Kids Gamified Educational System
+   100% Integrated with DUNO Design System v2 (Walkie Minimal & Soft Dark)
+   ════════════════════════════════════════════════════════════════════════════════ */
+
+/* ── HUD Bar & Subnavigation ── */
+.kids-wrapper {
+  width: 100%;
+}
+
+.kids-hud-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.kids-hud-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.kids-hud-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.kids-stat-val {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.kids-stat-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+
+/* ── Dashboard Grid ── */
+.kids-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .kids-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Kids Hero Card ── */
+.kids-hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 2.25rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.kids-hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--orange);
+}
+
+.kids-hero-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.kids-hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 0.75rem;
+}
+
+.kids-hero-title {
+  font-family: var(--font);
+  font-size: 1.85rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+
+.kids-hero-desc {
+  font-size: 0.95rem;
+  color: var(--ink-2);
+  line-height: 1.55;
+  max-width: 580px;
+  margin-bottom: 1.25rem;
+}
+
+.kids-hero-mascot-box {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  color: var(--ink);
+  font-size: 3rem;
+}
+
+@media (max-width: 600px) {
+  .kids-hero-card {
+    flex-direction: column;
+    text-align: left;
+  }
+  .kids-hero-mascot-box {
+    align-self: flex-start;
+  }
+}
+
+/* ── Skill Tree Section ── */
+.kids-tree-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 3rem 1.5rem;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  min-height: 480px;
+}
+
+.kids-tree-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line-subtle);
+}
+
+.kids-tree-header-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.kids-tree-connector {
+  position: absolute;
+  width: 3px;
+  background: var(--line);
+  top: 120px;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.kids-tree-nodes {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  position: relative;
+  z-index: 2;
+  align-items: center;
+}
+
+.kids-node-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.kids-node-btn {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: var(--bg-card);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.kids-node-btn:hover {
+  transform: scale(1.08);
+  border-color: var(--orange);
+  box-shadow: var(--shadow-hover);
+}
+
+.kids-node-btn.available {
+  background: var(--orange);
+  color: #ffffff;
+  border-color: var(--orange);
+  box-shadow: var(--shadow-orange);
+  animation: kids-node-pulse 2.2s infinite;
+}
+
+@keyframes kids-node-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 79, 0, 0.45); }
+  70%  { box-shadow: 0 0 0 16px rgba(255, 79, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 79, 0, 0); }
+}
+
+.kids-node-btn.completed {
+  background: var(--bg-card);
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.kids-node-btn.locked {
+  background: var(--bg-subtle);
+  border-color: var(--line);
+  color: var(--ink-4);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.kids-node-btn.locked:hover {
+  transform: none;
+  border-color: var(--line);
+  box-shadow: var(--shadow-sm);
+}
+
+.kids-node-meta {
+  margin-top: 10px;
+  text-align: center;
+  max-width: 170px;
+}
+
+.kids-node-title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+.kids-node-stars {
+  font-size: 0.72rem;
+  color: #eab308;
+  margin-top: 3px;
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+}
+
+/* Popover do Node */
+.kids-popover {
+  position: absolute;
+  top: calc(100% + 12px);
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  padding: 1.25rem;
+  width: 260px;
+  z-index: 100;
+  animation: dropdown-in 0.15s ease-out;
+  text-align: center;
+}
+
+.kids-popover::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent var(--line) transparent;
+}
+
+.kids-popover-title {
+  font-size: 0.95rem;
+  font-weight: 750;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.kids-popover-desc {
+  font-size: 0.82rem;
+  color: var(--ink-2);
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+/* ── Sidebar Panels ── */
+.kids-panel-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.kids-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line-subtle);
+}
+
+.kids-panel-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.kids-panel-link {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.kids-panel-link:hover {
+  text-decoration: underline;
+}
+
+/* Meter / Progress */
+.kids-meter-track {
+  height: 8px;
+  background: var(--bg-subtle);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  border: 1px solid var(--line-subtle);
+  margin-top: 6px;
+}
+
+.kids-meter-fill {
+  height: 100%;
+  background: var(--orange);
+  border-radius: var(--r-pill);
+  transition: width 0.4s ease;
+}
+
+/* User Card */
+.kids-user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+}
+
+.kids-user-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.kids-user-name {
+  font-size: 0.95rem;
+  font-weight: 750;
+  color: var(--ink);
+}
+
+/* Quest item */
+.kids-quest-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.kids-quest-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kids-quest-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.kids-quest-reward {
+  color: var(--orange);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.kids-quest-btn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  background: var(--orange);
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.kids-quest-btn:hover {
+  opacity: 0.9;
+}
+
+.kids-quest-btn.claimed {
+  background: var(--bg-subtle);
+  color: var(--ink-3);
+  cursor: default;
+}
+
+/* ── Quiz Arena ── */
+.kids-quiz-container {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.kids-quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.kids-quiz-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 2.25rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.5rem;
+}
+
+.kids-quiz-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--orange);
+  margin-bottom: 0.75rem;
+}
+
+.kids-quiz-question {
+  font-size: 1.28rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: 1.75rem;
+}
+
+.kids-quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 650px) {
+  .kids-quiz-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kids-quiz-opt {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 1.15rem 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 0.94rem;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: all 0.16s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kids-quiz-opt:hover {
+  border-color: var(--orange);
+  background: var(--bg-subtle);
+  transform: translateY(-1px);
+}
+
+.kids-quiz-opt.selected {
+  border-color: var(--orange);
+  background: var(--orange-dim);
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.kids-quiz-opt.correct {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+  color: #10b981;
+  font-weight: 650;
+}
+
+.kids-quiz-opt.incorrect {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  font-weight: 650;
+  animation: kids-shake 0.35s ease;
+}
+
+@keyframes kids-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.kids-opt-letter {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-sm);
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: var(--ink-2);
+}
+
+.kids-quiz-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.kids-feedback-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 650;
+  font-size: 0.95rem;
+}
+
+/* ── Quests & Vaults ── */
+.kids-vault-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .kids-vault-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kids-vault-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.kids-vault-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--r-md);
+  margin: 0 auto 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.kids-vault-title {
+  font-size: 1.05rem;
+  font-weight: 750;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.kids-vault-desc {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+  margin-bottom: 1rem;
+}
+
+/* ── Leaderboard Table ── */
+.kids-ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.kids-ranking-th {
+  padding: 0.9rem 1.25rem;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-subtle);
+}
+
+.kids-ranking-tr {
+  border-bottom: 1px solid var(--line-subtle);
+  transition: background 0.12s;
+}
+
+.kids-ranking-tr:hover {
+  background: var(--bg-card-subtle);
+}
+
+.kids-ranking-tr.is-current-user {
+  background: var(--orange-dim);
+}
+
+.kids-ranking-td {
+  padding: 0.95rem 1.25rem;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+
+.kids-podium-pos {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.kids-podium-pos.pos-1 {
+  background: #fef08a;
+  color: #854d0e;
+  border: 1px solid #facc15;
+}
+
+.kids-podium-pos.pos-2 {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+.kids-podium-pos.pos-3 {
+  background: #fed7aa;
+  color: #9a3412;
+  border: 1px solid #fb923c;
+}
+
+/* Modal */
+.kids-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 19, 17, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.kids-modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 2.25rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  animation: dropdown-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Animated Tux Cyber Mascot ── */
+.tux-mascot-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.14));
+}
+
+.tux-mascot-svg {
+  animation: tux-float 3.5s ease-in-out infinite;
+  display: block;
+}
+
+.tux-waving-arm {
+  transform-origin: 120px 88px;
+  animation: tux-wave 2.2s ease-in-out infinite;
+}
+
+.tux-floor-shadow {
+  animation: tux-shadow-scale 3.5s ease-in-out infinite;
+  transform-origin: 80px 172px;
+}
+
+@keyframes tux-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes tux-shadow-scale {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(0.85);
+    opacity: 0.15;
+  }
+}
+
+@keyframes tux-wave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-18deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  75% {
+    transform: rotate(-14deg);
+  }
+}
+
+/* ── Track Switcher (Pilares do Currículo) ── */
+.kids-track-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1.75rem;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.kids-track-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--r-pill);
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  font-family: var(--font);
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.16s ease;
+}
+
+.kids-track-pill:hover {
+  background: var(--bg-card-subtle);
+  border-color: var(--orange);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.kids-track-pill.active {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #ffffff;
+  box-shadow: var(--shadow-orange);
+}
+
+.kids-track-pill.active i {
+  color: #ffffff !important;
+}
+
+/* ── Academy Funnel Card (O Funil para CTF Real) ── */
+.kids-academy-funnel-card {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-subtle) 100%);
+  border: 2px solid var(--orange);
+  border-radius: var(--r-md);
+  padding: 1.75rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-orange);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  animation: kids-glow-in 0.4s ease;
+}
+
+@keyframes kids-glow-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .kids-academy-funnel-card {
+    flex-direction: column;
+    text-align: left;
+    align-items: flex-start;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   OFFICIAL DUNO KIDS PIXEL PENGUIN MASCOT & ANIMATIONS
+   ══════════════════════════════════════════════════════════════════════════════ */
+.tux-pixel-mascot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+  gap: 10px;
+}
+
+.tux-pixel-speech-bubble {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+  max-width: 220px;
+  text-align: center;
+  animation: tux-bubble-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tux-pixel-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px 6px 0;
+  border-style: solid;
+  border-color: var(--bg-card) transparent;
+  display: block;
+  width: 0;
+}
+
+.tux-pixel-speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 7px 7px 0;
+  border-style: solid;
+  border-color: var(--line) transparent;
+  display: block;
+  width: 0;
+}
+
+.tux-bubble-cursor {
+  display: inline-block;
+  color: var(--orange);
+  animation: tux-blink 1s infinite;
+  margin-left: 2px;
+  font-weight: 700;
+}
+
+@keyframes tux-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes tux-bubble-pop {
+  from { opacity: 0; transform: translateY(4px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.tux-pixel-character-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tux-pixel-img {
+  width: 175px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
+  animation: tux-pixel-float 3.5s ease-in-out infinite;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  user-select: none;
+}
+
+.tux-pixel-img:hover {
+  transform: translateY(-4px) scale(1.03);
+}
+
+.tux-pixel-shadow {
+  width: 90px;
+  height: 8px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  margin-top: -6px;
+  animation: tux-shadow-pulse 3.5s ease-in-out infinite;
+}
+
+@keyframes tux-pixel-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+
+@keyframes tux-shadow-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.35; }
+  50%      { transform: scale(0.82); opacity: 0.18; }
+}
+
+/* ── Floating Tux Companion Widget ── */
+.tux-floating-companion {
+  --companion-color: var(--orange);
+  --companion-glow: rgba(234, 88, 12, 0.35);
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 990;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.tux-companion-bubble {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  box-shadow: var(--shadow-md);
+  max-width: 260px;
+  position: relative;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--ink);
+  animation: dropdown-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tux-companion-close {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--ink-3);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.tux-companion-close:hover {
+  color: var(--ink);
+}
+
+.tux-companion-speaker {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--companion-color, var(--orange));
+  margin-bottom: 3px;
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+
+.tux-companion-avatar-btn {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #0d1117;
+  border: 2px solid var(--companion-color, var(--orange));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px var(--companion-glow, rgba(234, 88, 12, 0.28));
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  padding: 0;
+  overflow: visible;
+}
+
+.tux-companion-avatar-btn:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 10px 28px var(--companion-glow, rgba(234, 88, 12, 0.45));
+}
+
+.tux-companion-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.tux-companion-icon {
+  font-size: 1.85rem;
+  color: var(--companion-color, var(--orange));
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+}
+
+.tux-companion-avatar-btn:hover .tux-companion-icon {
+  transform: scale(1.15);
+}
+
+.tux-companion-sprite {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+.tux-companion-pulse {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--companion-color, var(--orange));
+  opacity: 0;
+  animation: tux-ring-pulse 2.4s infinite;
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+@keyframes tux-ring-pulse {
+  0%   { transform: scale(0.92); opacity: 0.85; }
+  60%  { transform: scale(1.3); opacity: 0; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   REINVENTED INTERACTIVE MISSION EXPERIENCE
+   ══════════════════════════════════════════════════════════════════════════════ */
+.kids-mission-container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+}
+
+.kids-mission-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0 1.5rem 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.kids-mission-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.kids-mission-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.kids-mission-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--orange);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.kids-mission-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* Stepper de Fases */
+.kids-phase-stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 4px 10px;
+}
+
+.kids-phase-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  color: var(--ink-3);
+  font-family: var(--font);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.kids-phase-step .kids-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.kids-phase-step.active {
+  background: var(--bg-subtle);
+  color: var(--ink);
+}
+
+.kids-phase-step.active .kids-step-num {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #ffffff;
+}
+
+.kids-phase-step.completed {
+  color: #10b981;
+}
+
+.kids-phase-step.completed .kids-step-num {
+  background: #10b981;
+  border-color: #10b981;
+  color: #ffffff;
+}
+
+.kids-step-divider {
+  color: var(--line);
+  font-size: 0.9rem;
+}
+
+/* ── FASE 1: TEORIA INTERATIVA ── */
+.kids-theory-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .kids-theory-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kids-theory-mascot-dock {
+  position: sticky;
+  top: 90px;
+}
+
+.tux-interactive-guide-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.tux-bubble-editorial {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  width: 100%;
+}
+
+.tux-bubble-editorial::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 7px 7px 0;
+  border-style: solid;
+  border-color: var(--bg-card) transparent;
+}
+
+.tux-bubble-editorial::before {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 8px 0;
+  border-style: solid;
+  border-color: var(--line) transparent;
+}
+
+.tux-bubble-author {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 750;
+  color: var(--orange);
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.tux-bubble-editorial-text {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 0;
+}
+
+.tux-guide-sprite-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tux-guide-icon-badge {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-subtle));
+  border: 2px solid var(--orange);
+  box-shadow: 0 10px 30px rgba(234, 88, 12, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  animation: tux-pixel-float 3.5s ease-in-out infinite;
+}
+
+.tux-guide-icon {
+  font-size: 3.2rem;
+  color: var(--orange);
+  filter: drop-shadow(0 2px 8px rgba(234, 88, 12, 0.4));
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.tux-guide-sprite {
+  width: 140px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  animation: tux-pixel-float 3.5s ease-in-out infinite;
+}
+
+.kids-theory-content-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 2.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.kids-slide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.kids-slide-counter {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  font-weight: 600;
+}
+
+.kids-slide-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+  line-height: 1.3;
+}
+
+.kids-analogy-callout {
+  display: flex;
+  gap: 14px;
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--orange);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.kids-analogy-icon {
+  color: var(--orange);
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.kids-analogy-body strong {
+  display: block;
+  font-size: 0.86rem;
+  font-family: var(--font-mono);
+  color: var(--orange);
+  margin-bottom: 4px;
+}
+
+.kids-analogy-body p {
+  font-size: 0.9rem;
+  color: var(--ink);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.kids-slide-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.kids-bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.kids-bullet-item i {
+  font-size: 1.1rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.kids-code-box {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+}
+
+.kids-code-header {
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: #8b949e;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.kids-code-content {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  color: #e6edf3;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.kids-slide-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line-subtle);
+  margin-top: 1rem;
+}
+
+/* ── FASE 2: LABORATÓRIO INTERATIVO ── */
+.kids-lab-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.kids-lab-header-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.tux-lab-icon-badge {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--bg-subtle);
+  border: 1.5px solid var(--orange);
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tux-lab-icon {
+  font-size: 1.85rem;
+  color: var(--orange);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.tux-lab-sprite {
+  width: 72px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+.kids-lab-instruction-kicker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--orange);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.kids-lab-instruction-text {
+  font-size: 0.95rem;
+  color: var(--ink);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Terminal CRT Simulado */
+.kids-terminal-window {
+  background: #090d13;
+  border: 1px solid #28303e;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+}
+
+.kids-terminal-bar {
+  background: #131923;
+  border-bottom: 1px solid #28303e;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kids-terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.kids-terminal-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot-red { background: #ef4444; }
+.dot-yellow { background: #f59e0b; }
+.dot-green { background: #10b981; }
+
+.kids-terminal-title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.kids-terminal-status {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #10b981;
+}
+
+.kids-terminal-body {
+  padding: 1.25rem;
+  min-height: 180px;
+  max-height: 320px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+.term-line { margin-bottom: 4px; white-space: pre-wrap; word-break: break-all; }
+.term-system { color: #38bdf8; }
+.term-hint { color: #64748b; font-style: italic; }
+.term-hint-cmd { color: #475569; }
+.term-success { color: #4ade80; font-weight: 600; }
+.term-error { color: #f87171; }
+
+.prompt-user { color: #f97316; font-weight: 700; }
+.prompt-dir { color: #38bdf8; }
+
+.kids-terminal-input-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: #0f1520;
+  border-top: 1px solid #28303e;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+
+.kids-term-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+
+.kids-quick-commands {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: #090d13;
+  border-top: 1px solid #1a2230;
+  overflow-x: auto;
+}
+
+.kids-quick-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.kids-quick-btn {
+  background: #182232;
+  border: 1px solid #2a384e;
+  border-radius: var(--r-sm);
+  padding: 4px 10px;
+  color: #f1f5f9;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.kids-quick-btn:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #ffffff;
+}
+
+/* Lab de Sequência */
+.kids-sequence-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 1.75rem;
+}
+
+.kids-sequence-target-slots {
+  min-height: 80px;
+  background: var(--bg-subtle);
+  border: 2px dashed var(--line);
+  border-radius: var(--r-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+
+.seq-empty-hint {
+  color: var(--ink-3);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 1rem 0;
+  font-style: italic;
+}
+
+.kids-sequence-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.kids-seq-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 8px 14px;
+  font-size: 0.86rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.kids-seq-btn:hover {
+  border-color: var(--orange);
+  background: var(--bg-subtle);
+}
+
+.kids-seq-btn.slotted {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Lab de Inspetor */
+.kids-inspector-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 1.75rem;
+}
+
+.kids-inspector-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.kids-inspector-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 1rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.16s ease;
+  text-align: left;
+}
+
+.kids-inspector-opt:hover {
+  border-color: var(--orange);
+  background: var(--bg-subtle);
+}
+
+.kids-inspector-opt.selected-wrong {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+}
+
+.kids-inspector-opt.selected-correct {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+  color: #10b981;
+}
+
+/* Lab Success Footer */
+.kids-lab-footer {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-subtle) 100%);
+  border: 2px solid #10b981;
+  border-radius: var(--r-md);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  animation: kids-glow-in 0.35s ease;
+  flex-wrap: wrap;
+}
+
+.kids-lab-success-msg {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── FASE 3: DESAFIO CHECKPOINT ── */
+.kids-checkpoint-mascot-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.tux-mentor-icon-badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: var(--bg-subtle);
+  border: 1.5px solid var(--orange);
+  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tux-mentor-icon {
+  font-size: 2rem;
+  color: var(--orange);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.tux-mentor-sprite {
+  width: 72px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.tux-mentor-info {
+  flex: 1;
+}
+
+.tux-mentor-info p {
+  font-size: 0.92rem;
+  color: var(--ink);
+  line-height: 1.5;
+  margin: 4px 0 10px 0;
+}
+
+.kids-hint-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--orange);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.kids-hint-pill-btn:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #ffffff;
+}
+
+.tux-celebrate-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.tux-celebrate-icon-badge {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234, 88, 12, 0.18) 0%, rgba(234, 88, 12, 0.02) 70%);
+  border: 2px solid var(--orange);
+  box-shadow: 0 8px 32px rgba(234, 88, 12, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+.tux-celebrate-icon {
+  font-size: 3.5rem;
+  color: #f59e0b;
+  filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.6));
+}
+
+.tux-celebrate-sprite {
+  width: 120px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  animation: tux-pixel-float 2.5s ease-in-out infinite;
+}

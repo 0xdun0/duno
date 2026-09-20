@@ -1,0 +1,116 @@
+{% extends "kids/base_kids.html" %}
+
+{% block kids_title %}Placar de Líderes & Ligas — Kids{% endblock %}
+
+{% block kids_breadcrumb %}
+<span class="breadcrumb-sep">›</span>
+<span>Ranking</span>
+{% endblock %}
+
+{% block kids_content %}
+<!-- Editorial Header -->
+<section class="kids-hero-card">
+  <div class="kids-hero-text">
+    <div class="kids-hero-kicker">
+      <i class="nf nf-md-trophy" aria-hidden="true"></i>
+      <span>COMPETIÇÃO ACADÊMICA & LIGAS</span>
+    </div>
+    <h1 class="kids-hero-title">Tabela de Líderes</h1>
+    <p class="kids-hero-desc">
+      Acumule XP respondendo quizzes, completando lições na Trilha e mantendo sua sequência diária ativa.
+    </p>
+  </div>
+
+  <div class="platform-pill" style="padding: 10px 18px; font-size: 0.95rem;">
+    <i class="nf nf-md-shield" style="color: #b45309; font-size: 1.2rem;" aria-hidden="true"></i>
+    <span style="font-weight: 700; color: var(--ink);">Liga: Bronze</span>
+  </div>
+</section>
+
+<!-- League Selector Pills (DUNO style) -->
+<div class="hero-filters" style="margin-bottom: 1.75rem; justify-content: flex-start;">
+  <button type="button" class="filter-pill active">
+    <i class="nf nf-md-shield" style="color: #b45309;"></i>
+    <span>Liga Bronze</span>
+    <span class="pill-tag">Atual</span>
+  </button>
+  <button type="button" class="filter-pill" style="opacity: 0.65;">
+    <i class="nf nf-md-shield" style="color: #94a3b8;"></i>
+    <span>Liga Prata</span>
+  </button>
+  <button type="button" class="filter-pill" style="opacity: 0.65;">
+    <i class="nf nf-md-shield" style="color: #f59e0b;"></i>
+    <span>Liga Ouro</span>
+  </button>
+  <button type="button" class="filter-pill" style="opacity: 0.65;">
+    <i class="nf nf-md-diamond" style="color: #10b981;"></i>
+    <span>Liga Esmeralda</span>
+  </button>
+  <button type="button" class="filter-pill" style="opacity: 0.65;">
+    <i class="nf nf-md-seal" style="color: #38bdf8;"></i>
+    <span>Liga Diamante</span>
+  </button>
+</div>
+
+<!-- Leaderboard Table -->
+<div style="overflow-x: auto;">
+  <table class="kids-ranking-table">
+    <thead>
+      <tr>
+        <th class="kids-ranking-th" style="width: 70px;">Pos</th>
+        <th class="kids-ranking-th">Aluno</th>
+        <th class="kids-ranking-th" style="width: 120px;">Nível</th>
+        <th class="kids-ranking-th" style="width: 140px;">Ofensiva</th>
+        <th class="kids-ranking-th" style="width: 140px; text-align: right;">Total XP</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in ranking %}
+      {% set is_me = (r.id == user.id) %}
+      <tr class="kids-ranking-tr {% if is_me %}is-current-user{% endif %}">
+        <td class="kids-ranking-td">
+          {% if loop.index == 1 %}
+            <span class="kids-podium-pos pos-1">1</span>
+          {% elif loop.index == 2 %}
+            <span class="kids-podium-pos pos-2">2</span>
+          {% elif loop.index == 3 %}
+            <span class="kids-podium-pos pos-3">3</span>
+          {% else %}
+            <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-3); padding-left: 6px;">
+              {{ loop.index }}
+            </span>
+          {% endif %}
+        </td>
+        <td class="kids-ranking-td">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--bg-subtle); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--ink);">
+              {{ r.username[:2] | upper }}
+            </div>
+            <span style="font-weight: 700; color: var(--ink);">
+              {{ r.username }}
+              {% if is_me %}<span class="brand-badge" style="margin-left: 6px;">VOCÊ</span>{% endif %}
+            </span>
+          </div>
+        </td>
+        <td class="kids-ranking-td">
+          <span class="level-badge level-low">
+            <span class="level-dot"></span>
+            Nvl {{ r.level }}
+          </span>
+        </td>
+        <td class="kids-ranking-td">
+          <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-2);">
+            <i class="nf nf-md-fire" style="color: #f59e0b;"></i> {{ r.streak_days }}d
+          </span>
+        </td>
+        <td class="kids-ranking-td" style="text-align: right;">
+          <span style="font-family: var(--font-mono); font-weight: 750; color: var(--orange); font-size: 0.95rem;">
+            {{ r.xp }} XP
+          </span>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

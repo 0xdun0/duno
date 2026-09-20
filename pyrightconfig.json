@@ -1,0 +1,39 @@
+{
+  "include": [
+    ".",
+    "tests"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    ".venv"
+  ],
+  "pythonPath": "/home/dione/Projects/duno/.venv/bin/python",
+  "pythonVersion": "3.14",
+  "pythonPlatform": "Linux",
+  "venvPath": "/home/dione/Projects/duno",
+  "venv": ".venv",
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "pythonPath": "/home/dione/Projects/duno/.venv/bin/python",
+      "extraPaths": [
+        ".",
+        "tests",
+        "services/challenge-runner",
+        "services/challenge_runner",
+        ".venv/lib/python3.14/site-packages",
+        "/home/dione/Projects/duno/.venv/lib/python3.14/site-packages"
+      ]
+    }
+  ],
+  "extraPaths": [
+    ".",
+    "tests",
+    "/home/dione/Projects/duno",
+    "/home/dione/Projects/duno/tests",
+    "/home/dione/Projects/duno/services/challenge-runner",
+    "/home/dione/Projects/duno/services/challenge_runner",
+    "/home/dione/Projects/duno/.venv/lib/python3.14/site-packages"
+  ]
+}

@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}Catálogo de Máquinas Publicadas — DUNO Admin{% endblock %}
+
+{% block content %}
+<div class="settings-page-wrapper">
+  <div class="settings-container">
+
+    <!-- Top Breadcrumb / Kicker -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+      <div class="settings-kicker-brand">
+        <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="color:inherit; text-decoration:none;">DUNO // ADMIN PIPELINE</a> // MÁQUINAS PUBLICADAS
+      </div>
+      <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="font-size:0.8rem; color:var(--ink-2); text-decoration:none;">
+        ← Voltar ao Painel
+      </a>
+    </div>
+
+    <!-- Hero Header -->
+    <header class="settings-hero">
+      <h1 class="settings-title">Máquinas Publicadas</h1>
+      <p class="settings-subtitle">Controle de catálogo das máquinas ativas na plataforma DUNO, histórico de versões em produção e despublicação.</p>
+    </header>
+
+    <div class="settings-divider"></div>
+
+    <!-- TABELA DE MÁQUINAS PUBLICADAS -->
+    <div class="table-responsive" style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; box-shadow:var(--shadow-sm);">
+      <table class="duno-table" style="width:100%; border-collapse:collapse; text-align:left;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--line); background:var(--bg-card-subtle); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3);">
+            <th style="padding:0.9rem 1.25rem;">Máquina / Slug</th>
+            <th style="padding:0.9rem 1rem;">Versão Publicada</th>
+            <th style="padding:0.9rem 1rem;">Autor</th>
+            <th style="padding:0.9rem 1rem;">Categoria / SO</th>
+            <th style="padding:0.9rem 1rem;">Dificuldade</th>
+            <th style="padding:0.9rem 1rem;">Status</th>
+            <th style="padding:0.9rem 1rem;">Publicado em</th>
+            <th style="padding:0.9rem 1.25rem; text-align:right;">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in machines %}
+          <tr style="border-bottom:1px solid var(--line-subtle); font-size:0.875rem;">
+            <td style="padding:1rem 1.25rem;">
+              <div style="font-weight:700; color:var(--ink);">{{ m.name }}</div>
+              <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-3);">{{ m.slug }} • #{{ m.challenge_id }}</div>
+            </td>
+            <td style="padding:1rem 1rem;">
+              <span class="badge font-mono" style="background:var(--bg-subtle); color:var(--ink-2); padding:0.2rem 0.5rem; border-radius:4px; font-size:0.75rem;">
+                v{{ m.published_version }}
+              </span>
+            </td>
+            <td style="padding:1rem 1rem; color:var(--ink-2);">
+              {{ m.author_name }}
+            </td>
+            <td style="padding:1rem 1rem;">
+              <div style="color:var(--ink-2);">{{ m.category or 'Geral' }}</div>
+              <div style="font-size:0.75rem; color:var(--ink-3);">{{ m.os_type or 'Linux' }}</div>
+            </td>
+            <td style="padding:1rem 1rem;">
+              <span class="badge diff-badge-{{ m.reviewed_difficulty|lower if m.reviewed_difficulty else (m.author_difficulty|lower if m.author_difficulty else 'easy') }}" style="padding:0.2rem 0.5rem; border-radius:4px; font-size:0.75rem;">
+                {{ m.reviewed_difficulty or m.author_difficulty or 'Easy' }}
+              </span>
+            </td>
+            <td style="padding:1rem 1rem;">
+              {% if m.is_active %}
+              <span class="badge" style="background:rgba(34, 197, 94, 0.15); color:#16a34a; font-weight:700; font-size:0.75rem; padding:0.25rem 0.65rem; border-radius:var(--r-pill); display:inline-flex; align-items:center; gap:0.35rem;">
+                <span class="status-dot" style="background:#16a34a;"></span>
+                Ativa no Catálogo
+              </span>
+              {% else %}
+              <span class="badge" style="background:rgba(239, 68, 68, 0.15); color:#dc2626; font-weight:700; font-size:0.75rem; padding:0.25rem 0.65rem; border-radius:var(--r-pill); display:inline-flex; align-items:center; gap:0.35rem;">
+                <span class="status-dot" style="background:#dc2626;"></span>
+                Despublicada
+              </span>
+              {% endif %}
+            </td>
+            <td style="padding:1rem 1rem; color:var(--ink-3); font-size:0.75rem; font-family:var(--font-mono);">
+              {{ (m.published_at|string)[:16] if m.published_at else '-' }}
+            </td>
+            <td style="padding:1rem 1.25rem; text-align:right;">
+              <div style="display:inline-flex; gap:0.5rem; align-items:center;">
+                <a href="{{ url_for('submissions_admin.machine_review_workspace', submission_id=m.sub_id) }}" class="btn-subtle" style="text-decoration:none; padding:0.35rem 0.7rem; font-size:0.75rem; border-radius:var(--r-xs); border:1px solid var(--line); color:var(--ink-2); background:var(--bg-subtle);">
+                  Bancada
+                </a>
+                {% if m.is_active %}
+                <button type="button" onclick="unpublishMachine({{ m.sub_id }})" class="btn-subtle" style="padding:0.35rem 0.7rem; font-size:0.75rem; border-radius:var(--r-xs); border:1px solid #fca5a5; background:#fee2e2; color:#b91c1c; cursor:pointer;">
+                  Despublicar
+                </button>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="8" style="padding:3rem; text-align:center; color:var(--ink-3);">
+              Nenhuma máquina aprovada e publicada no catálogo ativo até o momento.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script>
+async function unpublishMachine(subId) {
+  const reason = prompt('Informe a razão da despublicação (manutenção, vulnerabilidade inesperada, etc.):');
+  if (reason === null) return;
+
+  try {
+    const res = await fetch(`/api/admin/machines/${subId}/unpublish`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reason: reason || 'Despublicado pelo administrador' })
+    });
+    const data = await res.json();
+    if (res.ok && data.status === 'success') {
+      alert('Máquina despublicada com sucesso.');
+      window.location.reload();
+    } else {
+      alert('Erro ao despublicar: ' + (data.error || 'Falha no servidor.'));
+    }
+  } catch (err) {
+    alert('Erro de conexão com o servidor.');
+  }
+}
+</script>
+{% endblock %}

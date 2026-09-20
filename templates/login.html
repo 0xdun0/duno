@@ -110,13 +110,6 @@
           </div>
           <span class="login-aside-name">duno</span>
         </div>
-
-        <button type="button" class="btn-login-collapse" id="btn-login-collapse" title="Recolher painel lateral" aria-label="Recolher painel informativo">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
       </div>
 
       <div class="login-aside-body">
@@ -142,16 +135,6 @@
 
     <!-- Right Panel: Minimalist Clean Form -->
     <main class="login-form-panel">
-      <div class="login-panel-header">
-        <button type="button" class="btn-login-expand" id="btn-login-expand" style="display:none;" title="Expandir painel informativo">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
-          <span>Sobre o DUNO</span>
-        </button>
-      </div>
-
       <h2 class="login-form-title">Acessar Laboratório</h2>
       <p class="login-form-subtitle">Entre com suas credenciais para gerenciar os módulos.</p>
 
@@ -184,40 +167,9 @@
   </div>
 
   <script>
-    (function() {
-      const split = document.getElementById('login-card-split');
-      const btnCollapse = document.getElementById('btn-login-collapse');
-      const btnExpand = document.getElementById('btn-login-expand');
-
-      function setCollapsed(isCollapsed) {
-        if (isCollapsed) {
-          split.classList.add('aside-collapsed');
-          if (btnExpand) btnExpand.style.display = 'inline-flex';
-          localStorage.setItem('duno_login_collapsed', '1');
-        } else {
-          split.classList.remove('aside-collapsed');
-          if (btnExpand) btnExpand.style.display = 'none';
-          localStorage.setItem('duno_login_collapsed', '0');
-        }
-      }
-
-      if (btnCollapse) {
-        btnCollapse.addEventListener('click', function() {
-          setCollapsed(true);
-        });
-      }
-
-      if (btnExpand) {
-        btnExpand.addEventListener('click', function() {
-          setCollapsed(false);
-        });
-      }
-
-      // Restaura preferência
-      if (localStorage.getItem('duno_login_collapsed') === '1') {
-        setCollapsed(true);
-      }
-    })();
+    try {
+      localStorage.removeItem('duno_login_collapsed');
+    } catch(e) {}
   </script>
 </body>
 </html>

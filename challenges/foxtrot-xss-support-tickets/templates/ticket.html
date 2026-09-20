@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Ticket #{{ ticket.id }} - EverSec{% endblock %}
+
+{% block extra_css %}
+<style>
+    .ticket-details {
+        background: #f7fafc;
+        border-radius: 10px;
+        padding: 30px;
+        margin-bottom: 20px;
+    }
+
+    .ticket-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    .ticket-number {
+        color: #667eea;
+        font-size: 0.9em;
+        font-weight: 600;
+    }
+
+    .ticket-title {
+        font-size: 1.5em;
+        color: #333;
+        margin: 10px 0;
+    }
+
+    .ticket-meta {
+        color: #666;
+        font-size: 0.9em;
+    }
+
+    .status-badge {
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: 600;
+    }
+
+    .status-open {
+        background: #fef5e7;
+        color: #f39c12;
+    }
+
+    .status-in-progress {
+        background: #ebf8ff;
+        color: #3182ce;
+    }
+
+    .ticket-description {
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .report-section {
+        background: #fef5e7;
+        border-left: 4px solid #f39c12;
+        padding: 20px;
+        margin-top: 30px;
+        border-radius: 5px;
+    }
+
+    .report-section h3 {
+        color: #f39c12;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ticket-details">
+    <div class="ticket-header">
+        <div>
+            <div class="ticket-number">Ticket #{{ ticket.id }}</div>
+            <h1 class="ticket-title">{{ ticket.title }}</h1>
+            <div class="ticket-meta">
+                Reported by <strong>{{ ticket.reporter }}</strong> on {{ ticket.timestamp }}
+            </div>
+        </div>
+        <span class="status-badge status-{{ ticket.status.lower().replace(' ', '-') }}">
+            {{ ticket.status }}
+        </span>
+    </div>
+
+    <h2>Description</h2>
+    <div class="ticket-description">
+        {{ ticket.description|safe }}
+    </div>
+
+    <div class="actions">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">← Back to List</a>
+        <form action="{{ url_for('delete_ticket', ticket_id=ticket.id) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn" style="background:#e53e3e;" onclick="return confirm('Delete this ticket?')">Delete</button>
+        </form>
+    </div>
+</div>
+
+<div class="report-section">
+    <h3>⚠️ Report to Admin</h3>
+    <p>If this ticket requires urgent admin attention, you can report it. An admin will review the ticket shortly.</p>
+
+    <form action="{{ url_for('report_to_admin', ticket_id=ticket.id) }}" method="POST" style="margin-top: 15px;">
+        <button type="submit" class="btn">Report to Admin</button>
+    </form>
+</div>
+
+{% endblock %}

@@ -28,6 +28,7 @@ Todos os módulos integram a mesma aplicação Flask.
 | 18 | API Versioning | `/api_versioning` | Acesso a dados através de versão antiga. |
 | 19 | Mass Assignment | `/mass_assignment` | Manipulação de campos através de JSON. |
 | 20 | API Security | `/api/*` | Laboratório de segurança de API. |
+| 21 | Desafios CTF | `/challenges` | Desafios práticos ofensivos isolados em containers Docker. |
 
 ## Estrutura
 

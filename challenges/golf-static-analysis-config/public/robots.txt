@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /.git/
+Disallow: /admin/
+Disallow: /config/
+Disallow: /backup/
+Disallow: *.map
+
+# Sitemap (coming soon)
+# Sitemap: /sitemap.xml
+
+# Development files - should not be indexed
+Disallow: /src/
+Disallow: /.env
+Disallow: /node_modules/

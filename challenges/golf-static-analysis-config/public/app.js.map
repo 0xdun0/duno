@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "sources": ["../src/app.jsx"],
+  "names": ["API_ENDPOINT", "API_KEY", "SECRET_TOKEN", "showLogin", "showDocs"],
+  "mappings": "AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA",
+  "file": "app.js",
+  "sourcesContent": [
+    "// EverSec Portal - Original Source\n// Build: development\n// internal-build-token: s0urc3_m4ps_t3ll_s3cr3ts\n\nconst API_ENDPOINT = 'https://api.eversec.com/v1';\nconst API_KEY = '4p1_k3y_1n_s0urc3_c0d3';\nconst SECRET_TOKEN = 'dev-secret-12345';\n\n// Application code...\nfunction showLogin() {\n  console.log('Login clicked');\n}\n\nfunction showDocs() {\n  console.log('Docs clicked');\n}\n"
+  ]
+}

@@ -1,0 +1,82 @@
+      <!-- Progress Card (Interativo com Scroll e Cores Verdes) -->
+      <div class="wt-progress-card" id="wt-progress-card">
+        <h3 class="wt-aside-title">Progresso</h3>
+        <div class="wt-progress-track">
+          <!-- Step 1: Recon -->
+          <div class="wt-progress-step" id="pstep-1" data-target="step-1" title="Ir para Reconhecimento">
+            <span class="wt-pstep-num">1</span>
+            <span class="wt-pstep-label">Recon</span>
+          </div>
+          <div class="wt-progress-line" id="pline-1"></div>
+
+          <!-- Step 2: JWT -->
+          <div class="wt-progress-step" id="pstep-2" data-target="step-2" title="Ir para Forja de JWT (alg: none)">
+            <span class="wt-pstep-num">2</span>
+            <span class="wt-pstep-label">JWT</span>
+          </div>
+          <div class="wt-progress-line" id="pline-2"></div>
+
+          <!-- Step 3: Admin -->
+          <div class="wt-progress-step" id="pstep-3" data-target="step-3" title="Ir para Painel Admin (Flag 1)">
+            <span class="wt-pstep-num">3</span>
+            <span class="wt-pstep-label">Admin</span>
+          </div>
+          <div class="wt-progress-line" id="pline-3"></div>
+
+          <!-- Step 4: SSTI -->
+          <div class="wt-progress-step" id="pstep-4" data-target="step-4" title="Ir para SSTI & RCE (Flag 2)">
+            <span class="wt-pstep-num">4</span>
+            <span class="wt-pstep-label">SSTI</span>
+          </div>
+          <div class="wt-progress-line line-to-root" id="pline-4"></div>
+
+          <!-- Step 5: Root Flag -->
+          <div class="wt-progress-step pstep-root" id="pstep-5" data-target="step-5" title="Ir para Escalada Root (Flag 3)">
+            <span class="wt-pstep-num wt-pstep-flag"><i class="nf nf-fa-flag" aria-hidden="true"></i></span>
+            <span class="wt-pstep-label">Root</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Tips -->
+      <div class="wt-tips-card">
+        <h3 class="wt-aside-title">
+          <i class="nf nf-md-lightbulb_outline" aria-hidden="true"></i>
+          Dicas Práticas
+        </h3>
+        <ul class="wt-tips-list">
+          <li>Tokens JWT utilizam 2 pontos (<code>.</code>); no algoritmo <code>none</code>, o ponto final é mandatório.</li>
+          <li>Teste SSTI em Jinja2 com operações aritméticas como <code>{{ 7 * 7 }}</code> ou <code>{{ 'a' * 5 }}</code>.</li>
+          <li>Ao disparar comandos não-interativos via SSTI, use sempre a flag <code>-c</code> (ex: <code>/bin/sh -c</code>).</li>
+          <li>O comando <code>sudo -l</code> é mandatório para mapear GTFOBins utilizáveis sem senha.</li>
+        </ul>
+      </div>
+
+      <!-- Additional Resources & Academy Link -->
+      <div class="wt-resources-card">
+        <h3 class="wt-aside-title">
+          <i class="nf nf-oct-link" aria-hidden="true"></i>
+          Recursos de Apoio
+        </h3>
+        <ul class="wt-resources-list">
+          <li onclick="window.location.href='/academy/auth_bypass'" style="cursor: pointer; font-weight: 700; color: var(--primary);" title="Abrir Módulo de Autenticação">
+            <span>DUNO Academy — Auth Bypass</span>
+            <i class="nf nf-md-school" aria-hidden="true"></i>
+          </li>
+          <li onclick="window.open('https://gtfobins.github.io', '_blank')" style="cursor: pointer;" title="Abrir GTFOBins">
+            <span>GTFOBins — PrivEsc Reference</span>
+            <i class="nf nf-md-open_in_new" aria-hidden="true"></i>
+          </li>
+          <li onclick="window.open('https://portswigger.net/web-security/jwt', '_blank')" style="cursor: pointer;" title="Guia PortSwigger JWT">
+            <span>PortSwigger JWT Attacks Guide</span>
+            <i class="nf nf-md-open_in_new" aria-hidden="true"></i>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Quote -->
+      <div class="wt-quote-card">
+        <div class="wt-quote-mark">"</div>
+        <p class="wt-quote-text">Trust, but verify. And never trust alg: none.</p>
+        <span class="wt-quote-author">— AppSec Guidelines</span>
+      </div>

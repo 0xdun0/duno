@@ -1,0 +1,492 @@
+{% extends "base.html" %}
+{% block title %}{{ challenge.name }} — Desafio CTF{% endblock %}
+
+{% block content %}
+<div class="module-page cd-page">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Navegação">
+    <a href="{{ url_for('index') }}">DUNO</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('challenges.index') }}">Desafios CTF</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>{{ challenge.name }}</span>
+  </nav>
+
+  <!-- Main 2-Panel Layout -->
+  <div class="cd-layout">
+
+    <!-- ═══ LEFT PANEL ═══ -->
+    <div class="cd-main">
+
+      <!-- Header -->
+      <div class="cd-header">
+        <div class="cd-header-icon">
+          <i class="nf nf-fa-server" aria-hidden="true"></i>
+        </div>
+        <div class="cd-header-text">
+          <span class="cd-category-label">{{ challenge.category | upper }}</span>
+          <h1 class="cd-title">{{ challenge.name }}</h1>
+          <p class="cd-subtitle">{{ challenge.short_description }}</p>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div class="cd-tags">
+        <span class="cd-tag">{{ challenge.category | lower }}</span>
+        <span class="cd-tag">{{ challenge.difficulty }}</span>
+        {% if 'sql' in challenge.category|lower or 'sqli' in challenge.id %}
+          <span class="cd-tag">sql-injection</span>
+          <span class="cd-tag">auth-bypass</span>
+        {% elif 'xss' in challenge.id or 'scripting' in challenge.category|lower %}
+          <span class="cd-tag">xss</span>
+          <span class="cd-tag">cookie-theft</span>
+        {% elif 'jwt' in challenge.id or 'autenticação' in challenge.category|lower %}
+          <span class="cd-tag">jwt</span>
+          <span class="cd-tag">token-forge</span>
+        {% elif 'ssrf' in challenge.category|lower %}
+          <span class="cd-tag">ssrf</span>
+          <span class="cd-tag">cloud-metadata</span>
+        {% elif 'idor' in challenge.id or 'controle' in challenge.category|lower %}
+          <span class="cd-tag">idor</span>
+          <span class="cd-tag">access-control</span>
+        {% elif 'cve' in challenge.category|lower %}
+          <span class="cd-tag">cve</span>
+          <span class="cd-tag">exploit</span>
+        {% elif 'forense' in challenge.category|lower %}
+          <span class="cd-tag">dfir</span>
+          <span class="cd-tag">memory-dump</span>
+        {% elif 'cripto' in challenge.category|lower %}
+          <span class="cd-tag">crypto</span>
+          <span class="cd-tag">decode</span>
+        {% elif 'template' in challenge.category|lower %}
+          <span class="cd-tag">ssti</span>
+          <span class="cd-tag">rce</span>
+        {% elif 'graphql' in challenge.category|lower %}
+          <span class="cd-tag">graphql</span>
+          <span class="cd-tag">introspection</span>
+        {% else %}
+          <span class="cd-tag">pentest</span>
+          <span class="cd-tag">exploit</span>
+        {% endif %}
+      </div>
+
+      <!-- Description Section -->
+      <div class="cd-description-section">
+        <div class="cd-section-header">
+          <i class="nf nf-oct-file" aria-hidden="true"></i>
+          <span>DESCRIPTION</span>
+        </div>
+        <p class="cd-description-text">
+          {{ challenge.objective or challenge.long_description or challenge.short_description }}
+        </p>
+      </div>
+
+      <!-- Start Machine -->
+      <div class="cd-start-section">
+        <button type="button"
+                class="cd-start-btn js-detail-start-btn"
+                id="btn-detail-start"
+                data-challenge-id="{{ challenge.id }}"
+                data-instance-id="{{ challenge.instance_id or '' }}"
+                data-status="{{ challenge.instance_status or 'available' }}">
+          {% if challenge.instance_status == 'running' %}
+            <i class="nf nf-fa-stop" aria-hidden="true"></i>
+            Stop Machine
+          {% elif challenge.instance_status == 'starting' %}
+            <i class="nf nf-md-loading" aria-hidden="true"></i>
+            Starting...
+          {% else %}
+            <i class="nf nf-fa-play" aria-hidden="true"></i>
+            Start Machine
+          {% endif %}
+        </button>
+        <div class="cd-time-to-start">
+          <i class="nf nf-md-clock_outline" aria-hidden="true"></i>
+          <span>Time to Start</span>
+          <strong>{{ challenge.estimated_minutes }} min</strong>
+        </div>
+      </div>
+
+      <!-- Active Instance Box -->
+      <div class="challenge-instance-box" id="detail-instance-box" {% if challenge.instance_status != 'running' %}style="display:none;"{% endif %}>
+        <div class="instance-endpoint-row">
+          <span class="instance-dot"></span>
+          <span class="instance-label">Alvo Ativo:</span>
+          <a href="{{ challenge.endpoint or '#' }}" target="_blank" rel="noopener" class="instance-link" id="detail-endpoint-link">
+            {{ challenge.endpoint or 'Preparando endpoint...' }}
+          </a>
+        </div>
+        <div class="instance-timer" id="detail-instance-timer">
+          TTL: ~60m
+        </div>
+      </div>
+
+      <!-- Flag Submission -->
+      <div class="cd-flag-section">
+        <div class="cd-section-header">
+          <i class="nf nf-fa-flag" aria-hidden="true"></i>
+          <span>FLAG SUBMISSION</span>
+        </div>
+
+        <div class="challenge-solved-banner" id="detail-solved-banner" {% if not challenge.is_solved %}style="display:none;"{% endif %}>
+          <span class="solved-icon">✓</span>
+          <span class="solved-text">Desafio Concluído!</span>
+        </div>
+
+        <form class="cd-flag-form" id="detail-flag-form" onsubmit="return false;">
+          <div class="flag-input-group">
+            <input type="text"
+                   class="form-control flag-input"
+                   id="detail-flag-input"
+                   placeholder="FLAG{...}"
+                   autocomplete="off"
+                   spellcheck="false">
+            <button type="button"
+                    class="btn btn-primary"
+                    id="btn-detail-submit-flag">
+              VALIDAR
+            </button>
+          </div>
+          <div class="flag-feedback" id="detail-flag-feedback" style="display:none;" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <!-- Keywords -->
+      <div class="cd-keywords">
+        <i class="nf nf-md-target" aria-hidden="true"></i>
+        {% if challenge.hints %}
+          {% for hint in challenge.hints[:4] %}
+            <span>{{ hint[:40] }}{% if hint|length > 40 %}…{% endif %}</span>
+            {% if not loop.last %}<span class="cd-kw-sep">/</span>{% endif %}
+          {% endfor %}
+        {% else %}
+          <span>EXPLORE</span><span class="cd-kw-sep">/</span>
+          <span>RECON</span><span class="cd-kw-sep">/</span>
+          <span>EXPLOIT</span><span class="cd-kw-sep">/</span>
+          <span>FLAG</span>
+        {% endif %}
+      </div>
+
+    </div>
+
+    <!-- ═══ RIGHT SIDEBAR ═══ -->
+    <div class="cd-sidebar">
+
+      <div class="cd-stat-block">
+        <span class="cd-stat-label">POINTS</span>
+        <div class="cd-stat-value cd-stat-points">
+          <i class="nf nf-fa-star" aria-hidden="true"></i>
+          <span>{{ challenge.points }}</span>
+        </div>
+      </div>
+
+      <div class="cd-stat-block">
+        <span class="cd-stat-label">XP</span>
+        <div class="cd-stat-value cd-stat-xp">
+          <i class="nf nf-md-diamond_stone" aria-hidden="true"></i>
+          <span>{{ challenge.points }}</span>
+        </div>
+      </div>
+
+      <div class="cd-stat-block">
+        <span class="cd-stat-label">MACHINE</span>
+        <div class="cd-stat-value cd-stat-machine">
+          {% if challenge.os == 'linux' %}
+            <i class="nf nf-linux-tux" aria-hidden="true"></i>
+          {% else %}
+            <i class="nf nf-md-microsoft_windows_classic" aria-hidden="true"></i>
+          {% endif %}
+          <div class="cd-machine-info">
+            <span class="cd-machine-os">{{ 'Linux' if challenge.os == 'linux' else 'Windows' }}</span>
+            <span class="cd-machine-ip" id="detail-machine-ip">
+              {% if challenge.instance_status == 'running' and challenge.endpoint %}
+                IP: {{ challenge.endpoint }}
+              {% else %}
+                IP: Não iniciado
+              {% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cd-stat-block">
+        <span class="cd-stat-label">DIFFICULTY</span>
+        <div class="cd-stat-value cd-stat-difficulty">
+          <i class="nf nf-md-signal_cellular_3" aria-hidden="true"></i>
+          <div class="cd-diff-info">
+            <span class="cd-diff-text">{{ challenge.difficulty | capitalize }}</span>
+            <div class="cd-diff-dots">
+              {% if challenge.difficulty == 'easy' %}
+                <span class="cd-dot active"></span>
+                <span class="cd-dot"></span>
+                <span class="cd-dot"></span>
+                <span class="cd-dot"></span>
+              {% elif challenge.difficulty == 'medium' %}
+                <span class="cd-dot active"></span>
+                <span class="cd-dot active"></span>
+                <span class="cd-dot"></span>
+                <span class="cd-dot"></span>
+              {% elif challenge.difficulty == 'hard' %}
+                <span class="cd-dot active"></span>
+                <span class="cd-dot active"></span>
+                <span class="cd-dot active"></span>
+                <span class="cd-dot"></span>
+              {% else %}
+                <span class="cd-dot active"></span>
+                <span class="cd-dot active"></span>
+                <span class="cd-dot active"></span>
+                <span class="cd-dot active"></span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cd-stat-block">
+        <span class="cd-stat-label">SOLVES</span>
+        <div class="cd-stat-value">
+          <i class="nf nf-fa-users" aria-hidden="true"></i>
+          <span id="detail-solves-count">{{ challenge.solves_count }}</span>
+        </div>
+      </div>
+
+      {% if challenge.has_walkthrough %}
+      <div class="cd-stat-block cd-walkthrough-block">
+        <span class="cd-stat-label">WALKTHROUGH</span>
+        <div class="cd-stat-value">
+          <i class="nf nf-md-book_open_variant" aria-hidden="true"></i>
+          <a href="/desafio/{{ challenge_index }}/walkthrough" class="cd-walkthrough-link">
+            View Walkthrough <span class="cd-wt-arrow">→</span>
+          </a>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="challenge-bottom-nav" aria-label="Navegação entre desafios">
+    <a href="{{ url_for('challenges.index') }}" class="btn btn-outline btn-sm">
+      ← Voltar aos Desafios
+    </a>
+    <div class="challenge-prev-next">
+      {% if prev_index %}
+        <a href="/desafio/{{ prev_index }}" class="btn btn-outline btn-sm">
+          ← Desafio #{{ "%02d" | format(prev_index) }}
+        </a>
+      {% endif %}
+      {% if next_index %}
+        <a href="/desafio/{{ next_index }}" class="btn btn-primary btn-sm">
+          Próximo #{{ "%02d" | format(next_index) }} →
+        </a>
+      {% endif %}
+    </div>
+  </nav>
+
+</div>
+
+<script>
+(function() {
+  const challengeId = "{{ challenge.id }}";
+  const csrfToken = "{{ csrf_token }}";
+  const startBtn = document.getElementById('btn-detail-start');
+  const instanceBox = document.getElementById('detail-instance-box');
+  const endpointLink = document.getElementById('detail-endpoint-link');
+  const machineIp = document.getElementById('detail-machine-ip');
+  const flagInput = document.getElementById('detail-flag-input');
+  const submitFlagBtn = document.getElementById('btn-detail-submit-flag');
+  const flagFeedback = document.getElementById('detail-flag-feedback');
+  const solvedBanner = document.getElementById('detail-solved-banner');
+  const solvesCount = document.getElementById('detail-solves-count');
+
+  function updateInstanceUI(data) {
+    startBtn.setAttribute('data-status', data.status);
+    if (data.instance_id) {
+      startBtn.setAttribute('data-instance-id', data.instance_id);
+    }
+
+    if (data.status === 'running') {
+      startBtn.disabled = false;
+      startBtn.innerHTML = '<i class="nf nf-fa-stop" aria-hidden="true"></i> Stop Machine';
+      startBtn.className = 'cd-start-btn cd-start-btn--stop js-detail-start-btn';
+      if (instanceBox) instanceBox.style.display = 'flex';
+      if (endpointLink && data.endpoint) {
+        endpointLink.href = data.endpoint;
+        endpointLink.textContent = data.endpoint;
+      }
+      if (machineIp && data.endpoint) {
+        machineIp.textContent = 'IP: ' + data.endpoint.replace(/^https?:\/\//, '').split('/')[0];
+      }
+    } else if (data.status === 'starting') {
+      startBtn.disabled = true;
+      startBtn.innerHTML = '<i class="nf nf-md-loading" aria-hidden="true"></i> Provisioning...';
+      if (instanceBox) instanceBox.style.display = 'flex';
+      if (endpointLink) endpointLink.textContent = 'Provisionando container...';
+    } else if (data.status === 'stopped' || data.status === 'expired') {
+      startBtn.disabled = false;
+      startBtn.innerHTML = '<i class="nf nf-fa-play" aria-hidden="true"></i> Start Machine';
+      startBtn.className = 'cd-start-btn js-detail-start-btn';
+      if (instanceBox) instanceBox.style.display = 'none';
+      if (machineIp) machineIp.textContent = 'IP: Não iniciado';
+    } else if (data.status === 'failed') {
+      startBtn.disabled = false;
+      startBtn.innerHTML = '<i class="nf nf-fa-play" aria-hidden="true"></i> Retry';
+      startBtn.className = 'cd-start-btn js-detail-start-btn';
+      if (instanceBox) instanceBox.style.display = 'none';
+      alert('Falha na inicialização: ' + (data.last_error || 'Erro desconhecido.'));
+    }
+  }
+
+  async function pollInstance(instanceId) {
+    const delays = [2000, 3000, 5000, 8000, 13000, 20000];
+    const deadline = Date.now() + 120000;
+    let i = 0;
+
+    while (Date.now() < deadline) {
+      const delay = delays[Math.min(i++, delays.length - 1)];
+      await new Promise(r => setTimeout(r, delay));
+
+      try {
+        const res = await fetch(`/api/challenge-instances/${instanceId}`, {
+          credentials: 'same-origin',
+        });
+        if (!res.ok) continue;
+        const data = await res.json();
+        updateInstanceUI(data);
+
+        if (['running', 'failed', 'stopped', 'expired'].includes(data.status)) {
+          return;
+        }
+      } catch (e) {}
+    }
+    updateInstanceUI({ status: 'failed', last_error: 'Timeout de inicialização (120s).' });
+  }
+
+  if (startBtn) {
+    startBtn.addEventListener('click', async function() {
+      const currentStatus = this.getAttribute('data-status');
+      const instanceId = this.getAttribute('data-instance-id');
+
+      if (currentStatus === 'running' && instanceId) {
+        startBtn.disabled = true;
+        startBtn.innerHTML = '<i class="nf nf-md-loading" aria-hidden="true"></i> Stopping...';
+        try {
+          const res = await fetch(`/api/challenge-instances/${instanceId}/stop`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+            credentials: 'same-origin',
+          });
+          if (res.ok) {
+            updateInstanceUI({ status: 'stopped' });
+          }
+        } catch (e) {
+          startBtn.disabled = false;
+        }
+        return;
+      }
+
+      startBtn.disabled = true;
+      updateInstanceUI({ status: 'starting' });
+
+      try {
+        const res = await fetch(`/api/challenges/${challengeId}/instances`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+          credentials: 'same-origin',
+        });
+
+        if (res.status === 429) {
+          const retry = res.headers.get('Retry-After') || '30';
+          const errData = await res.json().catch(() => ({}));
+          alert((errData.error || 'Muitas requisições.') + `\nAguarde ${retry} segundos.`);
+          updateInstanceUI({ status: 'available' });
+          return;
+        }
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Falha ao iniciar desafio');
+        }
+
+        const data = await res.json();
+        updateInstanceUI(data);
+
+        if (data.status === 'starting') {
+          pollInstance(data.instance_id);
+        }
+      } catch (err) {
+        updateInstanceUI({ status: 'failed', last_error: err.message });
+      }
+    });
+  }
+
+  async function submitFlag() {
+    if (!flagInput || !submitFlagBtn || !flagFeedback) return;
+    const flagVal = flagInput.value.trim();
+    if (!flagVal) {
+      flagFeedback.className = 'flag-feedback error';
+      flagFeedback.textContent = 'Insira uma flag antes de submeter.';
+      flagFeedback.style.display = 'block';
+      return;
+    }
+
+    submitFlagBtn.disabled = true;
+    submitFlagBtn.textContent = 'VALIDANDO...';
+    flagFeedback.style.display = 'none';
+
+    try {
+      const res = await fetch(`/api/challenges/${encodeURIComponent(challengeId)}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+        body: JSON.stringify({ flag: flagVal }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.status === 200 && data.success) {
+        flagFeedback.className = 'flag-feedback success';
+        flagFeedback.textContent = data.message || 'Parabéns! Flag correta!';
+        flagFeedback.style.display = 'block';
+        flagInput.value = '';
+        if (solvedBanner) solvedBanner.style.display = 'flex';
+        if (solvesCount) {
+          const cur = parseInt(solvesCount.textContent) || 0;
+          solvesCount.textContent = cur + 1;
+        }
+      } else if (res.status === 409) {
+        flagFeedback.className = 'flag-feedback info';
+        flagFeedback.textContent = data.error || 'Desafio já resolvido anteriormente.';
+        flagFeedback.style.display = 'block';
+      } else {
+        flagFeedback.className = 'flag-feedback error';
+        flagFeedback.textContent = data.error || 'Flag incorreta. Tente novamente.';
+        flagFeedback.style.display = 'block';
+      }
+    } catch (e) {
+      flagFeedback.className = 'flag-feedback error';
+      flagFeedback.textContent = 'Erro de comunicação com o servidor.';
+      flagFeedback.style.display = 'block';
+    } finally {
+      submitFlagBtn.disabled = false;
+      submitFlagBtn.textContent = 'VALIDAR';
+    }
+  }
+
+  if (submitFlagBtn) {
+    submitFlagBtn.addEventListener('click', submitFlag);
+  }
+
+  if (flagInput) {
+    flagInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        submitFlag();
+      }
+    });
+  }
+})();
+</script>
+{% endblock %}

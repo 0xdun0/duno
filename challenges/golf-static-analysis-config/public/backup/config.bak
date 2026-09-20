@@ -1,0 +1,41 @@
+# EverSec Infrastructure Configuration Backup
+# Created: 2025-11-15 03:14:22 UTC
+# Backup operator: sysadmin@eversec.com
+# Description: Full service configuration export - pre-migration snapshot
+
+[database]
+host = db.eversec.internal
+port = 5432
+name = eversec_prod
+user = eversec_admin
+password = db_p4ssw0rd_2026
+ssl_mode = require
+pool_size = 20
+
+[cache]
+host = cache.eversec.internal
+port = 6379
+password = r3d1s_c4ch3_s3cr3t
+db = 0
+
+[mail]
+smtp_host = smtp.mailgun.eversec.com
+smtp_port = 587
+username = noreply@eversec.com
+password = m41l_s3rv1c3_p4ss
+
+[monitoring]
+datadog_api_key = b4ckup_c0nf1g_l34k3d
+newrelic_license = nr-license-key-placeholder
+pagerduty_token = pd-token-placeholder
+
+[storage]
+s3_bucket = eversec-prod-assets
+aws_access_key = AKIAIOSFODNN7EXAMPLE
+aws_secret_key = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+region = us-east-1
+
+[app]
+secret_key = 4pp_m4st3r_s3cr3t_k3y
+session_timeout = 3600
+max_upload_size = 52428800

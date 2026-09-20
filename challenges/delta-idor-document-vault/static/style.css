@@ -1,0 +1,369 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Login Page Styles */
+.login-container {
+    max-width: 450px;
+    margin: 50px auto;
+}
+
+.login-box {
+    background: white;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.logo {
+    font-size: 2.5em;
+    font-weight: bold;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.login-box h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+.error-message {
+    background: #fee;
+    border-left: 4px solid #e53e3e;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: #c53030;
+}
+
+/* Dashboard Styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    min-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-logout, .btn-back {
+    padding: 8px 20px;
+    background: #e2e8f0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-logout:hover, .btn-back:hover {
+    background: #cbd5e0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
+
+.main-content h1 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.info-text {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.documents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.document-card {
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.document-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.document-icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.document-card h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.document-id {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    font-family: 'Courier New', monospace;
+}
+
+.btn-view {
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: transform 0.2s;
+}
+
+.btn-view:hover {
+    transform: translateY(-2px);
+}
+
+.info-section {
+    background: #f7fafc;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.info-section h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.info-section ul {
+    list-style-position: inside;
+    color: #666;
+    line-height: 1.8;
+}
+
+.info-section code {
+    background: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    color: #e53e3e;
+}
+
+/* Document View Styles */
+.document-view {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.confidential-badge {
+    display: inline-block;
+    background: #e53e3e;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.document-meta {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    padding: 15px;
+    background: #f7fafc;
+    border-radius: 5px;
+}
+
+.meta-item {
+    color: #666;
+}
+
+.meta-item strong {
+    color: #333;
+}
+
+.document-content {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 30px;
+    margin: 20px 0;
+    min-height: 200px;
+    white-space: pre-wrap;
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.8;
+    color: #333;
+}
+
+.document-actions {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Error Page */
+.error-page {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.error-page h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.error-page .error-message {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+/* API Documentation Styles */
+.api-section {
+    margin-top: 30px;
+}
+
+.api-section h2 {
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+.api-endpoint {
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.api-endpoint code {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333;
+    margin-left: 10px;
+}
+
+.api-endpoint p {
+    color: #666;
+    margin: 10px 0;
+}
+
+.api-method {
+    display: inline-block;
+    background: #48bb78;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.85em;
+    font-family: 'Courier New', monospace;
+}
+
+.api-response {
+    margin-top: 12px;
+}
+
+.api-response pre {
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    overflow-x: auto;
+    margin-top: 5px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid #e2e8f0;
+    color: #666;
+}
+
+.footer p {
+    margin: 5px 0;
+}

@@ -11,7 +11,62 @@ services:
       - ./modules:/app/modules
       - ./app:/app/app
       - ./data:/app/data
+      - ./docs:/app/docs:ro
       - ./static/uploads:/app/static/uploads
     env_file:
       - .env
+    environment:
+      CHALLENGES_ENABLED: "true"
+      CHALLENGE_RUNNER_URL: http://challenge-runner:9000
+      CHALLENGE_RUNNER_TOKEN: ${CHALLENGE_RUNNER_TOKEN:-duno-runner-secret-key}
+    networks:
+      duno-net:
+        ipv4_address: 192.168.100.10
     restart: unless-stopped
+
+  challenge-runner:
+    build: ./services/challenge-runner
+    container_name: duno-challenge-runner
+    expose:
+      - "9000"
+    environment:
+      CHALLENGES_ROOT: /opt/challenges
+      CHALLENGE_INSTANCE_TTL_MINUTES: "60"
+      CHALLENGE_RUNNER_TOKEN: ${CHALLENGE_RUNNER_TOKEN:-duno-runner-secret-key}
+      CHALLENGE_NETWORK: challenge-net
+      CHALLENGE_SUBNET_PREFIX: "10.10.15."
+      CHALLENGE_EGRESS_ENABLED: "false"
+    volumes:
+      - ./challenges:/opt/challenges:ro
+      - ./services/challenge-runner:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      duno-net:
+        ipv4_address: 192.168.100.20
+      challenge-net:
+        ipv4_address: 10.10.15.2
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9000/healthz')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+networks:
+  duno-net:
+    name: duno-net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/24
+          gateway: 192.168.100.1
+  challenge-net:
+    name: challenge-net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.15.0/24
+          gateway: 10.10.15.1
+

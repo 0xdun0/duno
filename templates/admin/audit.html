@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Log de Auditoria — DUNO Admin{% endblock %}
+
+{% block content %}
+<div class="settings-page-wrapper">
+  <div class="settings-container">
+
+    <!-- Top Breadcrumb / Kicker -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+      <div class="settings-kicker-brand">
+        <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="color:inherit; text-decoration:none;">DUNO // ADMIN PIPELINE</a> // AUDITORIA
+      </div>
+      <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="font-size:0.8rem; color:var(--ink-2); text-decoration:none;">
+        ← Voltar ao Painel
+      </a>
+    </div>
+
+    <!-- Hero Header -->
+    <header class="settings-hero">
+      <h1 class="settings-title">Log de Auditoria da Esteira</h1>
+      <p class="settings-subtitle">Rastreabilidade completa de todas as operações, submissões, transições de estado, scans e decisões de publicação.</p>
+    </header>
+
+    <div class="settings-divider"></div>
+
+    <!-- FILTRO DE AÇÃO -->
+    <form method="GET" action="{{ url_for('submissions_admin.audit_logs') }}" style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1rem 1.25rem; margin-bottom:1.5rem; display:flex; gap:1rem; align-items:center; box-shadow:var(--shadow-sm);">
+      <div style="flex:1;">
+        <input type="text" name="action" value="{{ current_action }}" placeholder="Filtrar por ação (ex: TRANSITION, SUBMIT, APPROVE, BUILD...)" style="width:100%; padding:0.55rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); font-size:0.85rem; font-family:var(--font-mono);" />
+      </div>
+      <button type="submit" class="btn btn-primary" style="padding:0.55rem 1.25rem; font-size:0.85rem; border-radius:var(--r-xs);">
+        Filtrar
+      </button>
+      {% if current_action %}
+      <a href="{{ url_for('submissions_admin.audit_logs') }}" class="btn-subtle" style="padding:0.55rem 0.85rem; font-size:0.85rem; text-decoration:none; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-subtle); color:var(--ink-2);">
+        Limpar
+      </a>
+      {% endif %}
+    </form>
+
+    <!-- TABELA DE AUDITORIA -->
+    <div class="table-responsive" style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; box-shadow:var(--shadow-sm);">
+      <table class="duno-table" style="width:100%; border-collapse:collapse; text-align:left;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--line); background:var(--bg-card-subtle); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3);">
+            <th style="padding:0.9rem 1.25rem;">Data / Hora</th>
+            <th style="padding:0.9rem 1rem;">Ação</th>
+            <th style="padding:0.9rem 1rem;">Operador</th>
+            <th style="padding:0.9rem 1rem;">Máquina ID</th>
+            <th style="padding:0.9rem 1rem;">IP</th>
+            <th style="padding:0.9rem 1.25rem;">Detalhes do Evento</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for l in logs %}
+          <tr style="border-bottom:1px solid var(--line-subtle); font-size:0.85rem;">
+            <td style="padding:0.9rem 1.25rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-3); white-space:nowrap;">
+              {{ (l.created_at|string)[:19] if l.created_at else '-' }}
+            </td>
+            <td style="padding:0.9rem 1rem;">
+              <span class="badge font-mono" style="background:var(--bg-subtle); color:var(--ink); padding:0.25rem 0.5rem; border-radius:4px; font-size:0.75rem; font-weight:600;">
+                {{ l.action }}
+              </span>
+            </td>
+            <td style="padding:0.9rem 1rem; font-weight:600; color:var(--ink-2);">
+              {{ l.username or 'Sistema' }}
+            </td>
+            <td style="padding:0.9rem 1rem; font-family:var(--font-mono); font-size:0.8rem;">
+              {% if l.resource_id %}
+              <a href="{{ url_for('submissions_admin.machine_review_workspace', submission_id=l.resource_id) }}" style="color:var(--orange); text-decoration:none;">
+                #{{ l.resource_id }}
+              </a>
+              {% else %}
+              -
+              {% endif %}
+            </td>
+            <td style="padding:0.9rem 1rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-3);">
+              {{ l.ip or '-' }}
+            </td>
+            <td style="padding:0.9rem 1.25rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-2); max-width:380px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ l.metadata_json }}">
+              {{ l.metadata_json or '-' }}
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" style="padding:3rem; text-align:center; color:var(--ink-3);">
+              Nenhum registro de auditoria encontrado.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

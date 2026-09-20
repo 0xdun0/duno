@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 a1b2c3d4e5f67890123456789012345678901abc Dev Team <dev@eversec.io> 1738368000 -0500	commit (initial): Initial commit - EverSec DevTools portal setup
+a1b2c3d4e5f67890123456789012345678901abc b2c3d4e5f67890123456789012345678901abcde Dev Team <dev@eversec.io> 1738454400 -0500	commit: Add /admin/execute scripting platform - localhost-only via ctx.hostname check (Koa)
+b2c3d4e5f67890123456789012345678901abcde c3d4e5f67890123456789012345678901abcdef0 Dev Team <dev@eversec.io> 1738540800 -0500	commit: TODO tracked in SEC-2026-441 - review CVE-2026-27959 impact on ctx.hostname before prod deploy
+c3d4e5f67890123456789012345678901abcdef0 d4e5f67890123456789012345678901abcdef012 Dev Team <dev@eversec.io> 1738627200 -0500	commit: Add deployment config - DEVTOOLS_ADMIN_TOKEN=PLACEHOLDER_FLAG1
+d4e5f67890123456789012345678901abcdef012 e5f67890123456789012345678901abcdef01234 Dev Team <dev@eversec.io> 1738713600 -0500	commit: Remove credentials from repo - security review flagged plaintext secrets in commit history

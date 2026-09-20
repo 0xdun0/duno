@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Charlie] Admin Panel - EverSec Employee Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e53e3e 0%, #9b2c2c 100%);
+            color: white;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 30px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            background: #e53e3e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-bottom: 20px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box h3 {
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .flag {
+            background: #2d3748;
+            color: #4fd1c5;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f7fafc;
+            color: #333;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .section {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .export-list {
+            list-style: none;
+        }
+
+        .export-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .export-list li:last-child {
+            border-bottom: none;
+        }
+
+        .export-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: transform 0.2s;
+        }
+
+        .export-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            color: #555;
+            font-weight: 500;
+        }
+
+        .setting-value {
+            color: #333;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">EverSec Admin</div>
+            <div class="user-info">
+                <div>{{ username }} ({{ role|upper }})</div>
+                <a href="{{ url_for('dashboard') }}" class="back-btn">&larr; Back to Dashboard</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="admin-badge">ADMIN ACCESS ONLY</div>
+            <h1>Administration Panel</h1>
+            <p class="subtitle">System administration and data management</p>
+
+            <div class="success-box">
+                <h3>Admin Access Granted</h3>
+                <p>You have full administrative privileges.</p>
+                <div class="flag">{{ flag1 }}</div>
+            </div>
+
+            <h2>Employee Records</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Salary</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emp in employees %}
+                    <tr>
+                        <td>{{ emp.id }}</td>
+                        <td>{{ emp.name }}</td>
+                        <td>{{ emp.department }}</td>
+                        <td>{{ emp.salary }}</td>
+                        <td>{{ emp.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="section">
+                <h3>Data Export</h3>
+                <p style="color: #666; margin-bottom: 15px;">Download data files for reporting and analysis.</p>
+                <ul class="export-list">
+                    {% for file in export_files %}
+                    <li>
+                        <span>
+                            <strong>{{ file.name }}</strong>
+                            <br><span style="color: #888; font-size: 0.9em;">{{ file.description }}</span>
+                        </span>
+                        <a href="{{ url_for('admin_export', file=file.name) }}" class="export-link">Download</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Server Information</h3>
+                <div class="setting-item">
+                    <span class="setting-label">Application Version</span>
+                    <span class="setting-value">2.4.1</span>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Database Host</span>
+                    <span class="setting-value">db.internal.eversec.local</span>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">SSH Maintenance Port</span>
+                    <span class="setting-value">2200</span>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Service Account</span>
+                    <span class="setting-value">ctfuser</span>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Backup Schedule</span>
+                    <span class="setting-value">Daily @ 02:00 UTC</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Delta] Error - EverSec Document Vault</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">EverSec</div>
+        </div>
+
+        <div class="main-content">
+            <div class="error-page">
+                <h1>❌ Error</h1>
+                <p class="error-message">{{ error }}</p>
+                <a href="{{ url_for('dashboard') }}" class="btn-primary">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+{% block title %}{{ sub.name }} — Submissão #{{ sub.id }} — DUNO{% endblock %}
+
+{% block content %}
+<div class="settings-page-wrapper">
+  <div class="settings-container" style="max-width:1050px;">
+
+    <!-- Top Breadcrumb / Kicker -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+      <div class="settings-kicker-brand">
+        <a href="{{ url_for('submissions.contributions') }}" style="color:inherit; text-decoration:none;">DUNO // MINHAS CONTRIBUIÇÕES</a> // #{{ sub.id }}
+      </div>
+      <a href="{{ url_for('submissions.contributions') }}" style="font-size:0.8rem; color:var(--ink-2); text-decoration:none;">
+        ← Voltar para lista
+      </a>
+    </div>
+
+    <!-- Hero Header -->
+    <header class="settings-hero" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
+      <div>
+        <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.35rem;">
+          <h1 class="settings-title" style="margin-bottom:0;">{{ sub.name }}</h1>
+          <span class="badge font-mono" style="background:var(--bg-subtle); color:var(--ink-2); padding:0.25rem 0.6rem; border-radius:4px; font-size:0.8rem;">
+            v{{ sub.current_version }}
+          </span>
+        </div>
+        <p class="settings-subtitle" style="font-family:var(--font-mono); font-size:0.85rem; color:var(--ink-3);">
+          slug: <strong>{{ sub.slug }}</strong> • Autor: {{ sub.author_name }} • Enviado em: {{ (sub.created_at|string)[:16] if sub.created_at else '-' }}
+        </p>
+      </div>
+      <div>
+        <span class="submission-status-badge status-{{ sub.status|lower }}" style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.45rem 1rem; border-radius:var(--r-pill); font-size:0.85rem; font-weight:700;">
+          <span class="status-dot"></span>
+          {{ sub.status }}
+        </span>
+      </div>
+    </header>
+
+    <div class="settings-divider"></div>
+
+    <!-- PIPELINE STATUS STEPPER -->
+    <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; margin-bottom:2rem; box-shadow:var(--shadow-sm);">
+      <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3); margin-bottom:1rem; font-weight:700;">
+        Fase Atual no Pipeline de Publicação
+      </div>
+      {% set steps = [
+        ('SUBMITTED', 'Submissão'),
+        ('TRIAGE', 'Triagem'),
+        ('BUILDING', 'Build'),
+        ('SECURITY_REVIEW', 'Segurança'),
+        ('FUNCTIONAL_TEST', 'Testes'),
+        ('CONTENT_REVIEW', 'Didática'),
+        ('APPROVED', 'Aprovado'),
+        ('PUBLISHED', 'Publicado')
+      ] %}
+      <div style="display:flex; align-items:center; justify-content:space-between; overflow-x:auto; gap:0.5rem; padding-bottom:0.5rem;">
+        {% set reached = namespace(val=true) %}
+        {% for step_id, step_name in steps %}
+        <div style="display:flex; flex-direction:column; align-items:center; min-width:85px; text-align:center;">
+          <div style="width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; margin-bottom:0.35rem;
+            {% if sub.status == step_id %}
+              background:var(--orange); color:#fff; box-shadow:0 0 0 4px var(--orange-dim);
+            {% elif reached.val %}
+              background:var(--ink-2); color:#fff;
+            {% else %}
+              background:var(--bg-subtle); color:var(--ink-3); border:1px solid var(--line);
+            {% endif %}">
+            {% if sub.status == step_id %}
+              ●
+            {% elif reached.val %}
+              ✓
+            {% else %}
+              ○
+            {% endif %}
+          </div>
+          <span style="font-size:0.75rem; font-weight:{% if sub.status == step_id %}700{% else %}500{% endif %}; color:{% if sub.status == step_id %}var(--orange){% elif reached.val %}var(--ink){% else %}var(--ink-3){% endif %};">
+            {{ step_name }}
+          </span>
+        </div>
+        {% if not loop.last %}
+        <div style="flex:1; height:2px; background:{% if reached.val and sub.status != step_id %}var(--ink-2){% else %}var(--line){% endif %}; min-width:16px; margin-top:-14px;"></div>
+        {% endif %}
+        {% if sub.status == step_id %}
+          {% set reached.val = false %}
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- SEÇÃO: ALERTA SE AJUSTES SOLICITADOS -->
+    {% if sub.status == 'CHANGES_REQUESTED' %}
+    <div style="background:#FFF3E8; border:1px solid var(--orange); border-radius:var(--r-md); padding:1.25rem 1.5rem; margin-bottom:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+      <div>
+        <div style="font-weight:700; color:var(--orange-hover); font-size:1rem; margin-bottom:0.25rem;">
+          ⚠ Ajustes Solicitados pela Equipe de Revisão
+        </div>
+        <div style="color:var(--ink-2); font-size:0.875rem;">
+          Revise os comentários abaixo, efetue as alterações no pacote e envie uma nova versão atualizada.
+        </div>
+      </div>
+      <div>
+        <a href="#resubmit-section" class="btn btn-primary" style="text-decoration:none; padding:0.6rem 1.25rem; font-weight:600; border-radius:var(--r-sm);">
+          Enviar Nova Versão ↑
+        </a>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- GRID DE INFORMAÇÕES -->
+    <div style="display:grid; grid-template-columns:2fr 1fr; gap:1.75rem; margin-bottom:2.5rem;">
+      
+      <!-- Coluna Principal -->
+      <div>
+        <!-- Metadados -->
+        <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+          <h2 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:var(--ink);">Metadados Educacionais</h2>
+          <div style="margin-bottom:1.25rem;">
+            <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.25rem;">Descrição do Cenário</div>
+            <div style="color:var(--ink); font-size:0.9rem; line-height:1.6;">{{ metadata.short_desc if metadata else '-' }}</div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; padding-top:1rem; border-top:1px solid var(--line-subtle);">
+            <div>
+              <span style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); display:block;">Categoria</span>
+              <span style="font-weight:600; color:var(--ink); font-size:0.875rem;">{{ metadata.category if metadata else '-' }}</span>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); display:block;">Dificuldade</span>
+              <span style="font-weight:600; color:var(--ink); font-size:0.875rem;">{{ metadata.author_difficulty if metadata else '-' }}</span>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); display:block;">Sistema Operacional</span>
+              <span style="font-weight:600; color:var(--ink); font-size:0.875rem;">{{ metadata.os_type if metadata else '-' }}</span>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); display:block;">Tempo Estimado</span>
+              <span style="font-weight:600; color:var(--ink); font-size:0.875rem;">{{ metadata.estimated_time_minutes if metadata else '60' }} min</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arquivos Extraídos -->
+        <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+          <h2 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:var(--ink);">Arquivos do Pacote (Versão Atual)</h2>
+          <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:0.8rem;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--line); color:var(--ink-3); text-align:left;">
+                  <th style="padding:0.5rem 0.75rem;">Arquivo</th>
+                  <th style="padding:0.5rem 0.75rem;">Tamanho</th>
+                  <th style="padding:0.5rem 0.75rem;">SHA256</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for f in files %}
+                <tr style="border-bottom:1px solid var(--line-subtle);">
+                  <td style="padding:0.6rem 0.75rem; font-family:var(--font-mono); font-weight:500; color:var(--ink);">{{ f.file_path }}</td>
+                  <td style="padding:0.6rem 0.75rem; color:var(--ink-2);">{{ (f.file_size / 1024)|round(1) }} KB</td>
+                  <td style="padding:0.6rem 0.75rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-3);" title="{{ f.sha256 or '-' }}">
+                    {{ (f.sha256|string)[:16] if f.sha256 else '-' }}...
+                  </td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td colspan="3" style="padding:1rem; text-align:center; color:var(--ink-3);">Nenhum arquivo indexado.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Comentários e Interação de Revisão -->
+        <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+          <h2 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:var(--ink);">Comunicação com Revisores</h2>
+          
+          <div id="comments-list" style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.5rem;">
+            {% for c in comments %}
+            <div style="padding:1rem; border-radius:var(--r-xs); background:var(--bg-card-subtle); border-left:3px solid var(--orange);">
+              <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem; font-size:0.75rem;">
+                <span style="font-weight:700; color:var(--ink);">{{ c.username }}</span>
+                <span style="color:var(--ink-3);">{{ (c.created_at|string)[:16] if c.created_at else '-' }}</span>
+              </div>
+              <div style="font-size:0.875rem; color:var(--ink-2); white-space:pre-wrap;">{{ c.comment }}</div>
+            </div>
+            {% else %}
+            <div style="color:var(--ink-3); font-size:0.85rem; font-style:italic;">Nenhum comentário na thread de revisão até o momento.</div>
+            {% endfor %}
+          </div>
+
+          <!-- Formulário para adicionar comentário -->
+          <form id="comment-form" style="display:flex; flex-direction:column; gap:0.75rem;">
+            <textarea id="comment-text" required rows="3" placeholder="Envie uma mensagem ou tire dúvidas com os revisores..." style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.875rem; color:var(--ink);"></textarea>
+            <div style="display:flex; justify-content:flex-end;">
+              <button type="submit" id="btn-comment" class="btn btn-primary" style="padding:0.5rem 1.25rem; font-size:0.85rem; border-radius:var(--r-xs);">
+                Enviar Comentário
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Seção de Resubmissão (se CHANGES_REQUESTED ou DRAFT) -->
+        {% if sub.status in ['CHANGES_REQUESTED', 'DRAFT'] %}
+        <div id="resubmit-section" style="background:var(--bg-card); border:2px solid var(--orange); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+          <h2 style="font-size:1rem; font-weight:700; margin-bottom:0.5rem; color:var(--orange-hover);">Enviar Nova Versão do Pacote</h2>
+          <p style="font-size:0.85rem; color:var(--ink-2); margin-bottom:1rem;">
+            Selecione o arquivo atualizado com as correções solicitadas pela equipe. Uma nova versão será criada e submetida à validação.
+          </p>
+          <form id="resubmit-form" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:1rem;">
+            <input type="file" name="package" required accept=".zip,.tar.gz,.tgz" style="font-size:0.85rem;" />
+            <textarea name="changelog" rows="2" placeholder="Descreva brevemente as alterações feitas nesta versão..." style="width:100%; padding:0.5rem 0.75rem; border:1px solid var(--line); border-radius:var(--r-xs); font-size:0.85rem;"></textarea>
+            <div>
+              <button type="submit" id="btn-resubmit" class="btn btn-primary" style="padding:0.6rem 1.5rem; font-weight:700; border-radius:var(--r-xs);">
+                Submeter Nova Versão ↑
+              </button>
+            </div>
+          </form>
+        </div>
+        {% endif %}
+
+      </div>
+
+      <!-- Coluna Lateral: Histórico de Estados -->
+      <div>
+        <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; box-shadow:var(--shadow-sm);">
+          <h2 style="font-size:0.9rem; font-weight:700; margin-bottom:1rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink);">
+            Histórico de Transições
+          </h2>
+          <div style="display:flex; flex-direction:column; gap:1.25rem;">
+            {% for h in history %}
+            <div style="position:relative; padding-left:1.25rem; border-left:2px solid var(--line);">
+              <div style="position:absolute; left:-5px; top:2px; width:8px; height:8px; border-radius:50%; background:var(--orange);"></div>
+              <div style="font-weight:700; font-size:0.8rem; color:var(--ink);">
+                {{ h.to_status }}
+              </div>
+              <div style="font-size:0.75rem; color:var(--ink-3); margin-bottom:0.25rem;">
+                De: {{ h.from_status }} • Por: {{ h.changed_by or 'Sistema' }}
+              </div>
+              <div style="font-size:0.75rem; color:var(--ink-2); font-family:var(--font-mono);">
+                {{ (h.created_at|string)[:16] if h.created_at else '-' }}
+              </div>
+              {% if h.reason %}
+              <div style="margin-top:0.35rem; font-size:0.75rem; color:var(--ink-3); background:var(--bg-card-subtle); padding:0.35rem 0.5rem; border-radius:4px;">
+                {{ h.reason }}
+              </div>
+              {% endif %}
+            </div>
+            {% else %}
+            <div style="color:var(--ink-3); font-size:0.8rem;">Nenhum histórico registrado.</div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const commentForm = document.getElementById('comment-form');
+  const commentText = document.getElementById('comment-text');
+  const btnComment = document.getElementById('btn-comment');
+
+  if (commentForm) {
+    commentForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      btnComment.disabled = true;
+
+      try {
+        const resp = await fetch('{{ url_for("submissions.api_add_comment", submission_id=sub.id) }}', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ comment: commentText.value })
+        });
+
+        const res = await resp.json();
+        if (resp.ok && res.status === 'success') {
+          window.location.reload();
+        } else {
+          alert('Erro ao enviar comentário: ' + (res.error || 'Falha no servidor.'));
+          btnComment.disabled = false;
+        }
+      } catch (err) {
+        alert('Erro de conexão ao enviar comentário.');
+        btnComment.disabled = false;
+      }
+    });
+  }
+
+  const resubmitForm = document.getElementById('resubmit-form');
+  const btnResubmit = document.getElementById('btn-resubmit');
+
+  if (resubmitForm) {
+    resubmitForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      btnResubmit.disabled = true;
+      btnResubmit.innerText = 'Processando nova versão...';
+
+      const formData = new FormData(resubmitForm);
+      try {
+        const resp = await fetch('{{ url_for("submissions.api_resubmit_version", submission_id=sub.id) }}', {
+          method: 'POST',
+          body: formData
+        });
+
+        const res = await resp.json();
+        if (resp.ok && res.status === 'success') {
+          alert('Nova versão enviada com sucesso!');
+          window.location.reload();
+        } else {
+          alert('Erro ao resubmeter: ' + (res.errors ? res.errors.join(', ') : res.error));
+          btnResubmit.disabled = false;
+          btnResubmit.innerText = 'Submeter Nova Versão ↑';
+        }
+      } catch (err) {
+        alert('Erro de conexão ao resubmeter.');
+        btnResubmit.disabled = false;
+        btnResubmit.innerText = 'Submeter Nova Versão ↑';
+      }
+    });
+  }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Delta] Dashboard - EverSec Document Vault</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">EverSec</div>
+            <div class="user-info">
+                <span>Welcome, <strong>{{ username }}</strong> ({{ role }})</span>
+                <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <h1>Your Documents</h1>
+            <p class="info-text">You have <strong>{{ documents|length }}</strong> documents assigned to you.</p>
+
+            <div class="documents-grid">
+                {% for doc in documents %}
+                <div class="document-card">
+                    <div class="document-icon">
+                        {% if doc.confidential %}
+                        <span title="Confidential">&#128274;</span>
+                        {% else %}
+                        <span>&#128196;</span>
+                        {% endif %}
+                    </div>
+                    <h3>{{ doc.title }}</h3>
+                    <p class="document-id">ID: {{ doc.id }}</p>
+                    <a href="{{ url_for('view_document', doc_id=doc.id) }}" class="btn-view">View Document</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>EverSec Security Solutions</strong> - Document Vault v2.1.0</p>
+        </div>
+    </div>
+</body>
+</html>

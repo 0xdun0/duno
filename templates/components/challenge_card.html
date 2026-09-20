@@ -1,0 +1,169 @@
+{# templates/components/challenge_card.html — Card Oficial do Desafio CTF (Design Elegante e Compacto) #}
+{% set card_idx = challenge_loop_index if challenge_loop_index is defined else (loop.index if loop is defined and loop else 1) %}
+<div class="challenge-hcard level-{{ challenge.difficulty }}" 
+     id="challenge-card-{{ challenge.id }}"
+     data-challenge-id="{{ challenge.id }}"
+     data-challenge-idx="{{ card_idx }}"
+     data-category="{{ challenge.category }}"
+     data-difficulty="{{ challenge.difficulty }}">
+
+  <!-- ═══ CARD HEADER ═══ -->
+  <div class="hcard-top-row">
+    <div class="hcard-icon-box">
+      <i class="nf nf-fa-server" aria-hidden="true"></i>
+    </div>
+    <div class="hcard-title-meta">
+      <span class="hcard-category-kicker">{{ challenge.category | upper }}</span>
+      <h2 class="hcard-card-title">
+        <a href="/desafio/{{ card_idx }}" class="hcard-title-anchor" title="Abrir desafio {{ challenge.name }}">
+          {{ challenge.name }}
+        </a>
+      </h2>
+    </div>
+  </div>
+
+  <!-- ═══ DESCRIPTION SECTION (GENÉRICA / SEM SPOILERS) ═══ -->
+  <div class="hcard-desc-container">
+    <div class="hcard-desc-label">
+      <i class="nf nf-oct-file" aria-hidden="true"></i>
+      <span>DESCRIPTION</span>
+    </div>
+    <p class="hcard-desc-paragraph">
+      {{ challenge.card_description or "Analise o ambiente, identifique as vulnerabilidades presentes e obtenha acesso à flag final." }}
+    </p>
+  </div>
+
+  <!-- ═══ METADADOS DO ALVO (STATS & FLAGS + ROOT) ═══ -->
+  <div class="hcard-specs-grid">
+    <!-- POINTS -->
+    <div class="hcard-spec-item" title="Pontos">
+      <span class="spec-label">POINTS</span>
+      <span class="spec-val">
+        <i class="nf nf-fa-star" aria-hidden="true"></i>
+        {{ challenge.points }}
+      </span>
+    </div>
+
+    <!-- XP -->
+    <div class="hcard-spec-item" title="Total de XP">
+      <span class="spec-label">XP</span>
+      <span class="spec-val">
+        <i class="nf nf-md-diamond_stone" aria-hidden="true"></i>
+        {{ challenge.points }}
+      </span>
+    </div>
+
+    <!-- MACHINE / OS -->
+    <div class="hcard-spec-item" title="Sistema Operacional e IP">
+      <span class="spec-label">MACHINE</span>
+      <span class="spec-val spec-machine-val">
+        {% if challenge.os == 'linux' %}
+          <i class="nf nf-linux-tux" aria-hidden="true"></i> Linux
+        {% else %}
+          <i class="nf nf-md-microsoft_windows_classic" aria-hidden="true"></i> Windows
+        {% endif %}
+      </span>
+    </div>
+
+    <!-- DIFFICULTY -->
+    <div class="hcard-spec-item" title="Dificuldade">
+      <span class="spec-label">DIFFICULTY</span>
+      <div class="spec-diff-wrap">
+        <span class="spec-val">{{ challenge.difficulty | capitalize }}</span>
+        <div class="spec-dots">
+          {% if challenge.difficulty == 'easy' %}
+            <span class="sdot active"></span><span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+          {% elif challenge.difficulty == 'medium' %}
+            <span class="sdot active"></span><span class="sdot active"></span><span class="sdot"></span><span class="sdot"></span>
+          {% elif challenge.difficulty == 'hard' %}
+            <span class="sdot active"></span><span class="sdot active"></span><span class="sdot active"></span><span class="sdot"></span>
+          {% else %}
+            <span class="sdot active"></span><span class="sdot active"></span><span class="sdot active"></span><span class="sdot active"></span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- FLAGS + ROOT (Solicitado por dj) -->
+    <div class="hcard-spec-item hcard-spec-flags" title="Quantidade de flags e acesso root">
+      <span class="spec-label">FLAGS</span>
+      <span class="spec-val spec-flags-val">
+        <i class="nf nf-fa-flag" aria-hidden="true"></i>
+        {{ challenge.flags_info or '2 Flags + Root' }}
+      </span>
+    </div>
+  </div>
+
+  <!-- ═══ ACTION CONTROLS (START MACHINE & TIME) ═══ -->
+  <div class="hcard-action-bar">
+    <button type="button"
+            class="challenge-card-start-btn js-card-start-btn"
+            data-challenge-id="{{ challenge.id }}"
+            data-instance-id="{{ challenge.instance_id or '' }}"
+            data-status="{{ challenge.instance_status or 'available' }}">
+      {% if challenge.instance_status == 'running' %}
+        <i class="nf nf-fa-stop" aria-hidden="true"></i> Stop Machine
+      {% elif challenge.instance_status == 'starting' %}
+        <i class="nf nf-md-loading" aria-hidden="true"></i> Starting...
+      {% else %}
+        <i class="nf nf-fa-play" aria-hidden="true"></i> Start Machine
+      {% endif %}
+    </button>
+
+    <div class="hcard-time-badge" title="Tempo estimado para iniciar">
+      <i class="nf nf-md-clock_outline" aria-hidden="true"></i>
+      <span class="hcard-time-text">{{ challenge.estimated_minutes }} min</span>
+    </div>
+  </div>
+
+  <!-- ═══ SLEEK TARGET CONNECTION BAR (IP & COPY) ═══ -->
+  {% set clean_endpoint = challenge.endpoint | replace('http://', '') | replace('https://', '') if (challenge.instance_status == 'running' and challenge.endpoint) else ('10.10.15.' ~ ("%02d" | format(card_idx + 10)) ~ ':5001') %}
+  {% if challenge.instance_status == 'running' and challenge.endpoint %}
+  <div class="challenge-card-running-bar" id="card-running-{{ challenge.id }}">
+  {% else %}
+  <div class="challenge-card-running-bar" id="card-running-{{ challenge.id }}" style="display: none;">
+  {% endif %}
+    <div class="running-bar-left">
+      <i class="nf nf-md-target running-target-icon" aria-hidden="true" title="Alvo ativo"></i>
+      <span class="running-ip-txt" id="card-ip-{{ challenge.id }}">{{ clean_endpoint }}</span>
+    </div>
+    <div class="running-bar-actions">
+      <button type="button" 
+              class="running-action-btn js-copy-target-ip" 
+              data-ip="{{ clean_endpoint }}"
+              title="Copiar endereço do alvo">
+        <i class="nf nf-md-content_copy" aria-hidden="true"></i>
+      </button>
+      <a href="{{ challenge.endpoint or '#' }}" 
+         target="_blank" 
+         rel="noopener" 
+         class="running-action-btn running-action-link" 
+         id="card-running-link-{{ challenge.id }}"
+         title="Abrir alvo no navegador">
+        <i class="nf nf-md-open_in_new" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ROW: WALKTHROUGH & KICKER ═══ -->
+  <div class="hcard-bottom-row">
+    <div class="hcard-walkthrough-col">
+      <i class="nf nf-md-book_open_variant" aria-hidden="true"></i>
+      {% if challenge.has_walkthrough %}
+        <a href="/desafio/{{ card_idx }}/walkthrough" class="hcard-wt-link">
+          View Walkthrough <span class="wt-arr">→</span>
+        </a>
+      {% else %}
+        <span class="hcard-wt-link-disabled" title="Walkthrough em desenvolvimento">
+          View Walkthrough <span class="wt-arr" style="opacity:0.35;">→</span>
+        </span>
+      {% endif %}
+    </div>
+
+    <div class="hcard-kicker-col" title="Etapas de exploração">
+      <i class="nf nf-md-target" aria-hidden="true"></i>
+      <span>EXPLORE / ROOT</span>
+    </div>
+  </div>
+
+</div>

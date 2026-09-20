@@ -1,0 +1,52 @@
+services:
+  web:
+    build: .
+    ports:
+      - "4019:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      - FLAG1=${FLAG1:-cr4ftcms_rc3_v14_xx3}
+      - FLAG2=${FLAG2:-r00t_pr1v3sc_4ch13v3d}
+      - CRAFT_DB_DRIVER=mysql
+      - CRAFT_DB_SERVER=mysql
+      - CRAFT_DB_PORT=3306
+      - CRAFT_DB_DATABASE=craftcms
+      - CRAFT_DB_USER=craft
+      - CRAFT_DB_PASSWORD=CraftCMS_CTF_2026
+    networks:
+      - ctf-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  mysql:
+    image: mysql:8.4
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password_ctf_2026
+      - MYSQL_DATABASE=craftcms
+      - MYSQL_USER=craft
+      - MYSQL_PASSWORD=CraftCMS_CTF_2026
+    volumes:
+      - craftcms-mysql-data:/var/lib/mysql
+    networks:
+      - ctf-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+networks:
+  ctf-network:
+    external: true
+
+volumes:
+  craftcms-mysql-data:

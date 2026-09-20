@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}{% block kids_title %}Kids{% endblock %} — DUNO{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/kids.css') }}?v=20260917_v4">
+{% block extra_kids_head %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="kids-wrapper">
+
+  <!-- Breadcrumb (DUNO standard) -->
+  <nav class="breadcrumb" aria-label="Navegação">
+    <a href="{{ url_for('index') }}">DUNO</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('kids.dashboard') }}" class="nav-link-kids-wrap"><span class="nav-kids-badge" style="top: -9px;">NEWS</span><span>Kids</span></a>
+    {% block kids_breadcrumb %}{% endblock %}
+  </nav>
+
+  <!-- Gamification HUD Bar (DUNO Design System) -->
+  <div class="kids-hud-bar">
+    <div class="kids-hud-nav">
+      <a href="{{ url_for('kids.dashboard') }}" class="filter-pill {% if active_kids_tab == 'dashboard' %}active{% endif %}">
+        <i class="nf nf-md-file_tree" aria-hidden="true"></i>
+        <span>Trilha</span>
+      </a>
+      <a href="{{ url_for('kids.quests_view') }}" class="filter-pill {% if active_kids_tab == 'quests' %}active{% endif %}">
+        <i class="nf nf-md-target" aria-hidden="true"></i>
+        <span>Missões</span>
+      </a>
+      <a href="{{ url_for('kids.leaderboard_view') }}" class="filter-pill {% if active_kids_tab == 'leaderboard' %}active{% endif %}">
+        <i class="nf nf-md-trophy" aria-hidden="true"></i>
+        <span>Ranking</span>
+      </a>
+    </div>
+
+    <div class="kids-hud-stats">
+      <div class="platform-pill" title="Pontos de Experiência">
+        <i class="nf nf-md-lightning_bolt" style="color: var(--orange);" aria-hidden="true"></i>
+        <span class="kids-stat-val">{{ stats.xp if stats else 0 }}</span>
+        <span class="kids-stat-lbl">XP</span>
+      </div>
+
+      <div class="platform-pill" title="Vidas Restantes para Quizzes">
+        <i class="nf nf-md-heart" style="color: #ef4444;" aria-hidden="true"></i>
+        <span class="kids-stat-val">{{ stats.lives if stats else 5 }}/{{ stats.max_lives if stats else 5 }}</span>
+      </div>
+
+      <div class="platform-pill" title="Ofensiva diária de estudos">
+        <i class="nf nf-md-fire" style="color: #f59e0b;" aria-hidden="true"></i>
+        <span class="kids-stat-val">{{ stats.streak_days if stats else 1 }}d</span>
+      </div>
+
+      <div class="platform-pill" title="Moedas DUNO">
+        <i class="nf nf-md-circle_multiple" style="color: #eab308;" aria-hidden="true"></i>
+        <span class="kids-stat-val">{{ stats.coins if stats else 50 }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Slot -->
+  {% block kids_content %}{% endblock %}
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/kids.js') }}?v=20260917_v4"></script>
+{% block extra_kids_js %}{% endblock %}
+{% endblock %}

@@ -12,7 +12,19 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,400&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/duno.css') }}" />
+  <link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/duno.css') }}?v=20260917_5" />
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('duno_theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
   {% block head %}{% endblock %}
 </head>
 
@@ -169,13 +181,41 @@
         </div>
 
         <a href="{{ url_for('academy_hub') }}" class="nav-link" id="nav-academy-link">ACADEMY</a>
+        <a href="{{ url_for('kids.dashboard') }}" class="nav-link nav-link-kids-wrap {% if request.path.startswith('/kids') %}active{% endif %}" id="nav-kids-link">
+          <span class="nav-kids-badge">NEWS</span>
+          <span>KIDS</span>
+        </a>
+        {% if challenges_enabled %}
+        <a href="{{ url_for('challenges.index') }}" class="nav-link" id="nav-challenges-link">CHALLENGES</a>
+        {% endif %}
         <a href="{{ url_for('documentation') }}" class="nav-link" id="nav-docs-link">DOCS</a>
         <a href="{{ url_for('api_portal') }}" class="nav-link" id="nav-api-link">API</a>
         <a href="{{ url_for('about') }}" class="nav-link" id="nav-about-link">ABOUT</a>
       </nav>
 
-      <!-- Right Navigation Actions: Language Selector + User Dropdown / Login (Walkie Style) -->
+      <!-- Right Navigation Actions: Theme Toggle + Language Selector + User Dropdown / Login (Walkie Style) -->
       <div class="nav-actions">
+        <!-- Theme Toggle Button (Light / Soft Dark) — Click to swap -->
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn"
+          aria-label="Alternar tema" title="Alternar tema (Claro / Escuro)">
+          <svg class="theme-icon theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="theme-icon theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
         <!-- Language selector dropdown -->
         <div class="lang-dropdown" id="lang-dropdown">
           <button type="button" class="lang-btn" id="lang-toggle-btn" aria-haspopup="true" aria-expanded="false"
@@ -206,33 +246,34 @@
         </div>
 
         {% if current_user %}
-        <!-- User Menu Dropdown (LAB CONTROL & Reset DB) -->
+        <!-- User Menu Dropdown (COMMAND CENTER & Reset DB) -->
         <div class="user-dropdown" id="user-dropdown">
           <button type="button" class="nav-user-chip nav-user-welcome-chip" id="user-menu-trigger" aria-haspopup="true"
-            aria-expanded="false" title="Lab Control">
+            aria-expanded="false" title="Command Center">
             <span class="nav-welcome-msg">WELCOME BACK, {{ current_user.username|upper }}.</span>
             <span class="nav-welcome-arrow">↓</span>
           </button>
 
           <div class="user-dropdown-menu" id="user-dropdown-menu" style="display:none;">
             <div class="user-menu-header">
-              <div class="user-menu-welcome-kicker">LAB CONTROL</div>
-              <div class="user-menu-welcome-sub">YOUR LABORATORY IS READY.</div>
+              <div class="user-menu-welcome-kicker">COMMAND CENTER</div>
+              <div class="user-menu-welcome-sub">CENTRO INTEGRADO DE OPERAÇÕES</div>
             </div>
             <div class="user-menu-divider"></div>
             <a href="{{ url_for('settings') }}" class="user-menu-item">
-              <span class="menu-icon"></span>
-              <span>LAB CONTROL</span>
-              <span class="user-menu-arrow">→</span>
+              <i class="nf nf-fa-bolt menu-icon" aria-hidden="true"></i>
+              <span>Command Center</span>
+              <i class="nf nf-md-chevron_right user-menu-arrow" aria-hidden="true"></i>
             </a>
+            <div class="user-menu-divider"></div>
             <form method="POST" action="{{ url_for('reset') }}" id="user-reset-form" style="display:none;"></form>
             <button type="button" class="user-menu-item item-danger" onclick="openResetConfirmModal()">
-              <span class="menu-icon">↻</span>
+              <i class="nf nf-md-refresh menu-icon" aria-hidden="true"></i>
               <span>Reset Database</span>
             </button>
             <div class="user-menu-divider"></div>
             <a href="{{ url_for('logout') }}" class="user-menu-item">
-              <span class="menu-icon">→</span>
+              <i class="nf nf-md-logout menu-icon" aria-hidden="true"></i>
               <span>Sair</span>
             </a>
           </div>
@@ -528,6 +569,41 @@
           const form = document.getElementById('user-reset-form');
           if (form) form.submit();
         };
+
+        // 4. Alternador de Tema (Light / Soft Dark) — Click to swap
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        function updateThemeToggleUI(theme) {
+          if (!themeToggleBtn) return;
+          const isDark = theme === 'dark';
+          themeToggleBtn.setAttribute('title', isDark ? 'Mudar para Modo Claro' : 'Mudar para Modo Escuro');
+          themeToggleBtn.setAttribute('aria-label', isDark ? 'Ativar modo claro' : 'Ativar modo escuro');
+        }
+
+        const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        updateThemeToggleUI(initialTheme);
+
+        if (themeToggleBtn) {
+          themeToggleBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('duno_theme', next);
+            updateThemeToggleUI(next);
+            window.dispatchEvent(new CustomEvent('duno-theme-changed', { detail: { theme: next } }));
+          });
+        }
+
+        // Sincroniza com preferência do sistema operacional caso usuário não tenha forçado
+        if (window.matchMedia) {
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+            if (!localStorage.getItem('duno_theme')) {
+              const next = e.matches ? 'dark' : 'light';
+              document.documentElement.setAttribute('data-theme', next);
+              updateThemeToggleUI(next);
+            }
+          });
+        }
 
         // Mantém compatibilidade com chamadas existentes
         window.confirmResetDatabase = function () {

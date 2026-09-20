@@ -1,0 +1,535 @@
+{% extends "base.html" %}
+{% block title %}Desafios CTF — DUNO{% endblock %}
+
+{% block content %}
+<div class="challenges-container">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Navegação">
+    <a href="{{ url_for('index') }}">DUNO</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Desafios CTF</span>
+  </nav>
+
+  <!-- Editorial Hero Section -->
+  <section class="challenges-hero">
+    <div class="challenges-kicker">
+      <span class="challenges-kicker-dot"></span>
+      <span>LABORATÓRIO CTF • EVERSEC GRAVEYARD</span>
+    </div>
+    <h1 class="challenges-headline">DESAFIOS CTF</h1>
+    <p class="challenges-tagline">
+      Ataque prático em alvos reais isolados em containers Docker dedicados.
+    </p>
+    <p class="challenges-subtext">
+      Pratique exploração ofensiva em cenários completos importados do ctf-challenge. Cada desafio inicializa
+      um ambiente vulnerável sob demanda com portas dedicadas, isolamento de rede e guia prático em anexo (PDF).
+    </p>
+
+    <!-- Quick Stats Bar -->
+    <div class="challenges-stats-bar">
+      <div class="stat-pill">
+        <span class="stat-label">CATÁLOGO</span>
+        <span class="stat-val" id="stat-total-challenges">{{ challenges | length }} Desafios</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">TOTAL DE XP</span>
+        <span class="stat-val xp-hero-val">
+          <i class="nf nf-md-diamond_stone" aria-hidden="true"></i>
+          {% set total_pts = namespace(value=0) %}
+          {% for c in challenges %}{% set total_pts.value = total_pts.value + c.points %}{% endfor %}
+          {{ total_pts.value }} XP
+        </span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">ISOLAMENTO</span>
+        <span class="stat-val">Docker Single-Container</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">TTL INSTÂNCIA</span>
+        <span class="stat-val">60 minutos</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter & Search Controls -->
+  <section class="challenges-filters-section">
+    <div class="challenges-filter-row">
+      <div class="challenges-search-box">
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" 
+               id="challenge-search-input" 
+               class="challenge-search-input" 
+               placeholder="Filtrar por nome, ID ou técnica (ex: IDOR, XXE, API, Recon)..." 
+               autocomplete="off" />
+      </div>
+
+      <div class="challenges-filter-pills" id="difficulty-filters">
+        <button type="button" class="filter-pill active" data-difficulty="all">
+          Todos <span class="pill-tag">{{ challenges | length }}</span>
+        </button>
+        <button type="button" class="filter-pill" data-difficulty="easy">
+          Easy
+        </button>
+        <button type="button" class="filter-pill" data-difficulty="medium">
+          Medium
+        </button>
+        <button type="button" class="filter-pill" data-difficulty="hard">
+          Hard
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenge Grid (SSR First-Paint) -->
+  <section class="challenges-grid-section" aria-label="Lista de Desafios">
+    <div class="modules-grid challenges-grid" id="challenges-grid">
+      {% for challenge in challenges %}
+        {% set challenge_loop_index = loop.index %}
+        {% include "components/challenge_card.html" %}
+      {% else %}
+        <div class="empty-state" id="challenges-empty-state">
+          <div class="empty-state-icon"><i class="nf nf-md-package_variant_closed" aria-hidden="true"></i></div>
+          <h3 class="empty-state-title">Nenhum desafio disponível no catálogo</h3>
+          <p class="empty-state-desc">Nenhum ambiente de desafio foi publicado ainda. Execute o validador de registro para sincronizar.</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination Controls (9 cards per page) -->
+    <div class="pagination-container" id="pagination-container">
+      <button type="button" class="pagination-arrow" id="pagination-prev" disabled>
+        ← Anterior
+      </button>
+      <div class="pagination-numbers" id="pagination-numbers">
+        <!-- Rendered via JS: [1] [2] [3] -->
+      </div>
+      <button type="button" class="pagination-arrow" id="pagination-next">
+        Próximo →
+      </button>
+    </div>
+
+    <!-- Empty search state (hidden by default) -->
+    <div class="empty-state" id="search-empty-state" style="display: none;">
+      <div class="empty-state-icon"><i class="nf nf-md-magnify" aria-hidden="true"></i></div>
+      <h3 class="empty-state-title">Nenhum desafio encontrado</h3>
+      <p class="empty-state-desc">Tente ajustar seus termos de busca ou remover os filtros de dificuldade.</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- ═══ MODAL ANTI-SPOILER WALKTHROUGH ═══ -->
+<div class="wt-modal-backdrop" id="wt-confirm-modal" style="display: none;">
+  <div class="wt-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="wt-modal-title">
+    <div class="wt-modal-header">
+      <div class="wt-modal-kicker">
+        <i class="nf nf-md-alert_decagram" aria-hidden="true"></i>
+        <span>AVISO CTF • SPOILER DA SOLUÇÃO</span>
+      </div>
+      <button type="button" class="wt-modal-close" id="btn-close-wt-modal" aria-label="Fechar modal">×</button>
+    </div>
+
+    <div class="wt-modal-body">
+      <h3 class="wt-modal-title" id="wt-modal-title">Tem certeza que deseja ver o passo a passo?</h3>
+      <p class="wt-modal-desc">
+        O <strong>Walkthrough</strong> revela a resolução completa, todas as 5 flags e os payloads exatos. O ideal para você evoluir como pentester é tentar explorar o alvo por conta própria primeiro, sem cola!
+      </p>
+
+      <!-- Academy Recommendation Card -->
+      <div class="wt-academy-card">
+        <div class="wt-academy-badge">
+          <i class="nf nf-md-school" aria-hidden="true"></i>
+          <span>PRÉ-REQUISITOS RECOMENDADOS</span>
+        </div>
+        <h4 class="wt-academy-title">Módulo: SQL Injection (SQLi)</h4>
+        <p class="wt-academy-text">
+          Estude os conceitos de injeção em queries, autenticação bypass e extração via UNION na DUNO Academy antes de invadir o alvo.
+        </p>
+        <a href="/academy/sqli" class="btn btn-primary wt-academy-btn">
+          <i class="nf nf-md-book_open_page_variant" aria-hidden="true"></i>
+          Estudar SQLi na Academy →
+        </a>
+      </div>
+    </div>
+
+    <div class="wt-modal-footer">
+      <button type="button" class="btn btn-primary wt-modal-try-btn" id="btn-modal-try-alone">
+        <i class="nf nf-fa-play" aria-hidden="true"></i>
+        Iniciar Máquina e Tentar Sozinho
+      </button>
+      <a href="/desafio/1/walkthrough" class="wt-modal-proceed-link" id="link-modal-proceed-wt">
+        Ver o Passo a Passo Mesmo Assim →
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Client-side filter, pagination & card machine controls -->
+<script>
+(function() {
+  'use strict';
+
+  const CARDS_PER_PAGE = 9;
+  let currentPage = 1;
+  let activeDifficulty = 'all';
+  let searchTerm = '';
+  const csrfToken = "{{ csrf_token }}";
+
+  const searchInput = document.getElementById('challenge-search-input');
+  const filterPills = document.querySelectorAll('#difficulty-filters .filter-pill');
+  const allCards = Array.from(document.querySelectorAll('.challenge-hcard'));
+  const emptyState = document.getElementById('search-empty-state');
+  const paginationContainer = document.getElementById('pagination-container');
+  const paginationNumbers = document.getElementById('pagination-numbers');
+  const prevBtn = document.getElementById('pagination-prev');
+  const nextBtn = document.getElementById('pagination-next');
+  const gridSection = document.getElementById('challenges-grid');
+
+  function getMatchingCards() {
+    return allCards.filter(card => {
+      const diff = (card.getAttribute('data-difficulty') || '').toLowerCase();
+      const text = (card.innerText || '').toLowerCase();
+      const matchesDiff = (activeDifficulty === 'all' || diff === activeDifficulty);
+      const matchesSearch = (!searchTerm || text.includes(searchTerm));
+      return matchesDiff && matchesSearch;
+    });
+  }
+
+  function renderPage() {
+    const matching = getMatchingCards();
+    const totalMatching = matching.length;
+    const totalPages = Math.ceil(totalMatching / CARDS_PER_PAGE) || 1;
+
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+
+    // Oculta todos os cards inicialmente
+    allCards.forEach(c => {
+      c.style.display = 'none';
+    });
+
+    // Exibe apenas a fatia da página ativa
+    const start = (currentPage - 1) * CARDS_PER_PAGE;
+    const end = start + CARDS_PER_PAGE;
+    const pageCards = matching.slice(start, end);
+
+    pageCards.forEach(c => {
+      c.style.display = 'flex';
+    });
+
+    // Feedback de lista vazia
+    if (emptyState) {
+      emptyState.style.display = (totalMatching === 0) ? 'block' : 'none';
+    }
+
+    // Controles de paginação
+    if (totalMatching === 0 || totalPages <= 1) {
+      if (paginationContainer) {
+        paginationContainer.style.display = (totalMatching === 0) ? 'none' : 'flex';
+      }
+      if (paginationNumbers) {
+        paginationNumbers.innerHTML = `<button type="button" class="page-number-btn active">1</button>`;
+      }
+      if (prevBtn) prevBtn.disabled = true;
+      if (nextBtn) nextBtn.disabled = true;
+    } else {
+      if (paginationContainer) paginationContainer.style.display = 'flex';
+      if (prevBtn) prevBtn.disabled = (currentPage === 1);
+      if (nextBtn) nextBtn.disabled = (currentPage === totalPages);
+
+      let html = '';
+      for (let p = 1; p <= totalPages; p++) {
+        html += `<button type="button" class="page-number-btn ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`;
+      }
+      if (paginationNumbers) {
+        paginationNumbers.innerHTML = html;
+        paginationNumbers.querySelectorAll('.page-number-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            currentPage = parseInt(this.getAttribute('data-page'), 10);
+            renderPage();
+            scrollToGrid();
+          });
+        });
+      }
+    }
+  }
+
+  function scrollToGrid() {
+    if (gridSection) {
+      const top = gridSection.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    }
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function() {
+      if (currentPage > 1) {
+        currentPage--;
+        renderPage();
+        scrollToGrid();
+      }
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function() {
+      const totalPages = Math.ceil(getMatchingCards().length / CARDS_PER_PAGE) || 1;
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderPage();
+        scrollToGrid();
+      }
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function(e) {
+      searchTerm = e.target.value.trim().toLowerCase();
+      currentPage = 1;
+      renderPage();
+    });
+  }
+
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', function() {
+      filterPills.forEach(p => p.classList.remove('active'));
+      this.classList.add('active');
+      activeDifficulty = (this.getAttribute('data-difficulty') || 'all').toLowerCase();
+      currentPage = 1;
+      renderPage();
+    });
+  });
+
+  // ── START / STOP MACHINE DIRETAMENTE DO CARD ──
+  document.addEventListener('click', async function(e) {
+    const btn = e.target.closest('.js-card-start-btn');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    const challengeId = btn.getAttribute('data-challenge-id');
+    const currentStatus = btn.getAttribute('data-status') || 'available';
+    const instanceId = btn.getAttribute('data-instance-id');
+    const runningPill = document.getElementById(`card-running-${challengeId}`);
+    const runningLink = document.getElementById(`card-running-link-${challengeId}`);
+    const ipLabel = document.getElementById(`card-ip-${challengeId}`);
+
+    // STOP MACHINE
+    if (currentStatus === 'running' && instanceId) {
+      btn.disabled = true;
+      btn.innerHTML = '<i class="nf nf-md-loading" aria-hidden="true"></i> Stopping...';
+
+      try {
+        const res = await fetch(`/api/challenge-instances/${instanceId}/stop`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+          credentials: 'same-origin'
+        });
+        btn.disabled = false;
+        btn.setAttribute('data-status', 'available');
+        btn.setAttribute('data-instance-id', '');
+        btn.className = 'challenge-card-start-btn js-card-start-btn';
+        btn.innerHTML = '<i class="nf nf-fa-play" aria-hidden="true"></i> Start Machine';
+        if (runningPill) runningPill.style.display = 'none';
+        if (ipLabel) ipLabel.textContent = 'IP: Não iniciado';
+      } catch (err) {
+        btn.disabled = false;
+        alert('Erro ao parar instância: ' + err.message);
+      }
+      return;
+    }
+
+    // START MACHINE
+    btn.disabled = true;
+    btn.setAttribute('data-status', 'starting');
+    btn.innerHTML = '<i class="nf nf-md-loading" aria-hidden="true"></i> Starting...';
+
+    try {
+      const res = await fetch(`/api/challenges/${challengeId}/instances`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+        credentials: 'same-origin'
+      });
+
+      if (res.status === 401) {
+        btn.disabled = false;
+        btn.setAttribute('data-status', 'available');
+        btn.innerHTML = '<i class="nf nf-fa-play" aria-hidden="true"></i> Start Machine';
+        alert('Sua sessão expirou ou você não está autenticado. Por favor, faça login novamente para iniciar a máquina.');
+        window.location.href = '/login';
+        return;
+      }
+
+      if (res.status === 429) {
+        const retry = res.headers.get('Retry-After') || '30';
+        const errData = await res.json().catch(() => ({}));
+        alert((errData.error || 'Limite de requisições excedido.') + `\nAguarde ${retry} segundos.`);
+        btn.disabled = false;
+        btn.setAttribute('data-status', 'available');
+        btn.innerHTML = '<i class="nf nf-fa-play" aria-hidden="true"></i> Start Machine';
+        return;
+      }
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Falha ao iniciar laboratório.');
+      }
+
+      const data = await res.json();
+      btn.setAttribute('data-instance-id', data.instance_id || '');
+
+      if (data.status === 'running' && data.endpoint) {
+        applyRunningState(btn, challengeId, data);
+      } else {
+        // Polling do status
+        pollCardInstance(btn, challengeId, data.instance_id);
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.setAttribute('data-status', 'failed');
+      btn.innerHTML = '<i class="nf nf-fa-play" aria-hidden="true"></i> Retry';
+      alert('Falha ao iniciar máquina: ' + err.message);
+    }
+  });
+
+  function applyRunningState(btn, challengeId, data) {
+    btn.disabled = false;
+    btn.setAttribute('data-status', 'running');
+    btn.className = 'challenge-card-start-btn challenge-card-start-btn--stop js-card-start-btn';
+    btn.innerHTML = '<i class="nf nf-fa-stop" aria-hidden="true"></i> Stop Machine';
+
+    const runningBar = document.getElementById(`card-running-${challengeId}`);
+    const runningLink = document.getElementById(`card-running-link-${challengeId}`);
+    const ipLabel = document.getElementById(`card-ip-${challengeId}`);
+    const copyBtn = runningBar ? runningBar.querySelector('.js-copy-target-ip') : null;
+
+    if (runningBar && data.endpoint) {
+      const cleanIp = data.endpoint.replace(/^https?:\/\//, '').split('/')[0];
+      if (ipLabel) ipLabel.textContent = cleanIp;
+      if (runningLink) runningLink.href = data.endpoint;
+      if (copyBtn) copyBtn.setAttribute('data-ip', cleanIp);
+      runningBar.style.display = 'flex';
+    }
+  }
+
+  async function pollCardInstance(btn, challengeId, instanceId) {
+    const delays = [2000, 3000, 4000, 6000, 8000, 10000];
+    const deadline = Date.now() + 120000;
+    let i = 0;
+
+    while (Date.now() < deadline) {
+      const delay = delays[Math.min(i++, delays.length - 1)];
+      await new Promise(r => setTimeout(r, delay));
+
+      try {
+        const res = await fetch(`/api/challenge-instances/${instanceId}`, {
+          credentials: 'same-origin'
+        });
+        if (!res.ok) continue;
+        const data = await res.json();
+        if (data.status === 'running') {
+          applyRunningState(btn, challengeId, data);
+          return;
+        } else if (data.status === 'failed') {
+          btn.disabled = false;
+          btn.setAttribute('data-status', 'failed');
+          btn.className = 'challenge-card-start-btn js-card-start-btn';
+          btn.innerHTML = '<i class="nf nf-fa-play" aria-hidden="true"></i> Retry';
+          alert('A inicialização falhou: ' + (data.last_error || 'Erro interno no container.'));
+          return;
+        }
+      } catch (e) {
+        // Ignora falhas de rede no polling
+      }
+    }
+
+    btn.disabled = false;
+    btn.setAttribute('data-status', 'available');
+    btn.className = 'challenge-card-start-btn js-card-start-btn';
+    btn.innerHTML = '<i class="nf nf-fa-play" aria-hidden="true"></i> Start Machine';
+  }
+
+  // ── ANTI-SPOILER WALKTHROUGH MODAL INTERCEPTOR ──
+  const wtModal = document.getElementById('wt-confirm-modal');
+  const wtCloseBtn = document.getElementById('btn-close-wt-modal');
+  const wtTryAloneBtn = document.getElementById('btn-modal-try-alone');
+  const wtProceedLink = document.getElementById('link-modal-proceed-wt');
+  let currentCardStartBtn = null;
+
+  document.addEventListener('click', function(e) {
+    const wtLink = e.target.closest('.hcard-wt-link');
+    if (!wtLink) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const targetHref = wtLink.getAttribute('href');
+    if (wtProceedLink) wtProceedLink.setAttribute('href', targetHref);
+
+    // Identifica o botão de start machine do mesmo card
+    const cardEl = wtLink.closest('.challenge-hcard');
+    if (cardEl) {
+      currentCardStartBtn = cardEl.querySelector('.js-card-start-btn');
+    }
+
+    if (wtModal) wtModal.style.display = 'flex';
+  });
+
+  function closeWtModal() {
+    if (wtModal) wtModal.style.display = 'none';
+  }
+
+  if (wtCloseBtn) wtCloseBtn.addEventListener('click', closeWtModal);
+
+  if (wtModal) {
+    wtModal.addEventListener('click', function(e) {
+      if (e.target === wtModal) closeWtModal();
+    });
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && wtModal && wtModal.style.display === 'flex') {
+      closeWtModal();
+    }
+  });
+
+  if (wtTryAloneBtn) {
+    wtTryAloneBtn.addEventListener('click', function() {
+      closeWtModal();
+      if (currentCardStartBtn) {
+        currentCardStartBtn.click();
+      }
+    });
+  }
+
+  // ── COPY TARGET IP HANDLER ──
+  document.addEventListener('click', function(e) {
+    const copyBtn = e.target.closest('.js-copy-target-ip');
+    if (!copyBtn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const ip = copyBtn.getAttribute('data-ip');
+    if (!ip) return;
+    navigator.clipboard.writeText(ip);
+    const icon = copyBtn.querySelector('i');
+    if (icon) {
+      const origClass = icon.className;
+      icon.className = 'nf nf-md-check';
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        icon.className = origClass;
+        copyBtn.classList.remove('copied');
+      }, 1800);
+    }
+  });
+
+  // Render inicial
+  renderPage();
+})();
+</script>
+{% endblock %}
+

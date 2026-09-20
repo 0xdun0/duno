@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Delta] API Documentation - EverSec Document Vault</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">EverSec</div>
+            <div class="user-info">
+                <span>{{ username }}</span>
+                <a href="{{ url_for('dashboard') }}" class="btn-back">Back to Dashboard</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="document-view">
+                <h1>Document Vault API</h1>
+                <p class="info-text">REST API for programmatic access to the Document Vault. All endpoints require authentication via session cookie.</p>
+
+                <div class="api-section">
+                    <h2>Endpoints</h2>
+
+                    <div class="api-endpoint">
+                        <div class="api-method">GET</div>
+                        <code>/api/documents</code>
+                        <p>Returns a list of all documents in the vault with their IDs, titles, and confidentiality status.</p>
+                        <div class="api-response">
+                            <strong>Response:</strong>
+                            <pre>{
+  "documents": [
+    {
+      "id": 1042,
+      "title": "Meeting Notes - Sprint Retrospective",
+      "confidential": false
+    },
+    ...
+  ],
+  "total": 12
+}</pre>
+                        </div>
+                    </div>
+
+                    <div class="api-endpoint">
+                        <div class="api-method">GET</div>
+                        <code>/api/users/{id}</code>
+                        <p>Returns profile information for a user account.</p>
+                        <div class="api-response">
+                            <strong>Response:</strong>
+                            <pre>{
+  "id": 1,
+  "username": "employee",
+  "role": "employee",
+  "department": "Engineering",
+  "email": "jsmith@eversec.io",
+  "internal_notes": "Standard user. Onboarded 2025-03-15."
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-section">
+                    <h2>Authentication</h2>
+                    <p>All API requests must include a valid session cookie. Obtain a session by logging in via the web interface.</p>
+                </div>
+
+                <div class="api-section">
+                    <h2>Rate Limiting</h2>
+                    <p>API requests are limited to 100 requests per minute per session.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>EverSec Security Solutions</strong> - Document Vault API v2.1.0</p>
+        </div>
+    </div>
+</body>
+</html>

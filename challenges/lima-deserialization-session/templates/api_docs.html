@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Lima] API Documentation - EverSec</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .endpoint {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .endpoint-method {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .endpoint-path {
+            font-family: monospace;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .note strong {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>EverSec Session Manager API</h1>
+            <p>RESTful API for session validation</p>
+        </div>
+
+        <div class="card">
+            <h2>Endpoints</h2>
+
+            <div class="endpoint">
+                <div>
+                    <span class="endpoint-method">POST</span>
+                    <span class="endpoint-path">/api/validate</span>
+                </div>
+                <p style="margin-top: 10px; color: #666;">Validate a session token</p>
+            </div>
+
+            <h3 style="color: #333; margin: 20px 0 10px 0;">Request</h3>
+            <p><strong>Content-Type:</strong> application/json</p>
+            <p><strong>Body:</strong></p>
+
+            <div class="code-block">{
+    "session": "gASVdQAAAAAAAACMCF9fbWFpbl9flIwLVXNlclNlc3Npb26Uk5QpgZR9lCiMCHVzZXJuYW1llIwEam9obpSMBHJvbGWUjAR1c2VylIwNYXV0aGVudGljYXRlZJSIjApjcmVhdGVkX2F0lIwZMjAyNi0wMS0xOVQyMDowMDowMC4wMDAwMDCUdWIu"
+}</div>
+
+            <h3 style="color: #333; margin: 20px 0 10px 0;">Response</h3>
+            <div class="code-block">{
+    "valid": true,
+    "username": "john",
+    "role": "user",
+    "authenticated": true
+}</div>
+
+            <div class="note">
+                <strong>Note:</strong> The session field should contain a valid session token.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Error Responses</h2>
+
+            <p style="margin-bottom: 15px;"><strong>400 Bad Request</strong> - Invalid or missing session data</p>
+            <div class="code-block">{
+    "error": "Session data required"
+}</div>
+
+            <p style="margin: 20px 0 15px 0;"><strong>500 Internal Server Error</strong> - Validation error</p>
+            <div class="code-block">{
+    "error": "Validation error: ..."
+}</div>
+        </div>
+
+        <div class="card">
+            <h2>Example cURL Request</h2>
+
+            <div class="code-block">curl -X POST http://localhost:4008/api/validate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "session": "gASVdQAAAAAAAACMCF9fbWFpbl9f..."
+  }'</div>
+        </div>
+
+        <div class="back-link">
+            <a href="/">← Back to Home</a> |
+            <a href="/login">Login</a> |
+            <a href="/examples">View Examples</a>
+        </div>
+    </div>
+</body>
+</html>

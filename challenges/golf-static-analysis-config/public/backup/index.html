@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EverSec - Backup Files</title>
+    <style>
+        body { font-family: monospace; background: #1a1a2e; color: #e0e0e0; padding: 20px; }
+        h1 { color: #667eea; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #333; padding: 8px 12px; text-align: left; }
+        th { background: #2a2a4e; color: #667eea; }
+        tr:hover { background: #2a2a3e; }
+        a { color: #a78bfa; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .note { color: #f39c12; font-size: 0.85em; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>EverSec Backup Repository</h1>
+    <p>Infrastructure backup archive — internal use only.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Filename</th>
+                <th>Size</th>
+                <th>Last Modified</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="config.bak">config.bak</a></td>
+                <td>1.2 KB</td>
+                <td>2025-11-15 03:14</td>
+                <td>Full service configuration export</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p class="note">⚠ Access to this directory should be restricted in production.</p>
+</body>
+</html>

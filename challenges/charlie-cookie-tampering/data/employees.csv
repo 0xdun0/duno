@@ -1,0 +1,6 @@
+id,name,department,salary,hire_date,email
+1,John Employee,Engineering,$45000,2023-03-15,jemployee@eversec.local
+2,Alice Smith,Marketing,$48000,2022-09-01,asmith@eversec.local
+3,Bob Johnson,Sales,$52000,2021-06-20,bjohnson@eversec.local
+4,Carol White,Engineering,$50000,2023-01-10,cwhite@eversec.local
+5,Dave Brown,Support,$46000,2024-02-28,dbrown@eversec.local

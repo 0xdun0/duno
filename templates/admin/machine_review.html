@@ -1,0 +1,787 @@
+{% extends "base.html" %}
+{% block title %}Revisão: {{ sub.name }} (#{{ sub.id }}) — DUNO Admin{% endblock %}
+
+{% block content %}
+<div class="settings-page-wrapper">
+  <div class="settings-container" style="max-width:1200px;">
+
+    <!-- Top Breadcrumb / Kicker -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+      <div class="settings-kicker-brand">
+        <a href="{{ url_for('submissions_admin.machines_list') }}" style="color:inherit; text-decoration:none;">DUNO // MÁQUINAS</a> // REVISÃO #{{ sub.id }}
+      </div>
+      <div style="display:flex; gap:0.75rem; align-items:center;">
+        <a href="{{ url_for('submissions_admin.machines_list') }}" style="font-size:0.8rem; color:var(--ink-2); text-decoration:none;">
+          ← Voltar à Fila
+        </a>
+      </div>
+    </div>
+
+    <!-- Header / Overview Bar -->
+    <header class="settings-hero" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1.25rem; margin-bottom:1.5rem;">
+      <div>
+        <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.35rem;">
+          <h1 class="settings-title" style="margin-bottom:0;">{{ sub.name }}</h1>
+          <span class="badge font-mono" style="background:var(--bg-subtle); color:var(--ink-2); padding:0.25rem 0.6rem; border-radius:4px; font-size:0.85rem;">
+            v{{ sub.current_version }}
+          </span>
+          <span class="submission-status-badge status-{{ sub.status|lower }}" style="display:inline-flex; align-items:center; gap:0.35rem; padding:0.35rem 0.85rem; border-radius:var(--r-pill); font-size:0.8rem; font-weight:700;">
+            <span class="status-dot"></span>
+            {{ sub.status }}
+          </span>
+        </div>
+        <p class="settings-subtitle" style="font-family:var(--font-mono); font-size:0.85rem; color:var(--ink-3);">
+          slug: <strong>{{ sub.slug }}</strong> • Autor: <strong>{{ sub.author_name }}</strong> • Categoria: {{ metadata.category if metadata else 'Geral' }} • SO: {{ metadata.os_type if metadata else 'Linux' }}
+        </p>
+      </div>
+
+      <!-- Quick Action / Publish Indicator -->
+      <div style="display:flex; align-items:center; gap:0.75rem;">
+        {% if scorecard.ready_to_publish %}
+        <span class="badge" style="background:rgba(34, 197, 94, 0.15); color:#16a34a; border:1px solid #16a34a; padding:0.4rem 0.8rem; border-radius:var(--r-pill); font-size:0.75rem; font-weight:700;">
+          ✓ Todos os Gates Validados
+        </span>
+        {% else %}
+        <span class="badge" style="background:rgba(234, 88, 12, 0.12); color:var(--orange); border:1px solid var(--orange); padding:0.4rem 0.8rem; border-radius:var(--r-pill); font-size:0.75rem; font-weight:700;">
+          Gates Pendentes
+        </span>
+        {% endif %}
+        <a href="#tab-review" onclick="switchTab('review')" class="btn btn-primary" style="text-decoration:none; padding:0.5rem 1rem; font-size:0.85rem; font-weight:700; border-radius:var(--r-xs);">
+          Decisão / Parecer →
+        </a>
+      </div>
+    </header>
+
+    <!-- NAVEGAÇÃO DAS 10 ABAS -->
+    <div class="review-tabs-container" style="border-bottom:1px solid var(--line); margin-bottom:1.75rem; display:flex; gap:0.5rem; overflow-x:auto; padding-bottom:0.25rem;">
+      <button type="button" class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">1. Visão Geral</button>
+      <button type="button" class="tab-btn" data-tab="files" onclick="switchTab('files')">2. Arquivos</button>
+      <button type="button" class="tab-btn" data-tab="build" onclick="switchTab('build')">3. Build</button>
+      <button type="button" class="tab-btn" data-tab="security" onclick="switchTab('security')">
+        4. Segurança 
+        {% if findings %}
+        <span class="badge font-mono" style="background:var(--orange); color:#fff; padding:0.1rem 0.4rem; border-radius:var(--r-pill); font-size:0.65rem; margin-left:0.25rem;">{{ findings|length }}</span>
+        {% endif %}
+      </button>
+      <button type="button" class="tab-btn" data-tab="runtime" onclick="switchTab('runtime')">5. Runtime</button>
+      <button type="button" class="tab-btn" data-tab="tests" onclick="switchTab('tests')">6. Testes</button>
+      <button type="button" class="tab-btn" data-tab="flags" onclick="switchTab('flags')">7. Flags ({{ flags|length }})</button>
+      <button type="button" class="tab-btn" data-tab="learning" onclick="switchTab('learning')">8. Didática</button>
+      <button type="button" class="tab-btn" data-tab="review" onclick="switchTab('review')">9. Decisão &amp; Scorecard</button>
+      <button type="button" class="tab-btn" data-tab="history" onclick="switchTab('history')">10. Histórico &amp; Auditoria</button>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 1: VISÃO GERAL -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="tab-overview" class="tab-pane active">
+      <div style="display:grid; grid-template-columns:2fr 1fr; gap:1.5rem;">
+        <div>
+          <!-- Resumo -->
+          <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+            <h2 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:0.75rem;">Descrição e Escopo do Laboratório</h2>
+            <p style="color:var(--ink-2); font-size:0.9rem; line-height:1.6; margin-bottom:1.25rem;">
+              {{ metadata.short_desc if metadata else 'Sem descrição fornecida.' }}
+            </p>
+            
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:1rem; padding-top:1.25rem; border-top:1px solid var(--line-subtle);">
+              <div>
+                <span style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); display:block;">Categoria</span>
+                <span style="font-weight:600; color:var(--ink); font-size:0.9rem;">{{ metadata.category if metadata else '-' }}</span>
+              </div>
+              <div>
+                <span style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); display:block;">Dificuldade Autor</span>
+                <span style="font-weight:600; color:var(--ink); font-size:0.9rem;">{{ metadata.author_difficulty if metadata else '-' }}</span>
+              </div>
+              <div>
+                <span style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); display:block;">Dificuldade Oficial</span>
+                <span style="font-weight:700; color:var(--orange); font-size:0.9rem;">{{ metadata.reviewed_difficulty or 'Pendente de avaliação' }}</span>
+              </div>
+              <div>
+                <span style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); display:block;">Sistema Operacional</span>
+                <span style="font-weight:600; color:var(--ink); font-size:0.9rem;">{{ metadata.os_type if metadata else '-' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Portas e Rede -->
+          <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; box-shadow:var(--shadow-sm);">
+            <h2 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:0.75rem;">Serviços e Portas Declaradas</h2>
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+              {% for p in exposed_ports %}
+              <span class="badge font-mono" style="background:var(--bg-subtle); color:var(--ink); padding:0.35rem 0.75rem; border-radius:var(--r-xs); font-size:0.85rem; border:1px solid var(--line);">
+                Porta: {{ p }}/TCP
+              </span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar: Autor e Ajuste de Dificuldade -->
+        <div>
+          <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+            <h2 style="font-size:0.9rem; font-weight:700; color:var(--ink); margin-bottom:1rem; text-transform:uppercase;">Autor do Desafio</h2>
+            <div style="font-size:1.1rem; font-weight:700; color:var(--ink); margin-bottom:0.25rem;">
+              {{ metadata.author_name or sub.author_name }}
+            </div>
+            {% if metadata and metadata.author_url %}
+            <div style="margin-bottom:1rem;">
+              <a href="{{ metadata.author_url }}" target="_blank" rel="noopener" style="color:var(--orange); font-size:0.8rem; text-decoration:none;">
+                {{ metadata.author_url }} ↗
+              </a>
+            </div>
+            {% endif %}
+            <div style="font-size:0.75rem; color:var(--ink-3);">
+              Submetido originalmente em {{ (sub.created_at|string)[:10] }}
+            </div>
+          </div>
+
+          <!-- Ajuste de Dificuldade pelo Revisor -->
+          <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; box-shadow:var(--shadow-sm);">
+            <h2 style="font-size:0.9rem; font-weight:700; color:var(--ink); margin-bottom:0.75rem; text-transform:uppercase;">Calibrar Dificuldade Oficial</h2>
+            <p style="font-size:0.8rem; color:var(--ink-3); margin-bottom:1rem;">
+              Como revisor, você pode definir a dificuldade oficial da plataforma.
+            </p>
+            <div style="display:flex; flex-direction:column; gap:0.5rem;">
+              <select id="select-reviewed-difficulty" style="width:100%; padding:0.5rem; border:1px solid var(--line); border-radius:var(--r-xs); font-size:0.85rem;">
+                <option value="Easy" {% if metadata and (metadata.reviewed_difficulty == 'Easy' or (not metadata.reviewed_difficulty and metadata.author_difficulty == 'Easy')) %}selected{% endif %}>Easy (Fácil)</option>
+                <option value="Medium" {% if metadata and (metadata.reviewed_difficulty == 'Medium' or (not metadata.reviewed_difficulty and metadata.author_difficulty == 'Medium')) %}selected{% endif %}>Medium (Médio)</option>
+                <option value="Hard" {% if metadata and (metadata.reviewed_difficulty == 'Hard' or (not metadata.reviewed_difficulty and metadata.author_difficulty == 'Hard')) %}selected{% endif %}>Hard (Difícil)</option>
+                <option value="Insane" {% if metadata and (metadata.reviewed_difficulty == 'Insane' or (not metadata.reviewed_difficulty and metadata.author_difficulty == 'Insane')) %}selected{% endif %}>Insane (Extremo)</option>
+              </select>
+              <button type="button" onclick="updateDifficulty()" class="btn-subtle" style="padding:0.45rem; font-size:0.8rem; border-radius:var(--r-xs); border:1px solid var(--line); background:var(--bg-subtle); color:var(--ink); cursor:pointer;">
+                Salvar Dificuldade Oficial
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 2: ARQUIVOS & ESTRUTURA -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="tab-files" class="tab-pane" style="display:none;">
+      <div style="display:grid; grid-template-columns:300px 1fr; gap:1.5rem; height:600px;">
+        <!-- File Tree -->
+        <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); overflow-y:auto; padding:1rem; box-shadow:var(--shadow-sm);">
+          <div style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--ink-3); margin-bottom:0.75rem;">
+            Árvore de Arquivos ({{ files|length }})
+          </div>
+          <div style="display:flex; flex-direction:column; gap:0.25rem;">
+            {% for f in files %}
+            <button type="button" class="file-tree-item" data-path="{{ f.file_path }}" onclick="loadFilePreview('{{ f.file_path }}')" style="display:flex; justify-content:space-between; align-items:center; padding:0.45rem 0.6rem; border-radius:var(--r-xs); text-align:left; border:none; background:transparent; font-family:var(--font-mono); font-size:0.8rem; color:var(--ink); cursor:pointer; width:100%;">
+              <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">📄 {{ f.file_path }}</span>
+              <span style="font-size:0.7rem; color:var(--ink-3);">{{ (f.file_size / 1024)|round(1) }}k</span>
+            </button>
+            {% else %}
+            <div style="color:var(--ink-3); font-size:0.8rem;">Nenhum arquivo no pacote.</div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Code Viewer -->
+        <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); display:flex; flex-direction:column; overflow:hidden; box-shadow:var(--shadow-sm);">
+          <div style="background:var(--bg-card-subtle); border-bottom:1px solid var(--line); padding:0.6rem 1rem; display:flex; justify-content:space-between; align-items:center;">
+            <span id="preview-filename" style="font-family:var(--font-mono); font-size:0.85rem; font-weight:600; color:var(--ink);">
+              Selecione um arquivo para inspecionar
+            </span>
+            <span id="preview-meta" style="font-size:0.75rem; color:var(--ink-3);"></span>
+          </div>
+          <div style="flex:1; overflow:auto; background:#18181b; color:#f4f4f5; padding:1rem; font-family:var(--font-mono); font-size:0.85rem; line-height:1.6;">
+            <pre id="code-content" style="margin:0; white-space:pre-wrap; word-break:break-all;">Clique em um arquivo na coluna lateral para carregar seu código com inspeção segura.</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 3: BUILD -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="tab-build" class="tab-pane" style="display:none;">
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <div>
+            <h2 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:0.25rem;">Compilação Isolada do Contêiner</h2>
+            <p style="font-size:0.85rem; color:var(--ink-3);">
+              O build roda em ambiente estritamente isolado sem acesso à rede do host e sem permissões privilegiadas.
+            </p>
+          </div>
+          <button type="button" onclick="triggerBuild()" id="btn-trigger-build" class="btn btn-primary" style="padding:0.5rem 1.25rem; font-size:0.85rem; font-weight:600; border-radius:var(--r-xs); cursor:pointer;">
+            ⚙ Iniciar Build Isolado
+          </button>
+        </div>
+
+        {% if latest_build %}
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; padding:1rem; background:var(--bg-card-subtle); border-radius:var(--r-xs); margin-bottom:1.25rem; font-size:0.85rem;">
+          <div>
+            <span style="display:block; font-size:0.75rem; color:var(--ink-3); text-transform:uppercase;">Status</span>
+            <span style="font-weight:700; color:{% if latest_build.status == 'success' %}#16a34a{% else %}#dc2626{% endif %};">
+              {{ latest_build.status|upper }}
+            </span>
+          </div>
+          <div>
+            <span style="display:block; font-size:0.75rem; color:var(--ink-3); text-transform:uppercase;">Image Tag</span>
+            <span class="font-mono" style="font-size:0.8rem;">{{ latest_build.image_tag or '-' }}</span>
+          </div>
+          <div>
+            <span style="display:block; font-size:0.75rem; color:var(--ink-3); text-transform:uppercase;">Duração</span>
+            <span>{{ latest_build.duration_seconds or 0 }}s</span>
+          </div>
+          <div>
+            <span style="display:block; font-size:0.75rem; color:var(--ink-3); text-transform:uppercase;">Data de Execução</span>
+            <span>{{ (latest_build.created_at|string)[:16] if latest_build.created_at else '-' }}</span>
+          </div>
+        </div>
+
+        <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.5rem;">
+          Terminal de Logs de Build
+        </div>
+        <div style="background:#09090b; color:#a1a1aa; border-radius:var(--r-xs); padding:1rem; font-family:var(--font-mono); font-size:0.8rem; line-height:1.5; max-height:350px; overflow-y:auto;">
+          <pre style="margin:0; white-space:pre-wrap;">{{ latest_build.build_logs or 'Nenhum log registrado.' }}</pre>
+        </div>
+        {% else %}
+        <div style="padding:2.5rem; text-align:center; color:var(--ink-3); border:1px dashed var(--line); border-radius:var(--r-xs);">
+          Nenhum build executado para esta versão ainda. Clique em "Iniciar Build Isolado" acima.
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 4: SEGURANÇA & FINDINGS -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="tab-security" class="tab-pane" style="display:none;">
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+          <div>
+            <h2 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:0.25rem;">Scan Estático &amp; Detecção de Segredos</h2>
+            <p style="font-size:0.85rem; color:var(--ink-3);">
+              Análise de configurações perigosas de Docker/Compose e credenciais hardcoded.
+            </p>
+          </div>
+          <button type="button" onclick="triggerScan()" id="btn-trigger-scan" class="btn btn-primary" style="padding:0.5rem 1.25rem; font-size:0.85rem; font-weight:600; border-radius:var(--r-xs); cursor:pointer;">
+            🛡 Executar Scan de Segurança
+          </button>
+        </div>
+
+        {% if findings %}
+        <div class="table-responsive" style="border:1px solid var(--line); border-radius:var(--r-xs); overflow:hidden;">
+          <table class="duno-table" style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+            <thead>
+              <tr style="background:var(--bg-card-subtle); border-bottom:1px solid var(--line); font-size:0.75rem; text-transform:uppercase; color:var(--ink-3);">
+                <th style="padding:0.75rem 1rem;">Severidade</th>
+                <th style="padding:0.75rem 1rem;">Regra / Tipo</th>
+                <th style="padding:0.75rem 1rem;">Arquivo : Linha</th>
+                <th style="padding:0.75rem 1rem;">Descrição</th>
+                <th style="padding:0.75rem 1rem;">Classificação</th>
+                <th style="padding:0.75rem 1rem; text-align:right;">Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for f in findings %}
+              <tr style="border-bottom:1px solid var(--line-subtle);">
+                <td style="padding:0.8rem 1rem;">
+                  <span class="badge" style="
+                    font-size:0.7rem; font-weight:700; padding:0.2rem 0.5rem; border-radius:4px;
+                    {% if f.severity == 'CRITICAL' %}background:#fee2e2; color:#b91c1c; border:1px solid #f87171;
+                    {% elif f.severity == 'HIGH' %}background:#ffedd5; color:#c2410c; border:1px solid #fb923c;
+                    {% elif f.severity == 'MEDIUM' %}background:#fef9c3; color:#a16207; border:1px solid #facc15;
+                    {% else %}background:var(--bg-subtle); color:var(--ink-2);{% endif %}">
+                    {{ f.severity }}
+                  </span>
+                </td>
+                <td style="padding:0.8rem 1rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink);">
+                  {{ f.rule_id }}
+                </td>
+                <td style="padding:0.8rem 1rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-2);">
+                  {{ f.file_path }}{% if f.line_number %}:{{ f.line_number }}{% endif %}
+                </td>
+                <td style="padding:0.8rem 1rem; color:var(--ink-2); max-width:320px;">
+                  <div style="font-weight:600; color:var(--ink); font-size:0.8rem;">{{ f.title }}</div>
+                  <div style="font-size:0.75rem; color:var(--ink-3);">{{ f.description }}</div>
+                </td>
+                <td style="padding:0.8rem 1rem;">
+                  {% if f.is_expected %}
+                  <span class="badge" style="background:rgba(34, 197, 94, 0.15); color:#16a34a; font-size:0.75rem; font-weight:600; padding:0.2rem 0.5rem; border-radius:var(--r-pill);">
+                    ✓ Vuln do Lab (Esperada)
+                  </span>
+                  {% else %}
+                  <span class="badge" style="background:rgba(239, 68, 68, 0.12); color:#dc2626; font-size:0.75rem; font-weight:600; padding:0.2rem 0.5rem; border-radius:var(--r-pill);">
+                    ⚠ Risco Não-Esperado
+                  </span>
+                  {% endif %}
+                </td>
+                <td style="padding:0.8rem 1rem; text-align:right;">
+                  <button type="button" onclick="toggleExpectedFinding({{ f.id }}, {{ 'false' if f.is_expected else 'true' }})" class="btn-subtle" style="padding:0.35rem 0.7rem; font-size:0.75rem; border-radius:var(--r-xs); border:1px solid var(--line); background:var(--bg-subtle); color:var(--ink-2); cursor:pointer;">
+                    {% if f.is_expected %}Marcar Inaceitável{% else %}Marcar como Esperado{% endif %}
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div style="padding:2.5rem; text-align:center; color:var(--ink-3); border:1px dashed var(--line); border-radius:var(--r-xs);">
+          Nenhum finding registrado. Clique em "Executar Scan de Segurança" para analisar o pacote.
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 5: RUNTIME & ISOLAMENTO -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="tab-runtime" class="tab-pane" style="display:none;">
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+        <h2 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:1rem;">Parâmetros de Segurança de Runtime</h2>
+        
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.25rem;">
+          <div style="border:1px solid var(--line); border-radius:var(--r-xs); padding:1rem; background:var(--bg-card-subtle);">
+            <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700;">Isolamento de Rede</div>
+            <div style="font-size:1.1rem; font-weight:700; color:#16a34a; margin:0.35rem 0;">Internal Bridge</div>
+            <div style="font-size:0.75rem; color:var(--ink-3);">Sem acesso à rede local do host ou à internet externa.</div>
+          </div>
+
+          <div style="border:1px solid var(--line); border-radius:var(--r-xs); padding:1rem; background:var(--bg-card-subtle);">
+            <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700;">Privilégios de Container</div>
+            <div style="font-size:1.1rem; font-weight:700; color:#16a34a; margin:0.35rem 0;">Non-Privileged</div>
+            <div style="font-size:0.75rem; color:var(--ink-3);">Privileged mode e capacidades perigosas desativadas.</div>
+          </div>
+
+          <div style="border:1px solid var(--line); border-radius:var(--r-xs); padding:1rem; background:var(--bg-card-subtle);">
+            <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700;">Limite de Memória</div>
+            <div style="font-size:1.1rem; font-weight:700; color:var(--ink); margin:0.35rem 0;">512 MB (Max)</div>
+            <div style="font-size:0.75rem; color:var(--ink-3);">Prevenção contra esgotamento de recursos do nó.</div>
+          </div>
+
+          <div style="border:1px solid var(--line); border-radius:var(--r-xs); padding:1rem; background:var(--bg-card-subtle);">
+            <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700;">Limite de CPU</div>
+            <div style="font-size:1.1rem; font-weight:700; color:var(--ink); margin:0.35rem 0;">1.0 Core</div>
+            <div style="font-size:0.75rem; color:var(--ink-3);">Restrição rigorosa de threads e ciclos de clock.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 6: TESTES FUNCIONAIS -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="tab-tests" class="tab-pane" style="display:none;">
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+          <div>
+            <h2 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:0.25rem;">Bateria de Testes Funcionais</h2>
+            <p style="font-size:0.85rem; color:var(--ink-3);">
+              Verificação de inicialização correta, portas abertas e integridade de resposta HTTP.
+            </p>
+          </div>
+          <button type="button" onclick="triggerTest()" id="btn-trigger-test" class="btn btn-primary" style="padding:0.5rem 1.25rem; font-size:0.85rem; font-weight:600; border-radius:var(--r-xs); cursor:pointer;">
+            🧪 Executar Bateria de Testes
+          </button>
+        </div>
+
+        {% if tests %}
+        <div class="table-responsive" style="border:1px solid var(--line); border-radius:var(--r-xs); overflow:hidden;">
+          <table class="duno-table" style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+            <thead>
+              <tr style="background:var(--bg-card-subtle); border-bottom:1px solid var(--line); font-size:0.75rem; text-transform:uppercase; color:var(--ink-3);">
+                <th style="padding:0.75rem 1rem;">Nome do Teste</th>
+                <th style="padding:0.75rem 1rem;">Tipo</th>
+                <th style="padding:0.75rem 1rem;">Status</th>
+                <th style="padding:0.75rem 1rem;">Duração</th>
+                <th style="padding:0.75rem 1rem;">Detalhes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in tests %}
+              <tr style="border-bottom:1px solid var(--line-subtle);">
+                <td style="padding:0.8rem 1rem; font-weight:600; color:var(--ink);">{{ t.test_name }}</td>
+                <td style="padding:0.8rem 1rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-2);">{{ t.test_type }}</td>
+                <td style="padding:0.8rem 1rem;">
+                  <span class="badge" style="font-size:0.75rem; font-weight:700; padding:0.2rem 0.5rem; border-radius:var(--r-pill); {% if t.status == 'passed' %}background:rgba(34, 197, 94, 0.15); color:#16a34a;{% else %}background:rgba(239, 68, 68, 0.15); color:#dc2626;{% endif %}">
+                    {{ t.status|upper }}
+                  </span>
+                </td>
+                <td style="padding:0.8rem 1rem; color:var(--ink-3); font-size:0.8rem;">{{ t.duration_seconds or 0 }}s</td>
+                <td style="padding:0.8rem 1rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-2); max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                  {{ t.output or '-' }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div style="padding:2.5rem; text-align:center; color:var(--ink-3); border:1px dashed var(--line); border-radius:var(--r-xs);">
+          Nenhum teste executado ainda. Clique em "Executar Bateria de Testes" acima.
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 7: FLAGS -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="tab-flags" class="tab-pane" style="display:none;">
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+        <h2 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:1rem;">Flags Cadastradas no Desafio</h2>
+        
+        <div class="table-responsive" style="border:1px solid var(--line); border-radius:var(--r-xs); overflow:hidden;">
+          <table class="duno-table" style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+            <thead>
+              <tr style="background:var(--bg-card-subtle); border-bottom:1px solid var(--line); font-size:0.75rem; text-transform:uppercase; color:var(--ink-3);">
+                <th style="padding:0.75rem 1rem;">Tipo</th>
+                <th style="padding:0.75rem 1rem;">Valor / Localização</th>
+                <th style="padding:0.75rem 1rem;">Pontos</th>
+                <th style="padding:0.75rem 1rem;">SHA256 Hash</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for fl in flags %}
+              <tr style="border-bottom:1px solid var(--line-subtle);">
+                <td style="padding:0.8rem 1rem; font-weight:700; color:var(--ink);">{{ fl.flag_type }}</td>
+                <td style="padding:0.8rem 1rem; font-family:var(--font-mono); font-size:0.85rem; color:var(--orange);">
+                  {{ fl.flag_value or fl.flag_location or '-' }}
+                </td>
+                <td style="padding:0.8rem 1rem; font-weight:600; color:var(--ink);">{{ fl.points or 100 }} pts</td>
+                <td style="padding:0.8rem 1rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-3);">
+                  {{ (fl.flag_hash|string)[:20] if fl.flag_hash else '-' }}...
+                </td>
+              </tr>
+              {% else %}
+              <tr>
+                <td colspan="4" style="padding:2rem; text-align:center; color:var(--ink-3);">Nenhuma flag cadastrada no manifesto.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 8: DIDÁTICA & OBJETIVOS -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="tab-learning" class="tab-pane" style="display:none;">
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+        <h2 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:1.25rem;">Avaliação do Conteúdo Pedagógico</h2>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem;">
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.5rem;">Objetivos de Aprendizagem</div>
+            <ul style="margin-left:1.25rem; font-size:0.875rem; color:var(--ink-2); line-height:1.6;">
+              {% for obj in objectives %}
+              <li>{{ obj }}</li>
+              {% else %}
+              <li style="color:var(--ink-3);">Nenhum objetivo cadastrado.</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.5rem;">Pré-requisitos Recomendados</div>
+            <ul style="margin-left:1.25rem; font-size:0.875rem; color:var(--ink-2); line-height:1.6;">
+              {% for pre in prerequisites %}
+              <li>{{ pre }}</li>
+              {% else %}
+              <li style="color:var(--ink-3);">Nenhum pré-requisito cadastrado.</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid var(--line-subtle); padding-top:1.25rem;">
+          <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.5rem;">Dicas Pedagógicas &amp; Custos</div>
+          <div style="display:flex; flex-direction:column; gap:0.5rem;">
+            {% for h in hints %}
+            <div style="padding:0.6rem 0.85rem; border-radius:var(--r-xs); background:var(--bg-card-subtle); border-left:3px solid var(--orange); display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:0.85rem; color:var(--ink);">{{ h.hint if h is mapping else h }}</span>
+              {% if h is mapping and h.cost %}<span class="badge" style="font-size:0.75rem; color:var(--ink-3);">-{{ h.cost }} pts</span>{% endif %}
+            </div>
+            {% else %}
+            <div style="color:var(--ink-3); font-size:0.85rem;">Nenhuma dica cadastrada.</div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 9: DECISÃO & SCORECARD -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="tab-review" class="tab-pane" style="display:none;">
+      <!-- Scorecard -->
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+        <h2 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:1rem;">Scorecard de Validação para Publicação</h2>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:1.5rem;">
+          <div style="padding:0.85rem 1rem; border-radius:var(--r-xs); border:1px solid {% if scorecard.metadata %}#22c55e{% else %}#f87171{% endif %}; background:{% if scorecard.metadata %}rgba(34, 197, 94, 0.08){% else %}rgba(239, 68, 68, 0.08){% endif %};">
+            <div style="font-weight:700; font-size:0.85rem; color:var(--ink);">Metadados Básicos</div>
+            <div style="font-size:0.75rem; color:var(--ink-3);">{% if scorecard.metadata %}✓ Preenchidos{% else %}✗ Incompletos{% endif %}</div>
+          </div>
+
+          <div style="padding:0.85rem 1rem; border-radius:var(--r-xs); border:1px solid {% if scorecard.build %}#22c55e{% else %}#f87171{% endif %}; background:{% if scorecard.build %}rgba(34, 197, 94, 0.08){% else %}rgba(239, 68, 68, 0.08){% endif %};">
+            <div style="font-weight:700; font-size:0.85rem; color:var(--ink);">Build Isolado</div>
+            <div style="font-size:0.75rem; color:var(--ink-3);">{% if scorecard.build %}✓ Sucesso{% else %}✗ Não compilou{% endif %}</div>
+          </div>
+
+          <div style="padding:0.85rem 1rem; border-radius:var(--r-xs); border:1px solid {% if scorecard.security %}#22c55e{% else %}#f87171{% endif %}; background:{% if scorecard.security %}rgba(34, 197, 94, 0.08){% else %}rgba(239, 68, 68, 0.08){% endif %};">
+            <div style="font-weight:700; font-size:0.85rem; color:var(--ink);">Gate de Segurança</div>
+            <div style="font-size:0.75rem; color:var(--ink-3);">{% if scorecard.security %}✓ Sem riscos críticos{% else %}✗ Riscos não resolvidos{% endif %}</div>
+          </div>
+
+          <div style="padding:0.85rem 1rem; border-radius:var(--r-xs); border:1px solid {% if scorecard.tests %}#22c55e{% else %}#f87171{% endif %}; background:{% if scorecard.tests %}rgba(34, 197, 94, 0.08){% else %}rgba(239, 68, 68, 0.08){% endif %};">
+            <div style="font-weight:700; font-size:0.85rem; color:var(--ink);">Testes Funcionais</div>
+            <div style="font-size:0.75rem; color:var(--ink-3);">{% if scorecard.tests %}✓ Passou{% else %}✗ Pendente ou falhou{% endif %}</div>
+          </div>
+
+          <div style="padding:0.85rem 1rem; border-radius:var(--r-xs); border:1px solid {% if scorecard.flags %}#22c55e{% else %}#f87171{% endif %}; background:{% if scorecard.flags %}rgba(34, 197, 94, 0.08){% else %}rgba(239, 68, 68, 0.08){% endif %};">
+            <div style="font-weight:700; font-size:0.85rem; color:var(--ink);">Flags Válidas</div>
+            <div style="font-size:0.75rem; color:var(--ink-3);">{% if scorecard.flags %}✓ {{ flags|length }} flag(s){% else %}✗ Nenhuma flag{% endif %}</div>
+          </div>
+
+          <div style="padding:0.85rem 1rem; border-radius:var(--r-xs); border:1px solid {% if scorecard.learning %}#22c55e{% else %}#f87171{% endif %}; background:{% if scorecard.learning %}rgba(34, 197, 94, 0.08){% else %}rgba(239, 68, 68, 0.08){% endif %};">
+            <div style="font-weight:700; font-size:0.85rem; color:var(--ink);">Didática &amp; Objetivos</div>
+            <div style="font-size:0.75rem; color:var(--ink-3);">{% if scorecard.learning %}✓ Cadastrados{% else %}✗ Ausentes{% endif %}</div>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid var(--line-subtle); padding-top:1.5rem;">
+          <h3 style="font-size:0.95rem; font-weight:700; color:var(--ink); margin-bottom:0.75rem;">Parecer do Revisor</h3>
+          <div style="margin-bottom:1.25rem;">
+            <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">Notas Técnicas / Feedback para o Autor</label>
+            <textarea id="review-reason" rows="4" placeholder="Descreva os pontos positivos, vulnerabilidades encontradas ou os ajustes necessários..." style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); font-size:0.875rem;"></textarea>
+          </div>
+
+          <!-- BOTÕES DE DECISÃO -->
+          <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+            <button type="button" onclick="submitDecision('approve')" class="btn btn-primary" style="background:#16a34a; border-color:#16a34a; padding:0.65rem 1.5rem; font-weight:700; border-radius:var(--r-xs); cursor:pointer;">
+              ✓ Aprovar e Publicar Máquina
+            </button>
+            <button type="button" onclick="submitDecision('request_changes')" class="btn-subtle" style="background:#FFF3E8; border:1px solid var(--orange); color:var(--orange-hover); padding:0.65rem 1.5rem; font-weight:700; border-radius:var(--r-xs); cursor:pointer;">
+              ⚠ Solicitar Ajustes ao Autor
+            </button>
+            <button type="button" onclick="submitDecision('reject')" class="btn-subtle" style="background:#fee2e2; border:1px solid #ef4444; color:#b91c1c; padding:0.65rem 1.5rem; font-weight:700; border-radius:var(--r-xs); cursor:pointer;">
+              ✕ Rejeitar Submissão
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 10: HISTÓRICO & AUDITORIA -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="tab-history" class="tab-pane" style="display:none;">
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+        <h2 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:1.25rem;">Trilha de Auditoria &amp; Transições de Estado</h2>
+
+        <div style="display:flex; flex-direction:column; gap:1.25rem;">
+          {% for h in history %}
+          <div style="position:relative; padding-left:1.5rem; border-left:2px solid var(--line);">
+            <div style="position:absolute; left:-5px; top:2px; width:8px; height:8px; border-radius:50%; background:var(--orange);"></div>
+            <div style="font-weight:700; font-size:0.875rem; color:var(--ink);">
+              Transição para: <span class="submission-status-badge status-{{ h.to_status|lower }}" style="padding:0.15rem 0.5rem; border-radius:var(--r-pill); font-size:0.75rem;">{{ h.to_status }}</span>
+            </div>
+            <div style="font-size:0.75rem; color:var(--ink-3); margin-top:0.25rem;">
+              Status anterior: <strong>{{ h.from_status }}</strong> • Operador: <strong>{{ h.changed_by or 'Sistema' }}</strong> • Data: {{ (h.created_at|string)[:16] if h.created_at else '-' }}
+            </div>
+            {% if h.reason %}
+            <div style="margin-top:0.4rem; font-size:0.8rem; color:var(--ink-2); background:var(--bg-card-subtle); padding:0.5rem 0.75rem; border-radius:var(--r-xs);">
+              {{ h.reason }}
+            </div>
+            {% endif %}
+          </div>
+          {% else %}
+          <div style="color:var(--ink-3); font-size:0.85rem;">Nenhum evento registrado no histórico.</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.review-tabs-container .tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-3);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+.review-tabs-container .tab-btn:hover {
+  color: var(--ink);
+}
+.review-tabs-container .tab-btn.active {
+  color: var(--orange);
+  border-bottom-color: var(--orange);
+}
+.file-tree-item:hover {
+  background: var(--bg-card-subtle) !important;
+}
+.file-tree-item.selected {
+  background: var(--bg-subtle) !important;
+  font-weight: 700 !important;
+}
+</style>
+
+<script>
+function switchTab(tabId) {
+  document.querySelectorAll('.review-tabs-container .tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tabId);
+  });
+  document.querySelectorAll('.tab-pane').forEach(pane => {
+    pane.style.display = (pane.id === 'tab-' + tabId) ? 'block' : 'none';
+  });
+}
+
+async function loadFilePreview(filePath) {
+  const codeBox = document.getElementById('code-content');
+  const filenameLabel = document.getElementById('preview-filename');
+  const metaLabel = document.getElementById('preview-meta');
+
+  document.querySelectorAll('.file-tree-item').forEach(el => {
+    el.classList.toggle('selected', el.dataset.path === filePath);
+  });
+
+  filenameLabel.textContent = filePath;
+  codeBox.textContent = 'Carregando conteúdo...';
+
+  try {
+    const res = await fetch(`/api/admin/machines/{{ sub.id }}/file?path=` + encodeURIComponent(filePath));
+    const data = await res.json();
+    if (res.ok && data.status === 'success') {
+      codeBox.textContent = data.content;
+      metaLabel.textContent = data.size + ' bytes';
+    } else {
+      codeBox.textContent = 'Erro ao carregar arquivo: ' + (data.error || 'Não encontrado.');
+    }
+  } catch (err) {
+    codeBox.textContent = 'Erro de rede ao buscar conteúdo do arquivo.';
+  }
+}
+
+async function triggerBuild() {
+  const btn = document.getElementById('btn-trigger-build');
+  btn.disabled = true;
+  btn.textContent = 'Executando build...';
+  try {
+    const res = await fetch('/api/admin/machines/{{ sub.id }}/build', { method: 'POST' });
+    const data = await res.json();
+    alert(data.status === 'success' ? 'Build finalizado com sucesso!' : 'Falha no build: ' + data.error);
+    window.location.reload();
+  } catch (err) {
+    alert('Erro de conexão ao iniciar build.');
+    btn.disabled = false;
+  }
+}
+
+async function triggerScan() {
+  const btn = document.getElementById('btn-trigger-scan');
+  btn.disabled = true;
+  btn.textContent = 'Executando scan...';
+  try {
+    const res = await fetch('/api/admin/machines/{{ sub.id }}/scan', { method: 'POST' });
+    const data = await res.json();
+    alert(data.status === 'success' ? `Scan concluído! ${data.findings_count} findings detectados.` : 'Erro: ' + data.error);
+    window.location.reload();
+  } catch (err) {
+    alert('Erro ao executar scan.');
+    btn.disabled = false;
+  }
+}
+
+async function triggerTest() {
+  const btn = document.getElementById('btn-trigger-test');
+  btn.disabled = true;
+  btn.textContent = 'Testando contêiner...';
+  try {
+    const res = await fetch('/api/admin/machines/{{ sub.id }}/test', { method: 'POST' });
+    const data = await res.json();
+    alert(data.status === 'success' ? 'Bateria de testes finalizada!' : 'Falha nos testes: ' + data.error);
+    window.location.reload();
+  } catch (err) {
+    alert('Erro ao executar bateria de testes.');
+    btn.disabled = false;
+  }
+}
+
+async function toggleExpectedFinding(findingId, isExpected) {
+  try {
+    const res = await fetch(`/api/admin/findings/${findingId}/expected`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ is_expected: isExpected })
+    });
+    const data = await res.json();
+    if (res.ok && data.status === 'success') {
+      window.location.reload();
+    } else {
+      alert('Erro: ' + data.error);
+    }
+  } catch (err) {
+    alert('Erro ao atualizar finding.');
+  }
+}
+
+async function updateDifficulty() {
+  const select = document.getElementById('select-reviewed-difficulty');
+  try {
+    const res = await fetch('/api/admin/machines/{{ sub.id }}/difficulty', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ difficulty: select.value })
+    });
+    const data = await res.json();
+    if (res.ok && data.status === 'success') {
+      alert('Dificuldade oficial atualizada!');
+      window.location.reload();
+    } else {
+      alert('Erro: ' + data.error);
+    }
+  } catch (err) {
+    alert('Erro ao salvar dificuldade.');
+  }
+}
+
+async function submitDecision(action) {
+  const reason = document.getElementById('review-reason').value;
+  let url = '';
+  if (action === 'approve') url = '/api/admin/machines/{{ sub.id }}/approve-publish';
+  if (action === 'request_changes') url = '/api/admin/machines/{{ sub.id }}/request-changes';
+  if (action === 'reject') url = '/api/admin/machines/{{ sub.id }}/reject';
+
+  if (!reason && action !== 'approve') {
+    alert('Por favor, informe a justificativa ou orientações no campo de notas técnicas.');
+    return;
+  }
+
+  if (!confirm(`Confirma a decisão de ${action.toUpperCase()} para esta máquina?`)) return;
+
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reason: reason })
+    });
+    const data = await res.json();
+    if (res.ok && data.status === 'success') {
+      alert('Decisão processada com sucesso!');
+      window.location.reload();
+    } else {
+      alert('Não foi possível processar a decisão: ' + (data.error || 'Verifique o scorecard.'));
+    }
+  } catch (err) {
+    alert('Erro de conexão ao processar decisão.');
+  }
+}
+</script>
+{% endblock %}

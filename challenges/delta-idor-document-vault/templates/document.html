@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Delta] {{ document.title }} - EverSec Document Vault</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">EverSec</div>
+            <div class="user-info">
+                <span>{{ username }}</span>
+                <a href="{{ url_for('dashboard') }}" class="btn-back">Back to Dashboard</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="document-view">
+                {% if document.confidential %}
+                <div class="confidential-badge">
+                    CONFIDENTIAL
+                </div>
+                {% endif %}
+
+                <h1>{{ document.title }}</h1>
+                <div class="document-meta">
+                    <span class="meta-item">Document ID: <strong>{{ document.id }}</strong></span>
+                    <span class="meta-item">Classification: <strong>{{ 'Confidential' if document.confidential else 'Internal' }}</strong></span>
+                </div>
+
+                <div class="document-content">
+                    {{ document.content }}
+                </div>
+
+                <div class="document-actions">
+                    <a href="{{ url_for('dashboard') }}" class="btn-primary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>EverSec Security Solutions</strong> - Secure Document Access</p>
+        </div>
+    </div>
+</body>
+</html>

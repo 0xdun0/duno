@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Support Tickets - EverSec{% endblock %}
+
+{% block extra_css %}
+<style>
+    .tickets-grid {
+        display: grid;
+        gap: 20px;
+    }
+
+    .ticket-card {
+        background: #f7fafc;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 20px;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .ticket-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .ticket-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 15px;
+    }
+
+    .ticket-title {
+        font-size: 1.2em;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .status-badge {
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: 600;
+    }
+
+    .status-open {
+        background: #fef5e7;
+        color: #f39c12;
+    }
+
+    .status-in-progress {
+        background: #ebf8ff;
+        color: #3182ce;
+    }
+
+    .status-closed {
+        background: #d4edda;
+        color: #28a745;
+    }
+
+    .ticket-meta {
+        color: #666;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+    }
+
+    .ticket-description {
+        color: #666;
+        margin-bottom: 15px;
+    }
+
+    .ticket-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .hint-box {
+        background: #fef5e7;
+        border-left: 4px solid #f39c12;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>📋 Support Tickets</h1>
+<p style="color: #666; margin-bottom: 20px;">Browse and manage support tickets</p>
+
+<div class="hint-box">
+    <strong>💡 Tip:</strong> You can search for tickets using the search box in the navigation menu. Try searching for common terms!
+</div>
+
+<div class="tickets-grid">
+    {% for ticket in tickets %}
+    <div class="ticket-card">
+        <div class="ticket-header">
+            <div>
+                <div class="ticket-title">{{ ticket.title }}</div>
+                <div class="ticket-meta">
+                    #{{ ticket.id }} • Reported by {{ ticket.reporter }} • {{ ticket.timestamp }}
+                </div>
+            </div>
+            <span class="status-badge status-{{ ticket.status.lower().replace(' ', '-') }}">
+                {{ ticket.status }}
+            </span>
+        </div>
+
+        <div class="ticket-description">
+            {{ ticket.description }}
+        </div>
+
+        <div class="ticket-actions">
+            <a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}" class="btn">View Details</a>
+            <form action="{{ url_for('delete_ticket', ticket_id=ticket.id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="btn" style="background:#e53e3e;" onclick="return confirm('Delete this ticket?')">Delete</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

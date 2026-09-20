@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Latest Orders</title>
+</head>
+<body>
+  <h1>Latest Orders</h1>
+  <ul>
+    <% latestOrders.forEach((filename) => { %>
+      <li><a href="/orders/<%= filename %>"><%= filename %></a></li>
+    <% }); %>
+  </ul>
+</body>
+</html>

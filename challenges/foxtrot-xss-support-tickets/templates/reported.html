@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Reported to Admin - EverSec{% endblock %}
+
+{% block extra_css %}
+<style>
+    .success-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .success-icon {
+        font-size: 5em;
+        margin-bottom: 20px;
+    }
+
+    .success-message {
+        background: #d4edda;
+        border-left: 4px solid #28a745;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+
+    .success-message h2 {
+        color: #28a745;
+        margin-bottom: 15px;
+    }
+
+    .info-box {
+        background: #f7fafc;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: left;
+        margin: 20px 0;
+    }
+
+    .info-box p {
+        margin: 10px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="success-container">
+    <div class="success-icon">✅</div>
+
+    <div class="success-message">
+        <h2>Ticket Reported to Admin</h2>
+        <p>Ticket #{{ ticket_id }} has been reported to an administrator for urgent review.</p>
+        <p>An admin will visit and review the ticket within the next few seconds.</p>
+    </div>
+
+    <div class="info-box">
+        <strong>What happens next?</strong>
+        <p>• An admin bot will visit the ticket</p>
+        <p>• The admin has special privileges and cookies</p>
+        <p>• The ticket will be reviewed automatically</p>
+    </div>
+
+    <a href="{{ url_for('view_ticket', ticket_id=ticket_id) }}" class="btn">Back to Ticket</a>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
+</div>
+{% endblock %}

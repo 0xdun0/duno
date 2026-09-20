@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}{{ doc_data.metadata.title }} — Documentação DUNO{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/docs.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="docs-reader-page">
+  <div class="docs-reader-layout">
+
+    <!-- ═══ LEFT SIDEBAR (NAVEGAÇÃO COMPLETA) ═══ -->
+    <aside class="docs-reader-sidebar">
+      <a href="{{ url_for('documentation') }}" class="docs-reader-back-btn">
+        <i class="nf nf-md-arrow_left"></i>
+        <span>Voltar ao Hub de Docs</span>
+      </a>
+
+      <nav>
+        {% for cat in categories %}
+        <div class="docs-nav-category-title">{{ cat.title }}</div>
+        {% for doc in cat.articles %}
+        <a href="{{ url_for('documentation_doc', slug=doc.slug) }}" 
+           class="docs-nav-item-link {% if doc.slug == doc_data.metadata.slug %}active{% endif %}">
+          <i class="nf {{ doc.icon }}"></i>
+          <span>{{ doc.title }}</span>
+        </a>
+        {% endfor %}
+        {% endfor %}
+
+        <div class="docs-nav-category-title">What's new</div>
+        <a href="{{ url_for('documentation_doc', slug='changelog') }}" 
+           class="docs-nav-item-link {% if 'changelog' == doc_data.metadata.slug %}active{% endif %}">
+          <i class="nf nf-fa-history"></i>
+          <span>Changelog & Lançamentos</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- ═══ MAIN ARTICLE CONTENT ═══ -->
+    <main class="docs-article-wrapper">
+      <!-- Breadcrumb -->
+      <nav class="docs-breadcrumb" aria-label="Navegação hierárquica">
+        <a href="{{ url_for('documentation') }}">Docs</a>
+        <span>›</span>
+        <span>{{ doc_data.metadata.category_title }}</span>
+        <span>›</span>
+        <span style="color: var(--ink);">{{ doc_data.metadata.title }}</span>
+      </nav>
+
+      <!-- Article Header -->
+      <header class="docs-article-header">
+        <div class="docs-article-kicker">
+          <span class="pill-badge pill-badge-orange">{{ doc_data.metadata.tag }}</span>
+          <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-3);">{{ doc_data.metadata.category_title }}</span>
+        </div>
+        <h1 class="docs-article-title">{{ doc_data.metadata.title }}</h1>
+        <p class="docs-article-desc">{{ doc_data.metadata.desc }}</p>
+
+        <div class="docs-article-meta">
+          <span><i class="nf nf-fa-clock_o"></i> {{ doc_data.metadata.read_time }}</span>
+          <span>•</span>
+          <span><i class="nf nf-fa-calendar"></i> Atualizado em {{ doc_data.metadata.date }}</span>
+        </div>
+      </header>
+
+      <!-- Markdown Prose Rendered -->
+      <article class="docs-prose">
+        {{ doc_data.html_content | safe }}
+      </article>
+
+      <!-- Footer: Navegação Próximo / Anterior -->
+      <footer class="docs-nav-footer">
+        {% if doc_data.prev_doc %}
+        <a href="{{ url_for('documentation_doc', slug=doc_data.prev_doc.slug) }}" class="docs-nav-card prev">
+          <span class="docs-nav-label">← Artigo Anterior</span>
+          <span class="docs-nav-target-title">{{ doc_data.prev_doc.title }}</span>
+        </a>
+        {% else %}
+        <div></div>
+        {% endif %}
+
+        {% if doc_data.next_doc %}
+        <a href="{{ url_for('documentation_doc', slug=doc_data.next_doc.slug) }}" class="docs-nav-card next">
+          <span class="docs-nav-label">Próximo Artigo →</span>
+          <span class="docs-nav-target-title">{{ doc_data.next_doc.title }}</span>
+        </a>
+        {% endif %}
+      </footer>
+    </main>
+
+    <!-- ═══ RIGHT COLUMN: TOC (NESTA PÁGINA) ═══ -->
+    <aside class="docs-reader-toc-col">
+      {% if doc_data.toc %}
+      <div class="docs-toc-title">Nesta Página</div>
+      <ul class="docs-toc-list">
+        {% for heading in doc_data.toc %}
+        <li class="docs-toc-item {% if heading.level == 3 %}level-3{% endif %}">
+          <a href="#{{ heading.anchor }}">{{ heading.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </aside>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/docs.js') }}"></script>
+{% endblock %}

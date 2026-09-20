@@ -1,0 +1,12 @@
+{
+  "name": "eversec-devtools",
+  "version": "1.0.0",
+  "description": "EverSec Developer Tools Portal",
+  "main": "app.js",
+  "dependencies": {
+    "koa": "2.15.3",
+    "@koa/router": "^12.0.1",
+    "koa-bodyparser": "^4.4.1",
+    "koa-static": "^5.0.0"
+  }
+}

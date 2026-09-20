@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block title %}Painel Administrativo de Máquinas — DUNO Admin{% endblock %}
+
+{% block content %}
+<div class="settings-page-wrapper">
+  <div class="settings-container">
+
+    <!-- Top Breadcrumb / Kicker -->
+    <div class="settings-kicker-brand">DUNO // ADMIN OPERATIONS // PIPELINE</div>
+
+    <!-- Hero Header -->
+    <header class="settings-hero" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
+      <div>
+        <h1 class="settings-title">Painel de Revisão de Máquinas</h1>
+        <p class="settings-subtitle">Controle operacional da esteira de submissão, análise estática de segurança e publicação de laboratórios.</p>
+      </div>
+      <div style="display:flex; gap:0.75rem; align-items:center;">
+        <a href="{{ url_for('submissions_admin.machines_list') }}" class="btn btn-primary" style="text-decoration:none; padding:0.6rem 1.25rem; font-weight:600; border-radius:var(--r-sm);">
+          Fila de Revisão Completa →
+        </a>
+      </div>
+    </header>
+
+    <div class="settings-divider"></div>
+
+    <!-- METRICS CARDS -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1.25rem; margin-bottom:2rem;">
+      
+      <!-- Card 1: Pendentes -->
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; box-shadow:var(--shadow-sm);">
+        <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:0.5rem;">
+          Aguardando Triagem
+        </div>
+        <div style="font-size:2rem; font-weight:800; color:var(--orange); line-height:1;">
+          {{ pending_review }}
+        </div>
+        <div style="font-size:0.75rem; color:var(--ink-3); margin-top:0.5rem;">
+          Submetidas recentemente
+        </div>
+      </div>
+
+      <!-- Card 2: Em Build / Teste -->
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; box-shadow:var(--shadow-sm);">
+        <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:0.5rem;">
+          Em Build / Teste
+        </div>
+        <div style="font-size:2rem; font-weight:800; color:var(--ink); line-height:1;">
+          {{ building }}
+        </div>
+        <div style="font-size:0.75rem; color:var(--ink-3); margin-top:0.5rem;">
+          Processando no worker
+        </div>
+      </div>
+
+      <!-- Card 3: Revisão de Segurança -->
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; box-shadow:var(--shadow-sm);">
+        <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:0.5rem;">
+          Segurança
+        </div>
+        <div style="font-size:2rem; font-weight:800; color:var(--ink); line-height:1;">
+          {{ security_review }}
+        </div>
+        <div style="font-size:0.75rem; color:var(--ink-3); margin-top:0.5rem;">
+          {{ finding_counts.get('CRITICAL', 0) }} crít. / {{ finding_counts.get('HIGH', 0) }} altas
+        </div>
+      </div>
+
+      <!-- Card 4: Ajustes Solicitados -->
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; box-shadow:var(--shadow-sm);">
+        <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:0.5rem;">
+          Ajustes Solicitados
+        </div>
+        <div style="font-size:2rem; font-weight:800; color:var(--ink); line-height:1;">
+          {{ changes_requested }}
+        </div>
+        <div style="font-size:0.75rem; color:var(--ink-3); margin-top:0.5rem;">
+          Com os autores
+        </div>
+      </div>
+
+      <!-- Card 5: Publicadas -->
+      <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; box-shadow:var(--shadow-sm);">
+        <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:0.5rem;">
+          Publicadas Ativas
+        </div>
+        <div style="font-size:2rem; font-weight:800; color:#16a34a; line-height:1;">
+          {{ published }}
+        </div>
+        <div style="font-size:0.75rem; color:var(--ink-3); margin-top:0.5rem;">
+          No catálogo comunitário
+        </div>
+      </div>
+
+    </div>
+
+    <!-- QUICK LINKS BAR -->
+    <div style="display:flex; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
+      <a href="{{ url_for('submissions_admin.machines_list') }}" style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-sm); padding:0.85rem 1.25rem; text-decoration:none; color:var(--ink); font-weight:600; font-size:0.875rem; display:flex; align-items:center; gap:0.5rem;">
+        <span>🔍</span> Fila de Revisão Completa
+      </a>
+      <a href="{{ url_for('submissions_admin.published_machines') }}" style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-sm); padding:0.85rem 1.25rem; text-decoration:none; color:var(--ink); font-weight:600; font-size:0.875rem; display:flex; align-items:center; gap:0.5rem;">
+        <span>📦</span> Catálogo de Máquinas Publicadas
+      </a>
+      <a href="{{ url_for('submissions_admin.audit_logs') }}" style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-sm); padding:0.85rem 1.25rem; text-decoration:none; color:var(--ink); font-weight:600; font-size:0.875rem; display:flex; align-items:center; gap:0.5rem;">
+        <span>📋</span> Log de Auditoria &amp; Transições
+      </a>
+    </div>
+
+    <!-- TABELA DE SUBMISSÕES RECENTES -->
+    <section class="settings-section">
+      <div class="settings-section-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+        <h2 class="settings-section-title">ÚLTIMAS SUBMISSÕES NA ESTEIRA</h2>
+        <a href="{{ url_for('submissions_admin.machines_list') }}" style="font-size:0.8rem; color:var(--ink-2); text-decoration:none;">
+          Ver todas ({{ pending_review + building + security_review + published + changes_requested }}) →
+        </a>
+      </div>
+
+      <div class="table-responsive" style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; box-shadow:var(--shadow-sm);">
+        <table class="duno-table" style="width:100%; border-collapse:collapse; text-align:left;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--line); background:var(--bg-card-subtle); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3);">
+              <th style="padding:0.9rem 1.25rem;">ID / Máquina</th>
+              <th style="padding:0.9rem 1rem;">Autor</th>
+              <th style="padding:0.9rem 1rem;">Categoria / SO</th>
+              <th style="padding:0.9rem 1rem;">Dificuldade</th>
+              <th style="padding:0.9rem 1rem;">Status</th>
+              <th style="padding:0.9rem 1rem;">Atualizado</th>
+              <th style="padding:0.9rem 1.25rem; text-align:right;">Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in recent_submissions %}
+            <tr style="border-bottom:1px solid var(--line-subtle); font-size:0.875rem;">
+              <td style="padding:1rem 1.25rem;">
+                <div style="font-weight:700; color:var(--ink);">{{ s.name }}</div>
+                <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-3);">#{{ s.id }} • {{ s.slug }} (v{{ s.current_version }})</div>
+              </td>
+              <td style="padding:1rem 1rem; color:var(--ink-2);">
+                {{ s.author_name }}
+              </td>
+              <td style="padding:1rem 1rem;">
+                <div style="color:var(--ink-2);">{{ s.category or 'Geral' }}</div>
+                <div style="font-size:0.75rem; color:var(--ink-3);">{{ s.os_type or 'Linux' }}</div>
+              </td>
+              <td style="padding:1rem 1rem;">
+                <span class="badge diff-badge-{{ s.author_difficulty|lower if s.author_difficulty else 'easy' }}" style="padding:0.2rem 0.5rem; border-radius:4px; font-size:0.75rem;">
+                  {{ s.author_difficulty or 'Easy' }}
+                </span>
+              </td>
+              <td style="padding:1rem 1rem;">
+                <span class="submission-status-badge status-{{ s.status|lower }}" style="display:inline-flex; align-items:center; gap:0.35rem; padding:0.25rem 0.65rem; border-radius:var(--r-pill); font-size:0.75rem; font-weight:600;">
+                  <span class="status-dot"></span>
+                  {{ s.status }}
+                </span>
+              </td>
+              <td style="padding:1rem 1rem; color:var(--ink-3); font-size:0.75rem; font-family:var(--font-mono);">
+                {{ (s.updated_at|string)[:16] if s.updated_at else '-' }}
+              </td>
+              <td style="padding:1rem 1.25rem; text-align:right;">
+                <a href="{{ url_for('submissions_admin.machine_review_workspace', submission_id=s.id) }}" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.35rem; padding:0.4rem 0.85rem; border-radius:var(--r-xs); font-size:0.8rem; text-decoration:none;">
+                  Revisar →
+                </a>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="7" style="padding:2.5rem; text-align:center; color:var(--ink-3);">
+                Nenhuma submissão registrada no sistema.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+</div>
+{% endblock %}

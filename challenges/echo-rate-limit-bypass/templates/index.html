@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Echo] EverSec Login Throttle API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .challenge-info {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .challenge-info h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            margin: 30px 0;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .endpoint {
+            background: #2d3748;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .method {
+            display: inline-block;
+            background: #48bb78;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .method.post {
+            background: #ed8936;
+        }
+
+        .method.get {
+            background: #4299e1;
+        }
+
+        code {
+            background: #f7fafc;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e53e3e;
+        }
+
+        pre {
+            background: #2d3748;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .example {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .note {
+            background: #fef5e7;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .note strong {
+            color: #f39c12;
+        }
+
+        .link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">EverSec</div>
+            <h1>Login Throttle API</h1>
+            <p class="subtitle">Secure Authentication Rate Limiting System</p>
+        </div>
+
+        <div class="challenge-info">
+            <h3>🎯 Challenge Objective</h3>
+            <p>Our new authentication system uses a 4-digit PIN. Unfortunately, we lost the PIN! Can you help us recover it by testing our rate limiting system? We've provided a wordlist of the most common PINs to help.</p>
+        </div>
+
+        <div class="section">
+            <h2>📋 API Endpoints</h2>
+
+            <div class="endpoint">
+                <span class="method post">POST</span> /api/login
+            </div>
+            <p>Authenticate with a PIN. Rate limited to 5 requests per 60 seconds.</p>
+            <div class="example">
+                <strong>Request Body:</strong>
+                <pre>{"pin": "1234"}</pre>
+                <strong>Success Response (200):</strong>
+                <pre>{
+  "success": true,
+  "message": "Authentication successful!",
+  "flag": "...",
+  "attempts_from_ip": 3
+}</pre>
+                <strong>Error Response (429 - Rate Limited):</strong>
+                <pre>{
+  "success": false,
+  "error": "Rate limit exceeded. Try again in 60 seconds.",
+  "source_ip": "203.0.113.42"
+}</pre>
+            </div>
+
+            <div class="endpoint">
+                <span class="method get">GET</span> /api/status
+            </div>
+            <p>Check your current rate limit status.</p>
+            <div class="example">
+                <strong>Response (200):</strong>
+                <pre>{
+  "status": "online",
+  "your_ip": "203.0.113.42",
+  "rate_limit": "5 requests per 60 seconds",
+  "requests_remaining": 3
+}</pre>
+            </div>
+
+            <div class="endpoint">
+                <span class="method get">GET</span> /wordlist.txt
+            </div>
+            <p>Download a list of common PINs that might help you find the correct one.</p>
+        </div>
+
+        <div class="section">
+            <h2>🔒 Rate Limiting Policy</h2>
+            <ul>
+                <li>Maximum <strong>5 requests per 60 seconds</strong> per IP address</li>
+                <li>Rate limit applies to <code>/api/login</code> endpoint only</li>
+                <li>After rate limit is reached, wait 60 seconds before trying again</li>
+            </ul>
+        </div>
+
+        <div class="note">
+            <strong>💡 Note:</strong> The PIN is in the wordlist at <a href="/wordlist.txt" class="link">/wordlist.txt</a>. However, with only 5 attempts per minute, brute forcing the entire list would take quite a while. There must be a better way...
+        </div>
+
+        <div class="section">
+            <h2>🧪 Example Usage</h2>
+            <p>Test the API with curl:</p>
+            <pre>
+# Check your status
+curl http://localhost:4003/api/status
+
+# Try a login attempt
+curl -X POST http://localhost:4003/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"pin": "1234"}'
+
+# Get the wordlist
+curl http://localhost:4003/wordlist.txt
+            </pre>
+        </div>
+
+        <div class="footer">
+            <p><strong>EverSec Security Solutions</strong></p>
+            <p>Protecting your digital assets with cutting-edge rate limiting technology</p>
+        </div>
+    </div>
+</body>
+</html>

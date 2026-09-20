@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Charlie] Access Denied - EverSec Employee Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .error-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .error-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #e53e3e;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            background: #f7fafc;
+            border-left: 4px solid #e53e3e;
+            padding: 20px;
+            text-align: left;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">🚫</div>
+        <h1>Access Denied</h1>
+        <p class="error-message">{{ error }}</p>
+
+        <div class="info-box">
+            <p><strong>Your current credentials:</strong></p>
+            <p>Username: {{ username }}</p>
+            <p>Role: {{ role }}</p>
+        </div>
+
+        <a href="{{ url_for('dashboard') }}" class="back-btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>

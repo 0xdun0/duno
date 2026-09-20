@@ -10,11 +10,20 @@ from core.source_loader import load_source
 from core.reset import reset_lab
 from core.decorators import login_required
 from core.academy_data import get_learning_paths, get_all_lessons_summary, get_lesson_data
+from core.docs_manager import (
+    get_all_categories,
+    get_doc_metadata,
+    get_doc_content,
+    search_docs,
+    WHATS_NEW_TIMELINE,
+    SEARCH_SUGGESTIONS
+)
 
 
 def create_app():
     app = Flask(__name__, template_folder="../templates", static_folder="../static")
     app.config.from_object(Config)
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
 
     # Inicializa DB teardown
     init_db(app)
@@ -59,7 +68,33 @@ def create_app():
     @app.route("/docs")
     @login_required
     def documentation():
-        return render_template("pages/docs.html")
+        categories = get_all_categories()
+        return render_template(
+            "pages/docs_hub.html",
+            categories=categories,
+            whats_new=WHATS_NEW_TIMELINE,
+            search_suggestions=SEARCH_SUGGESTIONS
+        )
+
+    @app.route("/docs/<slug>")
+    @login_required
+    def documentation_doc(slug):
+        doc_data = get_doc_content(slug)
+        if not doc_data:
+            abort(404)
+        categories = get_all_categories()
+        return render_template(
+            "pages/docs_reader.html",
+            doc_data=doc_data,
+            categories=categories
+        )
+
+    @app.route("/api/docs/search")
+    @login_required
+    def api_docs_search():
+        query = request.args.get("q", "")
+        results = search_docs(query)
+        return jsonify(results)
 
     @app.route("/api")
     @login_required
@@ -75,6 +110,8 @@ def create_app():
     @login_required
     def settings():
         user = current_user()
+        if not user:
+            return redirect(url_for("login"))
         db = get_db()
         db_path = current_app.config.get("DATABASE", "/app/data/duno.db")
 
@@ -162,6 +199,55 @@ def create_app():
                     return jsonify({"status": "ok", "message": "Database reset successfully"})
                 return redirect(url_for("settings"))
 
+        # Submissões de máquinas do usuário (Minhas Contribuições)
+        user_submissions = []
+        try:
+            user_submissions = db.execute(
+                """SELECT s.id, s.title, s.slug, s.difficulty, s.status, s.visibility, s.created_at,
+                          (SELECT version_str FROM machine_versions WHERE submission_id = s.id ORDER BY id DESC LIMIT 1) as latest_version
+                   FROM machine_submissions s
+                   WHERE s.author_id = ?
+                   ORDER BY s.updated_at DESC""",
+                (user["id"],)
+            ).fetchall()
+        except Exception:
+            user_submissions = []
+
+        user_machine_stats = {
+            "total": len(user_submissions),
+            "published": sum(1 for s in user_submissions if s["status"] == "published"),
+            "in_review": sum(1 for s in user_submissions if s["status"] in ("in_review", "submitted", "scanning")),
+            "draft": sum(1 for s in user_submissions if s["status"] == "draft"),
+        }
+
+        # Moderação e auditoria de máquinas para administradores
+        admin_pending_submissions = []
+        admin_pending_count = 0
+        machine_audit_logs = []
+        if user and user.get("role") == "admin":
+            try:
+                admin_pending_submissions = db.execute(
+                    """SELECT s.id, s.title, s.slug, s.difficulty, s.status, s.created_at, u.username as author_username,
+                              (SELECT version_str FROM machine_versions WHERE submission_id = s.id ORDER BY id DESC LIMIT 1) as latest_version
+                       FROM machine_submissions s
+                       JOIN users u ON u.id = s.author_id
+                       WHERE s.status IN ('submitted', 'in_review', 'scanning')
+                       ORDER BY s.created_at ASC LIMIT 6"""
+                ).fetchall()
+                row_cnt = db.execute(
+                    "SELECT COUNT(*) FROM machine_submissions WHERE status IN ('submitted', 'in_review', 'scanning')"
+                ).fetchone()
+                admin_pending_count = row_cnt[0] if row_cnt else 0
+
+                machine_audit_logs = db.execute(
+                    """SELECT l.*, u.username 
+                       FROM machine_audit_logs l 
+                       LEFT JOIN users u ON u.id = l.user_id 
+                       ORDER BY l.id DESC LIMIT 8"""
+                ).fetchall()
+            except Exception:
+                pass
+
         return render_template(
             "pages/settings.html",
             user=user,
@@ -173,7 +259,17 @@ def create_app():
             current_default_level=current_default_level,
             valid_levels=VALID_LEVELS,
             activities=activities,
+            user_submissions=user_submissions,
+            user_machine_stats=user_machine_stats,
+            admin_pending_submissions=admin_pending_submissions,
+            admin_pending_count=admin_pending_count,
+            machine_audit_logs=machine_audit_logs,
         )
+
+    @app.route("/command-center")
+    @login_required
+    def command_center():
+        return redirect(url_for("settings"))
 
     # Auth blueprint inline (simples — não precisa de Blueprint separado)
     @app.route("/login", methods=["GET", "POST"])
@@ -227,7 +323,8 @@ def create_app():
             if user:
                 return get_level(user["id"], module)
             return "low"
-        return dict(current_user=user, module_level=module_level)
+        challenges_enabled = os.environ.get("CHALLENGES_ENABLED", "true").strip().lower() in ("true", "1", "yes", "on")
+        return dict(current_user=user, module_level=module_level, challenges_enabled=challenges_enabled)
 
     # Error handlers
     @app.errorhandler(400)
@@ -248,7 +345,9 @@ def create_app():
 
     @app.errorhandler(500)
     def server_error(e):
-        return render_template("error.html", code=500, msg="Erro interno"), 500
+        import traceback
+        traceback.print_exc()
+        return render_template("error.html", code=500, msg=f"Erro interno: {e}"), 500
 
     # ── Registra Blueprints ────────────────────────────────────────────────────
     _register_blueprints(app)
@@ -277,6 +376,10 @@ def _register_blueprints(app):
     from modules.api_versioning import bp as api_versioning_bp
     from modules.mass_assignment import bp as mass_assignment_bp
     from modules.api_security import bp as api_security_bp
+    from modules.challenges import bp as challenges_bp
+    from modules.kids import bp as kids_bp
+    from modules.machine_submissions.routes import bp as submissions_bp
+    from modules.machine_submissions.admin_routes import admin_bp as submissions_admin_bp
 
     app.register_blueprint(brute_force_bp)
     app.register_blueprint(command_injection_bp)
@@ -298,3 +401,8 @@ def _register_blueprints(app):
     app.register_blueprint(api_versioning_bp)
     app.register_blueprint(mass_assignment_bp)
     app.register_blueprint(api_security_bp)
+    app.register_blueprint(challenges_bp)
+    app.register_blueprint(kids_bp)
+    app.register_blueprint(submissions_bp)
+    app.register_blueprint(submissions_admin_bp)
+

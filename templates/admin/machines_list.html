@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Fila de Revisão de Máquinas — DUNO Admin{% endblock %}
+
+{% block content %}
+<div class="settings-page-wrapper">
+  <div class="settings-container">
+
+    <!-- Top Breadcrumb / Kicker -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+      <div class="settings-kicker-brand">
+        <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="color:inherit; text-decoration:none;">DUNO // ADMIN PIPELINE</a> // FILA DE REVISÃO
+      </div>
+      <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="font-size:0.8rem; color:var(--ink-2); text-decoration:none;">
+        ← Voltar ao Painel
+      </a>
+    </div>
+
+    <!-- Hero Header -->
+    <header class="settings-hero">
+      <h1 class="settings-title">Fila de Revisão de Máquinas</h1>
+      <p class="settings-subtitle">Gerenciamento centralizado de todas as submissões, filtrando por estado do pipeline, sistema operacional e dificuldade.</p>
+    </header>
+
+    <div class="settings-divider"></div>
+
+    <!-- FILTROS DE BUSCA -->
+    <form method="GET" action="{{ url_for('submissions_admin.machines_list') }}" style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; margin-bottom:1.75rem; box-shadow:var(--shadow-sm);">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; align-items:flex-end;">
+        <div>
+          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">Buscar Máquina / Slug</label>
+          <input type="text" name="q" value="{{ search }}" placeholder="Ex: matrix, web, sql..." style="width:100%; padding:0.55rem 0.75rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.85rem;" />
+        </div>
+
+        <div>
+          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">Status</label>
+          <select name="status" style="width:100%; padding:0.55rem 0.75rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.85rem;">
+            <option value="">Todos os status</option>
+            <option value="DRAFT" {% if current_status == 'DRAFT' %}selected{% endif %}>DRAFT</option>
+            <option value="SUBMITTED" {% if current_status == 'SUBMITTED' %}selected{% endif %}>SUBMITTED</option>
+            <option value="TRIAGE" {% if current_status == 'TRIAGE' %}selected{% endif %}>TRIAGE</option>
+            <option value="BUILDING" {% if current_status == 'BUILDING' %}selected{% endif %}>BUILDING</option>
+            <option value="SECURITY_REVIEW" {% if current_status == 'SECURITY_REVIEW' %}selected{% endif %}>SECURITY_REVIEW</option>
+            <option value="FUNCTIONAL_TEST" {% if current_status == 'FUNCTIONAL_TEST' %}selected{% endif %}>FUNCTIONAL_TEST</option>
+            <option value="CONTENT_REVIEW" {% if current_status == 'CONTENT_REVIEW' %}selected{% endif %}>CONTENT_REVIEW</option>
+            <option value="APPROVED" {% if current_status == 'APPROVED' %}selected{% endif %}>APPROVED</option>
+            <option value="PUBLISHED" {% if current_status == 'PUBLISHED' %}selected{% endif %}>PUBLISHED</option>
+            <option value="CHANGES_REQUESTED" {% if current_status == 'CHANGES_REQUESTED' %}selected{% endif %}>CHANGES_REQUESTED</option>
+            <option value="REJECTED" {% if current_status == 'REJECTED' %}selected{% endif %}>REJECTED</option>
+            <option value="UNPUBLISHED" {% if current_status == 'UNPUBLISHED' %}selected{% endif %}>UNPUBLISHED</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">Dificuldade</label>
+          <select name="difficulty" style="width:100%; padding:0.55rem 0.75rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.85rem;">
+            <option value="">Todas</option>
+            <option value="Easy" {% if current_diff == 'Easy' %}selected{% endif %}>Easy</option>
+            <option value="Medium" {% if current_diff == 'Medium' %}selected{% endif %}>Medium</option>
+            <option value="Hard" {% if current_diff == 'Hard' %}selected{% endif %}>Hard</option>
+            <option value="Insane" {% if current_diff == 'Insane' %}selected{% endif %}>Insane</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">Sistema Operacional</label>
+          <select name="os" style="width:100%; padding:0.55rem 0.75rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.85rem;">
+            <option value="">Todos</option>
+            <option value="Linux" {% if current_os == 'Linux' %}selected{% endif %}>Linux</option>
+            <option value="Windows" {% if current_os == 'Windows' %}selected{% endif %}>Windows</option>
+          </select>
+        </div>
+
+        <div style="display:flex; gap:0.5rem;">
+          <button type="submit" class="btn btn-primary" style="flex:1; padding:0.55rem 1rem; font-size:0.85rem; border-radius:var(--r-xs);">
+            Filtrar
+          </button>
+          <a href="{{ url_for('submissions_admin.machines_list') }}" class="btn-subtle" style="padding:0.55rem 0.85rem; font-size:0.85rem; border-radius:var(--r-xs); border:1px solid var(--line); text-decoration:none; color:var(--ink-2); background:var(--bg-subtle);">
+            Limpar
+          </a>
+        </div>
+      </div>
+    </form>
+
+    <!-- TABELA COMPLETA -->
+    <div class="table-responsive" style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; box-shadow:var(--shadow-sm);">
+      <table class="duno-table" style="width:100%; border-collapse:collapse; text-align:left;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--line); background:var(--bg-card-subtle); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3);">
+            <th style="padding:0.9rem 1.25rem;">ID / Máquina</th>
+            <th style="padding:0.9rem 1rem;">Versão</th>
+            <th style="padding:0.9rem 1rem;">Autor</th>
+            <th style="padding:0.9rem 1rem;">Categoria / SO</th>
+            <th style="padding:0.9rem 1rem;">Dificuldade</th>
+            <th style="padding:0.9rem 1rem;">Status</th>
+            <th style="padding:0.9rem 1rem;">Atualizado</th>
+            <th style="padding:0.9rem 1.25rem; text-align:right;">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in submissions %}
+          <tr style="border-bottom:1px solid var(--line-subtle); font-size:0.875rem;">
+            <td style="padding:1rem 1.25rem;">
+              <div style="font-weight:700; color:var(--ink);">{{ s.name }}</div>
+              <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-3);">#{{ s.id }} • {{ s.slug }}</div>
+            </td>
+            <td style="padding:1rem 1rem;">
+              <span class="badge font-mono" style="background:var(--bg-subtle); color:var(--ink-2); padding:0.2rem 0.5rem; border-radius:4px; font-size:0.75rem;">
+                v{{ s.current_version }}
+              </span>
+            </td>
+            <td style="padding:1rem 1rem; color:var(--ink-2);">
+              {{ s.author_name }}
+            </td>
+            <td style="padding:1rem 1rem;">
+              <div style="color:var(--ink-2);">{{ s.category or 'Geral' }}</div>
+              <div style="font-size:0.75rem; color:var(--ink-3);">{{ s.os_type or 'Linux' }}</div>
+            </td>
+            <td style="padding:1rem 1rem;">
+              <span class="badge diff-badge-{{ s.author_difficulty|lower if s.author_difficulty else 'easy' }}" style="padding:0.2rem 0.5rem; border-radius:4px; font-size:0.75rem;">
+                {{ s.reviewed_difficulty or s.author_difficulty or 'Easy' }}
+              </span>
+            </td>
+            <td style="padding:1rem 1rem;">
+              <span class="submission-status-badge status-{{ s.status|lower }}" style="display:inline-flex; align-items:center; gap:0.35rem; padding:0.25rem 0.65rem; border-radius:var(--r-pill); font-size:0.75rem; font-weight:600;">
+                <span class="status-dot"></span>
+                {{ s.status }}
+              </span>
+            </td>
+            <td style="padding:1rem 1rem; color:var(--ink-3); font-size:0.75rem; font-family:var(--font-mono);">
+              {{ (s.updated_at|string)[:16] if s.updated_at else '-' }}
+            </td>
+            <td style="padding:1rem 1.25rem; text-align:right;">
+              <a href="{{ url_for('submissions_admin.machine_review_workspace', submission_id=s.id) }}" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.35rem; padding:0.4rem 0.85rem; border-radius:var(--r-xs); font-size:0.8rem; text-decoration:none;">
+                Abrir Revisão →
+              </a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="8" style="padding:3rem; text-align:center; color:var(--ink-3);">
+              Nenhuma máquina encontrada para os filtros selecionados.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
