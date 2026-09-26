@@ -11,13 +11,13 @@
   <!-- ═══ HERO SECTION: HOW CAN WE HELP? (DOCKER DOCS STYLE) ═══ -->
   <section class="docs-hero">
     <div class="docs-hero-inner">
-      <h1 class="docs-hero-title">How can we help?</h1>
+      <h1 class="docs-hero-title">{{ _('How can we help?') }}</h1>
 
       <!-- Central Search Box with Live Results -->
       <div class="docs-search-box-wrap">
         <form id="docs-search-form" class="docs-search-bar" autocomplete="off">
           <!-- Robô Assistente NerdFont (nf-fa-robot em #9d9c9b) -->
-          <div class="docs-robot-wrapper" id="docs-search-robot" title="Assistente DUNO Docs">
+          <div class="docs-robot-wrapper" id="docs-search-robot" title="{{ _('Assistente DUNO Docs') }}">
             <svg class="docs-robot-svg" viewBox="0 0 640 512" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DUNO Bot (nf-fa-robot)">
               <!-- Corpo e cabeça completos do nf-fa-robot em #9d9c9b -->
               <path d="M320 0c17.7 0 32 14.3 32 32l0 64 120 0c39.8 0 72 32.2 72 72l0 272c0 39.8-32.2 72-72 72l-304 0c-39.8 0-72-32.2-72-72l0-272c0-39.8 32.2-72 72-72l120 0 0-64c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zM48 224l16 0 0 192-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0 0-192 16 0z" fill="#9d9c9b" />
@@ -27,7 +27,7 @@
             </svg>
           </div>
           <input type="text" id="docs-search-input" class="docs-search-input" 
-                 placeholder="Ask anything about DUNO and get instant answers..." 
+                 placeholder="{{ _('Ask anything about DUNO and get instant answers...') }}" 
                  aria-label="Buscar na documentação">
           <button type="submit" class="docs-search-btn" aria-label="Executar busca">
             <i class="nf nf-md-arrow_right"></i>
@@ -72,9 +72,9 @@
     <!-- ═══ WHAT'S NEW TIMELINE (IGUAL DOCKER DOCS SCREENSHOT 2) ═══ -->
     <section class="docs-whats-new-section">
       <div class="docs-section-header">
-        <h2 class="docs-section-title">What's new</h2>
+        <h2 class="docs-section-title">{{ _('What\'s new') }}</h2>
         <a href="{{ url_for('documentation_doc', slug='changelog') }}" class="docs-section-link">
-          <span>Ver histórico completo</span>
+          <span>{{ _('Ver histórico completo') }}</span>
           <i class="nf nf-md-arrow_right"></i>
         </a>
       </div>

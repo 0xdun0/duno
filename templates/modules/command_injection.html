@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#2 Command Injection</span>
+    <span>{{ _('#2 Command Injection') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">Command Injection</h1>
-      <p class="module-desc">Injeção de comandos via entrada controlada</p>
+      <h1 class="module-title">{{ _('Command Injection') }}</h1>
+      <p class="module-desc">{{ _('Injeção de comandos via entrada controlada') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('command_injection', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,10 +34,10 @@
       </p>
       <form method="POST" action="/command_injection" id="cmd-form">
         <div class="form-group">
-          <label for="cmd-input">Comando / Host</label>
+          <label for="cmd-input">{{ _('Comando / Host') }}</label>
           <input type="text" id="cmd-input" name="cmd" class="form-control" placeholder="127.0.0.1" value="{{ cmd }}" />
         </div>
-        <button type="submit" class="btn btn-primary">Executar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Executar') }}</button>
       </form>
       {% if result is not none %}
       <div class="result-box raw" style="margin-top:1rem"><pre>{{ result }}</pre></div>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Sem sanitização — <code>shell=True</code> com input direto. Injete com <code>; id</code>{% endif %}
         {% if level == 'medium' %}Blacklist de <code>; && || ` $ |</code> — bypassável com <code>%0a</code> ou outros separadores{% endif %}

@@ -5,20 +5,20 @@
 <div class="page-container">
   <!-- Breadcrumb -->
   <nav class="breadcrumb" aria-label="Navegação">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>Documentação Técnica</span>
+    <span>{{ _('Documentação Técnica') }}</span>
   </nav>
 
   <!-- Page Header -->
   <header class="page-header">
     <div class="hero-pill-badge">
       <span class="hero-pill-dot"></span>
-      <span>Documentação Oficial • Engenharia & Arquitetura</span>
+      <span>{{ _('Documentação Oficial • Engenharia & Arquitetura') }}</span>
     </div>
-    <h1 class="page-title">Documentação DUNO</h1>
+    <h1 class="page-title">{{ _('Documentação DUNO') }}</h1>
     <p class="page-desc">
-      Guia técnico completo sobre arquitetura, inicialização, desenvolvimento de novos módulos e testes automatizados da plataforma.
+      {{ _('Guia técnico completo sobre arquitetura, inicialização, desenvolvimento de novos módulos e testes automatizados da plataforma.') }}
     </p>
   </header>
 
@@ -26,37 +26,37 @@
   <div class="docs-layout">
     <aside class="docs-sidebar">
       <div class="docs-nav-group">
-        <span class="docs-nav-title">VISÃO GERAL</span>
-        <a href="#getting-started" class="docs-nav-item active">Getting Started</a>
-        <a href="#architecture" class="docs-nav-item">Arquitetura & Stack</a>
-        <a href="#directory-structure" class="docs-nav-item">Estrutura de Pastas</a>
+        <span class="docs-nav-title">{{ _('VISÃO GERAL') }}</span>
+        <a href="#getting-started" class="docs-nav-item active">{{ _('Getting Started') }}</a>
+        <a href="#architecture" class="docs-nav-item">{{ _('Arquitetura & Stack') }}</a>
+        <a href="#directory-structure" class="docs-nav-item">{{ _('Estrutura de Pastas') }}</a>
       </div>
 
       <div class="docs-nav-group">
-        <span class="docs-nav-title">OPERAÇÃO & DESENVOLVIMENTO</span>
-        <a href="#security-levels-doc" class="docs-nav-item">Níveis de Segurança</a>
-        <a href="#development-guide" class="docs-nav-item">Criando Novos Módulos</a>
-        <a href="#testing-guide" class="docs-nav-item">Testes & Verificação</a>
-        <a href="#database-reset-doc" class="docs-nav-item">Reset Global do Banco</a>
+        <span class="docs-nav-title">{{ _('OPERAÇÃO & DESENVOLVIMENTO') }}</span>
+        <a href="#security-levels-doc" class="docs-nav-item">{{ _('Níveis de Segurança') }}</a>
+        <a href="#development-guide" class="docs-nav-item">{{ _('Criando Novos Módulos') }}</a>
+        <a href="#testing-guide" class="docs-nav-item">{{ _('Testes & Verificação') }}</a>
+        <a href="#database-reset-doc" class="docs-nav-item">{{ _('Reset Global do Banco') }}</a>
       </div>
     </aside>
 
     <main class="docs-content">
       <!-- Section: Getting Started -->
       <section id="getting-started" class="docs-section">
-        <h2>1. Getting Started</h2>
+        <h2>{{ _('1. Getting Started') }}</h2>
         <p>
-          O DUNO é executado de forma totalmente autônoma dentro de containers Docker. Não há necessidade de instalar Python, SQLite ou dependências no sistema hospedeiro.
+          {{ _('O DUNO é executado de forma totalmente autônoma dentro de containers Docker. Não há necessidade de instalar Python, SQLite ou dependências no sistema hospedeiro.') }}
         </p>
 
-        <h3>Pré-requisitos</h3>
+        <h3>{{ _('Pré-requisitos') }}</h3>
         <ul>
-          <li>Docker Engine 24+</li>
-          <li>Docker Compose v2+</li>
+          <li>{{ _('Docker Engine 24+') }}</li>
+          <li>{{ _('Docker Compose v2+') }}</li>
         </ul>
 
-        <h3>Inicialização Rápida</h3>
-        <p>No terminal, clone o repositório e execute:</p>
+        <h3>{{ _('Inicialização Rápida') }}</h3>
+        <p>{{ _('No terminal, clone o repositório e execute:') }}</p>
         <pre><code class="language-bash"># Inicializa o container com compilação e volume mounts
 sudo docker-compose up --build</code></pre>
 
@@ -68,44 +68,44 @@ Senha padrão:   password</code></pre>
 
       <!-- Section: Architecture -->
       <section id="architecture" class="docs-section">
-        <h2>2. Arquitetura & Stack</h2>
+        <h2>{{ _('2. Arquitetura & Stack') }}</h2>
         <p>
-          O sistema utiliza um modelo modular baseado em Flask Blueprints. Cada vulnerabilidade opera como uma unidade isolada contendo suas próprias rotas, regras de negócio e os 4 arquivos de código-fonte graduais.
+          {{ _('O sistema utiliza um modelo modular baseado em Flask Blueprints. Cada vulnerabilidade opera como uma unidade isolada contendo suas próprias rotas, regras de negócio e os 4 arquivos de código-fonte graduais.') }}
         </p>
 
         <table class="data-table">
           <thead>
             <tr>
-              <th>Camada</th>
-              <th>Tecnologia</th>
-              <th>Propósito</th>
+              <th>{{ _('Camada') }}</th>
+              <th>{{ _('Tecnologia') }}</th>
+              <th>{{ _('Propósito') }}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><strong>Linguagem</strong></td>
-              <td>Python 3.11-slim</td>
-              <td>Backend assíncrono e serviços do lab</td>
+              <td>{{ _('Python 3.11-slim') }}</td>
+              <td>{{ _('Backend assíncrono e serviços do lab') }}</td>
             </tr>
             <tr>
               <td><strong>Web Framework</strong></td>
-              <td>Flask 3.x</td>
-              <td>Roteamento modular via Blueprints</td>
+              <td>{{ _('Flask 3.x') }}</td>
+              <td>{{ _('Roteamento modular via Blueprints') }}</td>
             </tr>
             <tr>
               <td><strong>Persistência</strong></td>
-              <td>SQLite3</td>
+              <td>{{ _('SQLite3') }}</td>
               <td>Banco de dados com volume persistente (<code>/app/data/duno.db</code>)</td>
             </tr>
             <tr>
               <td><strong>Frontend</strong></td>
-              <td>Vanilla HTML5 / CSS3 / JS</td>
-              <td>Design system puro inspirado em Walkie, sem Tailwind ou frameworks pesados</td>
+              <td>{{ _('Vanilla HTML5 / CSS3 / JS') }}</td>
+              <td>{{ _('Design system puro inspirado em Walkie, sem Tailwind ou frameworks pesados') }}</td>
             </tr>
             <tr>
               <td><strong>Orquestração</strong></td>
-              <td>Docker Compose</td>
-              <td>Isolamento do ambiente de laboratório</td>
+              <td>{{ _('Docker Compose') }}</td>
+              <td>{{ _('Isolamento do ambiente de laboratório') }}</td>
             </tr>
           </tbody>
         </table>
@@ -113,7 +113,7 @@ Senha padrão:   password</code></pre>
 
       <!-- Section: Directory Structure -->
       <section id="directory-structure" class="docs-section">
-        <h2>3. Estrutura de Pastas</h2>
+        <h2>{{ _('3. Estrutura de Pastas') }}</h2>
         <pre><code class="language-text">duno/
 ├── app/
 │   └── __init__.py           # Application Factory & Rotas Globais
@@ -147,7 +147,7 @@ Senha padrão:   password</code></pre>
 
       <!-- Section: Security Levels -->
       <section id="security-levels-doc" class="docs-section">
-        <h2>4. Níveis de Segurança & Persistência</h2>
+        <h2>{{ _('4. Níveis de Segurança & Persistência') }}</h2>
         <p>
           O nível ativo de cada módulo é armazenado no banco de dados individualmente por usuário na tabela <code>security_levels</code>:
         </p>
@@ -166,7 +166,7 @@ Senha padrão:   password</code></pre>
 
       <!-- Section: Development Guide -->
       <section id="development-guide" class="docs-section">
-        <h2>5. Como Criar um Novo Módulo</h2>
+        <h2>{{ _('5. Como Criar um Novo Módulo') }}</h2>
         <p>
           Para estender o DUNO com um novo laboratório (ex: <code>ssrf</code>), siga o ciclo estruturado em 4 etapas:
         </p>
@@ -188,7 +188,7 @@ Senha padrão:   password</code></pre>
 
       <!-- Section: Testing -->
       <section id="testing-guide" class="docs-section">
-        <h2>6. Testes & Verificação</h2>
+        <h2>{{ _('6. Testes & Verificação') }}</h2>
         <p>
           O projeto possui testes automatizados cobrindo cada nível de segurança de cada módulo, garantindo que o nível <strong>low</strong> seja realmente explorável e o nível <strong>impossible</strong> seja estritamente impenetrável:
         </p>
@@ -198,9 +198,9 @@ sudo docker-compose exec duno-app pytest -v</code></pre>
 
       <!-- Section: Database Reset -->
       <section id="database-reset-doc" class="docs-section">
-        <h2>7. Reset Global do Banco</h2>
+        <h2>{{ _('7. Reset Global do Banco') }}</h2>
         <p>
-          Como os laboratórios sofrem ataques reais de injeção SQL, inserção de scripts no guestbook e manipulação de credenciais, o DUNO possui uma rotina de reset idempotente.
+          {{ _('Como os laboratórios sofrem ataques reais de injeção SQL, inserção de scripts no guestbook e manipulação de credenciais, o DUNO possui uma rotina de reset idempotente.') }}
         </p>
         <p>
           O reset recria todas as tabelas e dados padrão (seed) executando <code>POST /reset</code>, disponível a qualquer momento no <strong>Menu do Usuário</strong> na barra de navegação.

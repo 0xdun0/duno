@@ -1,0 +1,1059 @@
+- id: alpha-sqli-basics
+  source: eversec
+  source_path: challenges/alpha
+  category: SQL Injection
+  os: linux
+  name: Alpha
+  short_description: Explore classic SQL Injection vulnerabilities to bypass authentication,
+    extract data, and gain remote code execution.
+  long_description: Corporate employee portal vulnerable to SQL injection in the authentication
+    form and in the user query endpoint. Attackers exploit union-based SQL injection,
+    authentication bypass, and escalate to remote code execution (RCE) and root privileges.
+  objective: Contornar a autenticação via SQL Injection, extrair hashes e credenciais
+    do banco de dados SQLite/MySQL e explorar vetor de escalação de privilégios para
+    capturar a flag final de root.
+  instructions: '1. Inicie a instância e acesse a página de login da aplicação.
+
+    2. Injete payloads clássicos de bypass de autenticação no campo de usuário (''
+    OR 1=1 --).
+
+    3. Extraia o schema das tabelas e credenciais administrativas utilizando UNION
+    SELECT.
+
+    4. Obtenha a flag de usuário e escale privilégios no sistema.'
+  hints:
+  - Teste aspas simples e operadores lógicos básicos para identificar se o input é
+    concatenado na query.
+  - Utilize a diretiva UNION SELECT NULL, NULL... para descobrir o número exato de
+    colunas retornadas.
+  - Consulte sqlite_master ou information_schema para descobrir os nomes das tabelas
+    e colunas.
+  difficulty: easy
+  points: 1000
+  estimated_minutes: 35
+  solves_count: 0
+  environment_type: single
+  internal_port: 5000
+  protocol: http
+  status: available
+  requires_api_key: false
+  has_walkthrough: true
+  metadata_version: 1
+  card_description: Analyze the environment, identify the present vulnerabilities,
+    and gain access to the final flag.
+- id: bravo
+  source: eversec
+  source_path: challenges/bravo
+  category: Authentication & JWT
+  os: linux
+  name: Bravo
+  short_description: Explore weaknesses in the signing and validation of JWT tokens
+    (algorithm 'none', weak key, and tampering of claims).
+  long_description: 'Corporate portal using JSON Web Token (JWT) tokens for session
+    management with critical implementation flaws: predictable/weak symmetric secret,
+    acceptance of the ''none'' algorithm, and lack of integrity verification on the
+    backend, allowing identity and administrative privilege forgery.'
+  objective: Analisar a estrutura do token JWT fornecido na autenticação, forjar um
+    token com privilégios de administrador ou quebrar a chave secreta via força bruta
+    e acessar o painel restrito.
+  instructions: '1. Inicie o laboratório e registre uma conta comum no portal.
+
+    2. Inspecione o token JWT recebido no cookie de sessão ou no cabeçalho Authorization.
+
+    3. Utilize jwt_tool ou Hashcat/John the Ripper para recuperar o segredo ou forjar
+    claims com alg: ''none''.
+
+    4. Acesse o endpoint /admin com o token forjado para recuperar a flag.'
+  hints:
+  - Decodifique o cabeçalho e payload do token em base64url para inspecionar os campos.
+  - Verifique se o backend aceita assinaturas vazias quando alg é configurado para
+    'none'.
+  - Palavras-chave comuns como 'secret', 'password' ou 'jwtsecret' são frequentes
+    em implementações inseguras.
+  difficulty: easy
+  points: 1150
+  estimated_minutes: 35
+  solves_count: 0
+  environment_type: single
+  internal_port: 5002
+  protocol: http
+  status: available
+  requires_api_key: false
+  has_walkthrough: true
+  metadata_version: 1
+  card_description: Explore the application's attack surface, investigate the authentication
+    flows, and capture the flags.
+- id: charlie-cookie-tampering
+  source: eversec
+  source_path: challenges/charlie
+  category: Web Session
+  os: linux
+  name: Charlie
+  short_description: Manipulate encoded and weakly protected session cookies to gain
+    unauthorized access to privileged accounts.
+  long_description: Web application that manages the user's session state by storing
+    attributes such as role, id, and privileges directly in the client cookie, using
+    only reversible encoding or simple obfuscation without HMAC cryptographic signing.
+  objective: Interromper a requisição HTTP, decodificar e modificar os cookies de
+    sessão do navegador para forjar o papel de administrador e capturar a flag de
+    acesso.
+  instructions: '1. Inicie o desafio e efetue login com credenciais de teste fornecidas.
+
+    2. Inspecione os cookies gerados no Developer Tools (F12) ou via proxy (Burp Suite/OWASP
+    ZAP).
+
+    3. Identifique o padrão de codificação (Hex, Base64, JSON) e altere a propriedade
+    role para ''admin''.
+
+    4. Atualize o cookie na requisição e recarregue a página protegida.'
+  hints:
+  - Cookies que começam com eyJ ou semelhantes normalmente são Base64/JSON.
+  - Verifique se existe algum cookie nomeado como user_role, auth ou session_data.
+  - Recarregue a página após injetar o novo valor para validar a elevação.
+  difficulty: easy
+  points: 500
+  estimated_minutes: 25
+  solves_count: 0
+  environment_type: single
+  internal_port: 4000
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Analyze session persistence, bypass access restrictions, and locate
+    confidential data.
+- id: cheerio
+  source: eversec
+  source_path: challenges/delta
+  category: SSRF & Cloud
+  os: linux
+  name: Delta
+  short_description: Explore unsafe parsing and internal SSRF to query cloud metadata
+    (IMDS) and restricted services.
+  long_description: Web service based on Node.js and the Cheerio library for scraping
+    and parsing external URLs. The absence of strict validation filters allows Server-Side
+    Request Forgery (SSRF) requests against internal loopback interfaces (localhost:3030)
+    and emulation of the AWS IMDSv1 metadata service.
+  objective: Forçar o servidor a requisitar endpoints internos protegidos (169.254.169.254
+    e localhost:3030/keys) e extrair credenciais e flags do ambiente.
+  instructions: '1. Inicie a instância e analise a funcionalidade de busca/renderização
+    de URLs.
+
+    2. Envie URLs apontando para localhost:3000/admin para coletar o primeiro conjunto
+    de credenciais.
+
+    3. Teste o IP do serviço de metadados de nuvem (169.254.169.254) para simular
+    SSRF em ambiente cloud.
+
+    4. Alterne os métodos de requisição HTTP em localhost:3030 para revelar as chaves
+    secretas.'
+  hints:
+  - Acesse endpoints internos através da interface de scraping da aplicação.
+  - O endereço 169.254.169.254 é o clássico link-local de metadados AWS EC2.
+  - Experimente mudar verbos HTTP de HEAD para BODY ou GET nas rotas internas.
+  difficulty: medium
+  points: 350
+  estimated_minutes: 40
+  solves_count: 0
+  environment_type: single
+  internal_port: 3000
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Audit the web application's parameters, test the input vectors,
+    and obtain elevated access.
+- id: coffee
+  source: eversec
+  source_path: challenges/echo
+  category: File Inclusion
+  os: linux
+  name: Echo
+  short_description: Explore Local File Inclusion (LFI) and Path Traversal vulnerabilities
+    to extract database files and flags.
+  long_description: Online coffee store with a log and orders history viewing system.
+    The file query parameter accepts Base64-encoded paths without proper sanitization
+    against path traversal, allowing the reading of arbitrary operating system files
+    and dumping the SQLite database.
+  objective: Explorar LFI no endpoint /logs para ler arquivos protegidos do host (/home/appuser/flag.txt)
+    e extrair a base de dados de usuários (/app/users.db).
+  instructions: '1. Inicie o desafio e efetue login utilizando as credenciais obtidas
+    no desafio Delta.
+
+    2. Inspecione o endpoint de visualização de logs e note o parâmetro ''file'' com
+    valor em Base64.
+
+    3. Codifique caminhos absolutos como /home/appuser/flag.txt em Base64 e submeta
+    na URL.
+
+    4. Extraia o banco /app/users.db e acerte os arquivos de pedidos /orders/*.txt
+    para obter as flags.'
+  hints:
+  - Decodifique os valores do parâmetro 'file' no visualizador de logs para entender
+    o formato esperado.
+  - Utilize caminhos absolutos ou sequências de ../ para navegar na estrutura do servidor.
+  - Baixe o banco de dados users.db e inspecione as tabelas com sqlite3 ou strings.
+  difficulty: medium
+  points: 350
+  estimated_minutes: 40
+  solves_count: 0
+  environment_type: single
+  internal_port: 4000
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Investigate the running service, find blind spots in the architecture,
+    and extract the final flag.
+- id: delta-idor-document-vault
+  source: eversec
+  source_path: challenges/foxtrot
+  category: Access Control
+  os: linux
+  name: Foxtrot
+  short_description: Explore authorization flaws (IDOR) in a corporate document vault
+    with predictable identifiers.
+  long_description: Corporate document management system demonstrating classic Insecure
+    Direct Object Reference (IDOR) vulnerabilities. Users manipulate IDs in URLs and
+    APIs to retrieve confidential files of third parties, enumerate documents, access
+    deleted items, and profile data.
+  objective: Manipular identificadores sequenciais e parâmetros de autorização para
+    contornar restrições de acesso horizontal e vertical, obtendo documentos sigilosos
+    de outros usuários no cofre.
+  instructions: '1. Inicie o laboratório e acesse a aplicação web de gerenciamento
+    documental.
+
+    2. Crie ou utilize uma conta padrão para observar o formato e a estrutura das
+    URLs de visualização e download de arquivos (/documents/<id>).
+
+    3. Realize enumeração de identificadores alterando o parâmetro de ID sequencial
+    e verifique se há controle de permissão por usuário.
+
+    4. Acesse documentos restritos de administradores até localizar a credencial ou
+    flag contida no cofre.'
+  hints:
+  - Documentos excluídos podem continuar acessíveis se o endpoint não validar o status
+    do arquivo.
+  - Teste cabeçalhos de autorização e IDs numéricos menores ou maiores que o seu documento
+    atribuído.
+  - Filtros de busca e exportação em lote frequentemente negligenciam verificações
+    de permissão.
+  difficulty: medium
+  points: 700
+  estimated_minutes: 40
+  solves_count: 0
+  environment_type: single
+  internal_port: 4001
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Map the file system endpoints, bypass the permission control,
+    and collect the artifacts.
+- id: echo-rate-limit-bypass
+  source: eversec
+  source_path: challenges/ghost
+  category: Brute Force Break
+  os: linux
+  name: Ghost
+  short_description: Bypass request limits (Rate Limiting) and proxy headers for brute
+    force authentication and PIN.
+  long_description: Corporate login system protected by a rate limiting mechanism
+    that relies exclusively on client headers such as X-Forwarded-For, Client-IP,
+    and X-Real-IP. Players manipulate these headers to bypass blocks and carry out
+    successful brute-force attacks on PINs and passwords.
+  objective: Burlar o bloqueio de taxa de requisições falsificando cabeçalhos de encaminhamento
+    de IP e quebrar o PIN de 4 dígitos para obter acesso ao portal e elevar privilégios.
+  instructions: '1. Inicie a instância e tente submeter múltiplas tentativas de autenticação
+    inválidas até receber o bloqueio 429 Too Many Requests.
+
+    2. Injete cabeçalhos HTTP como X-Forwarded-For com endereços IPs aleatórios a
+    cada tentativa.
+
+    3. Automatize o envio de requisições para cobrir o espaço amostral de PINs numéricos
+    (0000-9999).
+
+    4. Acesse o sistema autenticado e colete as flags da aplicação.'
+  hints:
+  - Muitas proteções de rate limit confiam cegamente em cabeçalhos HTTP injetados
+    pelo cliente.
+  - 'Cabeçalhos a testar: X-Forwarded-For, X-Real-IP, X-Originating-IP, True-Client-IP.'
+  - Construa um loop em Python com rotação de IP no cabeçalho para testar as combinações
+    rapidamente.
+  difficulty: medium
+  points: 800
+  estimated_minutes: 40
+  solves_count: 0
+  environment_type: single
+  internal_port: 4003
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Evaluate the resilience of the routes against anomalous requests,
+    explore logical flaws, and capture the flag.
+- id: foxtrot-xss-support-tickets
+  source: eversec
+  source_path: challenges/hunter
+  category: Cross-Site Scripting
+  os: linux
+  name: Hunter
+  short_description: Explore reflected and stored Cross-Site Scripting (XSS) in support
+    tickets to exfiltrate admin cookies and tokens.
+  long_description: Corporate customer support system vulnerable to XSS in search
+    fields and in the body of support tickets. An administration bot simulates a user
+    accessing the tickets periodically without HTTPOnly-protected cookies, allowing
+    exfiltration via webhook.
+  objective: Injetar payload de Stored XSS que roube a sessão administrativa ao ser
+    visualizado pelo bot de suporte e capturar as flags protegidas no painel.
+  instructions: '1. Inicie a instância e explore o formulário de abertura de tickets
+    de suporte.
+
+    2. Teste a sanitização de tags HTML e scripts nos campos de título, mensagem e
+    anexos.
+
+    3. Configure um payload de JavaScript que envie document.cookie para o endpoint
+    de webhook /webhook/log.
+
+    4. Submeta o ticket e consulte os logs do webhook para capturar o cookie administrativo.'
+  hints:
+  - O robô administrativo inspeciona novos tickets em intervalos de aproximadamente
+    5 segundos.
+  - Verifique os logs de exfiltração em /webhook/log periodicamente antes de expirar.
+  - Teste tags com manipuladores de eventos como <img src=x onerror=...> para contornar
+    filtros básicos.
+  difficulty: medium
+  points: 1450
+  estimated_minutes: 45
+  solves_count: 0
+  environment_type: single
+  internal_port: 4002
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Examine the application's interaction points, track user behavior,
+    and escalate privileges.
+- id: golf-static-analysis-config
+  source: eversec
+  source_path: challenges/inferno
+  category: Recognition
+  os: linux
+  name: Hell
+  short_description: Explore development artifacts exposed in production, such as
+    source maps, .git history, and environment variables.
+  long_description: Development portal published in production containing several
+    exposed sensitive artifacts. Use web reconnaissance techniques and static analysis
+    to discover source maps, Git repository (.git), API keys, and configuration files
+    (.env and backups).
+  objective: Realizar reconhecimento em endpoints de produção desprotegidos e analisar
+    artefatos públicos para extrair credenciais vazadas, variáveis de ambiente e commits
+    históricos do repositório.
+  instructions: '1. Inicie a instância e inspecione o código-fonte HTML e arquivos
+    JavaScript incluídos.
+
+    2. Verifique declarações de sourceMappingURL nos scripts para reconstruir o código
+    original do frontend.
+
+    3. Teste o acesso a pastas sensíveis padrão de deploy (.git, .env, backups, api-keys).
+
+    4. Analise os arquivos revelados para extrair a flag oficial do laboratório.'
+  hints:
+  - Verifique o arquivo package.json ou comentários nos bundles de scripts.
+  - Ferramentas como curl e git-dumper facilitam a inspeção de arquivos .git expostos.
+  - Arquivos .env costumam armazenar segredos e chaves de acesso a serviços internos.
+  difficulty: medium
+  points: 550
+  estimated_minutes: 45
+  solves_count: 0
+  environment_type: single
+  internal_port: 4004
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Audit the available artifacts, locate exposed keys and configurations,
+    and compromise the server.
+- id: hotel-junior-dev-challenge
+  source: eversec
+  source_path: challenges/joker
+  category: Scripting
+  os: linux
+  name: Joker
+  short_description: Identify and rotate compromised API keys before the timeout via
+    automated script.
+  long_description: A DevSecOps and automation challenge where approximately 30% of
+    the organization's API keys were leaked. The system requires a rotation with a
+    specific prefix and checksum within a short time window (1.5s), forcing the development
+    of a script instead of manual processing.
+  objective: Identificar todas as chaves comprometidas (prefixadas por COMP_), gerar
+    chaves válidas de substituição no padrão exigido e submeter as configurações corrigidas
+    dentro da janela de 1.5 segundo.
+  instructions: '1. Inicie o laboratório e acerte a rota GET /configs para listar
+    as 100 configurações de serviços.
+
+    2. Identifique quais credenciais contêm chaves de API iniciando com o prefixo
+    COMP_.
+
+    3. Construa um script em Python para gerar chaves substitutas no formato PROD_RANDOM32CHARS_CHECKSUM,
+    onde o CHECKSUM são os 4 primeiros caracteres hexadecimais do MD5 da parte aleatória.
+
+    4. Submeta o payload corrigido via POST /validate antes do limite de tempo para
+    capturar a flag.'
+  hints:
+  - Chaves em ambiente de produção devem obrigatoriamente usar o prefixo PROD_.
+  - O checksum MD5 deve ser calculado exclusivamente sobre a sequência aleatória de
+    32 caracteres maiúsculos.
+  - Use requisições persistentes (requests.Session) para reduzir a latência de rede
+    no envio do POST.
+  difficulty: medium
+  points: 200
+  estimated_minutes: 30
+  solves_count: 0
+  environment_type: single
+  internal_port: 3000
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Inspect the application's resources, test the control mechanisms,
+    and carry out the target's invasion.
+- id: india-nosql-injection
+  source: eversec
+  source_path: challenges/knight
+  category: NoSQL Injection
+  os: linux
+  name: Cavaleiro
+  short_description: Explore NoSQL query operators (MongoDB/NeDB) to bypass authentication
+    and exfiltrate sensitive data.
+  long_description: Modern web portal that consumes user inputs in JSON format and
+    passes them directly to MongoDB/NeDB queries without data type validation. Allows
+    the injection of operators like $ne, $regex, $gt to bypass passwords and extract
+    characters from secrets.
+  objective: Injetar objetos JSON com operadores NoSQL para realizar autenticação
+    arbitrária e executar extração de flags caractere por caractere via regex.
+  instructions: '1. Inicie a instância e inspecione a rota de login /api/login.
+
+    2. Substitua o payload de texto por JSON estruturado com operadores como {"password":
+    {"$ne": null}}.
+
+    3. Utilize o operador $regex no formulário para enumerar tokens e senhas de administradores.
+
+    4. Reconstrua o token e capture a flag no painel interno.'
+  hints:
+  - Altere o Content-Type para application/json para enviar objetos NoSQL.
+  - 'O operador {"$regex": "^a.*"} permite testar o primeiro caractere de uma senha.'
+  - Crie um script em Python para automatizar a busca binária ou linear caractere
+    a caractere.
+  difficulty: medium
+  points: 1800
+  estimated_minutes: 45
+  solves_count: 0
+  environment_type: single
+  internal_port: 4007
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Identify anomalies in query processing, explore validation flaws,
+    and access the database.
+- id: juliet-xxe-injection
+  source: eversec
+  source_path: challenges/lynx
+  category: XML Injection
+  os: linux
+  name: Lynx
+  short_description: Explore unsafe XML parser through external entities (XXE), arbitrary
+    file reading, and SSRF.
+  long_description: Automatic billing system that parses XML files with DTD features
+    and external entities enabled. It demonstrates how insecure XML parser configurations
+    allow reading files on the host, internal SSRF, and potential chaining to RCE.
+  objective: Injetar entidades XML externas maliciosas (DOCTYPE/ENTITY) no payload
+    da nota fiscal para realizar leitura arbitrária de arquivos no sistema do container
+    e recuperar a flag protegida.
+  instructions: '1. Inicie o laboratório e capture o endpoint de submissão de faturas/invoices
+    que consome XML.
+
+    2. Analise a estrutura do documento XML esperado pela aplicação de faturamento.
+
+    3. Construa uma declaração DOCTYPE com ENTITY referenciando recursos do sistema
+    de arquivos via protocolo file:///.
+
+    4. Envie o payload e extraia a resposta processada para ler o arquivo contendo
+    a flag.'
+  hints:
+  - Verifique se o parser retorna o conteúdo de nós XML no corpo da resposta.
+  - Entidades externas do tipo <!ENTITY xxe SYSTEM 'file:///flag.txt'> são a base
+    clássica do ataque.
+  - Se a resposta direta for sanitizada, teste canais fora-de-banda (OOB) via HTTP.
+  difficulty: hard
+  points: 250
+  estimated_minutes: 45
+  solves_count: 0
+  environment_type: single
+  internal_port: 4005
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Map the API data intake, force the leakage of internal files,
+    and take over the system.
+- id: kilo-ssti-template-generator
+  source: eversec
+  source_path: challenges/mantis
+  category: Template Injection
+  os: linux
+  name: Mantis
+  short_description: Explore Server-Side Template Injection (SSTI) in Jinja2/Nunjucks
+    to break the sandbox and execute commands on the system.
+  long_description: Corporate email template generator that renders templates by combining
+    user text with template engines (Jinja2/Nunjucks). Sanitization failures allow
+    injection of {{ ... }} expressions that reach internal Python/Node.js classes
+    and culminate in RCE.
+  objective: Identificar a engine de templates ativa, injetar payloads para enumerar
+    a hierarquia de objetos (MRO) e invocar subprocessos do sistema operacional para
+    ler a flag.
+  instructions: '1. Inicie o desafio e acesse o editor de templates de e-mail.
+
+    2. Teste expressões matemáticas como {{7*7}} e {{config}} para detectar SSTI.
+
+    3. Navegue pela cadeia de herança com ().__class__.__bases__[0].__subclasses__()
+    para localizar subprocess.Popen ou os.system.
+
+    4. Execute comandos para ler o arquivo de flag no filesystem.'
+  hints:
+  - Se {{7*7}} retornar 49, a aplicação está avaliando código dentro da template engine.
+  - Preste atenção em caracteres bloqueados como ponto, aspas ou colchetes, utilizando
+    filtros alternativos.
+  - Em Node.js, explore templates Nunjucks ou Pug procurando por referências globais
+    ou require.
+  difficulty: hard
+  points: 1300
+  estimated_minutes: 50
+  solves_count: 0
+  environment_type: single
+  internal_port: 4006
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Investigate the backend rendering mechanism, explore command injection,
+    and gain root access.
+- id: lima-deserialization-session
+  source: eversec
+  source_path: challenges/nexus
+  category: Deserialization
+  os: linux
+  name: Nexus
+  short_description: Explore unsafe deserialization of objects (Python pickle / Node
+    serialize) for arbitrary code execution.
+  long_description: Session management application with advanced features that stores
+    complex serialized states on the client. The backend deserializes the data without
+    signature verification, allowing the construction of payloads for malicious class
+    injection.
+  objective: Construir um gadget malicioso serializado (pickle/serialize) que execute
+    comandos remotos no momento em que o servidor deserializar a sessão.
+  instructions: '1. Inicie o laboratório e analise como a sessão do usuário é transportada
+    (Base64 nos cookies ou headers).
+
+    2. Identifique a tecnologia de serialização subjacente (ex: Python pickle, Java,
+    Node.js serialize).
+
+    3. Elabore um script que gere o payload malicioso implementando o método mágico
+    apropriado (ex: __reduce__ em Python).
+
+    4. Envie o payload e obtenha a flag ou shell reverso.'
+  hints:
+  - O início de blobs pickle costuma conter bytes característicos como \x80\x03 ou
+    \x80\x04.
+  - Em Python, a função __reduce__ permite especificar uma função de chamada e seus
+    argumentos ao desserializar.
+  - Utilize ferramentas como ysoserial ou scripts customizados para montar os gadgets.
+  difficulty: hard
+  points: 900
+  estimated_minutes: 50
+  solves_count: 0
+  environment_type: single
+  internal_port: 4008
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Audit the serialized traffic, break the corporate session restrictions,
+    and compromise the machine.
+- id: mike-ssrf-to-rce
+  source: eversec
+  source_path: challenges/oracle
+  category: SSRF & RCE
+  os: linux
+  name: Oracle
+  short_description: Chain Server-Side Request Forgery (SSRF) with unprotected internal
+    services to reach Remote Code Execution.
+  long_description: Corporate website status checking tool with SSRF vulnerability.
+    The attacker pivots the request to internal cache or messaging services listening
+    on local ports (Redis/Docker API) and escalates to remote code execution.
+  objective: Descobrir portas e serviços internos na rede do container via SSRF e
+    forjar comandos de escrita para atingir execução de código.
+  instructions: '1. Inicie a instância e explore o formulário de verificação de URLs
+    (/check-health).
+
+    2. Realize varredura de portas internas na rede local através de requisições a
+    127.0.0.1:<porta>.
+
+    3. Identifique o serviço em execução na porta interna e prepare requisições com
+    protocolos suportados (gopher:// ou HTTP).
+
+    4. Invoque o comando de leitura da flag.'
+  hints:
+  - Tente esquemas como http://127.0.0.1 ou http://localhost para mapear serviços
+    internos.
+  - Serviços como Redis e Memcached permitem injeção de comandos com o protocolo gopher://.
+  - 'Filtros de IP podem ser contornados usando representações decimais ou hexadecimais
+    (ex: 2130706433).'
+  difficulty: hard
+  points: 1500
+  estimated_minutes: 55
+  solves_count: 0
+  environment_type: single
+  internal_port: 4010
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Discover internal services protected by the perimeter, abuse server
+    requests, and capture the flag.
+- id: november-drupalgeddon
+  source: eversec
+  source_path: challenges/phantom
+  category: CVE Exploitation
+  os: linux
+  name: Phantom
+  short_description: Explore the classic Drupalgeddon 2 vulnerability (CVE-2018-7600)
+    for code injection and server compromise.
+  long_description: Legacy corporate content portal running on Drupal 7.57 without
+    security patches. The critical vulnerability in the user registration form allows
+    attackers to inject manipulated renderable parameters and execute arbitrary commands
+    on the server.
+  objective: Explorar a falha CVE-2018-7600 via requisição POST maliciosa contra a
+    API de formulários do Drupal e obter execução de comandos como usuário www-data.
+  instructions: '1. Inicie o laboratório e confirme a versão do Drupal em execução
+    no cabeçalho ou metatags.
+
+    2. Formate uma requisição POST direcionada ao endpoint de formulário vulnerável
+    com parâmetros renderizáveis (#post_render).
+
+    3. Invoque comandos de sistema como ''id'' ou ''cat /flag.txt'' no payload.
+
+    4. Capture as flags de sistema e de aplicação.'
+  hints:
+  - A vulnerabilidade afeta a camada Form API e render arrays do Drupal 7 e 8.
+  - Scripts de PoC amplamente documentados no GitHub utilizam o endpoint de registro
+    de conta.
+  - Verifique o retorno do comando embutido no HTML retornado pelo servidor.
+  difficulty: hard
+  points: 900
+  estimated_minutes: 45
+  solves_count: 0
+  environment_type: single
+  internal_port: 80
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Identify outdated services on the target, exploit known RCE vectors,
+    and gain privileged access.
+- id: oscar-race-conditions
+  source: eversec
+  source_path: challenges/raven
+  category: Race Condition
+  os: linux
+  name: Raven
+  short_description: Explore race conditions in the validation of coupons and concurrent
+    financial transfers.
+  long_description: Checkout and promotional coupon platform where balance verification
+    and redemption do not use transaction locks or proper isolation. When sending
+    concurrent requests in milliseconds, multiple redemptions of the same coupon are
+    approved.
+  objective: Construir um exploit multithreaded ou em pipeline HTTP/2 para explorar
+    a janela de tempo entre a checagem e o débito (TOCTOU), acumulando créditos suficientes
+    para adquirir a flag.
+  instructions: '1. Inicie a instância e analise o fluxo de aplicação de cupom promocional
+    no painel do usuário.
+
+    2. Observe que cada cupom só pode ser utilizado teoricamente uma única vez.
+
+    3. Desenvolva um script assíncrono em Python (com asyncio/threading) para enviar
+    20+ requisições simultâneas de resgate.
+
+    4. Verifique o saldo inflacionado e adquira o item de flag na loja.'
+  hints:
+  - Utilize requests em threads sincronizadas com threading.Barrier ou HTTP/2 multiplexing.
+  - A janela de oportunidade entre a leitura do banco e a atualização é de poucos
+    milissegundos.
+  - Turbo Intruder no Burp Suite é uma ferramenta ideal para ataques de race condition.
+  difficulty: hard
+  points: 1650
+  estimated_minutes: 45
+  solves_count: 0
+  environment_type: single
+  internal_port: 4011
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Analyze competition of sensitive operations, explore critical
+    time windows, and obtain the reward.
+- id: papa-graphql-injection
+  source: eversec
+  source_path: challenges/shadow
+  category: GraphQL Injection
+  os: linux
+  name: Shadow
+  short_description: Explore GraphQL introspection, bypassing authorization in resolvers,
+    and injections in complex queries.
+  long_description: Modern corporate API developed with GraphQL with introspection
+    enabled and absence of authorization controls in certain resolvers. Allows discovering
+    hidden types, confidential data schemas, and performing injections in query arguments.
+  objective: Extrair o schema completo via consulta de introspecção (__schema), localizar
+    mutations/queries administrativas desprotegidas e obter acesso a dados restritos.
+  instructions: '1. Inicie o laboratório e localize o endpoint GraphQL (/graphql).
+
+    2. Envie uma query de introspecção para mapear todos os tipos, queries e mutations
+    disponíveis.
+
+    3. Identifique consultas sensíveis relacionadas a credenciais ou usuários administrativos.
+
+    4. Formule a consulta GraphQL correspondente e extraia as flags do sistema.'
+  hints:
+  - Queries com { __schema { types { name } } } revelam a estrutura completa da API.
+  - Ferramentas como GraphQL Voyager ou InQL facilitam a visualização dos tipos disponíveis.
+  - Verifique se resolvers aceitam injeção de parâmetros sem sanitização SQL ou NoSQL.
+  difficulty: hard
+  points: 1500
+  estimated_minutes: 50
+  solves_count: 0
+  environment_type: single
+  internal_port: 4012
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Investigate the exposed API, map the hidden query scheme, and
+    extract the restricted information.
+- id: quebec-enumeration
+  source: eversec
+  source_path: challenges/specter
+  category: Web Enumeration
+  os: linux
+  name: Specter
+  short_description: Discover 15 hidden flags through exhaustive enumeration of directories,
+    backup files, and exposed metadata.
+  long_description: 'Corporate institutional website containing dozens of artifacts
+    forgotten by agile development teams: robots.txt files, sitemaps, backup folders
+    (.zip, .bak), .git history, .env files, and unprotected administrative endpoints.'
+  objective: Realizar enumeração estruturada com wordlists especializadas para encontrar
+    diretórios ocultos, arquivos sensíveis de configuração e coletar as 15 flags distribuídas.
+  instructions: '1. Inicie a instância e examine os arquivos de índice, robots.txt
+    e sitemap.xml.
+
+    2. Execute ferramentas de brute-force de diretórios (gobuster, ffuf, feroxbuster)
+    com wordlists de reconhecimento web.
+
+    3. Inspecione cabeçalhos de resposta HTTP, comentários HTML e endpoints de debug.
+
+    4. Conecte os fragmentos de informação para coletar as flags disponíveis.'
+  hints:
+  - Verifique extensões comuns como .env, .bak, .old, .zip e .git.
+  - Arquivos de documentação de API (/docs, /swagger, /openapi.json) frequentemente
+    expõem rotas internas.
+  - Atenção aos códigos de status HTTP 301, 302 e 403 que podem indicar diretórios
+    existentes.
+  difficulty: medium
+  points: 750
+  estimated_minutes: 40
+  solves_count: 0
+  environment_type: single
+  internal_port: 4018
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Perform exhaustive reconnaissance on the server, discover hidden
+    assets, and locate all evidence.
+- id: romeo-dfir-memdump
+  source: eversec
+  source_path: challenges/titan
+  category: Digital Forensics
+  os: linux
+  name: Titan
+  short_description: Analyze security incident memory dumps (DFIR) to reconstruct
+    attacker actions and malicious processes.
+  long_description: Incident response scenario (DFIR - Operation Midnight Raven) simulating
+    intrusion on corporate workstations. The analyst investigates memory dumps using
+    Volatility and string analysis utilities to identify suspicious processes, network
+    connections, and exfiltrated credentials.
+  objective: Baixar o arquivo de evidência de memória do portal de incidentes, identificar
+    o processo malicioso em execução e recuperar chaves e artefatos de persistência
+    deixados pelo atacante.
+  instructions: '1. Inicie o laboratório e acesse a plataforma de gerenciamento de
+    casos de perícia.
+
+    2. Baixe o pacote de dump de memória referente ao incidente ''Patient Zero''.
+
+    3. Execute ferramentas como strings, grep ou plugins de Volatility 3 para analisar
+    processos e conexões de rede.
+
+    4. Responda às perguntas periciais e submeta as flags encontradas nos artefatos.'
+  hints:
+  - Procure por nomes de processos incomuns ou executáveis rodando fora dos diretórios
+    padrão (/tmp, /dev/shm).
+  - Filtre strings de texto por padrões de flags (DUNO{...} ou EverSec{...}).
+  - Analise conexões de rede ativas e comandos executados no shell capturados no buffer.
+  difficulty: hard
+  points: 4050
+  estimated_minutes: 60
+  solves_count: 0
+  environment_type: single
+  internal_port: 80
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Analyze volatile memory artifacts, investigate incident traces,
+    and recover cryptographic keys.
+- id: sierra-filing-cabinet
+  source: eversec
+  source_path: challenges/vector
+  category: Criptografia
+  os: linux
+  name: Vector
+  short_description: Decipher corporate documents protected by multiple layers of
+    coding and cryptographic ciphers.
+  long_description: Corporate digital file containing 5 confidential documents protected
+    by different cryptographic techniques and progressive encoding schemes (Base64,
+    Hexadecimal with inversion, binary substitution, ROT13/JWT, and ROT8000).
+  objective: Analisar as características de cada arquivo criptografado, construir
+    a receita de decodificação correta no CyberChef ou scripts em Python e revelar
+    todas as flags.
+  instructions: '1. Inicie a instância e visualize os documentos disponíveis no portal
+    de arquivos (/crypto1.txt até /crypto5.txt).
+
+    2. Identifique os conjuntos de caracteres de cada documento para inferir a técnica
+    de ofuscação.
+
+    3. Utilize ferramentas como CyberChef ou scripts locais para decodificar e decifrar
+    cada camada.
+
+    4. Submeta as flags extraídas de cada arquivo.'
+  hints:
+  - Use o recurso 'Magic' ou 'Entropy' do CyberChef para detectar tipos de cifras
+    desconhecidas.
+  - Documentos com caracteres orientais ou exóticos podem ser resultado de cifras
+    de deslocamento como ROT8000.
+  - Inspecione a estrutura dos tokens intermediários caso identifique payloads JWT.
+  difficulty: medium
+  points: 1400
+  estimated_minutes: 35
+  solves_count: 0
+  environment_type: single
+  internal_port: 80
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Explore the permissions of the shared file system, locate sensitive
+    directories, and capture the flag.
+- id: tango-calculator
+  source: eversec
+  source_path: challenges/viper
+  category: AI & LLM Security
+  os: linux
+  name: Viper
+  short_description: Explore Prompt Injection in an LLM-based calculator to leak system
+    instructions and secrets.
+  long_description: Modern web application of calculator and natural language processing
+    powered by artificial intelligence models. Prompt sanitization failures allow
+    jailbreak and instruction injection attacks that force the model to ignore security
+    rules and leak the secret key.
+  objective: Engenhar entradas de texto que contornem a validação de formato matemático,
+    induzindo o modelo de IA a revelar o segredo embutido no seu system prompt.
+  instructions: '1. Inicie o laboratório e acesse a interface interativa da calculadora
+    de IA.
+
+    2. Teste operações matemáticas convencionais e observe o formato das respostas
+    fornecidas.
+
+    3. Formule técnicas de Prompt Injection (ex: ignore instruções anteriores, modo
+    de depuração, tradução reversa).
+
+    4. Extraia o texto do prompt de sistema e capture a flag protegida.'
+  hints:
+  - Tente pedir para o modelo expressar o conteúdo de suas regras iniciais como uma
+    equação matemática.
+  - Técnicas de roleplay ou fingir ser o desenvolvedor do sistema frequentemente contornam
+    restrições superficiais.
+  - Utilize caracteres de escape ou codificações para burlar eventuais filtros de
+    palavras restritas no frontend.
+  difficulty: medium
+  points: 200
+  estimated_minutes: 30
+  solves_count: 0
+  environment_type: single
+  internal_port: 5432
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Analyze the backend calculation routines, explore code interpretation
+    flaws, and take control.
+- id: xray-craftcms-rce
+  source: eversec
+  source_path: challenges/wraith
+  category: CVE Exploitation
+  os: linux
+  name: Wraith
+  short_description: Explore dependency injection vulnerability and image transformation
+    in CraftCMS to obtain RCE and root.
+  long_description: Corporate portal based on the CMS CraftCMS version 5.6.16. The
+    application contains a critical dependency injection and remote code execution
+    vulnerability in the processing of image transformations uploaded by users, allowing
+    total server takeover.
+  objective: Explorar o vetor de vulnerabilidade no recurso de transformação de imagens
+    para invocar comandos arbitrários no container e elevar privilégios para root.
+  instructions: '1. Inicie a instância e analise a versão do CraftCMS e o endpoint
+    de upload e transformação de imagens.
+
+    2. Elabore uma requisição com parâmetros de injeção de dependência direcionada
+    aos componentes vulneráveis do framework.
+
+    3. Execute comandos de sistema no backend para obter a flag de usuário.
+
+    4. Inspecione tarefas agendadas ou permissões sudo para escalar para root e capturar
+    a flag final.'
+  hints:
+  - Consulte boletins de segurança e exploits públicos para vulnerabilidades recentes
+    em CraftCMS.
+  - A falha permite instanciar classes arbitrárias do framework através de parâmetros
+    de transformação de assets.
+  - Verifique as variáveis de ambiente e arquivos de configuração (.env) da aplicação
+    web.
+  difficulty: hard
+  points: 900
+  estimated_minutes: 50
+  solves_count: 0
+  environment_type: single
+  internal_port: 80
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Map the administrative panel, identify vulnerabilities in asset
+    management, and execute commands.
+- id: yankee-log4shell
+  source: eversec
+  source_path: challenges/zero
+  category: CVE Exploitation
+  os: linux
+  name: Zero
+  short_description: Explore the critical Log4Shell vulnerability (CVE-2021-44228)
+    in a Java SOC panel to obtain shell and root.
+  long_description: Corporate SOC monitoring dashboard implemented in Java using the
+    Apache Log4j 2.14.1 library vulnerable to remote code execution through JNDI/LDAP
+    lookups. Attackers trigger remote callbacks and escalate privileges in the system
+    via sudo.
+  objective: Identificar campos de entrada registrados no log do servidor, injetar
+    expressões JNDI maliciosas para obter execução remota de código e escalar privilégios
+    para root.
+  instructions: '1. Inicie o laboratório e explore as rotas de busca de logs e relatórios
+    da plataforma SOC.
+
+    2. Identifique quais cabeçalhos HTTP ou parâmetros de formulário são passados
+    para o log do Log4j (ex: User-Agent, filtros).
+
+    3. Injete strings com sintaxe de lookup JNDI (${jndi:ldap://...} ou ${jndi:rmi://...}).
+
+    4. Execute comandos para ler a flag e escale para root utilizando comandos autorizados
+    no sudoers.'
+  hints:
+  - Campos como User-Agent, X-Api-Version e inputs de busca costumam ser registrados
+    em logs corporativos.
+  - Para contornar filtros ingênuos de strings, use técnicas de ofuscação do Log4j
+    como ${lower:j}${lower:n}di.
+  - Verifique permissões com 'sudo -l' assim que obtiver acesso shell no container.
+  difficulty: hard
+  points: 1500
+  estimated_minutes: 50
+  solves_count: 0
+  environment_type: single
+  internal_port: 4020
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Identify vulnerable registry vectors, exploit remote code execution,
+    and obtain the shell.
+- id: zulu-koa-devtools
+  source: eversec
+  source_path: challenges/zenith
+  category: DevTools & Node Exploitation
+  os: linux
+  name: Zenith
+  short_description: Explore source code leakage in Koa.js, host access control bypass,
+    and script execution.
+  long_description: Internal portal of developer tools in Koa.js that exposes its
+    workspace as static files (including the .git repository). Analysis of the source
+    code reveals a script execution endpoint restricted to localhost that can be bypassed
+    via Host header manipulation.
+  objective: Extrair o código fonte pelo vazamento de arquivos estáticos, contornar
+    a validação de localhost no cabeçalho Host e invocar comandos com privilégios
+    de root.
+  instructions: '1. Inicie a instância e analise os arquivos estáticos expostos no
+    servidor web.
+
+    2. Recupere o histórico de commits do repositório .git oculto para encontrar tokens
+    vazados.
+
+    3. Inspecione o código de /admin/execute e explore o bypass do cabeçalho Host
+    (Host: localhost:fake@ip:4022).
+
+    4. Submeta scripts para execução remota e leia a flag final.'
+  hints:
+  - Use git-dumper ou curl para reconstruir o repositório a partir de /.git/logs/HEAD.
+  - Analise como a biblioteca de roteamento valida se o requisitante é localhost.
+  - Verifique o manipulador de execução de scripts para escapar do contexto e executar
+    comandos no SO.
+  difficulty: hard
+  points: 1600
+  estimated_minutes: 55
+  solves_count: 0
+  environment_type: single
+  internal_port: 4022
+  protocol: http
+  status: available
+  requires_api_key: false
+  metadata_version: 1
+  has_walkthrough: true
+  card_description: Analyze development tools active in production, discover debug
+    flaws, and capture the final flag.

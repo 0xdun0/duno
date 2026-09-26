@@ -6,9 +6,9 @@
 
   <!-- Breadcrumb -->
   <nav class="breadcrumb" aria-label="Navegação">
-    <a href="{{ url_for('index') }}">DUNO</a>
+    <a href="{{ url_for('index') }}">{{ _('DUNO') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <a href="{{ url_for('challenges.index') }}">Desafios CTF</a>
+    <a href="{{ url_for('challenges.index') }}">{{ _('Desafios CTF') }}</a>
     <span class="breadcrumb-sep">›</span>
     <span>{{ challenge.name }}</span>
   </nav>
@@ -36,38 +36,38 @@
         <span class="cd-tag">{{ challenge.category | lower }}</span>
         <span class="cd-tag">{{ challenge.difficulty }}</span>
         {% if 'sql' in challenge.category|lower or 'sqli' in challenge.id %}
-          <span class="cd-tag">sql-injection</span>
-          <span class="cd-tag">auth-bypass</span>
+          <span class="cd-tag">{{ _('sql-injection') }}</span>
+          <span class="cd-tag">{{ _('auth-bypass') }}</span>
         {% elif 'xss' in challenge.id or 'scripting' in challenge.category|lower %}
-          <span class="cd-tag">xss</span>
-          <span class="cd-tag">cookie-theft</span>
+          <span class="cd-tag">{{ _('xss') }}</span>
+          <span class="cd-tag">{{ _('cookie-theft') }}</span>
         {% elif 'jwt' in challenge.id or 'autenticação' in challenge.category|lower %}
-          <span class="cd-tag">jwt</span>
-          <span class="cd-tag">token-forge</span>
+          <span class="cd-tag">{{ _('jwt') }}</span>
+          <span class="cd-tag">{{ _('token-forge') }}</span>
         {% elif 'ssrf' in challenge.category|lower %}
-          <span class="cd-tag">ssrf</span>
-          <span class="cd-tag">cloud-metadata</span>
+          <span class="cd-tag">{{ _('ssrf') }}</span>
+          <span class="cd-tag">{{ _('cloud-metadata') }}</span>
         {% elif 'idor' in challenge.id or 'controle' in challenge.category|lower %}
-          <span class="cd-tag">idor</span>
-          <span class="cd-tag">access-control</span>
+          <span class="cd-tag">{{ _('idor') }}</span>
+          <span class="cd-tag">{{ _('access-control') }}</span>
         {% elif 'cve' in challenge.category|lower %}
-          <span class="cd-tag">cve</span>
-          <span class="cd-tag">exploit</span>
+          <span class="cd-tag">{{ _('cve') }}</span>
+          <span class="cd-tag">{{ _('exploit') }}</span>
         {% elif 'forense' in challenge.category|lower %}
-          <span class="cd-tag">dfir</span>
-          <span class="cd-tag">memory-dump</span>
+          <span class="cd-tag">{{ _('dfir') }}</span>
+          <span class="cd-tag">{{ _('memory-dump') }}</span>
         {% elif 'cripto' in challenge.category|lower %}
-          <span class="cd-tag">crypto</span>
-          <span class="cd-tag">decode</span>
+          <span class="cd-tag">{{ _('crypto') }}</span>
+          <span class="cd-tag">{{ _('decode') }}</span>
         {% elif 'template' in challenge.category|lower %}
-          <span class="cd-tag">ssti</span>
-          <span class="cd-tag">rce</span>
+          <span class="cd-tag">{{ _('ssti') }}</span>
+          <span class="cd-tag">{{ _('rce') }}</span>
         {% elif 'graphql' in challenge.category|lower %}
-          <span class="cd-tag">graphql</span>
-          <span class="cd-tag">introspection</span>
+          <span class="cd-tag">{{ _('graphql') }}</span>
+          <span class="cd-tag">{{ _('introspection') }}</span>
         {% else %}
-          <span class="cd-tag">pentest</span>
-          <span class="cd-tag">exploit</span>
+          <span class="cd-tag">{{ _('pentest') }}</span>
+          <span class="cd-tag">{{ _('exploit') }}</span>
         {% endif %}
       </div>
 
@@ -75,7 +75,7 @@
       <div class="cd-description-section">
         <div class="cd-section-header">
           <i class="nf nf-oct-file" aria-hidden="true"></i>
-          <span>DESCRIPTION</span>
+          <span>{{ _('DESCRIPTION') }}</span>
         </div>
         <p class="cd-description-text">
           {{ challenge.objective or challenge.long_description or challenge.short_description }}
@@ -103,7 +103,7 @@
         </button>
         <div class="cd-time-to-start">
           <i class="nf nf-md-clock_outline" aria-hidden="true"></i>
-          <span>Time to Start</span>
+          <span>{{ _('Time to Start') }}</span>
           <strong>{{ challenge.estimated_minutes }} min</strong>
         </div>
       </div>
@@ -112,13 +112,13 @@
       <div class="challenge-instance-box" id="detail-instance-box" {% if challenge.instance_status != 'running' %}style="display:none;"{% endif %}>
         <div class="instance-endpoint-row">
           <span class="instance-dot"></span>
-          <span class="instance-label">Alvo Ativo:</span>
+          <span class="instance-label">{{ _('Alvo Ativo:') }}</span>
           <a href="{{ challenge.endpoint or '#' }}" target="_blank" rel="noopener" class="instance-link" id="detail-endpoint-link">
             {{ challenge.endpoint or 'Preparando endpoint...' }}
           </a>
         </div>
         <div class="instance-timer" id="detail-instance-timer">
-          TTL: ~60m
+          {{ _('TTL: ~60m') }}
         </div>
       </div>
 
@@ -126,12 +126,12 @@
       <div class="cd-flag-section">
         <div class="cd-section-header">
           <i class="nf nf-fa-flag" aria-hidden="true"></i>
-          <span>FLAG SUBMISSION</span>
+          <span>{{ _('FLAG SUBMISSION') }}</span>
         </div>
 
         <div class="challenge-solved-banner" id="detail-solved-banner" {% if not challenge.is_solved %}style="display:none;"{% endif %}>
           <span class="solved-icon">✓</span>
-          <span class="solved-text">Desafio Concluído!</span>
+          <span class="solved-text">{{ _('Desafio Concluído!') }}</span>
         </div>
 
         <form class="cd-flag-form" id="detail-flag-form" onsubmit="return false;">
@@ -145,7 +145,7 @@
             <button type="button"
                     class="btn btn-primary"
                     id="btn-detail-submit-flag">
-              VALIDAR
+              {{ _('VALIDAR') }}
             </button>
           </div>
           <div class="flag-feedback" id="detail-flag-feedback" style="display:none;" aria-live="polite"></div>
@@ -161,10 +161,10 @@
             {% if not loop.last %}<span class="cd-kw-sep">/</span>{% endif %}
           {% endfor %}
         {% else %}
-          <span>EXPLORE</span><span class="cd-kw-sep">/</span>
-          <span>RECON</span><span class="cd-kw-sep">/</span>
-          <span>EXPLOIT</span><span class="cd-kw-sep">/</span>
-          <span>FLAG</span>
+          <span>{{ _('EXPLORE') }}</span><span class="cd-kw-sep">/</span>
+          <span>{{ _('RECON') }}</span><span class="cd-kw-sep">/</span>
+          <span>{{ _('EXPLOIT') }}</span><span class="cd-kw-sep">/</span>
+          <span>{{ _('FLAG') }}</span>
         {% endif %}
       </div>
 
@@ -174,7 +174,7 @@
     <div class="cd-sidebar">
 
       <div class="cd-stat-block">
-        <span class="cd-stat-label">POINTS</span>
+        <span class="cd-stat-label">{{ _('POINTS') }}</span>
         <div class="cd-stat-value cd-stat-points">
           <i class="nf nf-fa-star" aria-hidden="true"></i>
           <span>{{ challenge.points }}</span>
@@ -182,7 +182,7 @@
       </div>
 
       <div class="cd-stat-block">
-        <span class="cd-stat-label">XP</span>
+        <span class="cd-stat-label">{{ _('XP') }}</span>
         <div class="cd-stat-value cd-stat-xp">
           <i class="nf nf-md-diamond_stone" aria-hidden="true"></i>
           <span>{{ challenge.points }}</span>
@@ -190,7 +190,7 @@
       </div>
 
       <div class="cd-stat-block">
-        <span class="cd-stat-label">MACHINE</span>
+        <span class="cd-stat-label">{{ _('MACHINE') }}</span>
         <div class="cd-stat-value cd-stat-machine">
           {% if challenge.os == 'linux' %}
             <i class="nf nf-linux-tux" aria-hidden="true"></i>
@@ -211,7 +211,7 @@
       </div>
 
       <div class="cd-stat-block">
-        <span class="cd-stat-label">DIFFICULTY</span>
+        <span class="cd-stat-label">{{ _('DIFFICULTY') }}</span>
         <div class="cd-stat-value cd-stat-difficulty">
           <i class="nf nf-md-signal_cellular_3" aria-hidden="true"></i>
           <div class="cd-diff-info">
@@ -244,7 +244,7 @@
       </div>
 
       <div class="cd-stat-block">
-        <span class="cd-stat-label">SOLVES</span>
+        <span class="cd-stat-label">{{ _('SOLVES') }}</span>
         <div class="cd-stat-value">
           <i class="nf nf-fa-users" aria-hidden="true"></i>
           <span id="detail-solves-count">{{ challenge.solves_count }}</span>
@@ -253,7 +253,7 @@
 
       {% if challenge.has_walkthrough %}
       <div class="cd-stat-block cd-walkthrough-block">
-        <span class="cd-stat-label">WALKTHROUGH</span>
+        <span class="cd-stat-label">{{ _('WALKTHROUGH') }}</span>
         <div class="cd-stat-value">
           <i class="nf nf-md-book_open_variant" aria-hidden="true"></i>
           <a href="/desafio/{{ challenge_index }}/walkthrough" class="cd-walkthrough-link">
@@ -270,7 +270,7 @@
   <!-- Bottom Navigation -->
   <nav class="challenge-bottom-nav" aria-label="Navegação entre desafios">
     <a href="{{ url_for('challenges.index') }}" class="btn btn-outline btn-sm">
-      ← Voltar aos Desafios
+      {{ _('← Voltar aos Desafios') }}
     </a>
     <div class="challenge-prev-next">
       {% if prev_index %}
@@ -318,7 +318,9 @@
         endpointLink.textContent = data.endpoint;
       }
       if (machineIp && data.endpoint) {
-        machineIp.textContent = 'IP: ' + data.endpoint.replace(/^https?:\/\//, '').split('/')[0];
+        const hostPort = data.endpoint.replace(/^https?:\/\//, '').split('/')[0];
+        const pureIp = hostPort.includes(':') ? hostPort.split(':')[0] : hostPort;
+        machineIp.textContent = 'IP: ' + pureIp;
       }
     } else if (data.status === 'starting') {
       startBtn.disabled = true;
@@ -358,11 +360,12 @@
         updateInstanceUI(data);
 
         if (['running', 'failed', 'stopped', 'expired'].includes(data.status)) {
-          return;
+          return data;
         }
       } catch (e) {}
     }
     updateInstanceUI({ status: 'failed', last_error: 'Timeout de inicialização (120s).' });
+    return { status: 'failed', last_error: 'Timeout' };
   }
 
   if (startBtn) {
@@ -370,20 +373,25 @@
       const currentStatus = this.getAttribute('data-status');
       const instanceId = this.getAttribute('data-instance-id');
 
-      if (currentStatus === 'running' && instanceId) {
+      if (currentStatus === 'running') {
         startBtn.disabled = true;
         startBtn.innerHTML = '<i class="nf nf-md-loading" aria-hidden="true"></i> Stopping...';
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 6000);
         try {
-          const res = await fetch(`/api/challenge-instances/${instanceId}/stop`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
-            credentials: 'same-origin',
-          });
-          if (res.ok) {
-            updateInstanceUI({ status: 'stopped' });
+          if (instanceId) {
+            await fetch(`/api/challenge-instances/${instanceId}/stop`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+              credentials: 'same-origin',
+              signal: controller.signal
+            });
           }
         } catch (e) {
-          startBtn.disabled = false;
+          console.warn('Erro ao parar instância:', e);
+        } finally {
+          clearTimeout(timeoutId);
+          updateInstanceUI({ status: 'stopped' });
         }
         return;
       }
@@ -391,34 +399,53 @@
       startBtn.disabled = true;
       updateInstanceUI({ status: 'starting' });
 
-      try {
-        const res = await fetch(`/api/challenges/${challengeId}/instances`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
-          credentials: 'same-origin',
+      const startPromise = (async () => {
+        try {
+          const res = await fetch(`/api/challenges/${challengeId}/instances`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+            credentials: 'same-origin',
+          });
+
+          if (res.status === 429) {
+            const retry = res.headers.get('Retry-After') || '30';
+            const errData = await res.json().catch(() => ({}));
+            alert((errData.error || 'Muitas requisições.') + `\nAguarde ${retry} segundos.`);
+            updateInstanceUI({ status: 'available' });
+            throw new Error((errData.error || 'Muitas requisições.') + ` Aguarde ${retry}s.`);
+          }
+
+          if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            throw new Error(errData.error || 'Falha ao iniciar desafio');
+          }
+
+          const data = await res.json();
+          updateInstanceUI(data);
+
+          if (data.status === 'running' && data.endpoint) {
+            return data;
+          } else if (data.status === 'starting') {
+            const finalData = await pollInstance(data.instance_id);
+            return finalData;
+          }
+          return data;
+        } catch (err) {
+          updateInstanceUI({ status: 'failed', last_error: err.message });
+          throw err;
+        }
+      })();
+
+      if (window.CountdownCentral) {
+        const isCommunity = Boolean(document.querySelector('.badge-community-machine'));
+        const bootEstimate = isCommunity ? 45 : 8;
+        window.CountdownCentral.start({
+          challengeId: challengeId,
+          challengeName: document.querySelector('.detail-title')?.textContent?.trim() || challengeId,
+          bootEstimate: bootEstimate,
+          isCommunity: isCommunity,
+          promise: startPromise
         });
-
-        if (res.status === 429) {
-          const retry = res.headers.get('Retry-After') || '30';
-          const errData = await res.json().catch(() => ({}));
-          alert((errData.error || 'Muitas requisições.') + `\nAguarde ${retry} segundos.`);
-          updateInstanceUI({ status: 'available' });
-          return;
-        }
-
-        if (!res.ok) {
-          const errData = await res.json().catch(() => ({}));
-          throw new Error(errData.error || 'Falha ao iniciar desafio');
-        }
-
-        const data = await res.json();
-        updateInstanceUI(data);
-
-        if (data.status === 'starting') {
-          pollInstance(data.instance_id);
-        }
-      } catch (err) {
-        updateInstanceUI({ status: 'failed', last_error: err.message });
       }
     });
   }

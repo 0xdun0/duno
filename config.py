@@ -8,3 +8,4 @@ class Config:
     UPLOAD_FOLDER = "/app/static/uploads"
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "txt"}
     JWT_SECRET = os.environ.get("JWT_SECRET", "duno-jwt-secret")
+    BABEL_TRANSLATION_DIRECTORIES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "translations")

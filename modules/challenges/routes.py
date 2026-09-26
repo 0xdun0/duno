@@ -10,7 +10,7 @@ from flask import (
 from core.decorators import login_required
 from core.auth import current_user
 from core.database import get_db
-from modules.challenges.catalog import catalog
+from modules.challenges.catalog import catalog, get_challenge_walkthrough_path
 from modules.challenges.rate_limiter import rate_limiter
 from modules.challenges.runner_client import runner_client
 from modules.challenges.solves_service import solves_service
@@ -122,6 +122,19 @@ def challenge_page(identifier):
     ch, idx = catalog.get_by_identifier(identifier, user=user)
     if not ch or ch.get("status") == "draft":
         abort(404)
+
+    # Registra visualização para limpar o badge de "NOVA MÁQUINA"
+    if user and ch:
+        try:
+            db = get_db()
+            db.execute(
+                "INSERT OR IGNORE INTO user_challenge_views (user_id, challenge_id) VALUES (?, ?)",
+                (user["id"], ch["id"])
+            )
+            db.commit()
+        except Exception:
+            pass
+
     total_challenges = len(catalog.load_challenges())
     next_idx = idx + 1 if idx and idx < total_challenges else None
     prev_idx = idx - 1 if idx and idx > 1 else None
@@ -144,7 +157,20 @@ def challenge_walkthrough(identifier):
     ch, idx = catalog.get_by_identifier(identifier, user=user)
     if not ch or ch.get("status") == "draft":
         abort(404)
-    if not ch.get("has_walkthrough"):
+
+    # Walkthrough unificado: lê walkthrough.md da máquina, independente de ser community
+    walkthrough_html = None
+    wt_path = get_challenge_walkthrough_path(ch)
+    if wt_path:
+        try:
+            import markdown as md_lib
+            wt_text = wt_path.read_text(encoding="utf-8", errors="replace")
+            walkthrough_html = md_lib.markdown(
+                wt_text, extensions=["fenced_code", "tables", "toc"]
+            )
+        except Exception:
+            pass
+    elif not ch.get("has_walkthrough"):
         abort(404)
     exp_val = ch.get("expires_at")
     if hasattr(exp_val, "isoformat"):
@@ -159,6 +185,7 @@ def challenge_walkthrough(identifier):
         challenge=ch,
         challenge_index=idx or 1,
         csrf_token=session.get("csrf_token"),
+        walkthrough_html=walkthrough_html,
     )
 
 

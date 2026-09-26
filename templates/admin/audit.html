@@ -8,17 +8,17 @@
     <!-- Top Breadcrumb / Kicker -->
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
       <div class="settings-kicker-brand">
-        <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="color:inherit; text-decoration:none;">DUNO // ADMIN PIPELINE</a> // AUDITORIA
+        <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="color:inherit; text-decoration:none;">{{ _('DUNO // ADMIN PIPELINE') }}</a> // AUDITORIA
       </div>
       <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="font-size:0.8rem; color:var(--ink-2); text-decoration:none;">
-        ← Voltar ao Painel
+        {{ _('← Voltar ao Painel') }}
       </a>
     </div>
 
     <!-- Hero Header -->
     <header class="settings-hero">
-      <h1 class="settings-title">Log de Auditoria da Esteira</h1>
-      <p class="settings-subtitle">Rastreabilidade completa de todas as operações, submissões, transições de estado, scans e decisões de publicação.</p>
+      <h1 class="settings-title">{{ _('Log de Auditoria da Esteira') }}</h1>
+      <p class="settings-subtitle">{{ _('Rastreabilidade completa de todas as operações, submissões, transições de estado, scans e decisões de publicação.') }}</p>
     </header>
 
     <div class="settings-divider"></div>
@@ -26,14 +26,14 @@
     <!-- FILTRO DE AÇÃO -->
     <form method="GET" action="{{ url_for('submissions_admin.audit_logs') }}" style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1rem 1.25rem; margin-bottom:1.5rem; display:flex; gap:1rem; align-items:center; box-shadow:var(--shadow-sm);">
       <div style="flex:1;">
-        <input type="text" name="action" value="{{ current_action }}" placeholder="Filtrar por ação (ex: TRANSITION, SUBMIT, APPROVE, BUILD...)" style="width:100%; padding:0.55rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); font-size:0.85rem; font-family:var(--font-mono);" />
+        <input type="text" name="action" value="{{ current_action }}" placeholder="{{ _('Filtrar por ação (ex: TRANSITION, SUBMIT, APPROVE, BUILD...)') }}" style="width:100%; padding:0.55rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); font-size:0.85rem; font-family:var(--font-mono);" />
       </div>
       <button type="submit" class="btn btn-primary" style="padding:0.55rem 1.25rem; font-size:0.85rem; border-radius:var(--r-xs);">
-        Filtrar
+        {{ _('Filtrar') }}
       </button>
       {% if current_action %}
       <a href="{{ url_for('submissions_admin.audit_logs') }}" class="btn-subtle" style="padding:0.55rem 0.85rem; font-size:0.85rem; text-decoration:none; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-subtle); color:var(--ink-2);">
-        Limpar
+        {{ _('Limpar') }}
       </a>
       {% endif %}
     </form>
@@ -43,12 +43,12 @@
       <table class="duno-table" style="width:100%; border-collapse:collapse; text-align:left;">
         <thead>
           <tr style="border-bottom:1px solid var(--line); background:var(--bg-card-subtle); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3);">
-            <th style="padding:0.9rem 1.25rem;">Data / Hora</th>
-            <th style="padding:0.9rem 1rem;">Ação</th>
-            <th style="padding:0.9rem 1rem;">Operador</th>
-            <th style="padding:0.9rem 1rem;">Máquina ID</th>
-            <th style="padding:0.9rem 1rem;">IP</th>
-            <th style="padding:0.9rem 1.25rem;">Detalhes do Evento</th>
+            <th style="padding:0.9rem 1.25rem;">{{ _('Data / Hora') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Ação') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Operador') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Máquina ID') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('IP') }}</th>
+            <th style="padding:0.9rem 1.25rem;">{{ _('Detalhes do Evento') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -84,7 +84,7 @@
           {% else %}
           <tr>
             <td colspan="6" style="padding:3rem; text-align:center; color:var(--ink-3);">
-              Nenhum registro de auditoria encontrado.
+              {{ _('Nenhum registro de auditoria encontrado.') }}
             </td>
           </tr>
           {% endfor %}

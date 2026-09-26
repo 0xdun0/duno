@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "sources": ["../src/app.jsx"],
+  "names": ["API_ENDPOINT", "API_KEY", "SECRET_TOKEN", "showLogin", "showDocs"],
+  "mappings": "AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA",
+  "file": "app.js",
+  "sourcesContent": [
+    "// EverSec Portal - Original Source\n// Build: development\n// internal-build-token: DUNO{35c8761ee56e8e9be0e007372359c53b}\n\nconst API_ENDPOINT = 'https://api.eversec.com/v1';\nconst API_KEY = 'DUNO{585f55d476046e2baf410aec24e5f67c}';\nconst SECRET_TOKEN = 'dev-secret-12345';\n\n// Application code...\nfunction showLogin() {\n  console.log('Login clicked');\n}\n\nfunction showDocs() {\n  console.log('Docs clicked');\n}\n"
+  ]
+}

@@ -16,18 +16,24 @@ class ChallengeRunnerClient:
         self.base_url = (base_url or RUNNER_URL).rstrip("/")
         self.token = token or RUNNER_TOKEN
 
-    def _request(self, method, path, data=None):
+    def _request(self, method, path, data=None, timeout=120):
         url = f"{self.base_url}{path}"
         headers = {
             "X-Runner-Token": self.token,
             "Content-Type": "application/json",
             "User-Agent": "DUNO-Web/1.0",
         }
-        req_body = json.dumps(data).encode("utf-8") if data is not None else None
+
+        def _json_serial(obj):
+            if hasattr(obj, "isoformat"):
+                return obj.isoformat()
+            return str(obj)
+
+        req_body = json.dumps(data, default=_json_serial).encode("utf-8") if data is not None else None
         req = urllib.request.Request(url, data=req_body, headers=headers, method=method)
 
         try:
-            with urllib.request.urlopen(req, timeout=120) as resp:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
                 status = resp.status
                 if status == 204:
                     return status, {}
@@ -94,7 +100,7 @@ class ChallengeRunnerClient:
         return self._request("GET", f"/instances/{instance_id}")
 
     def stop_instance(self, instance_id):
-        return self._request("DELETE", f"/instances/{instance_id}")
+        return self._request("DELETE", f"/instances/{instance_id}", timeout=6)
 
     def extend_instance(self, instance_id, additional_seconds=3600):
         return self._request("POST", f"/instances/{instance_id}/extend", {"additional_seconds": additional_seconds})

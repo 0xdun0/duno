@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#18 API Versioning</span>
+    <span>{{ _('#18 API Versioning') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">API Versioning</h1>
-      <p class="module-desc">Acesso a dados sensíveis via versão de API obsoleta</p>
+      <h1 class="module-title">{{ _('API Versioning') }}</h1>
+      <p class="module-desc">{{ _('Acesso a dados sensíveis via versão de API obsoleta') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('api_versioning', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,18 +34,18 @@
       </p>
       <form method="GET" action="/api_versioning" id="version-form">
         <div class="form-group">
-          <label for="version-select">Versão da API</label>
+          <label for="version-select">{{ _('Versão da API') }}</label>
           <select id="version-select" name="version" class="form-control"
                   onchange="this.form.submit()">
-            <option value="v1" {% if version == 'v1' %}selected{% endif %}>v1 (legada)</option>
-            <option value="v2" {% if version == 'v2' %}selected{% endif %}>v2 (atual)</option>
+            <option value="v1" {% if version == 'v1' %}selected{% endif %}>{{ _('v1 (legada)') }}</option>
+            <option value="v2" {% if version == 'v2' %}selected{% endif %}>{{ _('v2 (atual)') }}</option>
           </select>
         </div>
       </form>
       {% if result %}
       <div style="margin-top:1rem;overflow-x:auto">
         <table class="data-table">
-          <thead><tr><th>ID</th><th>User ID</th><th>Token</th><th>Version</th></tr></thead>
+          <thead><tr><th>{{ _('ID') }}</th><th>{{ _('User ID') }}</th><th>{{ _('Token') }}</th><th>{{ _('Version') }}</th></tr></thead>
           <tbody>
             {% for row in result %}
             <tr>
@@ -62,7 +62,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Sem filtro — retorna todos os tokens independente de versão{% endif %}
         {% if level == 'medium' %}Filtra por versão mas v1 ainda acessível pela URL{% endif %}

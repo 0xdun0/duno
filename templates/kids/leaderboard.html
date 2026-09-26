@@ -4,7 +4,7 @@
 
 {% block kids_breadcrumb %}
 <span class="breadcrumb-sep">›</span>
-<span>Ranking</span>
+<span>{{ _('Ranking') }}</span>
 {% endblock %}
 
 {% block kids_content %}
@@ -13,17 +13,17 @@
   <div class="kids-hero-text">
     <div class="kids-hero-kicker">
       <i class="nf nf-md-trophy" aria-hidden="true"></i>
-      <span>COMPETIÇÃO ACADÊMICA & LIGAS</span>
+      <span>{{ _('COMPETIÇÃO ACADÊMICA & LIGAS') }}</span>
     </div>
-    <h1 class="kids-hero-title">Tabela de Líderes</h1>
+    <h1 class="kids-hero-title">{{ _('Tabela de Líderes') }}</h1>
     <p class="kids-hero-desc">
-      Acumule XP respondendo quizzes, completando lições na Trilha e mantendo sua sequência diária ativa.
+      {{ _('Acumule XP respondendo quizzes, completando lições na Trilha e mantendo sua sequência diária ativa.') }}
     </p>
   </div>
 
   <div class="platform-pill" style="padding: 10px 18px; font-size: 0.95rem;">
     <i class="nf nf-md-shield" style="color: #b45309; font-size: 1.2rem;" aria-hidden="true"></i>
-    <span style="font-weight: 700; color: var(--ink);">Liga: Bronze</span>
+    <span style="font-weight: 700; color: var(--ink);">{{ _('Liga: Bronze') }}</span>
   </div>
 </section>
 
@@ -31,24 +31,24 @@
 <div class="hero-filters" style="margin-bottom: 1.75rem; justify-content: flex-start;">
   <button type="button" class="filter-pill active">
     <i class="nf nf-md-shield" style="color: #b45309;"></i>
-    <span>Liga Bronze</span>
-    <span class="pill-tag">Atual</span>
+    <span>{{ _('Liga Bronze') }}</span>
+    <span class="pill-tag">{{ _('Atual') }}</span>
   </button>
   <button type="button" class="filter-pill" style="opacity: 0.65;">
     <i class="nf nf-md-shield" style="color: #94a3b8;"></i>
-    <span>Liga Prata</span>
+    <span>{{ _('Liga Prata') }}</span>
   </button>
   <button type="button" class="filter-pill" style="opacity: 0.65;">
     <i class="nf nf-md-shield" style="color: #f59e0b;"></i>
-    <span>Liga Ouro</span>
+    <span>{{ _('Liga Ouro') }}</span>
   </button>
   <button type="button" class="filter-pill" style="opacity: 0.65;">
     <i class="nf nf-md-diamond" style="color: #10b981;"></i>
-    <span>Liga Esmeralda</span>
+    <span>{{ _('Liga Esmeralda') }}</span>
   </button>
   <button type="button" class="filter-pill" style="opacity: 0.65;">
     <i class="nf nf-md-seal" style="color: #38bdf8;"></i>
-    <span>Liga Diamante</span>
+    <span>{{ _('Liga Diamante') }}</span>
   </button>
 </div>
 
@@ -57,11 +57,11 @@
   <table class="kids-ranking-table">
     <thead>
       <tr>
-        <th class="kids-ranking-th" style="width: 70px;">Pos</th>
-        <th class="kids-ranking-th">Aluno</th>
-        <th class="kids-ranking-th" style="width: 120px;">Nível</th>
-        <th class="kids-ranking-th" style="width: 140px;">Ofensiva</th>
-        <th class="kids-ranking-th" style="width: 140px; text-align: right;">Total XP</th>
+        <th class="kids-ranking-th" style="width: 70px;">{{ _('Pos') }}</th>
+        <th class="kids-ranking-th">{{ _('Aluno') }}</th>
+        <th class="kids-ranking-th" style="width: 120px;">{{ _('Nível') }}</th>
+        <th class="kids-ranking-th" style="width: 140px;">{{ _('Ofensiva') }}</th>
+        <th class="kids-ranking-th" style="width: 140px; text-align: right;">{{ _('Total XP') }}</th>
       </tr>
     </thead>
     <tbody>
@@ -88,7 +88,7 @@
             </div>
             <span style="font-weight: 700; color: var(--ink);">
               {{ r.username }}
-              {% if is_me %}<span class="brand-badge" style="margin-left: 6px;">VOCÊ</span>{% endif %}
+              {% if is_me %}<span class="brand-badge" style="margin-left: 6px;">{{ _('VOCÊ') }}</span>{% endif %}
             </span>
           </div>
         </td>

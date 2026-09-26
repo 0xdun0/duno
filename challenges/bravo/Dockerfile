@@ -24,9 +24,9 @@ RUN useradd -m -u 1000 -s /bin/bash ctfuser
 RUN echo "ctfuser ALL=(ALL) NOPASSWD: /usr/bin/env, /usr/bin/python3" >> /etc/sudoers
 
 # Set up flags from build arguments (Formato Híbrido: DUNO{hash})
-ARG FLAG1=DUNO{5d41402abc4b2a76b9719d911017c592}
-ARG FLAG2=DUNO{7c6a180b36896a0a8c02787eeafb0e4c}
-ARG FLAG3=DUNO{9e107d9d372bb6826bd81d3542a419d6}
+ARG FLAG1=DUNO{DUNO{69a329523ce1ec88bf63061863d9cb14}}
+ARG FLAG2=DUNO{DUNO{816b09aa255516ec745de7b215e2e158}}
+ARG FLAG3=DUNO{DUNO{883c631dbcaca4373e1428a73c6cb19d}}
 
 ENV FLAG1=${FLAG1}
 ENV FLAG2=${FLAG2}

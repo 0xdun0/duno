@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#6 Insecure CAPTCHA</span>
+    <span>{{ _('#6 Insecure CAPTCHA') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">Insecure CAPTCHA</h1>
-      <p class="module-desc">Bypass de mecanismo de CAPTCHA</p>
+      <h1 class="module-title">{{ _('Insecure CAPTCHA') }}</h1>
+      <p class="module-desc">{{ _('Bypass de mecanismo de CAPTCHA') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('captcha', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,15 +34,15 @@
       </p>
       <form method="POST" action="/captcha" id="captcha-form">
         <div class="form-group">
-          <label>Desafio</label>
+          <label>{{ _('Desafio') }}</label>
           <p style="color:var(--text-primary);font-weight:600;font-size:1rem">{{ challenge.question }}</p>
           <input type="hidden" name="challenge_id" value="{{ challenge.id }}" />
         </div>
         <div class="form-group">
-          <label for="captcha-answer">Resposta</label>
-          <input type="text" id="captcha-answer" name="answer" class="form-control" placeholder="Ex: 7" />
+          <label for="captcha-answer">{{ _('Resposta') }}</label>
+          <input type="text" id="captcha-answer" name="answer" class="form-control" placeholder="{{ _('Ex: 7') }}" />
         </div>
-        <button type="submit" class="btn btn-primary">Verificar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Verificar') }}</button>
       </form>
       {% if result %}
       <div class="result-box {% if 'correto' in result %}success{% else %}error{% endif %}">{{ result }}</div>
@@ -50,7 +50,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Validação apenas no cliente (JS) — servidor aceita qualquer resposta{% endif %}
         {% if level == 'medium' %}Valida server-side mas não marca como usado — desafio reutilizável{% endif %}

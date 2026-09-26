@@ -7,35 +7,33 @@
   <section class="hero-section">
     <div class="hero-pill-badge" id="hero-badge">
       <span class="hero-pill-dot"></span>
-      <span id="txt-hero-pill">Ambiente de Laboratório • 20 Módulos de Exploração</span>
+      <span id="txt-hero-pill">{{ _('Ambiente de Laboratório • 20 Módulos de Exploração') }}</span>
     </div>
 
     <h1 class="hero-title">
-      <span id="txt-hero-prefix">A plataforma de segurança que você pode</span>
-      <span class="highlight-box"><span id="typewriter-word">quebrar</span><span class="hero-cursor">|</span></span>
+      <span id="txt-hero-prefix">{{ _('A plataforma de segurança que você pode') }}</span>
+      <span class="highlight-box"><span id="typewriter-word">{{ _('quebrar') }}</span><span class="hero-cursor">|</span></span>
     </h1>
 
     <p class="hero-desc" id="txt-hero-desc">
-      Explore 20 cenários reais de vulnerabilidade web com 4 níveis graduais de proteção (Low a Impossible).
-      Inspecione o código-fonte ao vivo e domine técnicas de exploração e defesa.
+      {{ _('Explore 20 cenários reais de vulnerabilidade web com 4 níveis graduais de proteção (Low a Impossible). Inspecione o código-fonte ao vivo e domine técnicas de exploração e defesa.') }}
     </p>
 
     <!-- Command Search Bar (⌘K) -->
     <div class="command-search-container">
       <div class="command-search-bar" id="command-search-bar">
-        <svg class="command-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="command-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" 
-               id="command-search-input" 
-               class="command-input" 
-               placeholder="Pesquisar laboratório... (ex: SQLi, XSS, CSRF, Token)" 
-               autocomplete="off" />
-        <span class="command-shortcut-hint" title="Pressione Super+A para buscar">
-          <kbd>SUPER</kbd><kbd>A</kbd>
+        <input type="text" id="command-search-input" class="command-input"
+          placeholder="{{ _('Pesquisar laboratório... (ex: SQLi, XSS, CSRF, Token)') }}" autocomplete="off" />
+        <span class="command-shortcut-hint" title="{{ _('Pressione Super+A para buscar') }}">
+          <kbd>󰘳</kbd><kbd>A</kbd>
         </span>
-        <button type="button" class="command-clear-btn" id="command-clear-btn" aria-label="Limpar busca" style="display:none;">✕</button>
+        <button type="button" class="command-clear-btn" id="command-clear-btn" aria-label="Limpar busca"
+          style="display:none;">✕</button>
       </div>
       <div class="search-feedback" id="search-feedback" style="display:none;"></div>
     </div>
@@ -43,22 +41,22 @@
     <!-- Filter Pills (Walkie style platform pills) -->
     <div class="hero-filters" id="category-filters">
       <button class="filter-pill active" data-filter="all">
-        <span id="filter-all-label">Todos</span> <span class="pill-tag" id="count-all">20</span>
+        <span id="filter-all-label">{{ _('Todos') }}</span> <span class="pill-tag" id="count-all">20</span>
       </button>
       <button class="filter-pill" data-filter="injection">
-        <span>Injeção & DB</span> <span class="pill-tag">5</span>
+        <span>{{ _('Injeção \& DB') }}</span> <span class="pill-tag">5</span>
       </button>
       <button class="filter-pill" data-filter="auth">
-        <span>Autenticação & Sessão</span> <span class="pill-tag">4</span>
+        <span>{{ _('Autenticação \& Sessão') }}</span> <span class="pill-tag">4</span>
       </button>
       <button class="filter-pill" data-filter="client">
-        <span>Client-side & XSS</span> <span class="pill-tag">5</span>
+        <span>{{ _('Client-side \& XSS') }}</span> <span class="pill-tag">5</span>
       </button>
       <button class="filter-pill" data-filter="access">
-        <span>Acesso & Cripto</span> <span class="pill-tag">3</span>
+        <span>{{ _('Acesso \& Cripto') }}</span> <span class="pill-tag">3</span>
       </button>
       <button class="filter-pill" data-filter="api">
-        <span>APIs & Lógica</span> <span class="pill-tag">3</span>
+        <span>{{ _('APIs \& Lógica') }}</span> <span class="pill-tag">3</span>
       </button>
     </div>
   </section>
@@ -68,38 +66,53 @@
     <div class="modules-grid" id="modules-grid">
 
       {% set modules = [
-        ("01", "Brute Force",            "brute_force",       "auth",      "Autenticação",        "Quebra de credenciais via dicionário e força bruta contra endpoints de autenticação.", "login password autenticação auth"),
-        ("02", "Command Injection",      "command_injection", "injection", "Injeção",             "Execução arbitrária de comandos no sistema operacional através de parâmetros desprotegidos.", "cmd rce terminal bash"),
-        ("03", "CSRF",                   "csrf",              "client",    "Client-side",         "Falsificação de requisições cross-site explorando persistência de sessão e cookies do navegador.", "token forgery referer same-site"),
-        ("04", "File Inclusion",         "file_inclusion",    "injection", "Injeção",             "Inclusão dinâmica de arquivos locais (LFI) e remotos via manipulação de caminhos.", "lfi rfi path traversal etc passwd"),
-        ("05", "File Upload",            "file_upload",       "injection", "Upload",              "Upload irrestrito de arquivos executáveis contornando validações de extensão e MIME type.", "php shell webshell mime"),
-        ("06", "Insecure CAPTCHA",       "captcha",           "auth",      "Bypass",              "Bypass de mecanismos de validação CAPTCHA por falha lógica no fluxo de validação.", "bot anti-bot recaptcha"),
-        ("07", "SQL Injection",          "sqli",              "injection", "Banco de Dados",      "Extração e manipulação de dados em consultas SQL via UNION, OR 1=1 e comentários.", "union select database sqlite database"),
-        ("08", "SQL Injection (Blind)",  "sqli_blind",        "injection", "Banco de Dados",      "Inferência de dados caractere a caractere através de respostas booleanas e time delays.", "boolean time sleep benchmark"),
-        ("09", "Weak Session IDs",       "weak_session",      "auth",      "Sessão",              "Sessões previsíveis com geração sequencial que possibilitam sequestro de contas.", "cookie session hijacking id"),
-        ("10", "XSS (DOM)",              "xss_dom",           "client",    "Cross-Site Scripting","Execução de scripts maliciosos injetados diretamente no DOM pelo navegador.", "innerhtml document sink source"),
-        ("11", "XSS (Reflected)",        "xss_reflected",     "client",    "Cross-Site Scripting","Injeção de payload JavaScript refletido diretamente na resposta HTTP do servidor.", "script alert query url"),
-        ("12", "XSS (Stored)",           "xss_stored",        "client",    "Cross-Site Scripting","Persistência de scripts maliciosos em banco de dados executados para outros usuários.", "guestbook persistente script"),
-        ("13", "CSP Bypass",             "csp_bypass",        "client",    "Políticas",           "Evasão de Content Security Policy permissiva através de JSONP e scripts inline.", "content security policy jsonp nonce"),
-        ("14", "JavaScript Attacks",     "js_attacks",        "client",    "Client-side",         "Manipulação de cálculos e regras de negócio validadas exclusivamente no front-end.", "client side tamper token"),
-        ("15", "Authorisation Bypass",   "auth_bypass",       "access",    "Controle de Acesso",  "Elevação de privilégio e acesso indevido a painéis administrativos restritos.", "admin role idor privilege"),
-        ("16", "Open HTTP Redirect",     "open_redirect",     "access",    "Redirecionamento",    "Desvio de usuários para domínios arbitrários via parâmetros de redirecionamento.", "phishing url forward redirect"),
-        ("17", "Cryptography",           "crypto",            "access",    "Criptografia",        "Quebra de hashes legados e cifras fracas utilizadas para proteger dados confidenciais.", "md5 sha1 cipher hash secret"),
-        ("18", "API Versioning",         "api_versioning",    "api",       "API Security",        "Acesso e exploração de endpoints legados obsoletos (/v1) sem correções de segurança.", "v1 v2 rest endpoint deprecation"),
-        ("19", "Mass Assignment",        "mass_assignment",   "api",       "API Security",        "Sobrescrita de propriedades sensíveis via injeção de parâmetros adicionais em JSON.", "json admin role property binding"),
-        ("20", "API Security",           "api_security",      "api",       "API Security",        "Falhas críticas em APIs REST incluindo BOLA, rate limiting e vazamento de tokens.", "bola authorization token rate limit"),
+      ("01", "Brute Force", "brute_force", "auth", "Autenticação", "Quebra de credenciais via dicionário e força bruta
+      contra endpoints de autenticação.", "login password autenticação auth"),
+      ("02", "Command Injection", "command_injection", "injection", "Injeção", "Execução arbitrária de comandos no
+      sistema operacional através de parâmetros desprotegidos.", "cmd rce terminal bash"),
+      ("03", "CSRF", "csrf", "client", "Client-side", "Falsificação de requisições cross-site explorando persistência de
+      sessão e cookies do navegador.", "token forgery referer same-site"),
+      ("04", "File Inclusion", "file_inclusion", "injection", "Injeção", "Inclusão dinâmica de arquivos locais (LFI) e
+      remotos via manipulação de caminhos.", "lfi rfi path traversal etc passwd"),
+      ("05", "File Upload", "file_upload", "injection", "Upload", "Upload irrestrito de arquivos executáveis contornando
+      validações de extensão e MIME type.", "php shell webshell mime"),
+      ("06", "Insecure CAPTCHA", "captcha", "auth", "Bypass", "Bypass de mecanismos de validação CAPTCHA por falha
+      lógica no fluxo de validação.", "bot anti-bot recaptcha"),
+      ("07", "SQL Injection", "sqli", "injection", "Banco de Dados", "Extração e manipulação de dados em consultas SQL
+      via UNION, OR 1=1 e comentários.", "union select database sqlite database"),
+      ("08", "SQL Injection (Blind)", "sqli_blind", "injection", "Banco de Dados", "Inferência de dados caractere a
+      caractere através de respostas booleanas e time delays.", "boolean time sleep benchmark"),
+      ("09", "Weak Session IDs", "weak_session", "auth", "Sessão", "Sessões previsíveis com geração sequencial que
+      possibilitam sequestro de contas.", "cookie session hijacking id"),
+      ("10", "XSS (DOM)", "xss_dom", "client", "Cross-Site Scripting","Execução de scripts maliciosos injetados
+      diretamente no DOM pelo navegador.", "innerhtml document sink source"),
+      ("11", "XSS (Reflected)", "xss_reflected", "client", "Cross-Site Scripting","Injeção de payload JavaScript
+      refletido diretamente na resposta HTTP do servidor.", "script alert query url"),
+      ("12", "XSS (Stored)", "xss_stored", "client", "Cross-Site Scripting","Persistência de scripts maliciosos em banco
+      de dados executados para outros usuários.", "guestbook persistente script"),
+      ("13", "CSP Bypass", "csp_bypass", "client", "Políticas", "Evasão de Content Security Policy permissiva através de
+      JSONP e scripts inline.", "content security policy jsonp nonce"),
+      ("14", "JavaScript Attacks", "js_attacks", "client", "Client-side", "Manipulação de cálculos e regras de negócio
+      validadas exclusivamente no front-end.", "client side tamper token"),
+      ("15", "Authorisation Bypass", "auth_bypass", "access", "Controle de Acesso", "Elevação de privilégio e acesso
+      indevido a painéis administrativos restritos.", "admin role idor privilege"),
+      ("16", "Open HTTP Redirect", "open_redirect", "access", "Redirecionamento", "Desvio de usuários para domínios
+      arbitrários via parâmetros de redirecionamento.", "phishing url forward redirect"),
+      ("17", "Cryptography", "crypto", "access", "Criptografia", "Quebra de hashes legados e cifras fracas utilizadas
+      para proteger dados confidenciais.", "md5 sha1 cipher hash secret"),
+      ("18", "API Versioning", "api_versioning", "api", "API Security", "Acesso e exploração de endpoints legados
+      obsoletos (/v1) sem correções de segurança.", "v1 v2 rest endpoint deprecation"),
+      ("19", "Mass Assignment", "mass_assignment", "api", "API Security", "Sobrescrita de propriedades sensíveis via
+      injeção de parâmetros adicionais em JSON.", "json admin role property binding"),
+      ("20", "API Security", "api_security", "api", "API Security", "Falhas críticas em APIs REST incluindo BOLA, rate
+      limiting e vazamento de tokens.", "bola authorization token rate limit"),
       ] %}
 
       {% for num, name, slug, cat, cat_label, desc, keywords in modules %}
       {% set lvl = module_level(slug) %}
-      <a href="{{ url_for(slug + '.index') }}" 
-         class="module-card level-{{ lvl }}" 
-         id="card-{{ slug }}"
-         data-num="{{ num }}"
-         data-category="{{ cat }}"
-         data-title="{{ name | lower }}"
-         data-desc="{{ desc | lower }}"
-         data-keywords="{{ keywords | lower }}">
+      <a href="{{ url_for(slug + '.index') }}" class="module-card level-{{ lvl }}" id="card-{{ slug }}"
+        data-num="{{ num }}" data-category="{{ cat }}" data-title="{{ name | lower }}" data-desc="{{ desc | lower }}"
+        data-keywords="{{ keywords | lower }}">
         <div class="card-top">
           <span class="card-index">#{{ num }}</span>
           <span class="card-category-tag">{{ cat_label }}</span>
@@ -123,13 +136,13 @@
     <!-- Pagination Controls (9 cards per page) -->
     <div class="pagination-container" id="pagination-container">
       <button type="button" class="pagination-arrow" id="pagination-prev" disabled>
-        ← Anterior
+        {{ _('← Anterior') }}
       </button>
       <div class="pagination-numbers" id="pagination-numbers">
         <!-- Rendered via JS: [1] [2] [3] -->
       </div>
       <button type="button" class="pagination-arrow" id="pagination-next">
-        Próximo →
+        {{ _('Próximo →') }}
       </button>
     </div>
   </section>
@@ -138,17 +151,18 @@
   <section class="downloads-section" id="download-section">
     <div class="downloads-cta-row">
       <a href="javascript:void(0)" class="btn-download-pill" id="btn-download-iso" onclick="showIsoNotice()">
-        <span id="txt-download-btn">BAIXAR ISO DUNO</span>
+        <span id="txt-download-btn">{{ _('BAIXAR ISO DUNO') }}</span>
       </a>
       <div class="product-hunt-badge">
         <div class="ph-trophy">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#F59E0B"/>
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+              fill="#F59E0B" />
           </svg>
         </div>
         <div class="ph-content">
-          <span class="ph-sub">SECURITY SUITE</span>
-          <span class="ph-title">#1 Open Lab of the Day</span>
+          <span class="ph-sub">{{ _('SECURITY SUITE') }}</span>
+          <span class="ph-title">{{ _('#1 Open Lab of the Day') }}</span>
         </div>
       </div>
     </div>
@@ -156,83 +170,91 @@
     <!-- Platform pills row (Mac, Windows, Linux [Tux Penguin], iPhone, Android, ISO Bare-Metal, Docker) -->
     <div class="platform-pills-row">
       <!-- 1. Mac (Apple logo como no print) -->
-      <div class="platform-pill" title="Compatível com macOS Intel & Apple Silicon">
+      <div class="platform-pill" title="{{ _('Compatível com macOS Intel & Apple Silicon') }}">
         <span class="platform-icon">
           <svg class="platform-svg" width="13" height="13" viewBox="0 0 170 170" fill="currentColor">
-            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.7-7.85-12-14.43-6.09-9.35-10.74-20.08-13.97-32.18-3.23-12.1-4.85-23.47-4.85-34.1 0-14.13 3.5-26.08 10.5-35.85 7-9.78 15.93-14.78 26.79-15 4.58 0 9.77 1.25 15.58 3.75 5.81 2.5 9.77 3.75 11.88 3.75 1.74 0 5.8-1.25 12.18-3.75 6.38-2.5 11.45-3.65 15.22-3.45 14.13.76 25.13 5.98 33 15.65-12.18 7.39-18.17 17.5-17.96 30.33.22 10.22 4.13 18.8 11.74 25.76 7.61 6.96 16.74 10.98 27.39 12.07-2.17 6.74-4.89 13.91-8.15 21.52zM119.22 31.84c0-7.39 2.66-14.35 7.99-20.87C132.54 4.45 139.17.65 147.1 0c.22 1.09.33 2.17.33 3.26 0 7.17-2.77 14.24-8.32 21.2-5.54 6.96-12.28 10.87-20.22 11.74-.22-1.3-.33-2.72-.33-4.36z"/>
+            <path
+              d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.7-7.85-12-14.43-6.09-9.35-10.74-20.08-13.97-32.18-3.23-12.1-4.85-23.47-4.85-34.1 0-14.13 3.5-26.08 10.5-35.85 7-9.78 15.93-14.78 26.79-15 4.58 0 9.77 1.25 15.58 3.75 5.81 2.5 9.77 3.75 11.88 3.75 1.74 0 5.8-1.25 12.18-3.75 6.38-2.5 11.45-3.65 15.22-3.45 14.13.76 25.13 5.98 33 15.65-12.18 7.39-18.17 17.5-17.96 30.33.22 10.22 4.13 18.8 11.74 25.76 7.61 6.96 16.74 10.98 27.39 12.07-2.17 6.74-4.89 13.91-8.15 21.52zM119.22 31.84c0-7.39 2.66-14.35 7.99-20.87C132.54 4.45 139.17.65 147.1 0c.22 1.09.33 2.17.33 3.26 0 7.17-2.77 14.24-8.32 21.2-5.54 6.96-12.28 10.87-20.22 11.74-.22-1.3-.33-2.72-.33-4.36z" />
           </svg>
         </span>
-        <span class="platform-name">Mac</span>
+        <span class="platform-name">{{ _('Mac') }}</span>
       </div>
 
       <!-- 2. Windows (Bandeira do Windows como no print) -->
-      <div class="platform-pill" title="Compatível com Windows 10/11 WSL2">
+      <div class="platform-pill" title="{{ _('Compatível com Windows 10/11 WSL2') }}">
         <span class="platform-icon">
           <svg class="platform-svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.401H10.949M0 12.6h9.75V22.2L0 20.701M10.949 12.6H24V24l-12.951-1.801"/>
+            <path
+              d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.401H10.949M0 12.6h9.75V22.2L0 20.701M10.949 12.6H24V24l-12.951-1.801" />
           </svg>
         </span>
-        <span class="platform-name">Windows</span>
+        <span class="platform-name">{{ _('Windows') }}</span>
       </div>
 
       <!-- 3. Linux (Pinguim Tux como dj pediu) -->
-      <div class="platform-pill" title="Compatível com distribuições Linux (Debian, Ubuntu, Arch, Fedora)">
+      <div class="platform-pill" title="{{ _('Compatível com distribuições Linux (Debian, Ubuntu, Arch, Fedora)') }}">
         <span class="platform-icon">
           <svg class="platform-svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.002 0c-2.483 0-4.5 2.017-4.5 4.5 0 .848.236 1.642.645 2.32C6.17 7.784 4.8 9.742 4.8 12c0 1.25.437 2.404 1.172 3.313L4.625 18.06A1.5 1.5 0 0 0 5.922 20.3h1.832c1.233.743 2.673 1.172 4.248 1.172s3.015-.429 4.248-1.172h1.832a1.5 1.5 0 0 0 1.297-2.24l-1.347-2.747A5.94 5.94 0 0 0 19.2 12c0-2.258-1.37-4.216-3.347-5.18.409-.678.645-1.472.645-2.32 0-2.483-2.017-4.5-4.496-4.5zm-1.6 4.3c.4 0 .7.3.7.7s-.3.7-.7.7-.7-.3-.7-.7.3-.7.7-.7zm3.2 0c.4 0 .7.3.7.7s-.3.7-.7.7-.7-.3-.7-.7.3-.7.7-.7zm-1.6 2c.7 0 1.3.4 1.3.9s-.6.9-1.3.9-1.3-.4-1.3-.9.6-.9 1.3-.9z"/>
+            <path
+              d="M12.002 0c-2.483 0-4.5 2.017-4.5 4.5 0 .848.236 1.642.645 2.32C6.17 7.784 4.8 9.742 4.8 12c0 1.25.437 2.404 1.172 3.313L4.625 18.06A1.5 1.5 0 0 0 5.922 20.3h1.832c1.233.743 2.673 1.172 4.248 1.172s3.015-.429 4.248-1.172h1.832a1.5 1.5 0 0 0 1.297-2.24l-1.347-2.747A5.94 5.94 0 0 0 19.2 12c0-2.258-1.37-4.216-3.347-5.18.409-.678.645-1.472.645-2.32 0-2.483-2.017-4.5-4.496-4.5zm-1.6 4.3c.4 0 .7.3.7.7s-.3.7-.7.7-.7-.3-.7-.7.3-.7.7-.7zm3.2 0c.4 0 .7.3.7.7s-.3.7-.7.7-.7-.3-.7-.7.3-.7.7-.7zm-1.6 2c.7 0 1.3.4 1.3.9s-.6.9-1.3.9-1.3-.4-1.3-.9.6-.9 1.3-.9z" />
           </svg>
         </span>
-        <span class="platform-name">Linux</span>
-        <span class="pill-badge-orange">EXPERIMENTAL</span>
+        <span class="platform-name">{{ _('Linux') }}</span>
+        <span class="pill-badge-orange">{{ _('EXPERIMENTAL') }}</span>
       </div>
 
       <!-- 4. iPhone (Apple logo como no print) -->
-      <div class="platform-pill" title="Acesso Web Pentest via Safari / iOS">
+      <div class="platform-pill" title="{{ _('Acesso Web Pentest via Safari / iOS') }}">
         <span class="platform-icon">
           <svg class="platform-svg" width="13" height="13" viewBox="0 0 170 170" fill="currentColor">
-            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.7-7.85-12-14.43-6.09-9.35-10.74-20.08-13.97-32.18-3.23-12.1-4.85-23.47-4.85-34.1 0-14.13 3.5-26.08 10.5-35.85 7-9.78 15.93-14.78 26.79-15 4.58 0 9.77 1.25 15.58 3.75 5.81 2.5 9.77 3.75 11.88 3.75 1.74 0 5.8-1.25 12.18-3.75 6.38-2.5 11.45-3.65 15.22-3.45 14.13.76 25.13 5.98 33 15.65-12.18 7.39-18.17 17.5-17.96 30.33.22 10.22 4.13 18.8 11.74 25.76 7.61 6.96 16.74 10.98 27.39 12.07-2.17 6.74-4.89 13.91-8.15 21.52zM119.22 31.84c0-7.39 2.66-14.35 7.99-20.87C132.54 4.45 139.17.65 147.1 0c.22 1.09.33 2.17.33 3.26 0 7.17-2.77 14.24-8.32 21.2-5.54 6.96-12.28 10.87-20.22 11.74-.22-1.3-.33-2.72-.33-4.36z"/>
+            <path
+              d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.7-7.85-12-14.43-6.09-9.35-10.74-20.08-13.97-32.18-3.23-12.1-4.85-23.47-4.85-34.1 0-14.13 3.5-26.08 10.5-35.85 7-9.78 15.93-14.78 26.79-15 4.58 0 9.77 1.25 15.58 3.75 5.81 2.5 9.77 3.75 11.88 3.75 1.74 0 5.8-1.25 12.18-3.75 6.38-2.5 11.45-3.65 15.22-3.45 14.13.76 25.13 5.98 33 15.65-12.18 7.39-18.17 17.5-17.96 30.33.22 10.22 4.13 18.8 11.74 25.76 7.61 6.96 16.74 10.98 27.39 12.07-2.17 6.74-4.89 13.91-8.15 21.52zM119.22 31.84c0-7.39 2.66-14.35 7.99-20.87C132.54 4.45 139.17.65 147.1 0c.22 1.09.33 2.17.33 3.26 0 7.17-2.77 14.24-8.32 21.2-5.54 6.96-12.28 10.87-20.22 11.74-.22-1.3-.33-2.72-.33-4.36z" />
           </svg>
         </span>
-        <span class="platform-name">iPhone</span>
+        <span class="platform-name">{{ _('iPhone') }}</span>
       </div>
 
       <!-- 5. Android (Robô Android como no print) -->
-      <div class="platform-pill" title="Acesso Web Pentest via Chrome / Android">
+      <div class="platform-pill" title="{{ _('Acesso Web Pentest via Chrome / Android') }}">
         <span class="platform-icon">
           <svg class="platform-svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.52 15.34c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m-11.04 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m11.4-6.02l2-3.46c.12-.2.05-.46-.15-.57-.2-.12-.46-.05-.57.15l-2.02 3.5c-1.55-.71-3.29-1.04-5.14-1.04s-3.59.33-5.14 1.04L4.84 5.44c-.11-.2-.37-.27-.57-.15-.2.11-.27.37-.15.57l2 3.46C2.69 11.19.34 14.66 0 18.76h24c-.34-4.1-2.69-7.57-6.12-9.44z"/>
+            <path
+              d="M17.52 15.34c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m-11.04 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m11.4-6.02l2-3.46c.12-.2.05-.46-.15-.57-.2-.12-.46-.05-.57.15l-2.02 3.5c-1.55-.71-3.29-1.04-5.14-1.04s-3.59.33-5.14 1.04L4.84 5.44c-.11-.2-.37-.27-.57-.15-.2.11-.27.37-.15.57l2 3.46C2.69 11.19.34 14.66 0 18.76h24c-.34-4.1-2.69-7.57-6.12-9.44z" />
           </svg>
         </span>
-        <span class="platform-name">Android</span>
-        <span class="pill-badge-gray">EM BREVE</span>
+        <span class="platform-name">{{ _('Android') }}</span>
+        <span class="pill-badge-gray">{{ _('EM BREVE') }}</span>
       </div>
 
       <!-- 6. ISO Bare-Metal (Disco Óptico Vetorial) -->
-      <div class="platform-pill" title="Imagem ISO para instalação direta na máquina física ou VM">
+      <div class="platform-pill" title="{{ _('Imagem ISO para instalação direta na máquina física ou VM') }}">
         <span class="platform-icon">
-          <svg class="platform-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="9"/>
-            <circle cx="12" cy="12" r="3"/>
+          <svg class="platform-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <circle cx="12" cy="12" r="9" />
+            <circle cx="12" cy="12" r="3" />
           </svg>
         </span>
-        <span class="platform-name">ISO Bare-Metal</span>
-        <span class="pill-badge-gray">EM BREVE</span>
+        <span class="platform-name">{{ _('ISO Bare-Metal') }}</span>
+        <span class="pill-badge-gray">{{ _('EM BREVE') }}</span>
       </div>
 
       <!-- 7. Docker (Baleia Docker Vetorial) -->
-      <div class="platform-pill" title="Instalação containerizada disponível agora">
+      <div class="platform-pill" title="{{ _('Instalação containerizada disponível agora') }}">
         <span class="platform-icon">
           <svg class="platform-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M13.98 11.08h2.12c.1 0 .19-.08.19-.19V9.01c0-.1-.08-.19-.19-.19h-2.12a.19.19 0 00-.18.19v1.89c0 .1.08.18.18.18m-2.95-5.43h2.12c.1 0 .18-.08.18-.19V3.57c0-.1-.08-.18-.18-.18h-2.12a.19.19 0 00-.19.18v1.89c0 .1.09.19.19.19zm0 2.71h2.12c.1 0 .18-.08.18-.18V6.29c0-.1-.08-.19-.18-.19h-2.12a.19.19 0 00-.19.19v1.89c0 .1.09.18.19.18zm-2.96 0h2.12c.1 0 .19-.08.19-.18V6.29c0-.1-.09-.19-.19-.19H8.07a.19.19 0 00-.18.19v1.89c0 .1.08.18.18.18zm0 2.72h2.12c.1 0 .19-.08.19-.19V9.01c0-.1-.09-.19-.19-.19H8.07a.19.19 0 00-.18.19v1.89c0 .1.08.18.18.18zm-2.95 0h2.12c.1 0 .18-.08.18-.19V9.01c0-.1-.08-.19-.18-.19H5.12a.19.19 0 00-.18.19v1.89c0 .1.08.18.18.18zm18.8 1.05c-.37-.26-.95-.38-1.61-.38-.35 0-.71.03-1.07.1a3.86 3.86 0 00-.64-1.4 4.54 4.54 0 00-2.46-1.45l-.52-.12-.3.44a7.92 7.92 0 00-1.12 2.81H.44A.44.44 0 000 12.3c0 3.33 1.64 5.86 4.86 7.53 2.1 1.09 4.78 1.64 7.94 1.64 6.86 0 11.23-3.63 11.23-9.35 0-.25-.03-.49-.1-.72z"/>
+            <path
+              d="M13.98 11.08h2.12c.1 0 .19-.08.19-.19V9.01c0-.1-.08-.19-.19-.19h-2.12a.19.19 0 00-.18.19v1.89c0 .1.08.18.18.18m-2.95-5.43h2.12c.1 0 .18-.08.18-.19V3.57c0-.1-.08-.18-.18-.18h-2.12a.19.19 0 00-.19.18v1.89c0 .1.09.19.19.19zm0 2.71h2.12c.1 0 .18-.08.18-.18V6.29c0-.1-.08-.19-.18-.19h-2.12a.19.19 0 00-.19.19v1.89c0 .1.09.18.19.18zm-2.96 0h2.12c.1 0 .19-.08.19-.18V6.29c0-.1-.09-.19-.19-.19H8.07a.19.19 0 00-.18.19v1.89c0 .1.08.18.18.18zm0 2.72h2.12c.1 0 .19-.08.19-.19V9.01c0-.1-.09-.19-.19-.19H8.07a.19.19 0 00-.18.19v1.89c0 .1.08.18.18.18zm-2.95 0h2.12c.1 0 .18-.08.18-.19V9.01c0-.1-.08-.19-.18-.19H5.12a.19.19 0 00-.18.19v1.89c0 .1.08.18.18.18zm18.8 1.05c-.37-.26-.95-.38-1.61-.38-.35 0-.71.03-1.07.1a3.86 3.86 0 00-.64-1.4 4.54 4.54 0 00-2.46-1.45l-.52-.12-.3.44a7.92 7.92 0 00-1.12 2.81H.44A.44.44 0 000 12.3c0 3.33 1.64 5.86 4.86 7.53 2.1 1.09 4.78 1.64 7.94 1.64 6.86 0 11.23-3.63 11.23-9.35 0-.25-.03-.49-.1-.72z" />
           </svg>
         </span>
-        <span class="platform-name">Docker</span>
-        <span class="pill-badge-green">DISPONÍVEL</span>
+        <span class="platform-name">{{ _('Docker') }}</span>
+        <span class="pill-badge-green">{{ _('DISPONÍVEL') }}</span>
       </div>
     </div>
 
     <p class="downloads-subnote" id="txt-downloads-subnote">
-      Distribuição ISO bootável em desenvolvimento para instalação direta em bare-metal, Proxmox, VMware ou VirtualBox — ambiente de pentest 100% isolado de rede.
+      {{ _('Distribuição ISO bootável em desenvolvimento para instalação direta em bare-metal, Proxmox, VMware ou VirtualBox —
+      ambiente de pentest 100%% isolado de rede.') }}
     </p>
   </section>
 </div>
@@ -240,246 +262,314 @@
 
 {% block scripts %}
 <script>
-/* ─────────────────────────────────────────────────────────────────────────────
-   DUNO Interactive Engine: Typewriter + Search + 9-Card Pagination + Languages
-   ───────────────────────────────────────────────────────────────────────────── */
-(function() {
-  'use strict';
+  /* ─────────────────────────────────────────────────────────────────────────────
+     DUNO Interactive Engine: Typewriter + Search + 9-Card Pagination + Languages
+     ───────────────────────────────────────────────────────────────────────────── */
+  (function () {
+    'use strict';
 
-  // 1. TYPEWRITER EFFECT
-  // Digita o nome "quebrar", pausa com cursor piscando, apaga letra por letra e repete
-  const typewriterWordEl = document.getElementById('typewriter-word');
-  let currentWord = "quebrar";
-  let charIndex = currentWord.length;
-  let isDeleting = true; // Inicia apagando após uma pausa inicial para demonstrar o efeito imediatamente
-  let typewriterTimer = null;
+    // 1. TYPEWRITER EFFECT
+    // Digita o nome "quebrar", pausa com cursor piscando, apaga letra por letra e repete
+    const typewriterWordEl = document.getElementById('typewriter-word');
+    let currentWord = "quebrar";
+    let charIndex = currentWord.length;
+    let isDeleting = true; // Inicia apagando após uma pausa inicial para demonstrar o efeito imediatamente
+    let typewriterTimer = null;
 
-  function runTypewriter() {
-    if (!typewriterWordEl) return;
+    function runTypewriter() {
+      if (!typewriterWordEl) return;
 
-    if (!isDeleting) {
-      charIndex++;
-      typewriterWordEl.textContent = currentWord.substring(0, charIndex);
+      if (!isDeleting) {
+        charIndex++;
+        typewriterWordEl.textContent = currentWord.substring(0, charIndex);
 
-      if (charIndex === currentWord.length) {
-        isDeleting = true;
-        typewriterTimer = setTimeout(runTypewriter, 2400); // Pausa de 2.4s na palavra completa
-        return;
+        if (charIndex === currentWord.length) {
+          isDeleting = true;
+          typewriterTimer = setTimeout(runTypewriter, 2400); // Pausa de 2.4s na palavra completa
+          return;
+        }
+        typewriterTimer = setTimeout(runTypewriter, 125); // Velocidade de digitação
+      } else {
+        charIndex--;
+        typewriterWordEl.textContent = currentWord.substring(0, charIndex);
+
+        if (charIndex === 0) {
+          isDeleting = false;
+          typewriterTimer = setTimeout(runTypewriter, 500); // Pausa vazia antes de recomeçar a digitar
+          return;
+        }
+        typewriterTimer = setTimeout(runTypewriter, 70); // Velocidade ao apagar
       }
-      typewriterTimer = setTimeout(runTypewriter, 125); // Velocidade de digitação
-    } else {
-      charIndex--;
-      typewriterWordEl.textContent = currentWord.substring(0, charIndex);
-
-      if (charIndex === 0) {
-        isDeleting = false;
-        typewriterTimer = setTimeout(runTypewriter, 500); // Pausa vazia antes de recomeçar a digitar
-        return;
-      }
-      typewriterTimer = setTimeout(runTypewriter, 70); // Velocidade ao apagar
-    }
-  }
-
-  // Começa o loop após breve pausa de 1.2s
-  setTimeout(runTypewriter, 1200);
-
-  // 2. PAGINATION & SEARCH & CATEGORY FILTER
-  const CARDS_PER_PAGE = 9;
-  let currentPage = 1;
-  let activeCategory = 'all';
-  let searchQuery = '';
-
-  const allCards = Array.from(document.querySelectorAll('.module-card'));
-  const searchInput = document.getElementById('command-search-input');
-  const clearBtn = document.getElementById('command-clear-btn');
-  const searchFeedback = document.getElementById('search-feedback');
-  const paginationContainer = document.getElementById('pagination-container');
-  const paginationNumbers = document.getElementById('pagination-numbers');
-  const prevBtn = document.getElementById('pagination-prev');
-  const nextBtn = document.getElementById('pagination-next');
-  const filterButtons = document.querySelectorAll('.filter-pill');
-
-  function getMatchingCards() {
-    return allCards.filter(card => {
-      // Categoria
-      const cat = card.getAttribute('data-category');
-      const matchCat = (activeCategory === 'all' || cat === activeCategory);
-      if (!matchCat) return false;
-
-      // Busca
-      if (!searchQuery) return true;
-      const title = card.getAttribute('data-title') || '';
-      const num = card.getAttribute('data-num') || '';
-      const desc = card.getAttribute('data-desc') || '';
-      const keywords = card.getAttribute('data-keywords') || '';
-      const q = searchQuery.toLowerCase().trim();
-
-      return title.includes(q) || num.includes(q) || desc.includes(q) || keywords.includes(q);
-    });
-  }
-
-  function renderPage() {
-    const matching = getMatchingCards();
-    const totalMatching = matching.length;
-    const totalPages = Math.ceil(totalMatching / CARDS_PER_PAGE) || 1;
-
-    // Garante que currentPage está dentro dos limites
-    if (currentPage > totalPages) currentPage = totalPages;
-    if (currentPage < 1) currentPage = 1;
-
-    // Oculta todos os cards primeiro
-    allCards.forEach(c => c.style.display = 'none');
-
-    // Exibe apenas os cards da página atual
-    const start = (currentPage - 1) * CARDS_PER_PAGE;
-    const end = start + CARDS_PER_PAGE;
-    const pageCards = matching.slice(start, end);
-
-    pageCards.forEach(c => {
-      c.style.display = 'flex';
-    });
-
-    // Feedback de busca
-    if (searchQuery) {
-      searchFeedback.style.display = 'block';
-      searchFeedback.textContent = `${totalMatching} laboratório(s) encontrado(s) para "${searchQuery}"`;
-    } else {
-      searchFeedback.style.display = 'none';
     }
 
-    // Renderiza controles de paginação
-    if (totalPages <= 1) {
-      paginationContainer.style.display = (totalMatching === 0) ? 'none' : 'flex';
-      paginationNumbers.innerHTML = `<button type="button" class="page-number-btn active">1</button>`;
-      prevBtn.disabled = true;
-      nextBtn.disabled = true;
-    } else {
-      paginationContainer.style.display = 'flex';
-      prevBtn.disabled = (currentPage === 1);
-      nextBtn.disabled = (currentPage === totalPages);
+    // Começa o loop após breve pausa de 1.2s
+    setTimeout(runTypewriter, 1200);
 
-      let html = '';
-      for (let p = 1; p <= totalPages; p++) {
-        html += `<button type="button" class="page-number-btn ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`;
-      }
-      paginationNumbers.innerHTML = html;
+    // 2. PAGINATION & SEARCH & CATEGORY FILTER
+    const CARDS_PER_PAGE = 9;
+    let currentPage = 1;
+    let activeCategory = 'all';
+    let searchQuery = '';
 
-      paginationNumbers.querySelectorAll('.page-number-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          currentPage = parseInt(this.getAttribute('data-page'), 10);
-          renderPage();
-          scrollToGrid();
-        });
+    const allCards = Array.from(document.querySelectorAll('.module-card'));
+    const searchInput = document.getElementById('command-search-input');
+    const clearBtn = document.getElementById('command-clear-btn');
+    const searchFeedback = document.getElementById('search-feedback');
+    const paginationContainer = document.getElementById('pagination-container');
+    const paginationNumbers = document.getElementById('pagination-numbers');
+    const prevBtn = document.getElementById('pagination-prev');
+    const nextBtn = document.getElementById('pagination-next');
+    const filterButtons = document.querySelectorAll('.filter-pill');
+
+    function getMatchingCards() {
+      return allCards.filter(card => {
+        // Categoria
+        const cat = card.getAttribute('data-category');
+        const matchCat = (activeCategory === 'all' || cat === activeCategory);
+        if (!matchCat) return false;
+
+        // Busca
+        if (!searchQuery) return true;
+        const title = card.getAttribute('data-title') || '';
+        const num = card.getAttribute('data-num') || '';
+        const desc = card.getAttribute('data-desc') || '';
+        const keywords = card.getAttribute('data-keywords') || '';
+        const q = searchQuery.toLowerCase().trim();
+
+        return title.includes(q) || num.includes(q) || desc.includes(q) || keywords.includes(q);
       });
     }
-  }
 
-  function scrollToGrid() {
-    const grid = document.getElementById('modules-grid');
-    if (grid) {
-      const top = grid.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    function renderPage() {
+      const matching = getMatchingCards();
+      const totalMatching = matching.length;
+      const totalPages = Math.ceil(totalMatching / CARDS_PER_PAGE) || 1;
+
+      // Garante que currentPage está dentro dos limites
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      // Oculta todos os cards primeiro
+      allCards.forEach(c => c.style.display = 'none');
+
+      // Exibe apenas os cards da página atual
+      const start = (currentPage - 1) * CARDS_PER_PAGE;
+      const end = start + CARDS_PER_PAGE;
+      const pageCards = matching.slice(start, end);
+
+      pageCards.forEach(c => {
+        c.style.display = 'flex';
+      });
+
+      // Feedback de busca
+      if (searchQuery) {
+        searchFeedback.style.display = 'block';
+        searchFeedback.textContent = `${totalMatching} laboratório(s) encontrado(s) para "${searchQuery}"`;
+      } else {
+        searchFeedback.style.display = 'none';
+      }
+
+      // Renderiza controles de paginação
+      if (totalPages <= 1) {
+        paginationContainer.style.display = (totalMatching === 0) ? 'none' : 'flex';
+        paginationNumbers.innerHTML = `<button type="button" class="page-number-btn active">1</button>`;
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+      } else {
+        paginationContainer.style.display = 'flex';
+        prevBtn.disabled = (currentPage === 1);
+        nextBtn.disabled = (currentPage === totalPages);
+
+        let html = '';
+        for (let p = 1; p <= totalPages; p++) {
+          html += `<button type="button" class="page-number-btn ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`;
+        }
+        paginationNumbers.innerHTML = html;
+
+        paginationNumbers.querySelectorAll('.page-number-btn').forEach(btn => {
+          btn.addEventListener('click', function () {
+            currentPage = parseInt(this.getAttribute('data-page'), 10);
+            renderPage();
+            scrollToGrid();
+          });
+        });
+      }
     }
-  }
 
-  prevBtn.addEventListener('click', function() {
-    if (currentPage > 1) {
-      currentPage--;
-      renderPage();
-      scrollToGrid();
+    function scrollToGrid() {
+      const grid = document.getElementById('modules-grid');
+      if (grid) {
+        const top = grid.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      }
     }
-  });
 
-  nextBtn.addEventListener('click', function() {
-    const matching = getMatchingCards();
-    const totalPages = Math.ceil(matching.length / CARDS_PER_PAGE) || 1;
-    if (currentPage < totalPages) {
-      currentPage++;
-      renderPage();
-      scrollToGrid();
-    }
-  });
+    prevBtn.addEventListener('click', function () {
+      if (currentPage > 1) {
+        currentPage--;
+        renderPage();
+        scrollToGrid();
+      }
+    });
 
-  // Filtros de Categoria
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-      filterButtons.forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      activeCategory = this.getAttribute('data-filter');
+    nextBtn.addEventListener('click', function () {
+      const matching = getMatchingCards();
+      const totalPages = Math.ceil(matching.length / CARDS_PER_PAGE) || 1;
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderPage();
+        scrollToGrid();
+      }
+    });
+
+    // Filtros de Categoria
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', function () {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        activeCategory = this.getAttribute('data-filter');
+        currentPage = 1;
+        renderPage();
+      });
+    });
+
+    // Campo de Pesquisa Command (⌘K)
+    searchInput.addEventListener('input', function () {
+      searchQuery = this.value.trim();
+      clearBtn.style.display = searchQuery ? 'block' : 'none';
       currentPage = 1;
       renderPage();
     });
-  });
 
-  // Campo de Pesquisa Command (⌘K)
-  searchInput.addEventListener('input', function() {
-    searchQuery = this.value.trim();
-    clearBtn.style.display = searchQuery ? 'block' : 'none';
-    currentPage = 1;
-    renderPage();
-  });
-
-  clearBtn.addEventListener('click', function() {
-    searchInput.value = '';
-    searchQuery = '';
-    clearBtn.style.display = 'none';
-    currentPage = 1;
-    renderPage();
-    searchInput.focus();
-  });
-
-  // Atalho de Teclado Global Super+A e Esc
-  document.addEventListener('keydown', function(e) {
-    const isSuperA = (e.metaKey || (e.ctrlKey && e.altKey)) && e.key.toLowerCase() === 'a';
-    const isFallbackK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k';
-    if (isSuperA || isFallbackK) {
-      e.preventDefault();
-      searchInput.focus();
-      searchInput.select();
-    }
-    if (e.key === '/' && document.activeElement !== searchInput && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) {
-      e.preventDefault();
-      searchInput.focus();
-    }
-    if (e.key === 'Escape' && document.activeElement === searchInput) {
+    clearBtn.addEventListener('click', function () {
       searchInput.value = '';
       searchQuery = '';
       clearBtn.style.display = 'none';
-      searchInput.blur();
       currentPage = 1;
       renderPage();
+      searchInput.focus();
+    });
+
+    // Atalho de Teclado Global Super+A e Esc
+    document.addEventListener('keydown', function (e) {
+      const isSuperA = (e.metaKey || (e.ctrlKey && e.altKey)) && e.key.toLowerCase() === 'a';
+      const isFallbackK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k';
+      if (isSuperA || isFallbackK) {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+      if (e.key === '/' && document.activeElement !== searchInput && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        e.preventDefault();
+        searchInput.focus();
+      }
+      if (e.key === 'Escape' && document.activeElement === searchInput) {
+        searchInput.value = '';
+        searchQuery = '';
+        clearBtn.style.display = 'none';
+        searchInput.blur();
+        currentPage = 1;
+        renderPage();
+      }
+    });
+
+    // Inicializa a paginação dos 9 cards
+    renderPage();
+
+    // 3. SELETOR DE IDIOMAS (PT / EN / ES)
+    const langToggleBtn = document.getElementById('lang-toggle-btn');
+    const langMenuList = document.getElementById('lang-menu-list');
+    const currentLangText = document.getElementById('current-lang-text');
+
+    if (langToggleBtn && langMenuList) {
+      langToggleBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const isOpen = langMenuList.style.display === 'block';
+        langMenuList.style.display = isOpen ? 'none' : 'block';
+      });
+
+      document.addEventListener('click', function () {
+        langMenuList.style.display = 'none';
+      });
+
+      const translations = {
+        pt: {
+          code: 'PT',
+          hero_pill: 'Ambiente de Laboratório • 20 Módulos de Exploração',
+          hero_prefix: 'A plataforma de segurança que você pode ',
+          typewriter_word: 'quebrar',
+          hero_desc: 'Explore 20 cenários reais de vulnerabilidade web com 4 níveis graduais de proteção (Low a Impossible). Inspecione o código-fonte ao vivo e domine técnicas de exploração e defesa.',
+          search_ph: 'Pesquisar laboratório... (ex: SQLi, XSS, CSRF, Token)',
+          filter_all: 'Todos',
+          download_btn: 'BAIXAR ISO DUNO',
+          downloads_subnote: 'Distribuição ISO bootável em desenvolvimento para instalação direta em bare-metal, Proxmox, VMware ou VirtualBox — ambiente de pentest 100% isolado de rede.'
+        },
+        en: {
+          code: 'EN',
+          hero_pill: 'Laboratory Environment • 20 Exploitation Modules',
+          hero_prefix: 'The security platform that you can ',
+          typewriter_word: 'break',
+          hero_desc: 'Explore 20 real-world web vulnerability scenarios with 4 gradual protection tiers (Low to Impossible). Inspect live source code and master offensive and defensive skills.',
+          search_ph: 'Search lab... (e.g. SQLi, XSS, CSRF, Token)',
+          filter_all: 'All',
+          download_btn: 'DOWNLOAD DUNO ISO',
+          downloads_subnote: 'Bootable ISO distribution in development for direct bare-metal, Proxmox, VMware, or VirtualBox installation — 100% network-isolated pentest suite.'
+        },
+        es: {
+          code: 'ES',
+          hero_pill: 'Entorno de Laboratorio • 20 Módulos de Explotación',
+          hero_prefix: 'La plataforma de seguridad que puedes ',
+          typewriter_word: 'romper',
+          hero_desc: 'Explora 20 escenarios reales de vulnerabilidades web con 4 niveles graduales de protección (Low a Impossible). Inspecciona el código fuente en vivo y domina técnicas ofensivas y defensivas.',
+          search_ph: 'Buscar laboratorio... (ej: SQLi, XSS, CSRF, Token)',
+          filter_all: 'Todos',
+          download_btn: 'DESCARGAR ISO DUNO',
+          downloads_subnote: 'Distribución ISO booteable en desarrollo para instalación directa en bare-metal, Proxmox, VMware o VirtualBox — entorno de pentesting 100% aislado de red.'
+        }
+      };
+
+      document.querySelectorAll('.lang-menu-item').forEach(item => {
+        item.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const lang = this.getAttribute('data-lang');
+          const data = translations[lang];
+          if (!data) return;
+
+          // Atualiza UI do dropdown
+          currentLangText.textContent = data.code;
+          document.querySelectorAll('.lang-menu-item').forEach(i => {
+            i.classList.remove('active');
+            const chk = i.querySelector('.lang-check');
+            if (chk) chk.textContent = '';
+          });
+          this.classList.add('active');
+          const activeChk = this.querySelector('.lang-check');
+          if (activeChk) activeChk.textContent = '✓';
+
+          langMenuList.style.display = 'none';
+
+          // Atualiza textos na página
+          document.getElementById('txt-hero-pill').textContent = data.hero_pill;
+          document.getElementById('txt-hero-prefix').textContent = data.hero_prefix;
+          document.getElementById('txt-hero-desc').textContent = data.hero_desc;
+          document.getElementById('command-search-input').placeholder = data.search_ph;
+          document.getElementById('filter-all-label').textContent = data.filter_all;
+          document.getElementById('txt-download-btn').textContent = data.download_btn;
+          document.getElementById('txt-downloads-subnote').textContent = data.downloads_subnote;
+
+          // Atualiza palavra da máquina de escrever
+          currentWord = data.typewriter_word;
+          charIndex = currentWord.length;
+          isDeleting = true;
+        });
+      });
     }
-  });
 
-  // Inicializa a paginação dos 9 cards
-  renderPage();
-
-  // 3. INTEGRAÇÃO DE IDIOMAS COM MOTOR GLOBAL
-  window.addEventListener('duno:langchange', function(e) {
-    if (!e.detail || !e.detail.data) return;
-    const data = e.detail.data;
-    // Atualiza palavra da máquina de escrever para o idioma ativo
-    currentWord = data.typewriter_word || 'quebrar';
-    charIndex = currentWord.length;
-    isDeleting = true;
-  });
-
-  // Palavra inicial sincronizada com o localStorage
-  const savedLang = localStorage.getItem('duno_lang') || 'pt';
-  const wordByLang = { pt: 'quebrar', en: 'break', es: 'romper' };
-  currentWord = wordByLang[savedLang] || 'quebrar';
-
-  // 4. AVISO DE DOWNLOAD ISO
-  window.showIsoNotice = function() {
-    const currentLang = localStorage.getItem('duno_lang') || 'pt';
-    const messages = {
-      pt: 'DUNO Bare-Metal ISO — Build em desenvolvimento.\n\nA imagem ISO estará disponível em breve com kernel Linux Hardened e ambiente offline completo para boot direto em servidores físicos ou VMs.',
-      en: 'DUNO Bare-Metal ISO — Build in active development.\n\nThe bootable ISO image will be available soon with a hardened Linux kernel and fully offline environment for direct bare-metal or VM installation.',
-      es: 'DUNO Bare-Metal ISO — Compilación en desarrollo.\n\nLa imagen ISO booteable estará disponible próximamente con kernel Linux Hardened y entorno offline completo para instalación directa en servidores físicos o VMs.'
+    // 4. AVISO DE DOWNLOAD ISO
+    window.showIsoNotice = function () {
+      alert('DUNO Bare-Metal ISO — Build em desenvolvimento.\n\nA imagem ISO estará disponível em breve com kernel Linux Hardened e ambiente offline completo para boot direto em servidores físicos ou VMs.');
     };
-    alert(messages[currentLang] || messages.pt);
-  };
 
-})();
+  })();
 </script>
 {% endblock %}

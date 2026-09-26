@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#19 Mass Assignment</span>
+    <span>{{ _('#19 Mass Assignment') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">Mass Assignment</h1>
-      <p class="module-desc">Manipulação de campos via JSON — elevação de privilégio</p>
+      <h1 class="module-title">{{ _('Mass Assignment') }}</h1>
+      <p class="module-desc">{{ _('Manipulação de campos via JSON — elevação de privilégio') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('mass_assignment', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,11 +34,11 @@
       </p>
       <form method="POST" action="/mass_assignment" id="ma-form">
         <div class="form-group">
-          <label for="payload">JSON Payload</label>
+          <label for="payload">{{ _('JSON Payload') }}</label>
           <textarea id="payload" name="payload" class="form-control" rows="4"
                     placeholder='{"username": "hacker", "role": "admin"}'></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Enviar') }}</button>
       </form>
       {% if result %}
       <div class="result-box {% if result.get('error') %}error{% else %}success{% endif %}">
@@ -48,7 +48,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Aceita qualquer campo incluindo <code>role</code> e <code>password_hash</code>{% endif %}
         {% if level == 'medium' %}Remove <code>role</code> mas aceita <code>password_hash</code> — ainda perigoso{% endif %}

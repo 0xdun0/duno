@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#3 CSRF</span>
+    <span>{{ _('#3 CSRF') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">CSRF</h1>
-      <p class="module-desc">Cross-Site Request Forgery — requisição forjada entre sites</p>
+      <h1 class="module-title">{{ _('CSRF') }}</h1>
+      <p class="module-desc">{{ _('Cross-Site Request Forgery — requisição forjada entre sites') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('csrf', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,13 +34,13 @@
       </p>
       <form method="POST" action="/csrf" id="csrf-form">
         <div class="form-group">
-          <label for="new-email">Novo username</label>
-          <input type="text" id="new-email" name="new_email" class="form-control" placeholder="novo_nome" />
+          <label for="new-email">{{ _('Novo username') }}</label>
+          <input type="text" id="new-email" name="new_email" class="form-control" placeholder="{{ _('novo_nome') }}" />
         </div>
         {% if level in ('high', 'impossible') %}
         <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
         {% endif %}
-        <button type="submit" class="btn btn-primary">Alterar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Alterar') }}</button>
       </form>
       {% if result %}
       <div class="result-box {% if 'inválido' in result or 'ausente' in result %}error{% else %}success{% endif %}">{{ result }}</div>
@@ -48,7 +48,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Sem token CSRF — qualquer site pode POST para <code>/csrf</code> com o cookie da vítima{% endif %}
         {% if level == 'medium' %}Verifica Referer — bypassável: Referer ausente ou com <code>localhost</code> na URL de origem{% endif %}

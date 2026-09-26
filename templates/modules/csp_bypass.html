@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#13 CSP Bypass</span>
+    <span>{{ _('#13 CSP Bypass') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">CSP Bypass</h1>
-      <p class="module-desc">Bypass de Content Security Policy</p>
+      <h1 class="module-title">{{ _('CSP Bypass') }}</h1>
+      <p class="module-desc">{{ _('Bypass de Content Security Policy') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('csp_bypass', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,11 +34,11 @@
       </p>
       <form method="POST" action="/csp_bypass" id="csp-form">
         <div class="form-group">
-          <label for="csp-name">Payload</label>
+          <label for="csp-name">{{ _('Payload') }}</label>
           <input type="text" id="csp-name" name="name" class="form-control"
                  placeholder="<img src=x onerror=alert(1)>" />
         </div>
-        <button type="submit" class="btn btn-primary">Testar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Testar') }}</button>
       </form>
       {% if result is not none %}
       <div class="result-box" style="margin-top:1rem">
@@ -55,7 +55,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Sem CSP — scripts externos e inline livres{% endif %}
         {% if level == 'medium' %}CSP com 'unsafe-inline' — XSS inline ainda possível{% endif %}

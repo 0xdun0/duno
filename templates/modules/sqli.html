@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#7 SQL Injection</span>
+    <span>{{ _('#7 SQL Injection') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">SQL Injection</h1>
-      <p class="module-desc">Manipulação de consultas SQL via entrada controlada</p>
+      <h1 class="module-title">{{ _('SQL Injection') }}</h1>
+      <p class="module-desc">{{ _('Manipulação de consultas SQL via entrada controlada') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('sqli', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,15 +34,15 @@
       </p>
       <form method="POST" action="/sqli" id="sqli-form">
         <div class="form-group">
-          <label for="user-id">User ID</label>
+          <label for="user-id">{{ _('User ID') }}</label>
           <input type="text" id="user-id" name="user_id" class="form-control" placeholder="1" />
         </div>
-        <button type="submit" class="btn btn-primary">Buscar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Buscar') }}</button>
       </form>
       {% if rows %}
       <div style="margin-top:1rem;overflow-x:auto">
         <table class="data-table">
-          <thead><tr><th>ID</th><th>Username</th><th>Role</th><th>Extra</th></tr></thead>
+          <thead><tr><th>{{ _('ID') }}</th><th>{{ _('Username') }}</th><th>{{ _('Role') }}</th><th>{{ _('Extra') }}</th></tr></thead>
           <tbody>
             {% for row in rows %}
             <tr>
@@ -59,7 +59,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Concatenação direta: <code>WHERE id = {input}</code> — UNION, OR 1=1, comentários todos funcionam{% endif %}
         {% if level == 'medium' %}Blacklist de palavras — bypassável com <code>UNION/**/SELECT</code> ou variação de case{% endif %}

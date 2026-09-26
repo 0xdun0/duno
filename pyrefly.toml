@@ -1,0 +1,22 @@
+project-includes = [
+    ".",
+    "tests",
+]
+project-excludes = [
+    "**/node_modules",
+    "**/__pycache__",
+    ".venv",
+]
+search-path = [
+    ".",
+    "tests",
+    "/home/dione/Projects/duno",
+    "/home/dione/Projects/duno/tests",
+    "/home/dione/Projects/duno/services/challenge-runner",
+    "/home/dione/Projects/duno/services/challenge_runner",
+    "/home/dione/Projects/duno/.venv/lib/python3.14/site-packages",
+]
+python-interpreter-path = "/home/dione/Projects/duno/.venv/bin/python"
+python-platform = "linux"
+python-version = "3.14.0"
+infer-with-first-use = false

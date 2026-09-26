@@ -5,9 +5,9 @@ from flask import Flask, request, render_template_string, redirect
 
 app = Flask(__name__)
 
-FLAG1 = os.environ.get('FLAG1', 'DUNO{5d41402abc4b2a76b9719d911017c592}')
-FLAG2 = os.environ.get('FLAG2', 'DUNO{7c6a180b36896a0a8c02787eeafb0e4c}')
-FLAG3 = os.environ.get('FLAG3', 'DUNO{9e107d9d372bb6826bd81d3542a419d6}')
+FLAG1 = os.environ.get('FLAG1', 'DUNO{DUNO{69a329523ce1ec88bf63061863d9cb14}}')
+FLAG2 = os.environ.get('FLAG2', 'DUNO{DUNO{816b09aa255516ec745de7b215e2e158}}')
+FLAG3 = os.environ.get('FLAG3', 'DUNO{DUNO{883c631dbcaca4373e1428a73c6cb19d}}')
 
 USERS = {
     "user": "password123",

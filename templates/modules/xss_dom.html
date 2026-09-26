@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#10 XSS (DOM)</span>
+    <span>{{ _('#10 XSS (DOM)') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">XSS (DOM)</h1>
-      <p class="module-desc">Cross-Site Scripting via manipulação do DOM</p>
+      <h1 class="module-title">{{ _('XSS (DOM)') }}</h1>
+      <p class="module-desc">{{ _('Cross-Site Scripting via manipulação do DOM') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('xss_dom', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,14 +34,14 @@
       </p>
       <form method="POST" action="/xss_dom" id="dom-form">
         <div class="form-group">
-          <label for="dom-name">Nome</label>
+          <label for="dom-name">{{ _('Nome') }}</label>
           <input type="text" id="dom-name" name="name" class="form-control" placeholder="<img src=x onerror=alert(1)>" />
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Enviar') }}</button>
       </form>
       {% if result is not none %}
       <div style="margin-top:1rem">
-        <p style="font-size:0.8rem;color:var(--text-muted)">Output (DOM):</p>
+        <p style="font-size:0.8rem;color:var(--text-muted)">{{ _('Output (DOM):') }}</p>
         {% if level == 'impossible' %}
         <div class="result-box">Olá, {{ result }}!</div>
         {% else %}
@@ -55,7 +55,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}innerHTML sem sanitização — qualquer HTML/JS é executado{% endif %}
         {% if level == 'medium' %}Remove &lt;script&gt; — bypassável com &lt;img onerror=...&gt;{% endif %}

@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#12 XSS (Stored)</span>
+    <span>{{ _('#12 XSS (Stored)') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">XSS (Stored)</h1>
-      <p class="module-desc">XSS persistido no guestbook</p>
+      <h1 class="module-title">{{ _('XSS (Stored)') }}</h1>
+      <p class="module-desc">{{ _('XSS persistido no guestbook') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('xss_stored', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,21 +34,21 @@
       </p>
       <form method="POST" action="/xss_stored" id="guestbook-form">
         <div class="form-group">
-          <label for="gb-name">Nome</label>
-          <input type="text" id="gb-name" name="name" class="form-control" placeholder="Seu nome" />
+          <label for="gb-name">{{ _('Nome') }}</label>
+          <input type="text" id="gb-name" name="name" class="form-control" placeholder="{{ _('Seu nome') }}" />
         </div>
         <div class="form-group">
-          <label for="gb-msg">Mensagem</label>
-          <textarea id="gb-msg" name="message" class="form-control" rows="3" placeholder="Sua mensagem..."></textarea>
+          <label for="gb-msg">{{ _('Mensagem') }}</label>
+          <textarea id="gb-msg" name="message" class="form-control" rows="3" placeholder="{{ _('Sua mensagem...') }}"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Postar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Postar') }}</button>
       </form>
 
       <div style="margin-top:1.5rem">
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.75rem">Entradas do guestbook:</p>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.75rem">{{ _('Entradas do guestbook:') }}</p>
         {% if entries %}
         <table class="data-table">
-          <thead><tr><th>#</th><th>Nome</th><th>Mensagem</th></tr></thead>
+          <thead><tr><th>#</th><th>{{ _('Nome') }}</th><th>{{ _('Mensagem') }}</th></tr></thead>
           <tbody>
             {% for entry in entries %}
             <tr>
@@ -60,13 +60,13 @@
           </tbody>
         </table>
         {% else %}
-        <p style="color:var(--text-muted);font-size:0.85rem">Sem entradas ainda.</p>
+        <p style="color:var(--text-muted);font-size:0.85rem">{{ _('Sem entradas ainda.') }}</p>
         {% endif %}
       </div>
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Salva raw + renderiza com Markup() — XSS executado para todos os visitantes{% endif %}
         {% if level == 'medium' %}Remove &lt;script&gt; mas renderiza raw — bypassável com eventos HTML5{% endif %}

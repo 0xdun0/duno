@@ -13,7 +13,9 @@
     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,400&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/duno.css') }}?v=20260917_5" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/duno.css') }}?v=20260920_1" />
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}" />
+  <link rel="alternate icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}" />
   <script>
     (function() {
       const savedTheme = localStorage.getItem('duno_theme');
@@ -32,103 +34,10 @@
   <!-- Header / Navigation Bar — Walkie Style -->
   <header class="header">
     <div class="header-inner">
-      <!-- Brand with concentric dot matrix logo -->
+      <!-- Brand -->
       <div class="brand-group">
-        <a href="{{ url_for('index') }}" class="brand-link" title="DUNO Dashboard">
-          <span class="brand-mark">
-            <svg class="brand-dot-matrix" width="32" height="32" viewBox="0 0 40 40" fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="1.1" fill="currentColor" />
-              <circle cx="23.4" cy="20.0" r="1.05" fill="currentColor" />
-              <circle cx="21.7" cy="22.94" r="1.05" fill="currentColor" />
-              <circle cx="18.3" cy="22.94" r="1.05" fill="currentColor" />
-              <circle cx="16.6" cy="20.0" r="1.05" fill="currentColor" />
-              <circle cx="18.3" cy="17.06" r="1.05" fill="currentColor" />
-              <circle cx="21.7" cy="17.06" r="1.05" fill="currentColor" />
-              <circle cx="26.8" cy="20.0" r="1.05" fill="currentColor" />
-              <circle cx="25.89" cy="23.4" r="1.05" fill="currentColor" />
-              <circle cx="23.4" cy="25.89" r="1.05" fill="currentColor" />
-              <circle cx="20.0" cy="26.8" r="1.05" fill="currentColor" />
-              <circle cx="16.6" cy="25.89" r="1.05" fill="currentColor" />
-              <circle cx="14.11" cy="23.4" r="1.05" fill="currentColor" />
-              <circle cx="13.2" cy="20.0" r="1.05" fill="currentColor" />
-              <circle cx="14.11" cy="16.6" r="1.05" fill="currentColor" />
-              <circle cx="16.6" cy="14.11" r="1.05" fill="currentColor" />
-              <circle cx="20.0" cy="13.2" r="1.05" fill="currentColor" />
-              <circle cx="23.4" cy="14.11" r="1.05" fill="currentColor" />
-              <circle cx="25.89" cy="16.6" r="1.05" fill="currentColor" />
-              <circle cx="30.2" cy="20.0" r="1.05" fill="currentColor" />
-              <circle cx="29.58" cy="23.49" r="1.05" fill="currentColor" />
-              <circle cx="27.81" cy="26.56" r="1.05" fill="currentColor" />
-              <circle cx="25.1" cy="28.83" r="1.05" fill="currentColor" />
-              <circle cx="21.77" cy="30.05" r="1.05" fill="currentColor" />
-              <circle cx="18.23" cy="30.05" r="1.05" fill="currentColor" />
-              <circle cx="14.9" cy="28.83" r="1.05" fill="currentColor" />
-              <circle cx="12.19" cy="26.56" r="1.05" fill="currentColor" />
-              <circle cx="10.42" cy="23.49" r="1.05" fill="currentColor" />
-              <circle cx="9.8" cy="20.0" r="1.05" fill="currentColor" />
-              <circle cx="10.42" cy="16.51" r="1.05" fill="currentColor" />
-              <circle cx="12.19" cy="13.44" r="1.05" fill="currentColor" />
-              <circle cx="14.9" cy="11.17" r="1.05" fill="currentColor" />
-              <circle cx="18.23" cy="9.95" r="1.05" fill="currentColor" />
-              <circle cx="21.77" cy="9.95" r="1.05" fill="currentColor" />
-              <circle cx="25.1" cy="11.17" r="1.05" fill="currentColor" />
-              <circle cx="27.81" cy="13.44" r="1.05" fill="currentColor" />
-              <circle cx="29.58" cy="16.51" r="1.05" fill="currentColor" />
-              <circle cx="33.6" cy="20.0" r="1.05" fill="currentColor" />
-              <circle cx="33.14" cy="23.52" r="1.05" fill="currentColor" />
-              <circle cx="31.78" cy="26.8" r="1.05" fill="currentColor" />
-              <circle cx="29.58" cy="29.58" r="1.05" fill="currentColor" />
-              <circle cx="26.65" cy="31.63" r="1.05" fill="currentColor" />
-              <circle cx="23.23" cy="32.81" r="1.05" fill="currentColor" />
-              <circle cx="19.58" cy="33.0" r="1.05" fill="currentColor" />
-              <circle cx="15.93" cy="32.18" r="1.05" fill="currentColor" />
-              <circle cx="12.63" cy="30.39" r="1.05" fill="currentColor" />
-              <circle cx="9.92" cy="27.76" r="1.05" fill="currentColor" />
-              <circle cx="8.01" cy="24.47" r="1.05" fill="currentColor" />
-              <circle cx="7.0" cy="20.73" r="1.05" fill="currentColor" />
-              <circle cx="6.99" cy="16.85" r="1.05" fill="currentColor" />
-              <circle cx="7.97" cy="13.09" r="1.05" fill="currentColor" />
-              <circle cx="9.85" cy="9.77" r="1.05" fill="currentColor" />
-              <circle cx="12.53" cy="7.1" r="1.05" fill="currentColor" />
-              <circle cx="15.82" cy="5.25" r="1.05" fill="currentColor" />
-              <circle cx="19.46" cy="4.36" r="1.05" fill="currentColor" />
-              <circle cx="23.11" cy="4.49" r="1.05" fill="currentColor" />
-              <circle cx="26.54" cy="5.62" r="1.05" fill="currentColor" />
-              <circle cx="29.5" cy="7.71" r="1.05" fill="currentColor" />
-              <circle cx="31.73" cy="10.63" r="1.05" fill="currentColor" />
-              <circle cx="33.12" cy="14.18" r="1.05" fill="currentColor" />
-              <circle cx="37.0" cy="20.0" r="1.05" fill="currentColor" />
-              <circle cx="36.56" cy="23.54" r="1.05" fill="currentColor" />
-              <circle cx="35.26" cy="26.9" r="1.05" fill="currentColor" />
-              <circle cx="33.15" cy="29.91" r="1.05" fill="currentColor" />
-              <circle cx="30.31" cy="32.41" r="1.05" fill="currentColor" />
-              <circle cx="26.87" cy="34.25" r="1.05" fill="currentColor" />
-              <circle cx="23.01" cy="35.34" r="1.05" fill="currentColor" />
-              <circle cx="18.94" cy="35.6" r="1.05" fill="currentColor" />
-              <circle cx="14.88" cy="34.99" r="1.05" fill="currentColor" />
-              <circle cx="11.05" cy="33.53" r="1.05" fill="currentColor" />
-              <circle cx="7.67" cy="31.3" r="1.05" fill="currentColor" />
-              <circle cx="4.92" cy="28.4" r="1.05" fill="currentColor" />
-              <circle cx="2.96" cy="24.96" r="1.05" fill="currentColor" />
-              <circle cx="1.92" cy="21.16" r="1.05" fill="currentColor" />
-              <circle cx="1.87" cy="17.2" r="1.05" fill="currentColor" />
-              <circle cx="2.81" cy="13.3" r="1.05" fill="currentColor" />
-              <circle cx="4.7" cy="9.67" r="1.05" fill="currentColor" />
-              <circle cx="7.45" cy="6.52" r="1.05" fill="currentColor" />
-              <circle cx="10.89" cy="4.03" r="1.05" fill="currentColor" />
-              <circle cx="14.84" cy="2.35" r="1.05" fill="currentColor" />
-              <circle cx="19.06" cy="1.6" r="1.05" fill="currentColor" />
-              <circle cx="23.32" cy="1.81" r="1.05" fill="currentColor" />
-              <circle cx="27.38" cy="2.98" r="1.05" fill="currentColor" />
-              <circle cx="31.0" cy="5.06" r="1.05" fill="currentColor" />
-              <circle cx="33.97" cy="7.94" r="1.05" fill="currentColor" />
-              <circle cx="36.1" cy="11.45" r="1.05" fill="currentColor" />
-              <circle cx="37.26" cy="15.42" r="1.05" fill="currentColor" />
-              <circle cx="37.38" cy="19.64" r="1.05" fill="currentColor" />
-            </svg>
-          </span>
-          <span class="brand-name">duno</span>
+        <a href="{{ url_for('index') }}" class="brand-link" title="{{ _('DUNO Dashboard') }}">
+          <img src="{{ url_for('static', filename='img/duno-logo.svg') }}" class="brand-logo" alt="duno" height="48" />
         </a>
       </div>
 
@@ -138,66 +47,65 @@
         <div class="nav-dropdown-wrap" id="labs-nav-dropdown">
           <button type="button" class="nav-link nav-dropdown-btn" id="labs-dropdown-trigger" aria-haspopup="true"
             aria-expanded="false">
-            <span id="nav-labs-label">LABS</span> <span class="nav-chevron">▾</span>
+            <span id="nav-labs-label" data-i18n="nav_labs">{{ _('LABS') }}</span> <span class="nav-chevron">▾</span>
           </button>
           <div class="nav-dropdown-menu" id="labs-dropdown-menu" style="display:none;">
             <div class="nav-dropdown-top">
-              <span class="dropdown-top-title" id="dropdown-top-title">LABORATÓRIOS DUNO</span>
-              <a href="{{ url_for('index') }}" class="dropdown-top-link" id="dropdown-top-link">Ver Grade Completa →</a>
+              <span class="dropdown-top-title" id="dropdown-top-title" data-i18n="labs_title">{{ _('LABORATÓRIOS DUNO') }}</span>
+              <a href="{{ url_for('index') }}" class="dropdown-top-link" id="dropdown-top-link" data-i18n="labs_view_all">{{ _('Ver Grade Completa →') }}</a>
             </div>
             <div class="nav-dropdown-columns">
               <div class="dropdown-col">
-                <span class="dropdown-col-heading" id="col-heading-1">Injeção & DB</span>
-                <a href="{{ url_for('sqli.index') }}">07 SQL Injection</a>
-                <a href="{{ url_for('sqli_blind.index') }}">08 Blind SQLi</a>
-                <a href="{{ url_for('command_injection.index') }}">02 Command Injection</a>
-                <a href="{{ url_for('file_inclusion.index') }}">04 File Inclusion</a>
-                <a href="{{ url_for('file_upload.index') }}">05 File Upload</a>
+                <span class="dropdown-col-heading" id="col-heading-1" data-i18n="labs_col1">{{ _('Injeção & DB') }}</span>
+                <a href="{{ url_for('sqli.index') }}">{{ _('07 SQL Injection') }}</a>
+                <a href="{{ url_for('sqli_blind.index') }}">{{ _('08 Blind SQLi') }}</a>
+                <a href="{{ url_for('command_injection.index') }}">{{ _('02 Command Injection') }}</a>
+                <a href="{{ url_for('file_inclusion.index') }}">{{ _('04 File Inclusion') }}</a>
+                <a href="{{ url_for('file_upload.index') }}">{{ _('05 File Upload') }}</a>
               </div>
               <div class="dropdown-col">
-                <span class="dropdown-col-heading" id="col-heading-2">Auth & Sessão</span>
-                <a href="{{ url_for('brute_force.index') }}">01 Brute Force</a>
-                <a href="{{ url_for('weak_session.index') }}">09 Weak Session IDs</a>
-                <a href="{{ url_for('captcha.index') }}">06 Insecure CAPTCHA</a>
-                <a href="{{ url_for('auth_bypass.index') }}">15 Auth Bypass</a>
+                <span class="dropdown-col-heading" id="col-heading-2" data-i18n="labs_col2">{{ _('Auth & Sessão') }}</span>
+                <a href="{{ url_for('brute_force.index') }}">{{ _('01 Brute Force') }}</a>
+                <a href="{{ url_for('weak_session.index') }}">{{ _('09 Weak Session IDs') }}</a>
+                <a href="{{ url_for('captcha.index') }}">{{ _('06 Insecure CAPTCHA') }}</a>
+                <a href="{{ url_for('auth_bypass.index') }}">{{ _('15 Auth Bypass') }}</a>
               </div>
               <div class="dropdown-col">
-                <span class="dropdown-col-heading" id="col-heading-3">Client-Side</span>
-                <a href="{{ url_for('xss_dom.index') }}">10 XSS (DOM)</a>
-                <a href="{{ url_for('xss_reflected.index') }}">11 XSS (Reflected)</a>
-                <a href="{{ url_for('xss_stored.index') }}">12 XSS (Stored)</a>
-                <a href="{{ url_for('csrf.index') }}">03 CSRF</a>
-                <a href="{{ url_for('csp_bypass.index') }}">13 CSP Bypass</a>
+                <span class="dropdown-col-heading" id="col-heading-3" data-i18n="labs_col3">{{ _('Client-Side') }}</span>
+                <a href="{{ url_for('xss_dom.index') }}">{{ _('10 XSS (DOM)') }}</a>
+                <a href="{{ url_for('xss_reflected.index') }}">{{ _('11 XSS (Reflected)') }}</a>
+                <a href="{{ url_for('xss_stored.index') }}">{{ _('12 XSS (Stored)') }}</a>
+                <a href="{{ url_for('csrf.index') }}">{{ _('03 CSRF') }}</a>
+                <a href="{{ url_for('csp_bypass.index') }}">{{ _('13 CSP Bypass') }}</a>
               </div>
               <div class="dropdown-col">
-                <span class="dropdown-col-heading" id="col-heading-4">APIs & Lógica</span>
-                <a href="{{ url_for('api_security.index') }}">20 API Security</a>
-                <a href="{{ url_for('api_versioning.index') }}">18 API Versioning</a>
-                <a href="{{ url_for('mass_assignment.index') }}">19 Mass Assignment</a>
-                <a href="{{ url_for('crypto.index') }}">17 Cryptography</a>
+                <span class="dropdown-col-heading" id="col-heading-4" data-i18n="labs_col4">{{ _('APIs & Lógica') }}</span>
+                <a href="{{ url_for('api_security.index') }}">{{ _('20 API Security') }}</a>
+                <a href="{{ url_for('api_versioning.index') }}">{{ _('18 API Versioning') }}</a>
+                <a href="{{ url_for('mass_assignment.index') }}">{{ _('19 Mass Assignment') }}</a>
+                <a href="{{ url_for('crypto.index') }}">{{ _('17 Cryptography') }}</a>
               </div>
             </div>
           </div>
         </div>
 
-        <a href="{{ url_for('academy_hub') }}" class="nav-link" id="nav-academy-link">ACADEMY</a>
+        <a href="{{ url_for('academy_hub') }}" class="nav-link" id="nav-academy-link" data-i18n="nav_academy">{{ _('ACADEMY') }}</a>
         <a href="{{ url_for('kids.dashboard') }}" class="nav-link nav-link-kids-wrap {% if request.path.startswith('/kids') %}active{% endif %}" id="nav-kids-link">
-          <span class="nav-kids-badge">NEWS</span>
-          <span>KIDS</span>
+          <span class="nav-kids-badge">{{ _('NEWS') }}</span>
+          <span>{{ _('KIDS') }}</span>
         </a>
         {% if challenges_enabled %}
-        <a href="{{ url_for('challenges.index') }}" class="nav-link" id="nav-challenges-link">CHALLENGES</a>
+        <a href="{{ url_for('challenges.index') }}" class="nav-link" id="nav-challenges-link">{{ _('CHALLENGES') }}</a>
         {% endif %}
-        <a href="{{ url_for('documentation') }}" class="nav-link" id="nav-docs-link">DOCS</a>
-        <a href="{{ url_for('api_portal') }}" class="nav-link" id="nav-api-link">API</a>
-        <a href="{{ url_for('about') }}" class="nav-link" id="nav-about-link">ABOUT</a>
+        <a href="{{ url_for('documentation') }}" class="nav-link" id="nav-docs-link" data-i18n="nav_docs">{{ _('DOCS') }}</a>
+        <a href="{{ url_for('about') }}" class="nav-link" id="nav-about-link" data-i18n="nav_about">{{ _('ABOUT') }}</a>
       </nav>
 
       <!-- Right Navigation Actions: Theme Toggle + Language Selector + User Dropdown / Login (Walkie Style) -->
       <div class="nav-actions">
         <!-- Theme Toggle Button (Light / Soft Dark) — Click to swap -->
         <button type="button" class="theme-toggle-btn" id="theme-toggle-btn"
-          aria-label="Alternar tema" title="Alternar tema (Claro / Escuro)">
+          aria-label="Alternar tema" title="{{ _('Alternar tema (Claro / Escuro)') }}">
           <svg class="theme-icon theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
@@ -219,7 +127,7 @@
         <!-- Language selector dropdown -->
         <div class="lang-dropdown" id="lang-dropdown">
           <button type="button" class="lang-btn" id="lang-toggle-btn" aria-haspopup="true" aria-expanded="false"
-            title="Selecionar Idioma">
+            title="{{ _('Selecionar Idioma') }}">
             <svg class="lang-globe-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
@@ -227,21 +135,41 @@
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
               </path>
             </svg>
-            <span id="current-lang-text">PT</span>
+            <span id="current-lang-text">{{ _('PT') }}</span>
           </button>
           <div class="lang-menu" id="lang-menu-list" style="display:none;">
             <button type="button" class="lang-menu-item" data-lang="en">
-              <span>English</span>
+              <span>{{ _('English') }}</span>
               <span class="lang-check" id="check-en"></span>
             </button>
             <button type="button" class="lang-menu-item" data-lang="es">
-              <span>Español</span>
+              <span>{{ _('Español') }}</span>
               <span class="lang-check" id="check-es"></span>
             </button>
             <button type="button" class="lang-menu-item active" data-lang="pt">
-              <span>Português</span>
+              <span>{{ _('Português') }}</span>
               <span class="lang-check" id="check-pt">✓</span>
             </button>
+          </div>
+        </div>
+
+        <!-- Notification Bell Toggle & Menu -->
+        <div class="notif-dropdown" id="notif-dropdown">
+          <button type="button" class="notif-btn" id="notif-toggle-btn" aria-haspopup="true" aria-expanded="false"
+            title="{{ _('Notificações da Plataforma') }}" aria-label="Notificações">
+            <i class="nf nf-fa-bell notif-bell-icon" aria-hidden="true"></i>
+            <span class="notif-badge" id="notif-badge" style="{% if not unread_notifications_count or unread_notifications_count == 0 %}display:none;{% endif %}">
+              {{ unread_notifications_count if unread_notifications_count else 0 }}
+            </span>
+          </button>
+          <div class="notif-menu" id="notif-menu" style="display:none;">
+            <div class="notif-menu-header">
+              <span class="notif-menu-title">{{ _('NOTIFICAÇÕES') }}</span>
+              <button type="button" class="notif-mark-read-btn" id="notif-mark-read-btn">{{ _('Marcar lidas') }}</button>
+            </div>
+            <div class="notif-menu-list" id="notif-menu-list">
+              <div class="notif-empty-state">{{ _('Nenhuma notificação no momento') }}</div>
+            </div>
           </div>
         </div>
 
@@ -249,38 +177,38 @@
         <!-- User Menu Dropdown (COMMAND CENTER & Reset DB) -->
         <div class="user-dropdown" id="user-dropdown">
           <button type="button" class="nav-user-chip nav-user-welcome-chip" id="user-menu-trigger" aria-haspopup="true"
-            aria-expanded="false" title="Command Center">
+            aria-expanded="false" title="{{ _('Command Center') }}">
             <span class="nav-welcome-msg">WELCOME BACK, {{ current_user.username|upper }}.</span>
             <span class="nav-welcome-arrow">↓</span>
           </button>
 
           <div class="user-dropdown-menu" id="user-dropdown-menu" style="display:none;">
             <div class="user-menu-header">
-              <div class="user-menu-welcome-kicker">COMMAND CENTER</div>
-              <div class="user-menu-welcome-sub">CENTRO INTEGRADO DE OPERAÇÕES</div>
+              <div class="user-menu-welcome-kicker">{{ _('COMMAND CENTER') }}</div>
+              <div class="user-menu-welcome-sub">{{ _('CENTRO INTEGRADO DE OPERAÇÕES') }}</div>
             </div>
             <div class="user-menu-divider"></div>
             <a href="{{ url_for('settings') }}" class="user-menu-item">
               <i class="nf nf-fa-bolt menu-icon" aria-hidden="true"></i>
-              <span>Command Center</span>
+              <span>{{ _('Command Center') }}</span>
               <i class="nf nf-md-chevron_right user-menu-arrow" aria-hidden="true"></i>
             </a>
             <div class="user-menu-divider"></div>
             <form method="POST" action="{{ url_for('reset') }}" id="user-reset-form" style="display:none;"></form>
             <button type="button" class="user-menu-item item-danger" onclick="openResetConfirmModal()">
               <i class="nf nf-md-refresh menu-icon" aria-hidden="true"></i>
-              <span>Reset Database</span>
+              <span>{{ _('Reset Database') }}</span>
             </button>
             <div class="user-menu-divider"></div>
             <a href="{{ url_for('logout') }}" class="user-menu-item">
               <i class="nf nf-md-logout menu-icon" aria-hidden="true"></i>
-              <span>Sair</span>
+              <span>{{ _('Sair') }}</span>
             </a>
           </div>
         </div>
         {% else %}
-        <a href="{{ url_for('login') }}" class="nav-text-btn" id="nav-login-btn">ENTRAR</a>
-        <a href="{{ url_for('login') }}" class="nav-signup-btn" id="nav-signup-btn">SIGN UP</a>
+        <a href="{{ url_for('login') }}" class="nav-text-btn" id="nav-login-btn" data-i18n="nav_login">{{ _('ENTRAR') }}</a>
+        <a href="{{ url_for('register') }}" class="nav-signup-btn" id="nav-signup-btn" data-i18n="nav_signup">{{ _('SIGN UP') }}</a>
         {% endif %}
       </div>
     </div>
@@ -294,10 +222,10 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <span class="footer-dot"></span>
-        <span>DUNO — Designed Unsecure Network Operations</span>
+        <span>{{ _('DUNO — Designed Unsecure Network Operations') }}</span>
       </div>
       <div class="footer-meta">
-        <span id="footer-meta-text">20 Módulos de Exploração • 4 Níveis Graduais • ISO Bare-Metal em Breve</span>
+        <span id="footer-meta-text" data-i18n="footer_meta">{{ _('20 Módulos de Exploração • 4 Níveis Graduais • ISO Bare-Metal em Breve') }}</span>
       </div>
     </div>
   </footer>
@@ -310,7 +238,7 @@
     <div class="modal-overlay" onclick="closeSourceModal()"></div>
     <div class="modal-box">
       <div class="modal-header">
-        <h2 id="source-modal-title">View Source</h2>
+        <h2 id="source-modal-title">{{ _('View Source') }}</h2>
         <span id="source-modal-meta" class="modal-meta"></span>
         <button class="modal-close" onclick="closeSourceModal()" aria-label="Fechar">✕</button>
       </div>
@@ -326,15 +254,15 @@
     <div class="modal-overlay" onclick="closeResetConfirmModal()"></div>
     <div class="modal-box modal-box-confirm">
       <div class="modal-header">
-        <h2 id="reset-modal-title" class="confirm-modal-title">RESET DATABASE?</h2>
+        <h2 id="reset-modal-title" class="confirm-modal-title">{{ _('RESET DATABASE?') }}</h2>
         <button class="modal-close" onclick="closeResetConfirmModal()" aria-label="Fechar">✕</button>
       </div>
       <div class="modal-body confirm-modal-body">
-        <p class="confirm-modal-lead">This will restore the laboratory database to its initial state.</p>
-        <p class="confirm-modal-sub">This action cannot be undone.</p>
+        <p class="confirm-modal-lead">{{ _('This will restore the laboratory database to its initial state.') }}</p>
+        <p class="confirm-modal-sub">{{ _('This action cannot be undone.') }}</p>
         <div class="confirm-modal-actions">
-          <button type="button" class="btn btn-outline" onclick="closeResetConfirmModal()">Cancel</button>
-          <button type="button" class="btn btn-danger-solid" onclick="executeResetDatabase()">Reset Database</button>
+          <button type="button" class="btn btn-outline" onclick="closeResetConfirmModal()">{{ _('Cancel') }}</button>
+          <button type="button" class="btn btn-danger-solid" onclick="executeResetDatabase()">{{ _('Reset Database') }}</button>
         </div>
       </div>
     </div>
@@ -353,146 +281,24 @@
   <script>
     // ── Global Language Switcher & Navigation Engine ─────────────────────────
     (function () {
-      const translations = {
-        pt: {
-          code: 'PT',
-          nav_labs: 'LABS',
-          nav_academy: 'ACADEMY',
-          nav_docs: 'DOCS',
-          nav_api: 'API',
-          nav_about: 'ABOUT',
-          nav_login: 'ENTRAR',
-          nav_signup: 'SIGN UP',
-          labs_title: 'LABORATÓRIOS DUNO',
-          labs_view_all: 'Ver Grade Completa →',
-          labs_col1: 'Injeção & DB',
-          labs_col2: 'Auth & Sessão',
-          labs_col3: 'Client-Side',
-          labs_col4: 'APIs & Lógica',
-          footer_meta: '20 Módulos de Exploração • 4 Níveis Graduais • ISO Bare-Metal em Breve',
-          // Hero / Index elements
-          hero_pill: 'Ambiente de Laboratório • 20 Módulos de Exploração',
-          hero_prefix: 'A plataforma de segurança que você pode ',
-          typewriter_word: 'quebrar',
-          hero_desc: 'Explore 20 cenários reais de vulnerabilidade web com 4 níveis graduais de proteção (Low a Impossible). Inspecione o código-fonte ao vivo e domine técnicas de exploração e defesa.',
-          search_ph: 'Pesquisar laboratório... (ex: SQLi, XSS, CSRF, Token)',
-          filter_all: 'Todos',
-          download_btn: 'BAIXAR ISO DUNO',
-          downloads_subnote: 'Distribuição ISO bootável em desenvolvimento para instalação direta em bare-metal, Proxmox, VMware ou VirtualBox — ambiente de pentest 100% isolado de rede.'
-        },
-        en: {
-          code: 'EN',
-          nav_labs: 'LABS',
-          nav_academy: 'ACADEMY',
-          nav_docs: 'DOCS',
-          nav_api: 'API',
-          nav_about: 'ABOUT',
-          nav_login: 'LOGIN',
-          nav_signup: 'SIGN UP',
-          labs_title: 'DUNO LABORATORIES',
-          labs_view_all: 'View Complete Grid →',
-          labs_col1: 'Injection & DB',
-          labs_col2: 'Auth & Session',
-          labs_col3: 'Client-Side',
-          labs_col4: 'APIs & Logic',
-          footer_meta: '20 Exploitation Modules • 4 Gradual Levels • Bare-Metal ISO Coming Soon',
-          // Hero / Index elements
-          hero_pill: 'Laboratory Environment • 20 Exploitation Modules',
-          hero_prefix: 'The security platform that you can ',
-          typewriter_word: 'break',
-          hero_desc: 'Explore 20 real-world web vulnerability scenarios with 4 gradual protection tiers (Low to Impossible). Inspect live source code and master offensive and defensive skills.',
-          search_ph: 'Search lab... (e.g. SQLi, XSS, CSRF, Token)',
-          filter_all: 'All',
-          download_btn: 'DOWNLOAD DUNO ISO',
-          downloads_subnote: 'Bootable ISO distribution in development for direct bare-metal, Proxmox, VMware, or VirtualBox installation — 100% network-isolated pentest suite.'
-        },
-        es: {
-          code: 'ES',
-          nav_labs: 'LABS',
-          nav_academy: 'ACADEMY',
-          nav_docs: 'DOCS',
-          nav_api: 'API',
-          nav_about: 'ABOUT',
-          nav_login: 'INGRESAR',
-          nav_signup: 'REGISTRO',
-          labs_title: 'LABORATORIOS DUNO',
-          labs_view_all: 'Ver Grilla Completa →',
-          labs_col1: 'Inyección & BD',
-          labs_col2: 'Auth & Sesión',
-          labs_col3: 'Client-Side',
-          labs_col4: 'APIs & Lógica',
-          footer_meta: '20 Módulos de Explotación • 4 Niveles Graduales • ISO Bare-Metal Próximamente',
-          // Hero / Index elements
-          hero_pill: 'Entorno de Laboratorio • 20 Módulos de Explotación',
-          hero_prefix: 'La plataforma de seguridad que puedes ',
-          typewriter_word: 'romper',
-          hero_desc: 'Explora 20 escenarios reales de vulnerabilidades web con 4 niveles graduales de proteção (Low a Impossible). Inspecciona el código fuente en vivo y domina técnicas ofensivas y defensivas.',
-          search_ph: 'Buscar laboratorio... (ej: SQLi, XSS, CSRF, Token)',
-          filter_all: 'Todos',
-          download_btn: 'DESCARGAR ISO DUNO',
-          downloads_subnote: 'Distribución ISO booteable en desarrollo para instalación directa en bare-metal, Proxmox, VMware o VirtualBox — entorno de pentesting 100% aislado de red.'
-        }
-      };
-
-      window.applyDunoLanguage = function (lang) {
-        const data = translations[lang] || translations.pt;
-
-        // Atualiza badge do botão de idioma
-        const currentLangText = document.getElementById('current-lang-text');
-        if (currentLangText) currentLangText.textContent = data.code;
-
-        // Atualiza checkmarks e classes ativas no menu
-        document.querySelectorAll('.lang-menu-item').forEach(item => {
-          const itemLang = item.getAttribute('data-lang');
-          const isCurrent = itemLang === lang;
-          item.classList.toggle('active', isCurrent);
-          const chk = item.querySelector('.lang-check');
-          if (chk) chk.textContent = isCurrent ? '✓' : '';
-        });
-
-        // Atualiza elementos da navbar e base
-        const elMap = {
-          'nav-labs-label': data.nav_labs,
-          'nav-academy-link': data.nav_academy,
-          'nav-docs-link': data.nav_docs,
-          'nav-api-link': data.nav_api,
-          'nav-about-link': data.nav_about,
-          'nav-login-btn': data.nav_login,
-          'nav-signup-btn': data.nav_signup,
-          'dropdown-top-title': data.labs_title,
-          'dropdown-top-link': data.labs_view_all,
-          'col-heading-1': data.labs_col1,
-          'col-heading-2': data.labs_col2,
-          'col-heading-3': data.labs_col3,
-          'col-heading-4': data.labs_col4,
-          'footer-meta-text': data.footer_meta,
-          'txt-hero-pill': data.hero_pill,
-          'txt-hero-prefix': data.hero_prefix,
-          'txt-hero-desc': data.hero_desc,
-          'filter-all-label': data.filter_all,
-          'txt-download-btn': data.download_btn,
-          'txt-downloads-subnote': data.downloads_subnote
-        };
-
-        for (const [id, val] of Object.entries(elMap)) {
-          const el = document.getElementById(id);
-          if (el && val !== undefined) el.textContent = val;
-        }
-
-        const searchInput = document.getElementById('command-search-input');
-        if (searchInput && data.search_ph) {
-          searchInput.placeholder = data.search_ph;
-        }
-
-        // Dispara evento para scripts de página (ex: typewriter na index)
-        window.dispatchEvent(new CustomEvent('duno:langchange', { detail: { lang, data } }));
-      };
-
       window.setDunoLanguage = function (lang) {
-        if (!translations[lang]) return;
+        console.log("[DUNO Lang] Trocando idioma para:", lang);
+        document.cookie = "duno_lang=" + lang + "; path=/; max-age=31536000";
         localStorage.setItem('duno_lang', lang);
-        window.applyDunoLanguage(lang);
+        window.location.reload();
       };
+
+      // Set active language menu checkmark based on cookie or local storage
+      const currentLang = localStorage.getItem('duno_lang') || 'pt';
+      const currentLangText = document.getElementById('current-lang-text');
+      if (currentLangText) currentLangText.textContent = currentLang.toUpperCase();
+      document.querySelectorAll('.lang-menu-item').forEach(item => {
+        const itemLang = item.getAttribute('data-lang');
+        const isCurrent = itemLang === currentLang;
+        item.classList.toggle('active', isCurrent);
+        const chk = item.querySelector('.lang-check');
+        if (chk) chk.textContent = isCurrent ? '✓' : '';
+      });
 
       document.addEventListener('DOMContentLoaded', function () {
         // 1. Labs Dropdown
@@ -527,6 +333,110 @@
           });
         }
 
+        const notifToggleBtn = document.getElementById('notif-toggle-btn');
+        const notifMenu = document.getElementById('notif-menu');
+        const notifMenuList = document.getElementById('notif-menu-list');
+        const notifBadge = document.getElementById('notif-badge');
+        const notifMarkReadBtn = document.getElementById('notif-mark-read-btn');
+
+        window.handleNotificationItemClick = function (event, notifId, link) {
+          if (event.ctrlKey || event.metaKey || event.button === 1) {
+            fetch('/api/notifications/mark-read', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ notification_id: notifId }),
+              keepalive: true
+            }).catch(() => {});
+            return;
+          }
+          event.preventDefault();
+          try {
+            fetch('/api/notifications/mark-read', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ notification_id: notifId }),
+              keepalive: true
+            }).finally(() => {
+              window.location.href = link;
+            });
+          } catch (_) {
+            window.location.href = link;
+          }
+        };
+
+        function loadNotifications() {
+          if (!notifMenuList) return;
+          fetch('/api/notifications')
+            .then(res => res.json())
+            .then(data => {
+              if (data.unread_count !== undefined && notifBadge) {
+                if (data.unread_count > 0) {
+                  notifBadge.textContent = data.unread_count;
+                  notifBadge.style.display = 'inline-block';
+                } else {
+                  notifBadge.textContent = '0';
+                  notifBadge.style.display = 'none';
+                }
+              }
+              const list = data.notifications || [];
+              if (list.length === 0) {
+                notifMenuList.innerHTML = '<div class="notif-empty-state">{{ _('Nenhuma notificação no momento') }}</div>';
+                return;
+              }
+              notifMenuList.innerHTML = list.map(n => {
+                const targetLink = n.link || '/challenges';
+                return `
+                <a href="${targetLink}" 
+                   class="notif-item ${n.is_read ? 'read' : 'unread'}"
+                   onclick="handleNotificationItemClick(event, ${n.id}, '${targetLink}')">
+                  <div class="notif-item-header">
+                    <span class="notif-item-title">${n.title}</span>
+                    <span class="notif-item-time">${n.created_at ? n.created_at.split(' ')[0] : ''}</span>
+                  </div>
+                  <div class="notif-item-msg">${n.message}</div>
+                </a>
+              `;
+              }).join('');
+            })
+            .catch(() => {
+              if (notifMenuList) notifMenuList.innerHTML = '<div class="notif-empty-state">{{ _('Erro ao carregar notificações') }}</div>';
+            });
+        }
+
+        if (notifToggleBtn && notifMenu) {
+          notifToggleBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const open = notifMenu.style.display === 'block';
+            notifMenu.style.display = open ? 'none' : 'block';
+            if (labsMenu) labsMenu.style.display = 'none';
+            if (userMenu) userMenu.style.display = 'none';
+            if (langMenuList) langMenuList.style.display = 'none';
+            if (!open) {
+              loadNotifications();
+            }
+          });
+        }
+
+        if (notifMarkReadBtn) {
+          notifMarkReadBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            fetch('/api/notifications/mark-read', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({})
+            })
+              .then(res => res.json())
+              .then(() => {
+                if (notifBadge) {
+                  notifBadge.textContent = '0';
+                  notifBadge.style.display = 'none';
+                }
+                loadNotifications();
+              })
+              .catch(() => {});
+          });
+        }
+
         if (langToggleBtn && langMenuList) {
           langToggleBtn.addEventListener('click', function (e) {
             e.stopPropagation();
@@ -534,6 +444,7 @@
             langMenuList.style.display = open ? 'none' : 'block';
             if (labsMenu) labsMenu.style.display = 'none';
             if (userMenu) userMenu.style.display = 'none';
+            if (notifMenu) notifMenu.style.display = 'none';
           });
 
           document.querySelectorAll('.lang-menu-item').forEach(item => {
@@ -551,6 +462,7 @@
           if (labsMenu) labsMenu.style.display = 'none';
           if (userMenu) userMenu.style.display = 'none';
           if (langMenuList) langMenuList.style.display = 'none';
+          if (notifMenu) notifMenu.style.display = 'none';
         });
 
         // Modais de Confirmação
@@ -610,12 +522,11 @@
           window.openResetConfirmModal();
         };
 
-        // Aplica o idioma salvo ou padrão
-        const currentLang = localStorage.getItem('duno_lang') || 'pt';
-        window.applyDunoLanguage(currentLang);
+        // O idioma agora é gerenciado pelo Babel no backend.
       });
     })();
   </script>
+  {% include "components/countdown_central.html" %}
   {% block scripts %}{% endblock %}
 </body>
 

@@ -8,17 +8,17 @@
     <!-- Top Breadcrumb / Kicker -->
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
       <div class="settings-kicker-brand">
-        <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="color:inherit; text-decoration:none;">DUNO // ADMIN PIPELINE</a> // MÁQUINAS PUBLICADAS
+        <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="color:inherit; text-decoration:none;">{{ _('DUNO // ADMIN PIPELINE') }}</a> // MÁQUINAS PUBLICADAS
       </div>
       <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="font-size:0.8rem; color:var(--ink-2); text-decoration:none;">
-        ← Voltar ao Painel
+        {{ _('← Voltar ao Painel') }}
       </a>
     </div>
 
     <!-- Hero Header -->
     <header class="settings-hero">
-      <h1 class="settings-title">Máquinas Publicadas</h1>
-      <p class="settings-subtitle">Controle de catálogo das máquinas ativas na plataforma DUNO, histórico de versões em produção e despublicação.</p>
+      <h1 class="settings-title">{{ _('Máquinas Publicadas') }}</h1>
+      <p class="settings-subtitle">{{ _('Controle de catálogo das máquinas ativas na plataforma DUNO, histórico de versões em produção e despublicação.') }}</p>
     </header>
 
     <div class="settings-divider"></div>
@@ -28,14 +28,14 @@
       <table class="duno-table" style="width:100%; border-collapse:collapse; text-align:left;">
         <thead>
           <tr style="border-bottom:1px solid var(--line); background:var(--bg-card-subtle); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3);">
-            <th style="padding:0.9rem 1.25rem;">Máquina / Slug</th>
-            <th style="padding:0.9rem 1rem;">Versão Publicada</th>
-            <th style="padding:0.9rem 1rem;">Autor</th>
-            <th style="padding:0.9rem 1rem;">Categoria / SO</th>
-            <th style="padding:0.9rem 1rem;">Dificuldade</th>
-            <th style="padding:0.9rem 1rem;">Status</th>
-            <th style="padding:0.9rem 1rem;">Publicado em</th>
-            <th style="padding:0.9rem 1.25rem; text-align:right;">Ações</th>
+            <th style="padding:0.9rem 1.25rem;">{{ _('Máquina / Slug') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Versão Publicada') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Autor') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Categoria / SO') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Dificuldade') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Status') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Publicado em') }}</th>
+            <th style="padding:0.9rem 1.25rem; text-align:right;">{{ _('Ações') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -81,11 +81,11 @@
             <td style="padding:1rem 1.25rem; text-align:right;">
               <div style="display:inline-flex; gap:0.5rem; align-items:center;">
                 <a href="{{ url_for('submissions_admin.machine_review_workspace', submission_id=m.sub_id) }}" class="btn-subtle" style="text-decoration:none; padding:0.35rem 0.7rem; font-size:0.75rem; border-radius:var(--r-xs); border:1px solid var(--line); color:var(--ink-2); background:var(--bg-subtle);">
-                  Bancada
+                  {{ _('Bancada') }}
                 </a>
                 {% if m.is_active %}
                 <button type="button" onclick="unpublishMachine({{ m.sub_id }})" class="btn-subtle" style="padding:0.35rem 0.7rem; font-size:0.75rem; border-radius:var(--r-xs); border:1px solid #fca5a5; background:#fee2e2; color:#b91c1c; cursor:pointer;">
-                  Despublicar
+                  {{ _('Despublicar') }}
                 </button>
                 {% endif %}
               </div>
@@ -94,7 +94,7 @@
           {% else %}
           <tr>
             <td colspan="8" style="padding:3rem; text-align:center; color:var(--ink-3);">
-              Nenhuma máquina aprovada e publicada no catálogo ativo até o momento.
+              {{ _('Nenhuma máquina aprovada e publicada no catálogo ativo até o momento.') }}
             </td>
           </tr>
           {% endfor %}

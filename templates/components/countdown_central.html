@@ -1,0 +1,375 @@
+{# templates/components/countdown_central.html — Modal Terminal Countdown Central para Inicialização de Desafios #}
+<div class="countdown-central-backdrop" id="countdown-central-modal" style="display: none;" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="countdown-central-box">
+    <!-- Top Bar -->
+    <div class="countdown-top-bar">
+      <div class="countdown-top-label">
+        <span class="countdown-live-indicator"></span>
+        <span id="countdown-target-name">{{ _('DUNO // LAB RUNNER') }}</span>
+      </div>
+      <div class="countdown-top-actions">
+        <button type="button" class="countdown-icon-btn js-countdown-copy-raw" title="{{ _('Copiar status do terminal') }}" id="btn-countdown-copy-raw">
+          <i class="nf nf-md-content_copy" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="countdown-icon-btn js-countdown-close" title="{{ _('Fechar') }}" id="btn-countdown-close-top">
+          <i class="nf nf-md-close" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Phase 1 & 2: Countdown & Transition -->
+    <div class="countdown-stage" id="countdown-stage-starting">
+      <div class="countdown-kicker" id="countdown-kicker-title">{{ _('MACHINE STARTING') }}</div>
+      <div class="countdown-big-number" id="countdown-timer-display">08</div>
+      <div class="countdown-subtext" id="countdown-timer-subtext">{{ _('seconds remaining') }}</div>
+      
+      <!-- ASCII Progress Bar -->
+      <div class="countdown-ascii-container">
+        <div class="countdown-ascii-bar" id="countdown-ascii-bar">
+          <span class="bar-fill">████████</span><span class="bar-empty">░░░░░░░░░░░░░░░░</span>
+        </div>
+      </div>
+
+      <div class="countdown-status-log" id="countdown-status-log">
+        {{ _('Initializing environment...') }}
+      </div>
+    </div>
+
+    <!-- Phase 3: Machine Online -->
+    <div class="countdown-stage" id="countdown-stage-online" style="display: none;">
+      <div class="terminal-online-card">
+        <div class="terminal-card-line terminal-title-line">
+          <span class="terminal-cursor-indicator">●</span> MACHINE ONLINE
+        </div>
+        
+        <div class="terminal-card-line terminal-field-label">
+          {{ _('ENDEREÇO IP DO ALVO') }}
+        </div>
+        <div class="terminal-card-line terminal-ip-value" id="countdown-online-ip">
+          {{ _('10.10.15.xx') }}
+        </div>
+        <div class="terminal-card-line terminal-port-meta" style="font-size: 12px; color: var(--ink-3, #948F86); margin-top: -1rem; margin-bottom: 1.2rem;">
+          Porta Web: <strong id="countdown-online-port" style="color: var(--ink-2, #5E5B55);">80</strong> • URL: <code id="countdown-online-url" style="color: var(--ink, #141311); background: var(--bg-card, #ffffff); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--line, #ded9cf);">http://10.10.15.xx:80</code>
+        </div>
+
+        <div class="terminal-card-actions">
+          <button type="button" class="btn-term-action js-term-copy-ip" id="btn-term-copy-ip" title="{{ _('Copiar somente o IP puro (sem porta) para ping, nmap, etc.') }}">
+            {{ _('[ COPIAR IP ]') }}
+          </button>
+          <button type="button" class="btn-term-action js-term-copy-url" id="btn-term-copy-url" title="{{ _('Copiar URL completa com porta para navegador') }}">
+            {{ _('[ COPIAR URL ]') }}
+          </button>
+          <a href="#" target="_blank" rel="noopener" class="btn-term-action btn-term-open" id="link-term-open-machine">
+            {{ _('[ ABRIR MÁQUINA ]') }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Arrow Down / Dismiss action -->
+      <div class="countdown-bottom-action">
+        <button type="button" class="countdown-down-arrow-btn js-countdown-close" title="{{ _('Concluir e ir ao laboratório') }}">
+          <i class="nf nf-md-arrow_down" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div class="countdown-stage" id="countdown-stage-error" style="display: none;">
+      <div class="countdown-kicker text-danger" style="color: #ef4444;">{{ _('INICIALIZAÇÃO INTERROMPIDA') }}</div>
+      <div class="countdown-big-number text-danger" style="color: #ef4444;">!</div>
+      <div class="countdown-status-log text-danger" id="countdown-error-msg" style="color: #ef4444;">
+        {{ _('Falha ao inicializar container.') }}
+      </div>
+      <div style="margin-top: 1.5rem;">
+        <button type="button" class="btn-term-action js-countdown-close">
+          {{ _('[ FECHAR ]') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.CountdownCentral = (function() {
+  const modal = document.getElementById('countdown-central-modal');
+  const targetNameEl = document.getElementById('countdown-target-name');
+  const kickerTitle = document.getElementById('countdown-kicker-title');
+  const timerDisplay = document.getElementById('countdown-timer-display');
+  const timerSubtext = document.getElementById('countdown-timer-subtext');
+  const asciiBar = document.getElementById('countdown-ascii-bar');
+  const statusLog = document.getElementById('countdown-status-log');
+
+  const stageStarting = document.getElementById('countdown-stage-starting');
+  const stageOnline = document.getElementById('countdown-stage-online');
+  const stageError = document.getElementById('countdown-stage-error');
+  const onlineIp = document.getElementById('countdown-online-ip');
+  const onlinePort = document.getElementById('countdown-online-port');
+  const onlineUrl = document.getElementById('countdown-online-url');
+  const btnCopyIp = document.getElementById('btn-term-copy-ip');
+  const btnCopyUrl = document.getElementById('btn-term-copy-url');
+  const linkOpenMachine = document.getElementById('link-term-open-machine');
+  const errorMsg = document.getElementById('countdown-error-msg');
+  const btnCopyRaw = document.getElementById('btn-countdown-copy-raw');
+
+  let countdownTimer = null;
+  let currentIp = '';
+  let currentPort = '80';
+  let currentEndpoint = '';
+
+  const TOTAL_BLOCKS = 24;
+
+  function updateDisplay(ratio, remainingSec, message) {
+    const safeRatio = Math.min(1, Math.max(0, ratio));
+    const filledCount = Math.min(TOTAL_BLOCKS, Math.max(0, Math.round(safeRatio * TOTAL_BLOCKS)));
+    const emptyCount = Math.max(0, TOTAL_BLOCKS - filledCount);
+
+    if (asciiBar) {
+      const filledStr = '█'.repeat(filledCount);
+      const emptyStr = '░'.repeat(emptyCount);
+      asciiBar.innerHTML = `<span class="bar-fill">${filledStr}</span><span class="bar-empty">${emptyStr}</span>`;
+    }
+
+    if (timerDisplay) {
+      timerDisplay.textContent = remainingSec < 10 ? '0' + remainingSec : String(remainingSec);
+    }
+
+    if (statusLog && message) {
+      statusLog.textContent = message;
+    }
+  }
+
+  function getDynamicLog(elapsed, totalEst, isWaitingApi) {
+    const ratio = elapsed / totalEst;
+    if (isWaitingApi) {
+      if (elapsed > 70) return 'Configurando daemons e serviços avançados...';
+      if (elapsed > 45) return 'Compilando camadas e provisionando container...';
+      return 'Finalizando verificações de rede e portas ativas...';
+    }
+    if (ratio < 0.20) return 'Inicializando ambiente isolado...';
+    if (ratio < 0.45) return 'Provisionando container e alocando rede 10.10.15.x...';
+    if (ratio < 0.70) return 'Iniciando daemons e serviços do alvo...';
+    if (ratio < 0.90) return 'Verificando integridade e portas ativas...';
+    return 'Finalizando inicialização do laboratório...';
+  }
+
+  function open(options) {
+    if (!modal) return;
+
+    if (countdownTimer) {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
+    }
+
+    const challengeName = options.challengeName || options.challengeId || 'LAB RUNNER';
+    if (targetNameEl) targetNameEl.textContent = challengeName.toUpperCase();
+
+    // Reset stages & state
+    stageStarting.style.display = 'block';
+    stageOnline.style.display = 'none';
+    stageError.style.display = 'none';
+
+    timerDisplay.classList.remove('ready-glow');
+    timerSubtext.classList.remove('ready-label');
+    timerSubtext.textContent = 'segundos restantes';
+    kickerTitle.textContent = 'INICIALIZANDO MÁQUINA';
+    kickerTitle.className = 'countdown-kicker';
+
+    // Estimativa inteligente adaptada por máquina
+    let initialEstimate = parseInt(options.bootEstimate || options.estimatedSeconds, 10);
+    if (!initialEstimate || isNaN(initialEstimate) || initialEstimate <= 0) {
+      const cid = (options.challengeId || '').toLowerCase();
+      if (cid.includes('datacenter') || cid.includes('community') || options.isCommunity) {
+        initialEstimate = 45;
+      } else {
+        initialEstimate = 8;
+      }
+    }
+
+    let targetSeconds = initialEstimate;
+    const startTimestamp = Date.now();
+    let isApiDone = false;
+    let resultData = null;
+
+    // Estado inicial sincronizado em 0%
+    updateDisplay(0, targetSeconds, getDynamicLog(0, targetSeconds, false));
+
+    // Exibe modal
+    modal.style.display = 'flex';
+    requestAnimationFrame(() => {
+      modal.classList.add('is-active');
+    });
+
+    // Monitora a resolução da API
+    if (options.promise) {
+      options.promise
+        .then(data => {
+          resultData = data;
+          isApiDone = true;
+          // Aceleração imediata para 100% quando a API responder pronta
+          accelerateToReady(resultData);
+        })
+        .catch(err => {
+          if (countdownTimer) clearInterval(countdownTimer);
+          showError(err.message || 'Falha na inicialização');
+        });
+    }
+
+    // Engine de contagem adaptativa sincronizada em lockstep
+    countdownTimer = setInterval(() => {
+      if (isApiDone) return;
+
+      const elapsedSec = (Date.now() - startTimestamp) / 1000;
+
+      // Se a máquina demorar mais que o estimado inicial (ex: compilação Docker fria),
+      // adapta a duração suavemente sem congelar o contador
+      if (elapsedSec >= targetSeconds - 1.5 && !isApiDone) {
+        targetSeconds = Math.max(targetSeconds + 8, Math.ceil(elapsedSec + 8));
+      }
+
+      const ratio = Math.min(0.96, elapsedSec / targetSeconds);
+      const remainingSec = Math.max(1, Math.ceil(targetSeconds - elapsedSec));
+
+      updateDisplay(ratio, remainingSec, getDynamicLog(elapsedSec, targetSeconds, elapsedSec >= initialEstimate));
+    }, 250);
+  }
+
+  function accelerateToReady(data) {
+    if (countdownTimer) {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
+    }
+
+    // Animação rápida de conclusão em 350ms
+    let curSec = parseInt(timerDisplay.textContent, 10) || 1;
+    const finishStep = () => {
+      curSec = Math.max(0, curSec - Math.ceil(curSec / 2));
+      if (curSec > 0) {
+        updateDisplay(0.98, curSec, 'Conexão estabelecida com o alvo...');
+        setTimeout(finishStep, 70);
+      } else {
+        triggerReadyTransition(data);
+      }
+    };
+    finishStep();
+  }
+
+  function triggerReadyTransition(data) {
+    timerDisplay.textContent = '00';
+    timerDisplay.classList.add('ready-glow');
+    timerSubtext.textContent = 'SISTEMA ONLINE';
+    timerSubtext.classList.add('ready-label');
+    if (asciiBar) {
+      asciiBar.innerHTML = `<span class="bar-fill">${'█'.repeat(TOTAL_BLOCKS)}</span>`;
+    }
+    statusLog.textContent = 'Todos os serviços respondendo com sucesso';
+
+    setTimeout(() => {
+      stageStarting.style.display = 'none';
+      stageOnline.style.display = 'block';
+
+      currentEndpoint = (data && data.endpoint) ? data.endpoint : 'http://10.10.15.11:80';
+      const hostPort = currentEndpoint.replace(/^https?:\/\//, '').split('/')[0];
+      if (hostPort.includes(':')) {
+        const parts = hostPort.split(':');
+        currentIp = parts[0];
+        currentPort = parts[1] || '80';
+      } else {
+        currentIp = hostPort;
+        currentPort = '80';
+      }
+
+      if (onlineIp) onlineIp.textContent = currentIp;
+      if (onlinePort) onlinePort.textContent = currentPort;
+      if (onlineUrl) onlineUrl.textContent = currentEndpoint;
+      if (linkOpenMachine) linkOpenMachine.href = currentEndpoint;
+    }, 600);
+  }
+
+  function showError(msg) {
+    stageStarting.style.display = 'none';
+    stageOnline.style.display = 'none';
+    stageError.style.display = 'block';
+    if (errorMsg) errorMsg.textContent = msg;
+  }
+
+  function close() {
+    if (!modal) return;
+    if (countdownTimer) {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
+    }
+    modal.classList.remove('is-active');
+    setTimeout(() => {
+      modal.style.display = 'none';
+    }, 250);
+  }
+
+  function initEvents() {
+    document.querySelectorAll('.js-countdown-close').forEach(b => {
+      b.addEventListener('click', close);
+    });
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) close();
+      });
+    }
+
+    if (btnCopyIp) {
+      btnCopyIp.addEventListener('click', () => {
+        if (currentIp && navigator.clipboard) {
+          navigator.clipboard.writeText(currentIp).then(() => {
+            const original = btnCopyIp.textContent;
+            btnCopyIp.textContent = '[ IP COPIADO! ]';
+            btnCopyIp.style.borderColor = '#16a34a';
+            btnCopyIp.style.color = '#16a34a';
+            setTimeout(() => {
+              btnCopyIp.textContent = original;
+              btnCopyIp.style.borderColor = '';
+              btnCopyIp.style.color = '';
+            }, 1800);
+          });
+        }
+      });
+    }
+
+    if (btnCopyUrl) {
+      btnCopyUrl.addEventListener('click', () => {
+        if (currentEndpoint && navigator.clipboard) {
+          navigator.clipboard.writeText(currentEndpoint).then(() => {
+            const original = btnCopyUrl.textContent;
+            btnCopyUrl.textContent = '[ URL COPIADA! ]';
+            btnCopyUrl.style.borderColor = '#16a34a';
+            btnCopyUrl.style.color = '#16a34a';
+            setTimeout(() => {
+              btnCopyUrl.textContent = original;
+              btnCopyUrl.style.borderColor = '';
+              btnCopyUrl.style.color = '';
+            }, 1800);
+          });
+        }
+      });
+    }
+
+    if (btnCopyRaw) {
+      btnCopyRaw.addEventListener('click', () => {
+        const textToCopy = currentIp ? `MACHINE ONLINE\nIP: ${currentIp}\nPORT: ${currentPort}\nURL: ${currentEndpoint}` : `MACHINE STARTING`;
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(textToCopy);
+        }
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initEvents);
+  } else {
+    initEvents();
+  }
+
+  return {
+    start: open,
+    close: close
+  };
+})();
+</script>

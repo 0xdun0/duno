@@ -1,9 +1,6 @@
-# Catálogo oficial de Desafios CTF do DUNO
-# Validado via python -m modules.challenges.validate_registry
-
 - id: alpha-sqli-basics
   source: eversec
-  source_path: challenges/alpha-sqli-basics
+  source_path: challenges/alpha
   category: Injeção SQL
   os: linux
   name: Alpha
@@ -85,7 +82,7 @@
   metadata_version: 1
 - id: charlie-cookie-tampering
   source: eversec
-  source_path: challenges/charlie-cookie-tampering
+  source_path: challenges/charlie
   category: Sessão Web
   os: linux
   name: Charlie
@@ -121,9 +118,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: cheerio
   source: eversec
-  source_path: challenges/cheerio
+  source_path: challenges/delta
   category: SSRF & Cloud
   os: linux
   name: Delta
@@ -160,9 +158,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: coffee
   source: eversec
-  source_path: challenges/coffee
+  source_path: challenges/echo
   category: Inclusão de Arquivos
   os: linux
   name: Echo
@@ -200,9 +199,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: delta-idor-document-vault
   source: eversec
-  source_path: challenges/delta-idor-document-vault
+  source_path: challenges/foxtrot
   category: Controle de Acesso
   os: linux
   name: Foxtrot
@@ -243,9 +243,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: echo-rate-limit-bypass
   source: eversec
-  source_path: challenges/echo-rate-limit-bypass
+  source_path: challenges/ghost
   category: Quebra de Força Bruta
   os: linux
   name: Ghost
@@ -283,9 +284,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: foxtrot-xss-support-tickets
   source: eversec
-  source_path: challenges/foxtrot-xss-support-tickets
+  source_path: challenges/hunter
   category: Cross-Site Scripting
   os: linux
   name: Hunter
@@ -323,9 +325,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: golf-static-analysis-config
   source: eversec
-  source_path: challenges/golf-static-analysis-config
+  source_path: challenges/inferno
   category: Reconhecimento
   os: linux
   name: Inferno
@@ -361,9 +364,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: hotel-junior-dev-challenge
   source: eversec
-  source_path: challenges/hotel-junior-dev-challenge
+  source_path: challenges/joker
   category: Scripting
   os: linux
   name: Joker
@@ -403,9 +407,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: india-nosql-injection
   source: eversec
-  source_path: challenges/india-nosql-injection
+  source_path: challenges/knight
   category: NoSQL Injection
   os: linux
   name: Knight
@@ -440,9 +445,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: juliet-xxe-injection
   source: eversec
-  source_path: challenges/juliet-xxe-injection
+  source_path: challenges/lynx
   category: Injeção XML
   os: linux
   name: Lynx
@@ -480,9 +486,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: kilo-ssti-template-generator
   source: eversec
-  source_path: challenges/kilo-ssti-template-generator
+  source_path: challenges/mantis
   category: Template Injection
   os: linux
   name: Mantis
@@ -519,9 +526,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: lima-deserialization-session
   source: eversec
-  source_path: challenges/lima-deserialization-session
+  source_path: challenges/nexus
   category: Desserialização
   os: linux
   name: Nexus
@@ -559,9 +567,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: mike-ssrf-to-rce
   source: eversec
-  source_path: challenges/mike-ssrf-to-rce
+  source_path: challenges/oracle
   category: SSRF & RCE
   os: linux
   name: Oracle
@@ -599,9 +608,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: november-drupalgeddon
   source: eversec
-  source_path: challenges/november-drupalgeddon
+  source_path: challenges/phantom
   category: Exploração de CVE
   os: linux
   name: Phantom
@@ -637,9 +647,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: oscar-race-conditions
   source: eversec
-  source_path: challenges/oscar-race-conditions
+  source_path: challenges/raven
   category: Condição de Corrida
   os: linux
   name: Raven
@@ -676,9 +687,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: papa-graphql-injection
   source: eversec
-  source_path: challenges/papa-graphql-injection
+  source_path: challenges/shadow
   category: GraphQL Injection
   os: linux
   name: Shadow
@@ -712,9 +724,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: quebec-enumeration
   source: eversec
-  source_path: challenges/quebec-enumeration
+  source_path: challenges/specter
   category: Enumeração Web
   os: linux
   name: Specter
@@ -751,9 +764,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: romeo-dfir-memdump
   source: eversec
-  source_path: challenges/romeo-dfir-memdump
+  source_path: challenges/titan
   category: Forense Digital
   os: linux
   name: Titan
@@ -790,9 +804,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: sierra-filing-cabinet
   source: eversec
-  source_path: challenges/sierra-filing-cabinet
+  source_path: challenges/vector
   category: Criptografia
   os: linux
   name: Vector
@@ -830,9 +845,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: tango-calculator
   source: eversec
-  source_path: challenges/tango-calculator
+  source_path: challenges/viper
   category: Segurança de IA & LLM
   os: linux
   name: Viper
@@ -871,9 +887,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: xray-craftcms-rce
   source: eversec
-  source_path: challenges/xray-craftcms-rce
+  source_path: challenges/wraith
   category: Exploração de CVE
   os: linux
   name: Wraith
@@ -912,9 +929,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: yankee-log4shell
   source: eversec
-  source_path: challenges/yankee-log4shell
+  source_path: challenges/zero
   category: Exploração de CVE
   os: linux
   name: Zero
@@ -953,9 +971,10 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true
 - id: zulu-koa-devtools
   source: eversec
-  source_path: challenges/zulu-koa-devtools
+  source_path: challenges/zenith
   category: DevTools & Node Exploitation
   os: linux
   name: Zenith
@@ -993,3 +1012,4 @@
   status: available
   requires_api_key: false
   metadata_version: 1
+  has_walkthrough: true

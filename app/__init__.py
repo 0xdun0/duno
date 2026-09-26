@@ -1,7 +1,8 @@
 import os
 from datetime import datetime
 from collections import Counter
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session, abort, current_app
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session, abort, current_app, send_from_directory
+from flask_babel import Babel
 from config import Config
 from core.database import init_db, get_db
 from core.auth import login_user, logout_user, current_user
@@ -15,8 +16,8 @@ from core.docs_manager import (
     get_doc_metadata,
     get_doc_content,
     search_docs,
-    WHATS_NEW_TIMELINE,
-    SEARCH_SUGGESTIONS
+    get_whats_new,
+    get_search_suggestions
 )
 
 
@@ -27,6 +28,16 @@ def create_app():
 
     # Inicializa DB teardown
     init_db(app)
+
+    # Inicializa Babel
+    def get_locale():
+        return request.cookies.get('duno_lang', 'pt')
+    babel = Babel(app, locale_selector=get_locale)
+
+    # ── Favicon ───────────────────────────────────────────────────────────────
+    @app.route("/favicon.ico")
+    def favicon():
+        return send_from_directory(app.static_folder or "static", "favicon.ico", mimetype="image/vnd.microsoft.icon")
 
     # ── Rotas globais ──────────────────────────────────────────────────────────
 
@@ -72,8 +83,8 @@ def create_app():
         return render_template(
             "pages/docs_hub.html",
             categories=categories,
-            whats_new=WHATS_NEW_TIMELINE,
-            search_suggestions=SEARCH_SUGGESTIONS
+            whats_new=get_whats_new(),
+            search_suggestions=get_search_suggestions()
         )
 
     @app.route("/docs/<slug>")
@@ -203,10 +214,14 @@ def create_app():
         user_submissions = []
         try:
             user_submissions = db.execute(
-                """SELECT s.id, s.title, s.slug, s.difficulty, s.status, s.visibility, s.created_at,
+                """SELECT s.id, s.name as title, s.name, s.slug, s.status, s.created_at, s.updated_at,
+                          COALESCE(m.author_difficulty, 'Medium') as difficulty,
                           (SELECT version_str FROM machine_versions WHERE submission_id = s.id ORDER BY id DESC LIMIT 1) as latest_version
                    FROM machine_submissions s
-                   WHERE s.author_id = ?
+                   LEFT JOIN machine_metadata m ON m.submission_id = s.id AND m.version_id = (
+                       SELECT id FROM machine_versions v WHERE v.submission_id = s.id ORDER BY v.id DESC LIMIT 1
+                   )
+                   WHERE s.user_id = ?
                    ORDER BY s.updated_at DESC""",
                 (user["id"],)
             ).fetchall()
@@ -215,9 +230,9 @@ def create_app():
 
         user_machine_stats = {
             "total": len(user_submissions),
-            "published": sum(1 for s in user_submissions if s["status"] == "published"),
-            "in_review": sum(1 for s in user_submissions if s["status"] in ("in_review", "submitted", "scanning")),
-            "draft": sum(1 for s in user_submissions if s["status"] == "draft"),
+            "published": sum(1 for s in user_submissions if s["status"].upper() == "PUBLISHED"),
+            "in_review": sum(1 for s in user_submissions if s["status"].upper() in ("SUBMITTED", "TRIAGE", "BUILDING", "SECURITY_REVIEW", "FUNCTIONAL_TEST", "CONTENT_REVIEW")),
+            "draft": sum(1 for s in user_submissions if s["status"].upper() in ("DRAFT", "CHANGES_REQUESTED")),
         }
 
         # Moderação e auditoria de máquinas para administradores
@@ -227,15 +242,19 @@ def create_app():
         if user and user.get("role") == "admin":
             try:
                 admin_pending_submissions = db.execute(
-                    """SELECT s.id, s.title, s.slug, s.difficulty, s.status, s.created_at, u.username as author_username,
+                    """SELECT s.id, s.name as title, s.name, s.slug, s.status, s.created_at, u.username as author_username,
+                              COALESCE(m.author_difficulty, 'Medium') as difficulty,
                               (SELECT version_str FROM machine_versions WHERE submission_id = s.id ORDER BY id DESC LIMIT 1) as latest_version
                        FROM machine_submissions s
-                       JOIN users u ON u.id = s.author_id
-                       WHERE s.status IN ('submitted', 'in_review', 'scanning')
+                       JOIN users u ON u.id = s.user_id
+                       LEFT JOIN machine_metadata m ON m.submission_id = s.id AND m.version_id = (
+                           SELECT id FROM machine_versions v WHERE v.submission_id = s.id ORDER BY v.id DESC LIMIT 1
+                       )
+                       WHERE s.status IN ('SUBMITTED', 'TRIAGE', 'BUILDING', 'SECURITY_REVIEW', 'FUNCTIONAL_TEST', 'CONTENT_REVIEW')
                        ORDER BY s.created_at ASC LIMIT 6"""
                 ).fetchall()
                 row_cnt = db.execute(
-                    "SELECT COUNT(*) FROM machine_submissions WHERE status IN ('submitted', 'in_review', 'scanning')"
+                    "SELECT COUNT(*) FROM machine_submissions WHERE status IN ('SUBMITTED', 'TRIAGE', 'BUILDING', 'SECURITY_REVIEW', 'FUNCTIONAL_TEST', 'CONTENT_REVIEW')"
                 ).fetchone()
                 admin_pending_count = row_cnt[0] if row_cnt else 0
 
@@ -282,6 +301,60 @@ def create_app():
             error = "Credenciais inválidas."
         return render_template("login.html", error=error)
 
+    @app.route("/register", methods=["GET", "POST"])
+    def register():
+        if current_user():
+            return redirect(url_for("index"))
+
+        if request.method == "POST":
+            username = request.form.get("username", "")
+            password = request.form.get("password", "")
+            password_confirm = request.form.get("password_confirm", "")
+            email = request.form.get("email", "")
+            display_name = request.form.get("display_name", "")
+            avatar = request.form.get("avatar", "robot")
+            country = request.form.get("country", "BR")
+            experience_level = request.form.get("experience_level", "iniciante")
+            interests = request.form.getlist("interests")
+            profile_public = 1 if request.form.get("profile_public", "1") == "1" else 0
+
+            # Validações básicas
+            if password != password_confirm:
+                if request.headers.get("X-Requested-With") == "XMLHttpRequest" or request.is_json:
+                    return jsonify({"success": False, "error": "As senhas não coincidem."}), 400
+                return render_template("register.html", error="As senhas não coincidem.")
+
+            try:
+                from core.auth import register_user
+                user = register_user(
+                    username=username,
+                    password=password,
+                    email=email,
+                    display_name=display_name,
+                    avatar=avatar,
+                    country=country,
+                    experience_level=experience_level,
+                    interests=interests,
+                    profile_public=profile_public
+                )
+                # Login automático pós-registro
+                login_user(username, password)
+
+                if request.headers.get("X-Requested-With") == "XMLHttpRequest" or request.is_json:
+                    return jsonify({"success": True, "redirect": url_for("index")})
+                return redirect(url_for("index"))
+
+            except ValueError as e:
+                if request.headers.get("X-Requested-With") == "XMLHttpRequest" or request.is_json:
+                    return jsonify({"success": False, "error": str(e)}), 400
+                return render_template("register.html", error=str(e))
+            except Exception as e:
+                if request.headers.get("X-Requested-With") == "XMLHttpRequest" or request.is_json:
+                    return jsonify({"success": False, "error": "Erro ao criar usuário."}), 500
+                return render_template("register.html", error="Erro interno ao criar usuário.")
+
+        return render_template("register.html")
+
     @app.route("/logout")
     def logout():
         logout_user()
@@ -315,6 +388,85 @@ def create_app():
         ref = request.referrer or url_for("index")
         return redirect(ref)
 
+    # ── APIs de Notificação da Plataforma ───────────────────────────────────────
+    @app.route("/api/notifications", methods=["GET"])
+    @login_required
+    def api_get_notifications():
+        user = current_user()
+        if not user:
+            return jsonify({"notifications": [], "unread_count": 0})
+        try:
+            from core.database import get_db
+            db = get_db()
+            role = user.get("role", "user")
+            user_id = user["id"]
+
+            rows = db.execute("""
+                SELECT n.id, n.type, n.title, n.message, n.link, n.target_id, n.created_at,
+                       CASE WHEN r.read_at IS NOT NULL THEN 1 ELSE 0 END as is_read
+                FROM platform_notifications n
+                LEFT JOIN user_notification_reads r ON r.notification_id = n.id AND r.user_id = ?
+                WHERE (n.target_role IS NULL OR n.target_role = ? OR (? = 'admin'))
+                  AND (n.target_user_id IS NULL OR n.target_user_id = ?)
+                ORDER BY n.id DESC LIMIT 15
+            """, (user_id, role, role, user_id)).fetchall()
+
+            unread_row = db.execute("""
+                SELECT COUNT(*) as cnt FROM platform_notifications n
+                WHERE (n.target_role IS NULL OR n.target_role = ? OR (? = 'admin'))
+                  AND (n.target_user_id IS NULL OR n.target_user_id = ?)
+                  AND n.id NOT IN (
+                      SELECT notification_id FROM user_notification_reads WHERE user_id = ?
+                  )
+            """, (role, role, user_id, user_id)).fetchone()
+
+            notifs = [dict(r) for r in rows]
+            unread_cnt = int(unread_row["cnt"]) if unread_row else 0
+            return jsonify({"notifications": notifs, "unread_count": unread_cnt})
+        except Exception as e:
+            return jsonify({"notifications": [], "unread_count": 0, "error": str(e)})
+
+    @app.route("/api/notifications/mark-read", methods=["POST"])
+    @login_required
+    def api_mark_notifications_read():
+        user = current_user()
+        if not user:
+            return jsonify({"error": "Unauthorized"}), 401
+        try:
+            from core.database import get_db
+            db = get_db()
+            user_id = user["id"]
+            role = user.get("role", "user")
+            req_data = request.get_json(silent=True) or {}
+            notif_id = req_data.get("notification_id")
+
+            if notif_id:
+                db.execute(
+                    "INSERT OR IGNORE INTO user_notification_reads (user_id, notification_id) VALUES (?, ?)",
+                    (user_id, int(notif_id))
+                )
+                db.commit()
+                return jsonify({"success": True, "marked": 1})
+
+            unreads = db.execute("""
+                SELECT n.id FROM platform_notifications n
+                WHERE (n.target_role IS NULL OR n.target_role = ? OR (? = 'admin'))
+                  AND (n.target_user_id IS NULL OR n.target_user_id = ?)
+                  AND n.id NOT IN (
+                      SELECT notification_id FROM user_notification_reads WHERE user_id = ?
+                  )
+            """, (role, role, user_id, user_id)).fetchall()
+
+            for u in unreads:
+                db.execute(
+                    "INSERT OR IGNORE INTO user_notification_reads (user_id, notification_id) VALUES (?, ?)",
+                    (user_id, u["id"])
+                )
+            db.commit()
+            return jsonify({"success": True, "marked": len(unreads)})
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
     # Context processor — injeta current_user e get_level em todos os templates
     @app.context_processor
     def inject_globals():
@@ -324,7 +476,33 @@ def create_app():
                 return get_level(user["id"], module)
             return "low"
         challenges_enabled = os.environ.get("CHALLENGES_ENABLED", "true").strip().lower() in ("true", "1", "yes", "on")
-        return dict(current_user=user, module_level=module_level, challenges_enabled=challenges_enabled)
+
+        unread_notifications_count = 0
+        if user:
+            try:
+                from core.database import get_db
+                db = get_db()
+                role = user.get("role", "user")
+                user_id = user["id"]
+                cnt_row = db.execute("""
+                    SELECT COUNT(*) as cnt FROM platform_notifications n
+                    WHERE (n.target_role IS NULL OR n.target_role = ? OR (? = 'admin'))
+                      AND (n.target_user_id IS NULL OR n.target_user_id = ?)
+                      AND n.id NOT IN (
+                          SELECT notification_id FROM user_notification_reads WHERE user_id = ?
+                      )
+                """, (role, role, user_id, user_id)).fetchone()
+                if cnt_row:
+                    unread_notifications_count = int(cnt_row["cnt"])
+            except Exception:
+                pass
+
+        return dict(
+            current_user=user,
+            module_level=module_level,
+            challenges_enabled=challenges_enabled,
+            unread_notifications_count=unread_notifications_count
+        )
 
     # Error handlers
     @app.errorhandler(400)

@@ -4,6 +4,28 @@ Acompanhe as principais atualizações de arquitetura, novos subsistemas e melho
 
 ---
 
+## 26 de Setembro de 2026
+
+### [i18n & Localização Global] Suporte Multi-Idioma Nativo (PT-BR, EN, ES)
+* **Arquitetura Flask-Babel:** Pipeline completo de internacionalização com detecção de locale e persistência via cookie `duno_lang`.
+* **Tradução Integral da Interface:** Cobertura de 100% dos templates Jinja2 (Base, Home, Autenticação, Perfil, OWASP Labs, CTF Challenges, Academy Hub, Walkthroughs, Machine Submissions e Admin).
+* **Hubs Desacoplados em YAML:** Localização em arquivos independentes para a Documentação (`docs_*.yaml`), Academy Hub (`academy_*.yaml`) e Catálogo de Desafios (`challenges_*.yaml`).
+* **Tradução Completa do DUNO Kids:** Suporte multilíngue nos 5 módulos curriculares, 21 lições, missões diárias, placar de líderes e interações pedagógicas com o Tux.
+* **Automação de Catálogos:** Script de tradução em lote com sanitização de tags `fuzzy` e compilação instantânea dos arquivos binários `.mo`.
+
+### [CTF Challenges Engine] Padronização Fonética e Hash de Flags
+* **Nomenclatura Fonética:** Padronização dos diretórios de máquinas ofensivas (`challenges/alpha`, `bravo`, `charlie`... `zero`).
+* **Unificação de Flags:** Formatação uniforme no padrão `DUNO{<hash>}` com validação centralizada via `flag_service.py`.
+* **Walkthroughs & Soluções:** Documentação passo a passo de exploração catalogada para todas as máquinas do ambiente.
+
+### [UI/UX & Estabilidade de Plataforma]
+* **Correção no Academy Hub:** Resolução de exceção HTTP 500 provocada por escapes incorretos de literais JavaScript em templates Jinja2.
+* **Componente de Countdown:** Novo componente de contagem regressiva centralizada para telemetria de laboratórios (`countdown_central.html`).
+* **Identidade Visual Refinada:** Novos assets vetoriais oficiais (`duno-logo.svg`, `duno-mark.svg`, `favicon.svg`).
+* **Qualidade de Software:** Bateria completa de testes automatizados com pytest para os subsistemas Kids e Machine Submissions.
+
+---
+
 ## 19 de Setembro de 2026
 
 ### [Machine Submissions] Pipeline de Submissão e Auditoria de Máquinas

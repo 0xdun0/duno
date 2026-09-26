@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#14 JavaScript Attacks</span>
+    <span>{{ _('#14 JavaScript Attacks') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">JavaScript Attacks</h1>
-      <p class="module-desc">Manipulação de valores client-side</p>
+      <h1 class="module-title">{{ _('JavaScript Attacks') }}</h1>
+      <p class="module-desc">{{ _('Manipulação de valores client-side') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('js_attacks', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,21 +34,21 @@
       </p>
       <form method="POST" action="/js_attacks" id="js-form">
         <div class="form-group">
-          <label for="product">Produto</label>
+          <label for="product">{{ _('Produto') }}</label>
           <select id="product" name="product_id" class="form-control">
-            <option value="1">Produto A — R$ 99,90</option>
-            <option value="2">Produto B — R$ 199,90</option>
-            <option value="3">Produto C — R$ 49,90</option>
+            <option value="1">{{ _('Produto A — R$ 99,90') }}</option>
+            <option value="2">{{ _('Produto B — R$ 199,90') }}</option>
+            <option value="3">{{ _('Produto C — R$ 49,90') }}</option>
           </select>
         </div>
         {% if level != 'impossible' %}
         <div class="form-group">
-          <label for="price">Preço (client-side)</label>
-          <input type="number" id="price" name="price" class="form-control"
+          <label for="price">{{ _('Preço (client-side)') }}</label>
+          <input type="number" id="price" name="price" class="form-control" 
                  placeholder="99.90" step="0.01" min="0" />
         </div>
         {% endif %}
-        <button type="submit" class="btn btn-primary">Comprar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Comprar') }}</button>
       </form>
       {% if result %}
       <div class="result-box {% if 'realizada' in result %}success{% else %}error{% endif %}">{{ result }}</div>
@@ -56,7 +56,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Preço enviado pelo cliente sem validação — altere para 0.01 no formulário{% endif %}
         {% if level == 'medium' %}Valida server-side mas aceita float — experimente valores edge case{% endif %}

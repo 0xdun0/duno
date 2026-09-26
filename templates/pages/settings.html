@@ -12,14 +12,14 @@
   <div class="settings-container cc-container">
 
     <!-- Top Breadcrumb / Kicker -->
-    <div class="settings-kicker-brand">DUNO // COMMAND CENTER</div>
+    <div class="settings-kicker-brand">{{ _('DUNO // COMMAND CENTER') }}</div>
 
     <!-- Hero Header -->
     <header class="settings-hero cc-hero">
       <div class="cc-hero-main">
-        <h1 class="settings-title cc-title">COMMAND CENTER</h1>
+        <h1 class="settings-title cc-title">{{ _('COMMAND CENTER') }}</h1>
         <p class="settings-subtitle cc-subtitle">
-          Centro integrado de operações: controle de máquinas da comunidade, parâmetros de segurança, governança e telemetria.
+          {{ _('Centro integrado de operações: controle de máquinas da comunidade, parâmetros de segurança, governança e telemetria.') }}
         </p>
       </div>
 
@@ -27,20 +27,20 @@
       <div class="cc-hud-chips">
         <div class="cc-hud-chip">
           <span class="cc-hud-dot status-pulse-dot"></span>
-          <span class="cc-hud-label">AMBIENTE</span>
-          <span class="cc-hud-val">ONLINE</span>
+          <span class="cc-hud-label">{{ _('AMBIENTE') }}</span>
+          <span class="cc-hud-val">{{ _('ONLINE') }}</span>
         </div>
         <div class="cc-hud-chip">
-          <span class="cc-hud-label">BASELINE</span>
+          <span class="cc-hud-label">{{ _('BASELINE') }}</span>
           <span class="cc-hud-val font-mono" id="hud-level-val">{{ current_default_level|upper if current_default_level is defined else 'LOW' }}</span>
         </div>
         <div class="cc-hud-chip">
-          <span class="cc-hud-label">SUAS MÁQUINAS</span>
+          <span class="cc-hud-label">{{ _('SUAS MÁQUINAS') }}</span>
           <span class="cc-hud-val font-mono">{{ stats.total }}</span>
         </div>
         {% if user and user.role == 'admin' %}
         <div class="cc-hud-chip cc-hud-chip-admin">
-          <span class="cc-hud-label">FILA DE REVISÃO</span>
+          <span class="cc-hud-label">{{ _('FILA DE REVISÃO') }}</span>
           <span class="cc-hud-val font-mono {% if pend_count > 0 %}text-warn{% endif %}">
             {{ pend_count }} PENDENTE{{ 'S' if pend_count != 1 else '' }}
           </span>
@@ -53,11 +53,11 @@
     <nav class="cc-tabs-bar" role="tablist" aria-label="Command Center Tabs">
       <button type="button" class="cc-tab-btn active" data-tab="overview" onclick="switchCCTab('overview')" id="tab-btn-overview">
         <i class="nf nf-fa-bolt cc-tab-icon" aria-hidden="true"></i>
-        <span class="cc-tab-label">Visão Geral</span>
+        <span class="cc-tab-label">{{ _('Visão Geral') }}</span>
       </button>
       <button type="button" class="cc-tab-btn" data-tab="machines" onclick="switchCCTab('machines')" id="tab-btn-machines">
         <i class="nf nf-md-rocket_launch cc-tab-icon" aria-hidden="true"></i>
-        <span class="cc-tab-label">Máquinas &amp; Contribuições</span>
+        <span class="cc-tab-label">{{ _('Máquinas &amp; Contribuições') }}</span>
         {% if stats.total > 0 %}
         <span class="cc-tab-badge">{{ stats.total }}</span>
         {% endif %}
@@ -65,7 +65,7 @@
       {% if user and user.role == 'admin' %}
       <button type="button" class="cc-tab-btn" data-tab="moderation" onclick="switchCCTab('moderation')" id="tab-btn-moderation">
         <i class="nf nf-md-shield_check cc-tab-icon" aria-hidden="true"></i>
-        <span class="cc-tab-label">Moderação &amp; Auditoria</span>
+        <span class="cc-tab-label">{{ _('Moderação &amp; Auditoria') }}</span>
         {% if pend_count > 0 %}
         <span class="cc-tab-badge cc-badge-alert">{{ pend_count }}</span>
         {% endif %}
@@ -73,11 +73,11 @@
       {% endif %}
       <button type="button" class="cc-tab-btn" data-tab="system" onclick="switchCCTab('system')" id="tab-btn-system">
         <i class="nf nf-md-cog cc-tab-icon" aria-hidden="true"></i>
-        <span class="cc-tab-label">Sistema &amp; Segurança</span>
+        <span class="cc-tab-label">{{ _('Sistema &amp; Segurança') }}</span>
       </button>
       <button type="button" class="cc-tab-btn" data-tab="database" onclick="switchCCTab('database')" id="tab-btn-database">
         <i class="nf nf-md-database cc-tab-icon" aria-hidden="true"></i>
-        <span class="cc-tab-label">Dados &amp; Manutenção</span>
+        <span class="cc-tab-label">{{ _('Dados &amp; Manutenção') }}</span>
       </button>
     </nav>
 
@@ -90,13 +90,13 @@
         <div class="cc-action-card">
           <div class="cc-card-top">
             <i class="nf nf-md-rocket_launch cc-card-icon" aria-hidden="true"></i>
-            <span class="cc-card-kicker">MÁQUINAS</span>
+            <span class="cc-card-kicker">{{ _('MÁQUINAS') }}</span>
           </div>
-          <h3 class="cc-card-title">Enviar Nova Máquina</h3>
-          <p class="cc-card-desc">Empacote desafios com Dockerfile, flags e manifest.yml para a comunidade.</p>
+          <h3 class="cc-card-title">{{ _('Enviar Nova Máquina') }}</h3>
+          <p class="cc-card-desc">{{ _('Empacote desafios com Dockerfile, flags e manifest.yml para a comunidade.') }}</p>
           <div class="cc-card-footer">
             <a href="{{ url_for('submissions.submit_page') }}" class="btn-cc-action">
-              <span>+ Enviar Máquina</span>
+              <span>{{ _('+ Enviar Máquina') }}</span>
               <span class="btn-arrow">→</span>
             </a>
           </div>
@@ -105,16 +105,16 @@
         <div class="cc-action-card">
           <div class="cc-card-top">
             <i class="nf nf-md-package_variant cc-card-icon" aria-hidden="true"></i>
-            <span class="cc-card-kicker">CONTRIBUIÇÕES</span>
+            <span class="cc-card-kicker">{{ _('CONTRIBUIÇÕES') }}</span>
           </div>
-          <h3 class="cc-card-title">Minhas Contribuições</h3>
+          <h3 class="cc-card-title">{{ _('Minhas Contribuições') }}</h3>
           <p class="cc-card-desc">
             Você possui <strong>{{ stats.total }}</strong> máquina(s) criada(s) • 
             <strong>{{ stats.published }}</strong> publicada(s).
           </p>
           <div class="cc-card-footer">
             <button type="button" class="btn-cc-action btn-cc-secondary" onclick="switchCCTab('machines')">
-              <span>Ver Minhas Máquinas</span>
+              <span>{{ _('Ver Minhas Máquinas') }}</span>
               <span class="btn-arrow">→</span>
             </button>
           </div>
@@ -124,15 +124,15 @@
         <div class="cc-action-card cc-action-card-admin">
           <div class="cc-card-top">
             <i class="nf nf-md-shield_check cc-card-icon" aria-hidden="true"></i>
-            <span class="cc-card-kicker">ADMINISTRAÇÃO</span>
+            <span class="cc-card-kicker">{{ _('ADMINISTRAÇÃO') }}</span>
           </div>
-          <h3 class="cc-card-title">Fila de Moderação</h3>
+          <h3 class="cc-card-title">{{ _('Fila de Moderação') }}</h3>
           <p class="cc-card-desc">
             <strong>{{ pend_count }}</strong> submissão(ões) aguardando varredura ou revisão manual de segurança.
           </p>
           <div class="cc-card-footer">
             <button type="button" class="btn-cc-action btn-cc-accent" onclick="switchCCTab('moderation')">
-              <span>Acessar Moderação</span>
+              <span>{{ _('Acessar Moderação') }}</span>
               <span class="btn-arrow">→</span>
             </button>
           </div>
@@ -141,15 +141,15 @@
         <div class="cc-action-card">
           <div class="cc-card-top">
             <i class="nf nf-md-cog cc-card-icon" aria-hidden="true"></i>
-            <span class="cc-card-kicker">SEGURANÇA</span>
+            <span class="cc-card-kicker">{{ _('SEGURANÇA') }}</span>
           </div>
-          <h3 class="cc-card-title">Nível do Laboratório</h3>
+          <h3 class="cc-card-title">{{ _('Nível do Laboratório') }}</h3>
           <p class="cc-card-desc">
             Baseline de dificuldade configurada em <strong class="font-mono text-orange">[{{ current_default_level|upper }}]</strong>.
           </p>
           <div class="cc-card-footer">
             <button type="button" class="btn-cc-action btn-cc-secondary" onclick="switchCCTab('system')">
-              <span>Alterar Parâmetros</span>
+              <span>{{ _('Alterar Parâmetros') }}</span>
               <span class="btn-arrow">→</span>
             </button>
           </div>
@@ -162,22 +162,22 @@
       <!-- SECTION: OPERADOR & ESCOPO -->
       <section class="settings-section">
         <div class="settings-section-header">
-          <h2 class="settings-section-title">OPERADOR DO SISTEMA</h2>
+          <h2 class="settings-section-title">{{ _('OPERADOR DO SISTEMA') }}</h2>
         </div>
         <div class="settings-section-content">
           <div class="settings-account-card">
             <div class="settings-account-badge">{{ user.role|upper if user else 'OPERATOR' }}</div>
-            <div class="settings-account-role">Operador de Laboratório Autenticado</div>
+            <div class="settings-account-role">{{ _('Operador de Laboratório Autenticado') }}</div>
             <div class="settings-account-username"><code>{{ user.username if user else 'operator' }}</code></div>
           </div>
 
           <div class="settings-kv-grid">
             <div class="settings-kv-row">
-              <span class="settings-kv-label">Identificador</span>
+              <span class="settings-kv-label">{{ _('Identificador') }}</span>
               <span class="settings-kv-value font-mono">{{ user.username if user else 'operator' }}</span>
             </div>
             <div class="settings-kv-row">
-              <span class="settings-kv-label">Privilégios</span>
+              <span class="settings-kv-label">{{ _('Privilégios') }}</span>
               <span class="settings-kv-value">
                 {% if user and user.role == 'admin' %}
                 Administrador Global • Revisão, Auditoria e Publicação de Máquinas
@@ -187,8 +187,8 @@
               </span>
             </div>
             <div class="settings-kv-row">
-              <span class="settings-kv-label">Escopo de Execução</span>
-              <span class="settings-kv-value">Sandbox Isolado com Docker Engine &amp; Rede Challenge-Net</span>
+              <span class="settings-kv-label">{{ _('Escopo de Execução') }}</span>
+              <span class="settings-kv-value">{{ _('Sandbox Isolado com Docker Engine &amp; Rede Challenge-Net') }}</span>
             </div>
           </div>
         </div>
@@ -199,7 +199,7 @@
       <!-- SECTION: HISTÓRICO DE ATIVIDADES -->
       <section class="settings-section">
         <div class="settings-section-header">
-          <h2 class="settings-section-title">LOG DE ATIVIDADES DO LABORATÓRIO</h2>
+          <h2 class="settings-section-title">{{ _('LOG DE ATIVIDADES DO LABORATÓRIO') }}</h2>
         </div>
         <div class="settings-section-content">
           <div class="settings-activity-list">
@@ -226,14 +226,14 @@
     <div class="cc-tab-pane" id="pane-machines">
       <div class="cc-section-toolbar">
         <div class="cc-toolbar-info">
-          <h2 class="cc-pane-heading">MINHAS MÁQUINAS &amp; DESAFIOS</h2>
+          <h2 class="cc-pane-heading">{{ _('MINHAS MÁQUINAS &amp; DESAFIOS') }}</h2>
           <p class="cc-pane-desc">
-            Crie, teste em sandbox e envie desafios no formato de container para a comunidade do DUNO.
+            {{ _('Crie, teste em sandbox e envie desafios no formato de container para a comunidade do DUNO.') }}
           </p>
         </div>
         <div class="cc-toolbar-actions">
           <a href="{{ url_for('submissions.submit_page') }}" class="btn-primary-action">
-            <span>+ Enviar Nova Máquina</span>
+            <span>{{ _('+ Enviar Nova Máquina') }}</span>
           </a>
         </div>
       </div>
@@ -243,12 +243,12 @@
         <table class="cc-data-table">
           <thead>
             <tr>
-              <th>MÁQUINA / SLUG</th>
-              <th>VERSÃO</th>
-              <th>DIFICULDADE</th>
-              <th>STATUS</th>
-              <th>CRIADA EM</th>
-              <th class="text-right">AÇÕES</th>
+              <th>{{ _('MÁQUINA / SLUG') }}</th>
+              <th>{{ _('VERSÃO') }}</th>
+              <th>{{ _('DIFICULDADE') }}</th>
+              <th>{{ _('STATUS') }}</th>
+              <th>{{ _('CRIADA EM') }}</th>
+              <th class="text-right">{{ _('AÇÕES') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -280,7 +280,7 @@
               </td>
               <td class="text-right">
                 <a href="{{ url_for('submissions.submission_detail', submission_id=sub.id) }}" class="btn-table-action">
-                  <span>Ver Pipeline</span>
+                  <span>{{ _('Ver Pipeline') }}</span>
                   <span class="btn-arrow">→</span>
                 </a>
               </td>
@@ -292,14 +292,14 @@
       {% else %}
       <div class="cc-empty-state">
         <div class="cc-empty-icon"><i class="nf nf-md-package_variant_closed" aria-hidden="true"></i></div>
-        <h3 class="cc-empty-title">Nenhuma máquina submetida ainda</h3>
+        <h3 class="cc-empty-title">{{ _('Nenhuma máquina submetida ainda') }}</h3>
         <p class="cc-empty-text">
           Você ainda não enviou nenhum desafio de máquina para a plataforma.
           Crie um pacote <code>.zip</code> ou <code>.tar.gz</code> contendo seu <code>manifest.yml</code> e <code>Dockerfile</code> e faça o upload para validação automatizada.
         </p>
         <div class="cc-empty-cta">
           <a href="{{ url_for('submissions.submit_page') }}" class="btn-primary-action">
-            <span>Enviar sua Primeira Máquina</span>
+            <span>{{ _('Enviar sua Primeira Máquina') }}</span>
             <span class="btn-arrow">→</span>
           </a>
         </div>
@@ -312,10 +312,10 @@
       <div class="cc-info-box">
         <div class="cc-info-box-header">
           <i class="nf nf-md-information_outline cc-info-icon" aria-hidden="true"></i>
-          <span class="cc-info-title">ESTRUTURA DO PACOTE DE MÁQUINA</span>
+          <span class="cc-info-title">{{ _('ESTRUTURA DO PACOTE DE MÁQUINA') }}</span>
         </div>
         <div class="cc-info-box-body">
-          <p>O pacote enviado passa por 5 etapas automatizadas antes da aprovação:</p>
+          <p>{{ _('O pacote enviado passa por 5 etapas automatizadas antes da aprovação:') }}</p>
           <div class="cc-steps-mini">
             <div class="cc-step-mini"><strong>1. Validação:</strong> Estrutura de arquivos, anti-ZipSlip e schema do <code>manifest.yml</code></div>
             <div class="cc-step-mini"><strong>2. Static Scan:</strong> Verificação de comandos perigosos, volumes sensíveis e binds de portas</div>
@@ -334,17 +334,17 @@
     <div class="cc-tab-pane" id="pane-moderation">
       <div class="cc-section-toolbar">
         <div class="cc-toolbar-info">
-          <h2 class="cc-pane-heading">GOVERNANÇA &amp; REVISÃO DE MÁQUINAS</h2>
+          <h2 class="cc-pane-heading">{{ _('GOVERNANÇA &amp; REVISÃO DE MÁQUINAS') }}</h2>
           <p class="cc-pane-desc">
-            Fila de revisão para aprovação de desafios comunitários, inspeção de builds e logs de auditoria.
+            {{ _('Fila de revisão para aprovação de desafios comunitários, inspeção de builds e logs de auditoria.') }}
           </p>
         </div>
         <div class="cc-toolbar-actions">
           <a href="{{ url_for('submissions_admin.admin_dashboard') }}" class="btn-secondary-action">
-            <span>Painel Completo de Moderação →</span>
+            <span>{{ _('Painel Completo de Moderação →') }}</span>
           </a>
           <a href="{{ url_for('submissions_admin.audit_logs') }}" class="btn-secondary-action">
-            <span>Log Completo de Auditoria →</span>
+            <span>{{ _('Log Completo de Auditoria →') }}</span>
           </a>
         </div>
       </div>
@@ -357,7 +357,7 @@
             {% if pend_count > 0 %}
             <span class="cc-count-pill alert-pill">{{ pend_count }} pendentes</span>
             {% else %}
-            <span class="cc-count-pill success-pill">Zerar</span>
+            <span class="cc-count-pill success-pill">{{ _('Zerar') }}</span>
             {% endif %}
           </h3>
         </div>
@@ -367,12 +367,12 @@
           <table class="cc-data-table">
             <thead>
               <tr>
-                <th>MÁQUINA</th>
-                <th>AUTOR</th>
-                <th>DIFICULDADE</th>
-                <th>STATUS ATUAL</th>
-                <th>DATA</th>
-                <th class="text-right">AÇÕES</th>
+                <th>{{ _('MÁQUINA') }}</th>
+                <th>{{ _('AUTOR') }}</th>
+                <th>{{ _('DIFICULDADE') }}</th>
+                <th>{{ _('STATUS ATUAL') }}</th>
+                <th>{{ _('DATA') }}</th>
+                <th class="text-right">{{ _('AÇÕES') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -399,8 +399,8 @@
                   {{ (sub.created_at|string)[:16] }}
                 </td>
                 <td class="text-right">
-                  <a href="{{ url_for('submissions_admin.review_machine', submission_id=sub.id) }}" class="btn-table-action btn-table-action-accent">
-                    <span>Revisar &amp; Inspecionar →</span>
+                  <a href="{{ url_for('submissions_admin.machine_review_workspace', submission_id=sub.id) }}" class="btn-table-action btn-table-action-accent">
+                    <span>{{ _('Revisar &amp; Inspecionar →') }}</span>
                   </a>
                 </td>
               </tr>
@@ -411,7 +411,7 @@
         {% else %}
         <div class="cc-success-box">
           <i class="nf nf-md-check_circle cc-success-icon" aria-hidden="true"></i>
-          <span>Fila de moderação em dia. Nenhuma submissão aguardando revisão manual no momento.</span>
+          <span>{{ _('Fila de moderação em dia. Nenhuma submissão aguardando revisão manual no momento.') }}</span>
         </div>
         {% endif %}
       </div>
@@ -421,7 +421,7 @@
       <!-- Logs Recentes de Auditoria de Máquinas -->
       <div class="cc-admin-subblock">
         <div class="cc-subblock-header">
-          <h3 class="cc-subblock-title">LOGS RECENTES DE AUDITORIA DE MÁQUINAS</h3>
+          <h3 class="cc-subblock-title">{{ _('LOGS RECENTES DE AUDITORIA DE MÁQUINAS') }}</h3>
         </div>
 
         {% if m_logs %}
@@ -429,12 +429,12 @@
           <table class="cc-data-table table-compact font-mono">
             <thead>
               <tr>
-                <th>DATA/HORA</th>
-                <th>OPERADOR</th>
-                <th>AÇÃO</th>
-                <th>RECURSO</th>
-                <th>STATUS</th>
-                <th>IP</th>
+                <th>{{ _('DATA/HORA') }}</th>
+                <th>{{ _('OPERADOR') }}</th>
+                <th>{{ _('AÇÃO') }}</th>
+                <th>{{ _('RECURSO') }}</th>
+                <th>{{ _('STATUS') }}</th>
+                <th>{{ _('IP') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -456,7 +456,7 @@
           </table>
         </div>
         {% else %}
-        <p class="text-muted font-mono" style="font-size:13px;">Nenhum registro de auditoria gerado ainda.</p>
+        <p class="text-muted font-mono" style="font-size:13px;">{{ _('Nenhum registro de auditoria gerado ainda.') }}</p>
         {% endif %}
       </div>
     </div>
@@ -468,37 +468,37 @@
     <div class="cc-tab-pane" id="pane-system">
       <section class="settings-section">
         <div class="settings-section-header">
-          <h2 class="settings-section-title">PARÂMETROS DO LABORATÓRIO</h2>
+          <h2 class="settings-section-title">{{ _('PARÂMETROS DO LABORATÓRIO') }}</h2>
         </div>
 
         <div class="settings-section-content">
           <div class="settings-kv-grid">
             <div class="settings-kv-row">
-              <span class="settings-kv-label">Ambiente de Execução</span>
-              <span class="settings-kv-value">Local Sandbox Containerized</span>
+              <span class="settings-kv-label">{{ _('Ambiente de Execução') }}</span>
+              <span class="settings-kv-value">{{ _('Local Sandbox Containerized') }}</span>
             </div>
             <div class="settings-kv-row">
-              <span class="settings-kv-label">Estado Operacional</span>
+              <span class="settings-kv-label">{{ _('Estado Operacional') }}</span>
               <span class="settings-kv-value status-running">
                 <span class="status-pulse-dot"></span> Operacional (Online)
               </span>
             </div>
             <div class="settings-kv-row">
-              <span class="settings-kv-label">Motor de Banco de Dados</span>
-              <span class="settings-kv-value">SQLite 3 (WAL Mode &amp; PARSE_DECLTYPES)</span>
+              <span class="settings-kv-label">{{ _('Motor de Banco de Dados') }}</span>
+              <span class="settings-kv-value">{{ _('SQLite 3 (WAL Mode &amp; PARSE_DECLTYPES)') }}</span>
             </div>
             <div class="settings-kv-row">
-              <span class="settings-kv-label">Plataforma</span>
-              <span class="settings-kv-value">DUNO Core v2.4</span>
+              <span class="settings-kv-label">{{ _('Plataforma') }}</span>
+              <span class="settings-kv-value">{{ _('DUNO Core v2.4') }}</span>
             </div>
           </div>
 
           <!-- Preferência Global de Dificuldade -->
           <div class="settings-preference-group" style="margin-top: 2.5rem;">
             <div class="settings-pref-info">
-              <h3 class="settings-pref-title">Nível Padrão Global de Segurança</h3>
+              <h3 class="settings-pref-title">{{ _('Nível Padrão Global de Segurança') }}</h3>
               <p class="settings-pref-desc">
-                Define o nível de proteção baseline para todos os 20 módulos práticos e desafios do laboratório. Alterar este valor sincroniza simultaneamente todos os módulos do operador.
+                {{ _('Define o nível de proteção baseline para todos os 20 módulos práticos e desafios do laboratório. Alterar este valor sincroniza simultaneamente todos os módulos do operador.') }}
               </p>
             </div>
 
@@ -533,25 +533,25 @@
     <div class="cc-tab-pane" id="pane-database">
       <section class="settings-section">
         <div class="settings-section-header">
-          <h2 class="settings-section-title">TELEMETRIA DA BASE DE DADOS</h2>
+          <h2 class="settings-section-title">{{ _('TELEMETRIA DA BASE DE DADOS') }}</h2>
         </div>
 
         <div class="settings-section-content">
           <div class="settings-kv-grid">
             <div class="settings-kv-row">
-              <span class="settings-kv-label">Arquivo de Persistência</span>
+              <span class="settings-kv-label">{{ _('Arquivo de Persistência') }}</span>
               <span class="settings-kv-value font-mono">{{ db_filename }}</span>
             </div>
             <div class="settings-kv-row">
-              <span class="settings-kv-label">Espaço Alocado em Disco</span>
+              <span class="settings-kv-label">{{ _('Espaço Alocado em Disco') }}</span>
               <span class="settings-kv-value font-mono">{{ db_size_formatted }}</span>
             </div>
             <div class="settings-kv-row">
-              <span class="settings-kv-label">Tabelas Ativas no Schema</span>
+              <span class="settings-kv-label">{{ _('Tabelas Ativas no Schema') }}</span>
               <span class="settings-kv-value font-mono">{{ table_count }} tabelas</span>
             </div>
             <div class="settings-kv-row">
-              <span class="settings-kv-label">Último Reset / Seed</span>
+              <span class="settings-kv-label">{{ _('Último Reset / Seed') }}</span>
               <span class="settings-kv-value">{{ last_reset }}</span>
             </div>
           </div>
@@ -563,21 +563,21 @@
       <!-- DANGER ZONE: RESET DATABASE -->
       <section class="settings-section settings-danger-zone" id="section-danger">
         <div class="settings-section-header">
-          <h2 class="settings-section-title danger-title">ZONA DE PERIGO (DANGER ZONE)</h2>
+          <h2 class="settings-section-title danger-title">{{ _('ZONA DE PERIGO (DANGER ZONE)') }}</h2>
         </div>
 
         <div class="settings-section-content">
           <div class="settings-danger-card">
             <div class="settings-danger-info">
-              <h3 class="settings-danger-heading">Redefinir Base de Dados do Laboratório</h3>
+              <h3 class="settings-danger-heading">{{ _('Redefinir Base de Dados do Laboratório') }}</h3>
               <p class="settings-danger-desc">
-                Restaura o banco de dados para os seeds iniciais da instalação. Limpa payloads injetados, sessões de teste e restaura as credenciais padrão do sistema.
+                {{ _('Restaura o banco de dados para os seeds iniciais da instalação. Limpa payloads injetados, sessões de teste e restaura as credenciais padrão do sistema.') }}
               </p>
             </div>
 
             <div class="settings-danger-action">
               <button type="button" class="btn-danger-action" onclick="openResetConfirmModal()">
-                [ Reset Database ]
+                {{ _('[ Reset Database ]') }}
               </button>
             </div>
           </div>

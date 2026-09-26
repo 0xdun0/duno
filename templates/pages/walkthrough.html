@@ -34,10 +34,10 @@
           <div class="wt-card-stat">
             {% if challenge.os == 'linux' %}
               <i class="nf nf-linux-tux" aria-hidden="true"></i>
-              <span>Linux</span>
+              <span>{{ _('Linux') }}</span>
             {% else %}
               <i class="nf nf-md-microsoft_windows_classic" aria-hidden="true"></i>
-              <span>Windows</span>
+              <span>{{ _('Windows') }}</span>
             {% endif %}
           </div>
           <div class="wt-card-stat">
@@ -65,7 +65,7 @@
         {% set clean_endpoint = challenge.endpoint | replace('http://', '') | replace('https://', '') if (challenge.instance_status == 'running' and challenge.endpoint) else '' %}
         <div class="wt-target-bar {% if challenge.instance_status == 'running' and challenge.endpoint %}is-running{% endif %}" id="wt-target-bar">
           <div class="wt-target-bar-left">
-            <i class="nf nf-md-target wt-target-icon {% if challenge.instance_status == 'running' %}active{% endif %}" id="wt-target-icon" aria-hidden="true" title="Alvo ativo"></i>
+            <i class="nf nf-md-target wt-target-icon {% if challenge.instance_status == 'running' %}active{% endif %}" id="wt-target-icon" aria-hidden="true" title="{{ _('Alvo ativo') }}"></i>
             <span class="wt-target-ip-txt" id="wt-machine-ip">{{ clean_endpoint if clean_endpoint else 'Não iniciado' }}</span>
           </div>
           <div class="wt-target-bar-actions" id="wt-target-actions" {% if not (challenge.instance_status == 'running' and challenge.endpoint) %}style="display: none;"{% endif %}>
@@ -73,7 +73,7 @@
                     class="wt-target-btn js-copy-wt-ip" 
                     id="wt-copy-ip-btn"
                     data-ip="{{ clean_endpoint }}" 
-                    title="Copiar IP do alvo">
+                    title="{{ _('Copiar IP do alvo') }}">
               <i class="nf nf-md-content_copy" aria-hidden="true"></i>
             </button>
             <a href="{{ challenge.endpoint or '#' }}" 
@@ -81,7 +81,7 @@
                rel="noopener" 
                class="wt-target-btn wt-target-link" 
                id="wt-open-ip-btn"
-               title="Abrir alvo em nova aba">
+               title="{{ _('Abrir alvo em nova aba') }}">
               <i class="nf nf-md-open_in_new" aria-hidden="true"></i>
             </a>
           </div>
@@ -92,17 +92,17 @@
           <div class="wt-session-header">
             <div class="wt-session-title">
               <i class="nf nf-md-timer_sand" aria-hidden="true"></i>
-              <span>TEMPO RESTANTE</span>
+              <span>{{ _('TEMPO RESTANTE') }}</span>
             </div>
-            <button type="button" class="wt-renew-pill js-renew-btn" id="btn-renew-time" title="Adicionar +1 hora de laboratório">
+            <button type="button" class="wt-renew-pill js-renew-btn" id="btn-renew-time" title="{{ _('Adicionar +1 hora de laboratório') }}">
               <i class="nf nf-md-autorenew" aria-hidden="true"></i>
-              <span>+1 Hora</span>
+              <span>{{ _('+1 Hora') }}</span>
             </button>
           </div>
           <div class="wt-session-body">
             <div class="wt-countdown-box">
               <span class="wt-countdown-digits" id="wt-countdown-digits">01:00:00</span>
-              <span class="wt-session-live-tag">LIVE</span>
+              <span class="wt-session-live-tag">{{ _('LIVE') }}</span>
             </div>
             <div class="wt-session-meter">
               <div class="wt-session-meter-fill" id="wt-session-meter-fill" style="width: 100%;"></div>
@@ -110,7 +110,7 @@
           </div>
           <div class="wt-renew-feedback" id="wt-renew-feedback" style="display: none;">
             <i class="nf nf-md-check_circle" aria-hidden="true"></i>
-            <span>+1 hora adicionada ao laboratório!</span>
+            <span>{{ _('+1 hora adicionada ao laboratório!') }}</span>
           </div>
         </div>
 
@@ -131,26 +131,26 @@
 
         <div class="wt-time-info">
           <i class="nf nf-md-clock_outline" aria-hidden="true"></i>
-          <span>Time to Start</span>
+          <span>{{ _('Time to Start') }}</span>
           <strong>{{ challenge.estimated_minutes }} min</strong>
         </div>
 
         <!-- Academy Promotion in Sidebar -->
         {% if challenge.id == 'bravo' %}
-        <div class="wt-need-help" onclick="window.location.href='/academy/auth_bypass'" style="cursor: pointer;" title="Estudar Autenticação na Academy">
+        <div class="wt-need-help" onclick="window.location.href='/academy/auth_bypass'" style="cursor: pointer;" title="{{ _('Estudar Autenticação na Academy') }}">
           <i class="nf nf-md-school" aria-hidden="true"></i>
           <div>
             <strong>Estude Antes de Atacar</strong>
-            <p>Acesse o módulo de Autenticação na DUNO Academy para dominar a base.</p>
+            <p>{{ _('Acesse o módulo de Autenticação na DUNO Academy para dominar a base.') }}</p>
           </div>
           <span class="wt-help-arrow">→</span>
         </div>
         {% else %}
-        <div class="wt-need-help" onclick="window.location.href='/academy/sqli'" style="cursor: pointer;" title="Estudar SQL Injection na Academy">
+        <div class="wt-need-help" onclick="window.location.href='/academy/sqli'" style="cursor: pointer;" title="{{ _('Estudar SQL Injection na Academy') }}">
           <i class="nf nf-md-school" aria-hidden="true"></i>
           <div>
             <strong>Estude Antes de Atacar</strong>
-            <p>Acesse o módulo de SQLi na DUNO Academy para dominar a base.</p>
+            <p>{{ _('Acesse o módulo de SQLi na DUNO Academy para dominar a base.') }}</p>
           </div>
           <span class="wt-help-arrow">→</span>
         </div>
@@ -160,7 +160,30 @@
 
     <!-- ═══ CENTER CONTENT ═══ -->
     <main class="wt-center">
-      {% if challenge.id == 'bravo' %}
+      {% if walkthrough_html %}
+        <div class="walkthrough-prose">{{ walkthrough_html | safe }}</div>
+        <script>
+        (function() {
+          document.querySelectorAll('.walkthrough-prose pre').forEach(function(pre) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'wt-prose-copy';
+            btn.title = 'Copiar comando';
+            btn.innerHTML = '<i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy';
+            btn.addEventListener('click', function() {
+              var code = pre.querySelector('code');
+              var txt = (code ? code.innerText : pre.innerText).replace(/\n$/, '');
+              if (navigator.clipboard) navigator.clipboard.writeText(txt);
+              var orig = btn.innerHTML;
+              btn.innerHTML = '<i class="nf nf-md-check" aria-hidden="true"></i> Copied';
+              btn.classList.add('on');
+              setTimeout(function() { btn.innerHTML = orig; btn.classList.remove('on'); }, 1500);
+            });
+            pre.appendChild(btn);
+          });
+        })();
+        </script>
+      {% elif challenge.id == 'bravo' %}
         {% include "pages/walkthroughs/bravo_content.html" %}
       {% else %}
         {% include "pages/walkthroughs/alpha_content.html" %}
@@ -169,7 +192,19 @@
 
     <!-- ═══ RIGHT SIDEBAR (PROGRESS & TIPS) ═══ -->
     <aside class="wt-right">
-      {% if challenge.id == 'bravo' %}
+      {% if walkthrough_html %}
+        <div class="walkthrough-aside">
+          <h4>{{ _('Sobre este walkthrough') }}</h4>
+          <p>{{ _('Guia oficial enviado pelo autor da máquina e revisado pela equipe DUNO.') }}</p>
+          <blockquote class="walkthrough-blockquote">Contém spoilers completos — tente explorar por conta própria antes de ler.</blockquote>
+          <h4>{{ _('Atalhos') }}</h4>
+          <ul class="walkthrough-list">
+            <li>Inicie a máquina pelo botão <strong>Start Machine</strong> e use o IP do alvo.</li>
+            <li>{{ _('Copie o IP pelo botão da barra de alvo.') }}</li>
+            <li>{{ _('Submeta as flags na página do desafio.') }}</li>
+          </ul>
+        </div>
+      {% elif challenge.id == 'bravo' %}
         {% include "pages/walkthroughs/bravo_aside.html" %}
       {% else %}
         {% include "pages/walkthroughs/alpha_aside.html" %}
@@ -449,7 +484,8 @@
       startBtn.innerHTML = '<i class="nf nf-fa-stop" aria-hidden="true"></i> Stop Machine';
       startBtn.className = 'cd-start-btn wt-start-btn cd-start-btn--stop js-detail-start-btn';
 
-      const cleanIp = data.endpoint ? data.endpoint.replace(/^https?:\/\//, '').split('/')[0] : '';
+      const hostPort = data.endpoint ? data.endpoint.replace(/^https?:\/\//, '').split('/')[0] : '';
+      const cleanIp = hostPort.includes(':') ? hostPort.split(':')[0] : hostPort;
       if (machineIp) machineIp.textContent = cleanIp;
 
       if (targetBar) targetBar.classList.add('is-running');

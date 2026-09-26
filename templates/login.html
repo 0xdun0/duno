@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="DUNO — Login no Laboratório" />
-  <title>Login — DUNO</title>
+  <title>{{ _('Login — DUNO') }}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,127 +16,35 @@
     <aside class="login-aside" id="login-aside">
       <div class="login-aside-brand">
         <div class="login-brand-left">
-          <div class="login-aside-logo">
-            <svg class="brand-dot-matrix" width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="color:var(--orange);">
-              <circle cx="20" cy="20" r="1.1" fill="currentColor"/>
-              <circle cx="23.4" cy="20.0" r="1.05" fill="currentColor"/>
-              <circle cx="21.7" cy="22.94" r="1.05" fill="currentColor"/>
-              <circle cx="18.3" cy="22.94" r="1.05" fill="currentColor"/>
-              <circle cx="16.6" cy="20.0" r="1.05" fill="currentColor"/>
-              <circle cx="18.3" cy="17.06" r="1.05" fill="currentColor"/>
-              <circle cx="21.7" cy="17.06" r="1.05" fill="currentColor"/>
-              <circle cx="26.8" cy="20.0" r="1.05" fill="currentColor"/>
-              <circle cx="25.89" cy="23.4" r="1.05" fill="currentColor"/>
-              <circle cx="23.4" cy="25.89" r="1.05" fill="currentColor"/>
-              <circle cx="20.0" cy="26.8" r="1.05" fill="currentColor"/>
-              <circle cx="16.6" cy="25.89" r="1.05" fill="currentColor"/>
-              <circle cx="14.11" cy="23.4" r="1.05" fill="currentColor"/>
-              <circle cx="13.2" cy="20.0" r="1.05" fill="currentColor"/>
-              <circle cx="14.11" cy="16.6" r="1.05" fill="currentColor"/>
-              <circle cx="16.6" cy="14.11" r="1.05" fill="currentColor"/>
-              <circle cx="20.0" cy="13.2" r="1.05" fill="currentColor"/>
-              <circle cx="23.4" cy="14.11" r="1.05" fill="currentColor"/>
-              <circle cx="25.89" cy="16.6" r="1.05" fill="currentColor"/>
-              <circle cx="30.2" cy="20.0" r="1.05" fill="currentColor"/>
-              <circle cx="29.58" cy="23.49" r="1.05" fill="currentColor"/>
-              <circle cx="27.81" cy="26.56" r="1.05" fill="currentColor"/>
-              <circle cx="25.1" cy="28.83" r="1.05" fill="currentColor"/>
-              <circle cx="21.77" cy="30.05" r="1.05" fill="currentColor"/>
-              <circle cx="18.23" cy="30.05" r="1.05" fill="currentColor"/>
-              <circle cx="14.9" cy="28.83" r="1.05" fill="currentColor"/>
-              <circle cx="12.19" cy="26.56" r="1.05" fill="currentColor"/>
-              <circle cx="10.42" cy="23.49" r="1.05" fill="currentColor"/>
-              <circle cx="9.8" cy="20.0" r="1.05" fill="currentColor"/>
-              <circle cx="10.42" cy="16.51" r="1.05" fill="currentColor"/>
-              <circle cx="12.19" cy="13.44" r="1.05" fill="currentColor"/>
-              <circle cx="14.9" cy="11.17" r="1.05" fill="currentColor"/>
-              <circle cx="18.23" cy="9.95" r="1.05" fill="currentColor"/>
-              <circle cx="21.77" cy="9.95" r="1.05" fill="currentColor"/>
-              <circle cx="25.1" cy="11.17" r="1.05" fill="currentColor"/>
-              <circle cx="27.81" cy="13.44" r="1.05" fill="currentColor"/>
-              <circle cx="29.58" cy="16.51" r="1.05" fill="currentColor"/>
-              <circle cx="33.6" cy="20.0" r="1.05" fill="currentColor"/>
-              <circle cx="33.14" cy="23.52" r="1.05" fill="currentColor"/>
-              <circle cx="31.78" cy="26.8" r="1.05" fill="currentColor"/>
-              <circle cx="29.58" cy="29.58" r="1.05" fill="currentColor"/>
-              <circle cx="26.65" cy="31.63" r="1.05" fill="currentColor"/>
-              <circle cx="23.23" cy="32.81" r="1.05" fill="currentColor"/>
-              <circle cx="19.58" cy="33.0" r="1.05" fill="currentColor"/>
-              <circle cx="15.93" cy="32.18" r="1.05" fill="currentColor"/>
-              <circle cx="12.63" cy="30.39" r="1.05" fill="currentColor"/>
-              <circle cx="9.92" cy="27.76" r="1.05" fill="currentColor"/>
-              <circle cx="8.01" cy="24.47" r="1.05" fill="currentColor"/>
-              <circle cx="7.0" cy="20.73" r="1.05" fill="currentColor"/>
-              <circle cx="6.99" cy="16.85" r="1.05" fill="currentColor"/>
-              <circle cx="7.97" cy="13.09" r="1.05" fill="currentColor"/>
-              <circle cx="9.85" cy="9.77" r="1.05" fill="currentColor"/>
-              <circle cx="12.53" cy="7.1" r="1.05" fill="currentColor"/>
-              <circle cx="15.82" cy="5.25" r="1.05" fill="currentColor"/>
-              <circle cx="19.46" cy="4.36" r="1.05" fill="currentColor"/>
-              <circle cx="23.11" cy="4.49" r="1.05" fill="currentColor"/>
-              <circle cx="26.54" cy="5.62" r="1.05" fill="currentColor"/>
-              <circle cx="29.5" cy="7.71" r="1.05" fill="currentColor"/>
-              <circle cx="31.73" cy="10.63" r="1.05" fill="currentColor"/>
-              <circle cx="33.12" cy="14.18" r="1.05" fill="currentColor"/>
-              <circle cx="37.0" cy="20.0" r="1.05" fill="currentColor"/>
-              <circle cx="36.56" cy="23.54" r="1.05" fill="currentColor"/>
-              <circle cx="35.26" cy="26.9" r="1.05" fill="currentColor"/>
-              <circle cx="33.15" cy="29.91" r="1.05" fill="currentColor"/>
-              <circle cx="30.31" cy="32.41" r="1.05" fill="currentColor"/>
-              <circle cx="26.87" cy="34.25" r="1.05" fill="currentColor"/>
-              <circle cx="23.01" cy="35.34" r="1.05" fill="currentColor"/>
-              <circle cx="18.94" cy="35.6" r="1.05" fill="currentColor"/>
-              <circle cx="14.88" cy="34.99" r="1.05" fill="currentColor"/>
-              <circle cx="11.05" cy="33.53" r="1.05" fill="currentColor"/>
-              <circle cx="7.67" cy="31.3" r="1.05" fill="currentColor"/>
-              <circle cx="4.92" cy="28.4" r="1.05" fill="currentColor"/>
-              <circle cx="2.96" cy="24.96" r="1.05" fill="currentColor"/>
-              <circle cx="1.92" cy="21.16" r="1.05" fill="currentColor"/>
-              <circle cx="1.87" cy="17.2" r="1.05" fill="currentColor"/>
-              <circle cx="2.81" cy="13.3" r="1.05" fill="currentColor"/>
-              <circle cx="4.7" cy="9.67" r="1.05" fill="currentColor"/>
-              <circle cx="7.45" cy="6.52" r="1.05" fill="currentColor"/>
-              <circle cx="10.89" cy="4.03" r="1.05" fill="currentColor"/>
-              <circle cx="14.84" cy="2.35" r="1.05" fill="currentColor"/>
-              <circle cx="19.06" cy="1.6" r="1.05" fill="currentColor"/>
-              <circle cx="23.32" cy="1.81" r="1.05" fill="currentColor"/>
-              <circle cx="27.38" cy="2.98" r="1.05" fill="currentColor"/>
-              <circle cx="31.0" cy="5.06" r="1.05" fill="currentColor"/>
-              <circle cx="33.97" cy="7.94" r="1.05" fill="currentColor"/>
-              <circle cx="36.1" cy="11.45" r="1.05" fill="currentColor"/>
-              <circle cx="37.26" cy="15.42" r="1.05" fill="currentColor"/>
-              <circle cx="37.38" cy="19.64" r="1.05" fill="currentColor"/>
-            </svg>
-          </div>
-          <span class="login-aside-name">duno</span>
+          <img src="{{ url_for('static', filename='img/duno-logo.svg') }}" class="login-aside-logo-img" alt="duno" height="34" />
         </div>
       </div>
 
       <div class="login-aside-body">
         <h1 class="login-aside-headline">
-          Segurança prática se aprende na <em>prática</em>.
+          {{ _('Segurança prática se aprende na <em>prática</em>.') }}
         </h1>
         <p class="login-aside-desc">
-          Ambiente isolado com 20 vulnerabilidades reais do OWASP Top 10, níveis de proteção graduais e inspeção de código-fonte ao vivo.
+          {{ _('Ambiente isolado com 20 vulnerabilidades reais do OWASP Top 10, níveis de proteção graduais e inspeção de código-fonte ao vivo.') }}
         </p>
 
         <div class="login-aside-tags">
-          <span class="login-aside-tag">Docker Sandbox</span>
-          <span class="login-aside-tag">OWASP Top 10</span>
-          <span class="login-aside-tag">Low → Impossible</span>
-          <span class="login-aside-tag">Live Source Code</span>
+          <span class="login-aside-tag">{{ _('Docker Sandbox') }}</span>
+          <span class="login-aside-tag">{{ _('OWASP Top 10') }}</span>
+          <span class="login-aside-tag">{{ _('Low → Impossible') }}</span>
+          <span class="login-aside-tag">{{ _('Live Source Code') }}</span>
         </div>
       </div>
 
       <div class="login-aside-footer">
-        <span>DUNO v2 • Designed Unsecure Network Operations</span>
+        <span>{{ _('DUNO v2 • Designed Unsecure Network Operations') }}</span>
       </div>
     </aside>
 
     <!-- Right Panel: Minimalist Clean Form -->
     <main class="login-form-panel">
-      <h2 class="login-form-title">Acessar Laboratório</h2>
-      <p class="login-form-subtitle">Entre com suas credenciais para gerenciar os módulos.</p>
+      <h2 class="login-form-title">{{ _('Acessar Laboratório') }}</h2>
+      <p class="login-form-subtitle">{{ _('Entre com suas credenciais para gerenciar os módulos.') }}</p>
 
       {% if error %}
       <div class="alert alert-error" role="alert">{{ error }}</div>
@@ -144,24 +52,28 @@
 
       <form method="POST" action="{{ url_for('login') }}" class="login-form" id="login-form">
         <div class="form-group">
-          <label for="username">Usuário</label>
+          <label for="username">{{ _('Usuário') }}</label>
           <input type="text" id="username" name="username" class="form-control"
-                 placeholder="admin" autocomplete="username" autofocus required />
+                 placeholder="{{ _('admin') }}" autocomplete="username" autofocus required />
         </div>
 
         <div class="form-group">
-          <label for="password">Senha</label>
+          <label for="password">{{ _('Senha') }}</label>
           <input type="password" id="password" name="password" class="form-control"
                  placeholder="••••••••" autocomplete="current-password" required />
         </div>
 
         <button type="submit" class="btn btn-primary btn-full btn-lg" id="login-submit" style="margin-top: 0.5rem;">
-          Entrar no Laboratório →
+          {{ _('Entrar no Laboratório →') }}
         </button>
       </form>
 
+      <div style="margin-top: 1.25rem; text-align: center; font-size: 0.88rem; color: var(--ink-2);">
+        {{ _('Não possui conta?') }} <a href="{{ url_for('register') }}" style="color: var(--orange); font-weight: 600; text-decoration: none;">{{ _('Cadastre-se no DUNO →') }}</a>
+      </div>
+
       <div class="login-hint-pill">
-        Credenciais padrão do laboratório: <code>admin</code> / <code>password</code>
+        {{ _('Credenciais padrão do laboratório:') }} <code>admin</code> / <code>password</code>
       </div>
     </main>
   </div>

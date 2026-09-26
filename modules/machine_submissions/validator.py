@@ -25,7 +25,7 @@ class ValidationError(Exception):
     pass
 
 
-def compute_sha256(filepath: str) -> str:
+def compute_sha256(filepath: str | Path) -> str:
     """Calcula o hash SHA256 de um arquivo."""
     h = hashlib.sha256()
     with open(filepath, "rb") as f:
@@ -34,7 +34,7 @@ def compute_sha256(filepath: str) -> str:
     return h.hexdigest()
 
 
-def validate_archive_magic_bytes(filepath: str) -> str:
+def validate_archive_magic_bytes(filepath: str | Path) -> str:
     """
     Inspeciona os primeiros bytes do arquivo para garantir que se trata
     de um arquivo ZIP ou TAR/GZ legítimo e não um arquivo executável mascarado.
@@ -83,7 +83,7 @@ def _sanitize_and_check_path(filename: str, dest_path: Path) -> Path:
     return target_file
 
 
-def safe_extract_zip(archive_path: str, extract_to: str) -> list[dict]:
+def safe_extract_zip(archive_path: str | Path, extract_to: str | Path) -> list[dict]:
     """
     Extrai arquivo .zip com mitigação contra:
     1. ZipSlip (Path Traversal via relative_to)
@@ -154,7 +154,7 @@ def safe_extract_zip(archive_path: str, extract_to: str) -> list[dict]:
     return extracted_files
 
 
-def safe_extract_tar(archive_path: str, extract_to: str) -> list[dict]:
+def safe_extract_tar(archive_path: str | Path, extract_to: str | Path) -> list[dict]:
     """
     Extrai arquivo .tar / .tar.gz com mitigação contra:
     1. Path Traversal
@@ -229,7 +229,7 @@ def safe_extract_tar(archive_path: str, extract_to: str) -> list[dict]:
     return extracted_files
 
 
-def extract_package(archive_path: str, extract_to: str) -> list[dict]:
+def extract_package(archive_path: str | Path, extract_to: str | Path) -> list[dict]:
     """Extrai pacote conforme a extensão e validação de magic bytes."""
     kind = validate_archive_magic_bytes(archive_path)
     if kind == "zip":

@@ -1,324 +1,48 @@
 """core/docs_manager.py — Gerenciador de Documentação Técnica do DUNO.
-Carrega, cataloga, converte Markdown para HTML e fornece índice de busca.
+Carrega, cataloga, converte Markdown para HTML e fornece índice de busca dinâmico.
 """
 import os
 import re
+import yaml
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 import markdown
 
 DOCS_DIR = Path(__file__).resolve().parent.parent / "docs"
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
-# 4 Categorias do Docker Docs + What's new
-CATEGORIES = [
-    {
-        "id": "get-started",
-        "title": "Get started",
-        "subtitle": "Inicialização rápida, Docker Compose, credenciais padrão e primeiros passos na plataforma.",
-        "icon": "nf-md-rocket_launch",
-        "badge_color": "var(--orange)",
-        "docs": ["quickstart", "architecture", "directory-structure"]
-    },
-    {
-        "id": "guides",
-        "title": "Guias & Prática",
-        "subtitle": "Walkthroughs de pentest Web, metodologia de exploração e a Trilha lúdica DUNO Kids.",
-        "icon": "nf-md-book_open_page_variant",
-        "badge_color": "#3b82f6",
-        "docs": ["kids-curriculum", "alpha-sqli-walkthrough", "module-development", "machine-submission-guide"]
-    },
-    {
-        "id": "manuals",
-        "title": "Manuais & Arquitetura",
-        "subtitle": "Topologia de rede tripartite, runner de desafios isolados, banco SQLite e engine de submissões.",
-        "icon": "nf-md-file_document_outline",
-        "badge_color": "#10b981",
-        "docs": ["network-architecture", "challenges-engine", "database-schema", "security-policy", "runbook-rollback", "design-system"]
-    },
-    {
-        "id": "reference",
-        "title": "Referência Técnica",
-        "subtitle": "Especificação do manifest.yml, APIs REST, catálogo dos 20 módulos OWASP e graduação dos níveis.",
-        "icon": "nf-oct-terminal",
-        "badge_color": "#8b5cf6",
-        "docs": ["manifest-spec", "owasp-modules", "security-levels", "api-reference"]
-    }
-]
-
-# Metadados de cada documento
-DOCS_METADATA: Dict[str, Dict[str, Any]] = {
-    "quickstart": {
-        "title": "Getting Started & Setup Rápido",
-        "category": "get-started",
-        "category_title": "Get started",
-        "file": "QUICKSTART.md",
-        "icon": "nf-md-rocket_launch",
-        "tag": "Setup",
-        "desc": "Como subir o DUNO via Docker Compose, portas expostas, credenciais de acesso padrão e primeiros testes.",
-        "read_time": "4 min de leitura",
-        "date": "19 Set 2026"
-    },
-    "architecture": {
-        "title": "Visão Geral da Arquitetura do DUNO",
-        "category": "get-started",
-        "category_title": "Get started",
-        "file": "ARCHITECTURE.md",
-        "icon": "nf-md-server_network",
-        "tag": "Architecture",
-        "desc": "Arquitetura modular em Flask Blueprints, persistência em SQLite, design system Walkie e subsistemas acoplados.",
-        "read_time": "6 min de leitura",
-        "date": "18 Set 2026"
-    },
-    "directory-structure": {
-        "title": "Estrutura de Diretórios & Convenções",
-        "category": "get-started",
-        "category_title": "Get started",
-        "file": "DIRECTORY_STRUCTURE.md",
-        "icon": "nf-md-folder_outline",
-        "tag": "Layout",
-        "desc": "Organização do código-fonte em core, modules, challenges, templates, static e políticas de nomenclatura.",
-        "read_time": "5 min de leitura",
-        "date": "17 Set 2026"
-    },
-    "kids-curriculum": {
-        "title": "DUNO Kids: Currículo Completo & Terminal CRT",
-        "category": "guides",
-        "category_title": "Guias & Prática",
-        "file": "KIDS_CURRICULUM.md",
-        "icon": "nf-linux-tux",
-        "tag": "Duno Kids",
-        "desc": "As 5 Trilhas pedagógicas (OS, Redes, Web, Criptografia, Defesa), simulador de terminal CRT e checkpoints com o mascote Tux.",
-        "read_time": "12 min de leitura",
-        "date": "18 Set 2026"
-    },
-    "alpha-sqli-walkthrough": {
-        "title": "Walkthrough de Pentest: Alpha SQLi Basics",
-        "category": "guides",
-        "category_title": "Guias & Prática",
-        "file": "WALKTHROUGH_ALPHA.md",
-        "icon": "nf-md-target_account",
-        "tag": "Walkthrough",
-        "desc": "Passo a passo didático de exploração do portal corporativo EverSec: bypass de login, extração de dados e 5 flags.",
-        "read_time": "10 min de leitura",
-        "date": "17 Set 2026"
-    },
-    "module-development": {
-        "title": "Como Desenvolver Novos Módulos de Vulnerabilidade",
-        "category": "guides",
-        "category_title": "Guias & Prática",
-        "file": "DEVELOPMENT_GUIDE.md",
-        "icon": "nf-fa-flask",
-        "tag": "Development",
-        "desc": "Passo a passo para implementar novos laboratórios OWASP graduais com os 4 arquivos didáticos de código-fonte.",
-        "read_time": "7 min de leitura",
-        "date": "16 Set 2026"
-    },
-    "machine-submission-guide": {
-        "title": "Guia de Empacotamento & Submissão de Máquinas",
-        "category": "guides",
-        "category_title": "Guias & Prática",
-        "file": "MACHINE_SUBMISSIONS.md",
-        "icon": "nf-md-package_variant_closed",
-        "tag": "Submissions",
-        "desc": "Como construir o pacote zip/tar de uma máquina comunitária, escrever o manifest.yml e passar na esteira de auditoria.",
-        "read_time": "8 min de leitura",
-        "date": "19 Set 2026"
-    },
-    "network-architecture": {
-        "title": "Topologia de Redes & Segregação Tripartite",
-        "category": "manuals",
-        "category_title": "Manuais & Arquitetura",
-        "file": "NETWORK_ARCHITECTURE.md",
-        "icon": "nf-md-lan",
-        "tag": "Networking",
-        "desc": "Segregação estrita entre host físico, rede da plataforma duno-net e subnet isolada de desafios duno-challenges-net.",
-        "read_time": "9 min de leitura",
-        "date": "17 Set 2026"
-    },
-    "challenges-engine": {
-        "title": "Orquestração de Desafios & Challenge Runner",
-        "category": "manuals",
-        "category_title": "Manuais & Arquitetura",
-        "file": "CHALLENGES.md",
-        "icon": "nf-fa-server",
-        "tag": "Challenges",
-        "desc": "Runner autônomo com Docker socket restrito, expiração em 45 minutos, proxy reverso dinâmico e validação de flags.",
-        "read_time": "8 min de leitura",
-        "date": "16 Set 2026"
-    },
-    "database-schema": {
-        "title": "Banco de Dados SQLite & Schema da Plataforma",
-        "category": "manuals",
-        "category_title": "Manuais & Arquitetura",
-        "file": "DATABASE_SCHEMA.md",
-        "icon": "nf-md-database",
-        "tag": "Database",
-        "desc": "Estrutura de tabelas do SQLite (users, security_levels, machine_submissions, audit_log) e rotina de reset atômico.",
-        "read_time": "6 min de leitura",
-        "date": "18 Set 2026"
-    },
-    "security-policy": {
-        "title": "Política de Segurança, Sandbox & Uso Responsável",
-        "category": "manuals",
-        "category_title": "Manuais & Arquitetura",
-        "file": "SECURITY_POLICY.md",
-        "icon": "nf-md-shield_check",
-        "tag": "Security",
-        "desc": "Diretrizes de confinamento de processos, mitigação de ZipSlip/ZipBomb, execução não-root e bloqueio de egress.",
-        "read_time": "6 min de leitura",
-        "date": "19 Set 2026"
-    },
-    "runbook-rollback": {
-        "title": "Runbook de Operações & Rollback Emergencial",
-        "category": "manuals",
-        "category_title": "Manuais & Arquitetura",
-        "file": "RUNBOOK_ROLLBACK.md",
-        "icon": "nf-fa-life_ring",
-        "tag": "Operations",
-        "desc": "Procedimentos de contingência, Kill Switch de desafios via feature flag CHALLENGES_ENABLED=false e recuperação de estado.",
-        "read_time": "5 min de leitura",
-        "date": "16 Set 2026"
-    },
-    "design-system": {
-        "title": "Identidade Visual & Design System DUNO",
-        "category": "manuals",
-        "category_title": "Manuais & Arquitetura",
-        "file": "DESIGN_SYSTEM.md",
-        "icon": "nf-md-palette",
-        "tag": "UI / UX",
-        "desc": "Princípios de design inspirados no Walkie/Obsidian: paleta de cores, tipografia Outfit/JetBrains, badges e Nerd Fonts.",
-        "read_time": "5 min de leitura",
-        "date": "18 Set 2026"
-    },
-    "manifest-spec": {
-        "title": "Especificação Oficial do manifest.yml",
-        "category": "reference",
-        "category_title": "Referência Técnica",
-        "file": "MANIFEST_SPEC.md",
-        "icon": "nf-md-code_json",
-        "tag": "Manifest",
-        "desc": "Schema detalhado de campos obrigatórios e opcionais para submissão de máquinas (machine, metadata, runtime, flags).",
-        "read_time": "7 min de leitura",
-        "date": "19 Set 2026"
-    },
-    "owasp-modules": {
-        "title": "Catálogo dos 20 Módulos de Vulnerabilidade Web & API",
-        "category": "reference",
-        "category_title": "Referência Técnica",
-        "file": "MODULES.md",
-        "icon": "nf-oct-terminal",
-        "tag": "Modules",
-        "desc": "Tabela de referência dos 20 laboratórios nativos com rotas, vetores de injeção, falhas de sessão e proteções modernas.",
-        "read_time": "8 min de leitura",
-        "date": "15 Set 2026"
-    },
-    "security-levels": {
-        "title": "Graduação dos Níveis de Segurança (Low a Impossible)",
-        "category": "reference",
-        "category_title": "Referência Técnica",
-        "file": "SECURITY_LEVELS.md",
-        "icon": "nf-md-gauge",
-        "tag": "Levels",
-        "desc": "Matriz conceitual e técnica diferenciando os 4 níveis de mitigação e o uso do visualizador dinâmico de código.",
-        "read_time": "5 min de leitura",
-        "date": "15 Set 2026"
-    },
-    "api-reference": {
-        "title": "Referência de APIs REST & Endpoints do Sistema",
-        "category": "reference",
-        "category_title": "Referência Técnica",
-        "file": "API_REFERENCE.md",
-        "icon": "nf-md-api",
-        "tag": "API",
-        "desc": "Especificação de rotas HTTP RESTful de challenges (/api/challenge/*), kids (/kids/api/*) e submissões (/submissions/api/*).",
-        "read_time": "9 min de leitura",
-        "date": "19 Set 2026"
-    },
-    "changelog": {
-        "title": "What's New — Linha do Tempo de Atualizações",
-        "category": "whats-new",
-        "category_title": "What's New",
-        "file": "CHANGELOG.md",
-        "icon": "nf-fa-history",
-        "tag": "Changelog",
-        "desc": "Histórico cronológico de lançamentos, features, correções de segurança e melhorias técnicas na plataforma DUNO.",
-        "read_time": "5 min de leitura",
-        "date": "19 Set 2026"
-    }
-}
-
-# Timeline de "What's new" (igual ao Docker Docs)
-WHATS_NEW_TIMELINE = [
-    {
-        "date": "19 Set",
-        "tag": "Machine Submissions",
-        "tag_class": "pill-orange",
-        "title": "Pipeline de Submissão e Auditoria de Máquinas da Comunidade",
-        "slug": "machine-submission-guide",
-        "summary": "Esteira completa com upload de pacotes .zip/.tar.gz, validação estrita de manifest.yml, scanner de vulnerabilidades em Dockerfile e Command Center integrado."
-    },
-    {
-        "date": "19 Set",
-        "tag": "Security Hardening",
-        "tag_class": "pill-red",
-        "title": "Blindagem Anti-ZipSlip, ZipBomb e Proibição de Symlinks",
-        "slug": "security-policy",
-        "summary": "Inspeção de magic bytes, contenção via pathlib.Path.relative_to, streaming com limite rígido de 100MB e bloqueio total de nós de dispositivo."
-    },
-    {
-        "date": "18 Set",
-        "tag": "DUNO Kids",
-        "tag_class": "pill-purple",
-        "title": "Ambiente Lúdico DUNO Kids & Terminal Linux CRT",
-        "slug": "kids-curriculum",
-        "summary": "5 Trilhas de aprendizado interativo com o mascote Tux, terminal retrô com comandos Linux reais emulados, analogias visuais e desafios checkpoints."
-    },
-    {
-        "date": "17 Set",
-        "tag": "Challenges Engine",
-        "tag_class": "pill-blue",
-        "title": "Catálogo de 25 Máquinas Vulneráveis & Orquestrador Dinâmico",
-        "slug": "challenges-engine",
-        "summary": "Execução isolada de containers CTF na rede duno-challenges-net, temporizador regressivo de 45 minutos e submissão validada de flags."
-    },
-    {
-        "date": "17 Set",
-        "tag": "Network Topology",
-        "tag_class": "pill-green",
-        "title": "Arquitetura de Segregação Tripartite Red Team",
-        "slug": "network-architecture",
-        "summary": "Separação completa entre a máquina host do operador, a aplicação de gerenciamento duno-app e a subnet de execução de alvos."
-    },
-    {
-        "date": "15 Set",
-        "tag": "OWASP Core",
-        "tag_class": "pill-orange",
-        "title": "20 Módulos de Vulnerabilidades com 4 Níveis Graduais",
-        "slug": "owasp-modules",
-        "summary": "Treinamento em SQLi, Blind SQLi, XSS, CSRF, File Upload e API Security com alternância em tempo real entre Low e Impossible."
-    }
-]
-
-# Sugestões de busca rápidas (pills do hero)
-SEARCH_SUGGESTIONS = [
-    {"label": "Como iniciar um laboratório?", "query": "quickstart"},
-    {"label": "Como funciona o isolamento Docker dos CTFs?", "query": "network-architecture"},
-    {"label": "Como submeter uma máquina da comunidade?", "query": "machine-submission-guide"},
-    {"label": "Como funciona o Duno Kids e o Terminal CRT?", "query": "kids-curriculum"},
-    {"label": "Quais são os 4 níveis de segurança?", "query": "security-levels"},
-    {"label": "O que é o manifest.yml?", "query": "manifest-spec"}
-]
-
+def _load_docs_data():
+    try:
+        from flask_babel import get_locale
+        locale = str(get_locale())
+    except Exception:
+        locale = "pt"
+    
+    yaml_path = DATA_DIR / f"docs_{locale}.yaml"
+    if not yaml_path.exists():
+        yaml_path = DATA_DIR / "docs_base.yaml"
+        
+    try:
+        with open(yaml_path, 'r', encoding='utf-8') as f:
+            return yaml.safe_load(f)
+    except Exception:
+        # Fallback de emergência
+        with open(DATA_DIR / "docs_base.yaml", 'r', encoding='utf-8') as f:
+            return yaml.safe_load(f)
 
 def get_all_categories() -> List[Dict[str, Any]]:
     """Retorna lista de categorias com os metadados dos seus documentos."""
+    data = _load_docs_data()
+    categories = data.get('categories', [])
+    docs_metadata = data.get('metadata', {})
+    
     res = []
-    for cat in CATEGORIES:
+    for cat in categories:
         cat_copy = dict(cat)
         cat_docs = []
-        for slug in cat["docs"]:
-            if slug in DOCS_METADATA:
-                meta = dict(DOCS_METADATA[slug])
+        for slug in cat.get("docs", []):
+            if slug in docs_metadata:
+                meta = dict(docs_metadata[slug])
                 meta["slug"] = slug
                 cat_docs.append(meta)
         cat_copy["articles"] = cat_docs
@@ -329,9 +53,11 @@ def get_all_categories() -> List[Dict[str, Any]]:
 
 def get_doc_metadata(slug: str) -> Optional[Dict[str, Any]]:
     """Recupera metadados de um documento pelo slug."""
-    if slug not in DOCS_METADATA:
+    data = _load_docs_data()
+    docs_metadata = data.get('metadata', {})
+    if slug not in docs_metadata:
         return None
-    meta = dict(DOCS_METADATA[slug])
+    meta = dict(docs_metadata[slug])
     meta["slug"] = slug
     return meta
 
@@ -365,40 +91,33 @@ def get_doc_content(slug: str) -> Optional[Dict[str, Any]]:
             anchor = re.sub(r"[^\w\- ]", "", title).strip().lower().replace(" ", "-")
             toc.append({"level": 3, "title": title, "anchor": anchor})
 
-    # Renderiza HTML com extensões ricas
-    md = markdown.Markdown(
-        extensions=[
-            "fenced_code",
-            "tables",
-            "attr_list",
-            "sane_lists"
-        ]
-    )
+    md = markdown.Markdown(extensions=["fenced_code", "tables", "attr_list", "sane_lists"])
     html_content = md.convert(raw_text)
 
-    # Injeta IDs nos cabeçalhos para âncoras suaves
     def add_header_ids(match):
         tag = match.group(1)
         text = match.group(2)
-        # remove tags internas para slug
         clean_text = re.sub(r"<[^>]+>", "", text)
         anchor = re.sub(r"[^\w\- ]", "", clean_text).strip().lower().replace(" ", "-")
         return f'<{tag} id="{anchor}">{text}</{tag}>'
 
     html_content = re.sub(r"<(h[23])>(.*?)</\1>", add_header_ids, html_content)
 
-    # Navegação Próximo / Anterior
+    data = _load_docs_data()
+    categories = data.get('categories', [])
+    docs_metadata = data.get('metadata', {})
+    
     all_slugs = []
-    for cat in CATEGORIES:
-        all_slugs.extend(cat["docs"])
+    for cat in categories:
+        all_slugs.extend(cat.get("docs", []))
 
     current_idx = all_slugs.index(slug) if slug in all_slugs else -1
-    prev_doc = DOCS_METADATA[all_slugs[current_idx - 1]] if current_idx > 0 else None
+    prev_doc = docs_metadata[all_slugs[current_idx - 1]] if current_idx > 0 else None
     if prev_doc:
         prev_doc = dict(prev_doc)
         prev_doc["slug"] = all_slugs[current_idx - 1]
 
-    next_doc = DOCS_METADATA[all_slugs[current_idx + 1]] if current_idx >= 0 and current_idx < len(all_slugs) - 1 else None
+    next_doc = docs_metadata[all_slugs[current_idx + 1]] if current_idx >= 0 and current_idx < len(all_slugs) - 1 else None
     if next_doc:
         next_doc = dict(next_doc)
         next_doc["slug"] = all_slugs[current_idx + 1]
@@ -420,8 +139,11 @@ def search_docs(query: str) -> List[Dict[str, Any]]:
 
     q = query.strip().lower()
     results = []
+    
+    data = _load_docs_data()
+    docs_metadata = data.get('metadata', {})
 
-    for slug, meta in DOCS_METADATA.items():
+    for slug, meta in docs_metadata.items():
         score = 0
         title_lower = meta["title"].lower()
         desc_lower = meta["desc"].lower()
@@ -436,7 +158,6 @@ def search_docs(query: str) -> List[Dict[str, Any]]:
         if q in desc_lower:
             score += 20
 
-        # Checa no conteúdo real
         filepath = DOCS_DIR / meta["file"]
         snippet = ""
         if filepath.is_file():
@@ -444,7 +165,6 @@ def search_docs(query: str) -> List[Dict[str, Any]]:
             content_lower = content.lower()
             if q in content_lower:
                 score += 10
-                # Extrai snippet do trecho onde encontrou
                 pos = content_lower.find(q)
                 start = max(0, pos - 60)
                 end = min(len(content), pos + 120)
@@ -459,3 +179,9 @@ def search_docs(query: str) -> List[Dict[str, Any]]:
 
     results.sort(key=lambda x: x["score"], reverse=True)
     return results[:10]
+
+def get_whats_new():
+    return _load_docs_data().get('timeline', [])
+
+def get_search_suggestions():
+    return _load_docs_data().get('search', [])

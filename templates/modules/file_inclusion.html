@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#4 File Inclusion</span>
+    <span>{{ _('#4 File Inclusion') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">File Inclusion</h1>
-      <p class="module-desc">Leitura de arquivos via parâmetro — Local File Inclusion</p>
+      <h1 class="module-title">{{ _('File Inclusion') }}</h1>
+      <p class="module-desc">{{ _('Leitura de arquivos via parâmetro — Local File Inclusion') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('file_inclusion', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,11 +34,11 @@
       </p>
       <form method="GET" action="/file_inclusion" id="fi-form">
         <div class="form-group">
-          <label for="page-input">Arquivo</label>
+          <label for="page-input">{{ _('Arquivo') }}</label>
           <input type="text" id="page-input" name="page" class="form-control"
-                 placeholder="about.txt" value="{{ page }}" />
+                 placeholder="{{ _('about.txt') }}" value="{{ page }}" />
         </div>
-        <button type="submit" class="btn btn-primary">Carregar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Carregar') }}</button>
       </form>
       {% if result is not none %}
       <div class="result-box raw" style="margin-top:1rem"><pre>{{ result }}</pre></div>
@@ -46,7 +46,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Path concatenado diretamente — <code>../../../etc/passwd</code> funciona{% endif %}
         {% if level == 'medium' %}Bloqueia <code>../</code> — bypassável com URL encoding <code>%2e%2e/</code>{% endif %}

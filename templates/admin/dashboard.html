@@ -6,17 +6,17 @@
   <div class="settings-container">
 
     <!-- Top Breadcrumb / Kicker -->
-    <div class="settings-kicker-brand">DUNO // ADMIN OPERATIONS // PIPELINE</div>
+    <div class="settings-kicker-brand">{{ _('DUNO // ADMIN OPERATIONS // PIPELINE') }}</div>
 
     <!-- Hero Header -->
     <header class="settings-hero" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
       <div>
-        <h1 class="settings-title">Painel de Revisão de Máquinas</h1>
-        <p class="settings-subtitle">Controle operacional da esteira de submissão, análise estática de segurança e publicação de laboratórios.</p>
+        <h1 class="settings-title">{{ _('Painel de Revisão de Máquinas') }}</h1>
+        <p class="settings-subtitle">{{ _('Controle operacional da esteira de submissão, análise estática de segurança e publicação de laboratórios.') }}</p>
       </div>
       <div style="display:flex; gap:0.75rem; align-items:center;">
         <a href="{{ url_for('submissions_admin.machines_list') }}" class="btn btn-primary" style="text-decoration:none; padding:0.6rem 1.25rem; font-weight:600; border-radius:var(--r-sm);">
-          Fila de Revisão Completa →
+          {{ _('Fila de Revisão Completa →') }}
         </a>
       </div>
     </header>
@@ -29,33 +29,33 @@
       <!-- Card 1: Pendentes -->
       <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; box-shadow:var(--shadow-sm);">
         <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:0.5rem;">
-          Aguardando Triagem
+          {{ _('Aguardando Triagem') }}
         </div>
         <div style="font-size:2rem; font-weight:800; color:var(--orange); line-height:1;">
           {{ pending_review }}
         </div>
         <div style="font-size:0.75rem; color:var(--ink-3); margin-top:0.5rem;">
-          Submetidas recentemente
+          {{ _('Submetidas recentemente') }}
         </div>
       </div>
 
       <!-- Card 2: Em Build / Teste -->
       <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; box-shadow:var(--shadow-sm);">
         <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:0.5rem;">
-          Em Build / Teste
+          {{ _('Em Build / Teste') }}
         </div>
         <div style="font-size:2rem; font-weight:800; color:var(--ink); line-height:1;">
           {{ building }}
         </div>
         <div style="font-size:0.75rem; color:var(--ink-3); margin-top:0.5rem;">
-          Processando no worker
+          {{ _('Processando no worker') }}
         </div>
       </div>
 
       <!-- Card 3: Revisão de Segurança -->
       <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; box-shadow:var(--shadow-sm);">
         <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:0.5rem;">
-          Segurança
+          {{ _('Segurança') }}
         </div>
         <div style="font-size:2rem; font-weight:800; color:var(--ink); line-height:1;">
           {{ security_review }}
@@ -68,26 +68,26 @@
       <!-- Card 4: Ajustes Solicitados -->
       <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; box-shadow:var(--shadow-sm);">
         <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:0.5rem;">
-          Ajustes Solicitados
+          {{ _('Ajustes Solicitados') }}
         </div>
         <div style="font-size:2rem; font-weight:800; color:var(--ink); line-height:1;">
           {{ changes_requested }}
         </div>
         <div style="font-size:0.75rem; color:var(--ink-3); margin-top:0.5rem;">
-          Com os autores
+          {{ _('Com os autores') }}
         </div>
       </div>
 
       <!-- Card 5: Publicadas -->
       <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; box-shadow:var(--shadow-sm);">
         <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:0.5rem;">
-          Publicadas Ativas
+          {{ _('Publicadas Ativas') }}
         </div>
         <div style="font-size:2rem; font-weight:800; color:#16a34a; line-height:1;">
           {{ published }}
         </div>
         <div style="font-size:0.75rem; color:var(--ink-3); margin-top:0.5rem;">
-          No catálogo comunitário
+          {{ _('No catálogo comunitário') }}
         </div>
       </div>
 
@@ -109,7 +109,7 @@
     <!-- TABELA DE SUBMISSÕES RECENTES -->
     <section class="settings-section">
       <div class="settings-section-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
-        <h2 class="settings-section-title">ÚLTIMAS SUBMISSÕES NA ESTEIRA</h2>
+        <h2 class="settings-section-title">{{ _('ÚLTIMAS SUBMISSÕES NA ESTEIRA') }}</h2>
         <a href="{{ url_for('submissions_admin.machines_list') }}" style="font-size:0.8rem; color:var(--ink-2); text-decoration:none;">
           Ver todas ({{ pending_review + building + security_review + published + changes_requested }}) →
         </a>
@@ -119,13 +119,13 @@
         <table class="duno-table" style="width:100%; border-collapse:collapse; text-align:left;">
           <thead>
             <tr style="border-bottom:1px solid var(--line); background:var(--bg-card-subtle); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3);">
-              <th style="padding:0.9rem 1.25rem;">ID / Máquina</th>
-              <th style="padding:0.9rem 1rem;">Autor</th>
-              <th style="padding:0.9rem 1rem;">Categoria / SO</th>
-              <th style="padding:0.9rem 1rem;">Dificuldade</th>
-              <th style="padding:0.9rem 1rem;">Status</th>
-              <th style="padding:0.9rem 1rem;">Atualizado</th>
-              <th style="padding:0.9rem 1.25rem; text-align:right;">Ação</th>
+              <th style="padding:0.9rem 1.25rem;">{{ _('ID / Máquina') }}</th>
+              <th style="padding:0.9rem 1rem;">{{ _('Autor') }}</th>
+              <th style="padding:0.9rem 1rem;">{{ _('Categoria / SO') }}</th>
+              <th style="padding:0.9rem 1rem;">{{ _('Dificuldade') }}</th>
+              <th style="padding:0.9rem 1rem;">{{ _('Status') }}</th>
+              <th style="padding:0.9rem 1rem;">{{ _('Atualizado') }}</th>
+              <th style="padding:0.9rem 1.25rem; text-align:right;">{{ _('Ação') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -158,14 +158,14 @@
               </td>
               <td style="padding:1rem 1.25rem; text-align:right;">
                 <a href="{{ url_for('submissions_admin.machine_review_workspace', submission_id=s.id) }}" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.35rem; padding:0.4rem 0.85rem; border-radius:var(--r-xs); font-size:0.8rem; text-decoration:none;">
-                  Revisar →
+                  {{ _('Revisar →') }}
                 </a>
               </td>
             </tr>
             {% else %}
             <tr>
               <td colspan="7" style="padding:2.5rem; text-align:center; color:var(--ink-3);">
-                Nenhuma submissão registrada no sistema.
+                {{ _('Nenhuma submissão registrada no sistema.') }}
               </td>
             </tr>
             {% endfor %}

@@ -1,0 +1,5664 @@
+# Portuguese translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-26 00:48-0300\n"
+"PO-Revision-Date: 2026-09-20 18:48-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt\n"
+"Language-Team: pt <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: templates/base.html:50 test_babel.py:7 test_babel.py:13
+msgid "LABS"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:11 templates/pages/challenges.html:11
+#: test_babel.py:8 test_babel.py:14
+msgid "Desafios CTF"
+msgstr ""
+
+#: templates/_level_switch.html:3 test_babel.py:9 test_babel.py:15
+msgid "Nível:"
+msgstr ""
+
+#: modules/kids/babel_strings.py:5
+msgid "Rede de computadores"
+msgstr ""
+
+#: modules/kids/babel_strings.py:6
+msgid "A teia mundial, DNS, HTTP/HTTPS e pacotes de dados"
+msgstr ""
+
+#: modules/kids/babel_strings.py:7
+msgid "Sistemas Operacionais"
+msgstr ""
+
+#: modules/kids/babel_strings.py:8
+msgid "Comandos mágicos, terminal Linux e permissões de arquivos"
+msgstr ""
+
+#: modules/kids/babel_strings.py:9
+msgid "Programação"
+msgstr ""
+
+#: modules/kids/babel_strings.py:10
+msgid "Lógica de programação, variáveis, condicionais e Python"
+msgstr ""
+
+#: modules/kids/babel_strings.py:11
+msgid "Security"
+msgstr ""
+
+#: modules/kids/babel_strings.py:12
+msgid "Tríade CIA, senhas fortes, phishing e firewalls"
+msgstr ""
+
+#: modules/kids/babel_strings.py:13
+msgid "Inglês para Cyber"
+msgstr ""
+
+#: modules/kids/babel_strings.py:14
+msgid "Vocabulário técnico, comandos em inglês e man pages"
+msgstr ""
+
+#: modules/kids/babel_strings.py:17
+msgid "O que é a Internet?"
+msgstr ""
+
+#: modules/kids/babel_strings.py:18
+msgid "A teia gigante que conecta o planeta"
+msgstr ""
+
+#: modules/kids/babel_strings.py:19
+msgid "O que é um Endereço IP?"
+msgstr ""
+
+#: modules/kids/babel_strings.py:20
+msgid "O CEP e RG de cada máquina conectada"
+msgstr ""
+
+#: modules/kids/babel_strings.py:21
+msgid "O GPS da Web: DNS"
+msgstr ""
+
+#: modules/kids/babel_strings.py:22
+msgid "Como o navegador acha sites sem saber números"
+msgstr ""
+
+#: modules/kids/babel_strings.py:23
+msgid "O Carteiro (HTTP/HTTPS)"
+msgstr ""
+
+#: modules/kids/babel_strings.py:24
+msgid "Cartas abertas vs cofres blindados criptografados"
+msgstr ""
+
+#: modules/kids/babel_strings.py:25
+msgid "O Radar de Rede"
+msgstr ""
+
+#: modules/kids/babel_strings.py:26
+msgid "Comandos essenciais: ping, ip e ifconfig"
+msgstr ""
+
+#: modules/kids/babel_strings.py:28
+msgid "O Cérebro do Computador"
+msgstr ""
+
+#: modules/kids/babel_strings.py:29
+msgid "O que é um Sistema Operacional e seus papéis"
+msgstr ""
+
+#: modules/kids/babel_strings.py:30
+msgid "A Caverna do Terminal"
+msgstr ""
+
+#: modules/kids/babel_strings.py:31
+msgid "Introdução ao Linux e comandos diretos no shell"
+msgstr ""
+
+#: modules/kids/babel_strings.py:32
+msgid "Navegando no Escuro"
+msgstr ""
+
+#: modules/kids/babel_strings.py:33
+msgid "Comandos essenciais: pwd, ls, cd e mkdir"
+msgstr ""
+
+#: modules/kids/babel_strings.py:34
+msgid "As Chaves do Reino"
+msgstr ""
+
+#: modules/kids/babel_strings.py:35
+msgid "Permissões de arquivos (r, w, x) e o comando chmod"
+msgstr ""
+
+#: modules/kids/babel_strings.py:37
+msgid "A Receita de Bolo"
+msgstr ""
+
+#: modules/kids/babel_strings.py:38
+msgid "Lógica de programação e passos ordenados"
+msgstr ""
+
+#: modules/kids/babel_strings.py:39
+msgid "Caixas e Etiquetas"
+msgstr ""
+
+#: modules/kids/babel_strings.py:40
+msgid "Variáveis, tipos de dados e strings na memória"
+msgstr ""
+
+#: modules/kids/babel_strings.py:41
+msgid "O Semáforo (If/Else)"
+msgstr ""
+
+#: modules/kids/babel_strings.py:42
+msgid "Condicionais e decisões baseadas em verdadeiro/falso"
+msgstr ""
+
+#: modules/kids/babel_strings.py:43
+msgid "A Magia do Python"
+msgstr ""
+
+#: modules/kids/babel_strings.py:44
+msgid "Seu primeiro script e comandos reais de automação"
+msgstr ""
+
+#: modules/kids/babel_strings.py:46
+msgid "O Triângulo Mágico (Tríade CIA)"
+msgstr ""
+
+#: modules/kids/babel_strings.py:47
+msgid "Confidencialidade, Integridade e Disponibilidade"
+msgstr ""
+
+#: modules/kids/babel_strings.py:48
+msgid "A Chave da Porta"
+msgstr ""
+
+#: modules/kids/babel_strings.py:49
+msgid "Senhas fortes, proteção contra força bruta e 2FA"
+msgstr ""
+
+#: modules/kids/babel_strings.py:50
+msgid "O Pescador de Dados (Phishing)"
+msgstr ""
+
+#: modules/kids/babel_strings.py:51
+msgid "Identificando mensagens falsas e engenharia social"
+msgstr ""
+
+#: modules/kids/babel_strings.py:52
+msgid "Os Guardas do Castelo"
+msgstr ""
+
+#: modules/kids/babel_strings.py:53
+msgid "Firewall perimetral e antivírus no disco"
+msgstr ""
+
+#: modules/kids/babel_strings.py:55
+msgid "O Alfabeto do Hacker"
+msgstr ""
+
+#: modules/kids/babel_strings.py:56
+msgid "A origem em inglês de ls, cd, cat e grep"
+msgstr ""
+
+#: modules/kids/babel_strings.py:57
+msgid "Palavras que Assustam"
+msgstr ""
+
+#: modules/kids/babel_strings.py:58
+msgid "Desmistificando Bug, Exploit, Payload e Hash"
+msgstr ""
+
+#: modules/kids/babel_strings.py:59
+msgid "Lendo as Instruções"
+msgstr ""
+
+#: modules/kids/babel_strings.py:60
+msgid "Dominando man pages e a flag --help no terminal"
+msgstr ""
+
+#: modules/kids/babel_strings.py:61
+msgid "Falando com o Mundo"
+msgstr ""
+
+#: modules/kids/babel_strings.py:62
+msgid "Relatórios técnicos, PoCs e disclosure responsável"
+msgstr ""
+
+#: modules/kids/babel_strings.py:65
+msgid "Conclua 1 Lição na Trilha"
+msgstr ""
+
+#: modules/kids/babel_strings.py:66
+msgid "Acerte 3 Perguntas de Quiz"
+msgstr ""
+
+#: modules/kids/babel_strings.py:67
+msgid "Estude Comandos no Terminal"
+msgstr ""
+
+#: modules/kids/babel_strings.py:70
+msgid "Lab 02: Command Injection"
+msgstr ""
+
+#: modules/kids/babel_strings.py:71
+msgid "Pratique execução de comandos no Linux real!"
+msgstr ""
+
+#: modules/kids/babel_strings.py:72
+msgid "Lab 03: CSRF & Requisições Web"
+msgstr ""
+
+#: modules/kids/babel_strings.py:73
+msgid "Teste requisições HTTP reais e tokens de segurança!"
+msgstr ""
+
+#: modules/kids/babel_strings.py:74
+msgid "Lab 07: SQL Injection"
+msgstr ""
+
+#: modules/kids/babel_strings.py:75
+msgid "Explore lógica e consultas de banco de dados!"
+msgstr ""
+
+#: modules/kids/babel_strings.py:76
+msgid "Lab 01: Brute Force"
+msgstr ""
+
+#: modules/kids/babel_strings.py:77
+msgid "Quebre senhas fracas e domine autenticação!"
+msgstr ""
+
+#: modules/kids/babel_strings.py:78
+msgid "Documentação Oficial"
+msgstr ""
+
+#: modules/kids/babel_strings.py:79
+msgid "Consulte manuais e referências técnicas em inglês!"
+msgstr ""
+
+#: modules/kids/babel_strings.py:80
+msgid "DUNO Academy"
+msgstr ""
+
+#: modules/kids/babel_strings.py:81
+msgid "Laboratórios práticos"
+msgstr ""
+
+#: templates/_academy_callout.html:8
+msgid "DUNO ACADEMY • TEORIA, ANATOMIA E DEFESA"
+msgstr ""
+
+#: templates/_academy_callout.html:11
+msgid ""
+"Entenda por que esta vulnerabilidade acontece, veja o fluxo de execução e"
+" aprenda a correção segura deste módulo na Academy."
+msgstr ""
+
+#: templates/_academy_callout.html:15
+msgid "LER NA ACADEMY"
+msgstr ""
+
+#: templates/base.html:39
+msgid "DUNO Dashboard"
+msgstr ""
+
+#: templates/base.html:54
+msgid "LABORATÓRIOS DUNO"
+msgstr ""
+
+#: templates/base.html:55
+msgid "Ver Grade Completa →"
+msgstr ""
+
+#: templates/base.html:59
+msgid "Injeção & DB"
+msgstr ""
+
+#: templates/base.html:60
+msgid "07 SQL Injection"
+msgstr ""
+
+#: templates/base.html:61
+msgid "08 Blind SQLi"
+msgstr ""
+
+#: templates/base.html:62
+msgid "02 Command Injection"
+msgstr ""
+
+#: templates/base.html:63
+msgid "04 File Inclusion"
+msgstr ""
+
+#: templates/base.html:64
+msgid "05 File Upload"
+msgstr ""
+
+#: templates/base.html:67
+msgid "Auth & Sessão"
+msgstr ""
+
+#: templates/base.html:68
+msgid "01 Brute Force"
+msgstr ""
+
+#: templates/base.html:69
+msgid "09 Weak Session IDs"
+msgstr ""
+
+#: templates/base.html:70
+msgid "06 Insecure CAPTCHA"
+msgstr ""
+
+#: templates/base.html:71
+msgid "15 Auth Bypass"
+msgstr ""
+
+#: templates/base.html:74
+msgid "Client-Side"
+msgstr ""
+
+#: templates/base.html:75
+msgid "10 XSS (DOM)"
+msgstr ""
+
+#: templates/base.html:76
+msgid "11 XSS (Reflected)"
+msgstr ""
+
+#: templates/base.html:77
+msgid "12 XSS (Stored)"
+msgstr ""
+
+#: templates/base.html:78
+msgid "03 CSRF"
+msgstr ""
+
+#: templates/base.html:79
+msgid "13 CSP Bypass"
+msgstr ""
+
+#: templates/base.html:82
+msgid "APIs & Lógica"
+msgstr ""
+
+#: templates/base.html:83
+msgid "20 API Security"
+msgstr ""
+
+#: templates/base.html:84
+msgid "18 API Versioning"
+msgstr ""
+
+#: templates/base.html:85
+msgid "19 Mass Assignment"
+msgstr ""
+
+#: templates/base.html:86
+msgid "17 Cryptography"
+msgstr ""
+
+#: templates/base.html:92
+msgid "ACADEMY"
+msgstr ""
+
+#: templates/base.html:94 templates/kids/base_kids.html:17
+msgid "NEWS"
+msgstr ""
+
+#: templates/base.html:95
+msgid "KIDS"
+msgstr ""
+
+#: templates/base.html:98
+msgid "CHALLENGES"
+msgstr ""
+
+#: templates/base.html:100
+msgid "DOCS"
+msgstr ""
+
+#: templates/base.html:101
+msgid "ABOUT"
+msgstr ""
+
+#: templates/base.html:108
+msgid "Alternar tema (Claro / Escuro)"
+msgstr ""
+
+#: templates/base.html:130
+msgid "Selecionar Idioma"
+msgstr ""
+
+#: templates/base.html:138
+msgid "PT"
+msgstr ""
+
+#: templates/base.html:142
+msgid "English"
+msgstr ""
+
+#: templates/base.html:146
+msgid "Español"
+msgstr ""
+
+#: templates/base.html:150
+msgid "Português"
+msgstr ""
+
+#: templates/base.html:159
+msgid "Notificações da Plataforma"
+msgstr ""
+
+#: templates/base.html:167
+msgid "NOTIFICAÇÕES"
+msgstr ""
+
+#: templates/base.html:168
+msgid "Marcar lidas"
+msgstr ""
+
+#: templates/base.html:171 templates/base.html:383
+msgid "Nenhuma notificação no momento"
+msgstr ""
+
+#: templates/base.html:180 templates/base.html:193
+msgid "Command Center"
+msgstr ""
+
+#: templates/base.html:187 templates/pages/settings.html:20
+msgid "COMMAND CENTER"
+msgstr ""
+
+#: templates/base.html:188
+msgid "CENTRO INTEGRADO DE OPERAÇÕES"
+msgstr ""
+
+#: templates/base.html:200 templates/base.html:265
+msgid "Reset Database"
+msgstr ""
+
+#: templates/base.html:205
+msgid "Sair"
+msgstr ""
+
+#: templates/base.html:210
+msgid "ENTRAR"
+msgstr ""
+
+#: templates/base.html:211
+msgid "SIGN UP"
+msgstr ""
+
+#: templates/base.html:225
+msgid "DUNO — Designed Unsecure Network Operations"
+msgstr ""
+
+#: templates/base.html:228
+msgid "20 Módulos de Exploração • 4 Níveis Graduais • ISO Bare-Metal em Breve"
+msgstr ""
+
+#: templates/base.html:241
+msgid "View Source"
+msgstr ""
+
+#: templates/base.html:257
+msgid "RESET DATABASE?"
+msgstr ""
+
+#: templates/base.html:261
+msgid "This will restore the laboratory database to its initial state."
+msgstr ""
+
+#: templates/base.html:262
+msgid "This action cannot be undone."
+msgstr ""
+
+#: templates/base.html:264
+msgid "Cancel"
+msgstr ""
+
+#: templates/base.html:402
+msgid "Erro ao carregar notificações"
+msgstr ""
+
+#: templates/error.html:7
+msgid "← Dashboard"
+msgstr ""
+
+#: templates/index.html:10
+msgid "Ambiente de Laboratório • 20 Módulos de Exploração"
+msgstr ""
+
+#: templates/index.html:14
+msgid "A plataforma de segurança que você pode"
+msgstr ""
+
+#: templates/index.html:15
+msgid "quebrar"
+msgstr ""
+
+#: templates/index.html:19
+msgid ""
+"Explore 20 cenários reais de vulnerabilidade web com 4 níveis graduais de"
+" proteção (Low a Impossible). Inspecione o código-fonte ao vivo e domine "
+"técnicas de exploração e defesa."
+msgstr ""
+
+#: templates/index.html:31
+msgid "Pesquisar laboratório... (ex: SQLi, XSS, CSRF, Token)"
+msgstr ""
+
+#: templates/index.html:32
+msgid "Pressione Super+A para buscar"
+msgstr ""
+
+#: templates/admin/machines_list.html:67 templates/index.html:44
+msgid "Todos"
+msgstr ""
+
+#: templates/index.html:47
+msgid "Injeção \\& DB"
+msgstr ""
+
+#: templates/index.html:50
+msgid "Autenticação \\& Sessão"
+msgstr ""
+
+#: templates/index.html:53
+msgid "Client-side \\& XSS"
+msgstr ""
+
+#: templates/index.html:56
+msgid "Acesso \\& Cripto"
+msgstr ""
+
+#: templates/index.html:59
+msgid "APIs \\& Lógica"
+msgstr ""
+
+#: templates/index.html:139 templates/pages/challenges.html:105
+msgid "← Anterior"
+msgstr ""
+
+#: templates/index.html:145 templates/pages/challenges.html:111
+msgid "Próximo →"
+msgstr ""
+
+#: templates/index.html:154
+msgid "BAIXAR ISO DUNO"
+msgstr ""
+
+#: templates/index.html:164
+msgid "SECURITY SUITE"
+msgstr ""
+
+#: templates/index.html:165
+msgid "#1 Open Lab of the Day"
+msgstr ""
+
+#: templates/index.html:173
+msgid "Compatível com macOS Intel & Apple Silicon"
+msgstr ""
+
+#: templates/index.html:180
+msgid "Mac"
+msgstr ""
+
+#: templates/index.html:184
+msgid "Compatível com Windows 10/11 WSL2"
+msgstr ""
+
+#: templates/admin/machines_list.html:69 templates/index.html:191
+#: templates/pages/walkthrough.html:40 templates/submissions/submit.html:77
+msgid "Windows"
+msgstr ""
+
+#: templates/index.html:195
+msgid "Compatível com distribuições Linux (Debian, Ubuntu, Arch, Fedora)"
+msgstr ""
+
+#: templates/admin/machines_list.html:68 templates/index.html:202
+#: templates/pages/about.html:79 templates/pages/walkthrough.html:37
+#: templates/submissions/submit.html:76
+msgid "Linux"
+msgstr ""
+
+#: templates/index.html:203
+msgid "EXPERIMENTAL"
+msgstr ""
+
+#: templates/index.html:207
+msgid "Acesso Web Pentest via Safari / iOS"
+msgstr ""
+
+#: templates/index.html:214
+msgid "iPhone"
+msgstr ""
+
+#: templates/index.html:218
+msgid "Acesso Web Pentest via Chrome / Android"
+msgstr ""
+
+#: templates/index.html:225
+msgid "Android"
+msgstr ""
+
+#: templates/index.html:226 templates/index.html:239
+msgid "EM BREVE"
+msgstr ""
+
+#: templates/index.html:230
+msgid "Imagem ISO para instalação direta na máquina física ou VM"
+msgstr ""
+
+#: templates/index.html:238
+msgid "ISO Bare-Metal"
+msgstr ""
+
+#: templates/index.html:243
+msgid "Instalação containerizada disponível agora"
+msgstr ""
+
+#: templates/index.html:250 templates/pages/about.html:99
+msgid "Docker"
+msgstr ""
+
+#: templates/index.html:251 templates/kids/dashboard.html:120
+msgid "DISPONÍVEL"
+msgstr ""
+
+#: templates/index.html:256
+#, python-format
+msgid ""
+"Distribuição ISO bootável em desenvolvimento para instalação direta em "
+"bare-metal, Proxmox, VMware ou VirtualBox —\n"
+"      ambiente de pentest 100%% isolado de rede."
+msgstr ""
+
+#: templates/login.html:7
+msgid "Login — DUNO"
+msgstr ""
+
+#: templates/login.html:25
+msgid "Segurança prática se aprende na <em>prática</em>."
+msgstr ""
+
+#: templates/login.html:28
+msgid ""
+"Ambiente isolado com 20 vulnerabilidades reais do OWASP Top 10, níveis de"
+" proteção graduais e inspeção de código-fonte ao vivo."
+msgstr ""
+
+#: templates/login.html:32
+msgid "Docker Sandbox"
+msgstr ""
+
+#: templates/login.html:33
+msgid "OWASP Top 10"
+msgstr ""
+
+#: templates/login.html:34
+msgid "Low → Impossible"
+msgstr ""
+
+#: templates/login.html:35
+msgid "Live Source Code"
+msgstr ""
+
+#: templates/login.html:40
+msgid "DUNO v2 • Designed Unsecure Network Operations"
+msgstr ""
+
+#: templates/login.html:46
+msgid "Acessar Laboratório"
+msgstr ""
+
+#: templates/login.html:47
+msgid "Entre com suas credenciais para gerenciar os módulos."
+msgstr ""
+
+#: templates/login.html:55 templates/modules/brute_force.html:38
+msgid "Usuário"
+msgstr ""
+
+#: templates/login.html:57 templates/modules/brute_force.html:40
+msgid "admin"
+msgstr ""
+
+#: templates/login.html:61 templates/modules/brute_force.html:43
+msgid "Senha"
+msgstr ""
+
+#: templates/login.html:67
+msgid "Entrar no Laboratório →"
+msgstr ""
+
+#: templates/login.html:72
+msgid "Não possui conta?"
+msgstr ""
+
+#: templates/login.html:72
+msgid "Cadastre-se no DUNO →"
+msgstr ""
+
+#: templates/login.html:76
+msgid "Credenciais padrão do laboratório:"
+msgstr ""
+
+#: templates/register.html:7
+msgid "Cadastrar-se — DUNO CTF Profile"
+msgstr ""
+
+#: templates/register.html:23
+msgid "Voltar para a Home"
+msgstr ""
+
+#: templates/register.html:25
+msgid "CTF LABS"
+msgstr ""
+
+#: templates/register.html:31
+msgid "Comunidade Discord"
+msgstr ""
+
+#: templates/register.html:32
+msgid "Converse com outros pesquisadores e compartilhe writeups."
+msgstr ""
+
+#: templates/register.html:34
+msgid "discord.gg/duno-ctf"
+msgstr ""
+
+#: templates/register.html:35
+msgid "Online"
+msgstr ""
+
+#: templates/pages/docs.html:10 templates/register.html:40
+msgid "Documentação Técnica"
+msgstr ""
+
+#: templates/register.html:41
+msgid "Especificações, manifest.yml e tutoriais da plataforma."
+msgstr ""
+
+#: templates/register.html:43
+msgid "docs.duno.local"
+msgstr ""
+
+#: templates/register.html:48
+msgid "Suporte a Desafios"
+msgstr ""
+
+#: templates/register.html:49
+msgid "Dúvidas sobre runners e flags? Consulte os instrutores."
+msgstr ""
+
+#: templates/register.html:51
+msgid "support@duno.local"
+msgstr ""
+
+#: templates/register.html:56
+msgid "Já possui uma conta?"
+msgstr ""
+
+#: templates/register.html:57
+msgid "Acesse diretamente seus laboratórios e desafios ativos."
+msgstr ""
+
+#: templates/register.html:60
+msgid "Entrar no DUNO →"
+msgstr ""
+
+#: templates/pages/about.html:316 templates/register.html:69
+msgid "GitHub"
+msgstr ""
+
+#: templates/register.html:70
+msgid "Discord"
+msgstr ""
+
+#: templates/register.html:71 templates/register.html:209
+msgid "Terminal"
+msgstr ""
+
+#: templates/pages/docs_reader.html:44 templates/register.html:72
+msgid "Docs"
+msgstr ""
+
+#: templates/register.html:83
+msgid "PASSO 1 DE 3 • ACESSO"
+msgstr ""
+
+#: templates/register.html:106
+msgid "Crie sua Conta no DUNO"
+msgstr ""
+
+#: templates/register.html:107
+msgid ""
+"Defina suas credenciais para acessar os 20 laboratórios e a arena de "
+"desafios CTF."
+msgstr ""
+
+#: templates/register.html:111
+msgid "Username no CTF *"
+msgstr ""
+
+#: templates/register.html:112
+msgid "ex: shadow_runner"
+msgstr ""
+
+#: templates/register.html:113
+msgid "Seu identificador no leaderboard (3 a 25 caracteres, a-z, 0-9, _, -)."
+msgstr ""
+
+#: templates/register.html:117
+msgid "E-mail (opcional)"
+msgstr ""
+
+#: templates/register.html:118
+msgid "seu@email.com"
+msgstr ""
+
+#: templates/register.html:119
+msgid "Para notificações e recuperação da conta."
+msgstr ""
+
+#: templates/register.html:125
+msgid "Senha de Acesso *"
+msgstr ""
+
+#: templates/register.html:127
+msgid "Mínimo de 6 caracteres."
+msgstr ""
+
+#: templates/register.html:131
+msgid "Confirmar Senha *"
+msgstr ""
+
+#: templates/register.html:142
+msgid "Qual é a sua trilha de segurança?"
+msgstr ""
+
+#: templates/register.html:143
+msgid ""
+"Personalizamos recomendações de laboratórios e desafios de acordo com sua"
+" experiência."
+msgstr ""
+
+#: templates/register.html:147
+msgid "Seu nível de familiaridade em Pentest \\& Cybersecurity:"
+msgstr ""
+
+#: templates/register.html:148
+msgid "1. Iniciante / Estudante"
+msgstr ""
+
+#: templates/register.html:155
+msgid "Selecione suas áreas de interesse favoritas (clique para marcar):"
+msgstr ""
+
+#: templates/register.html:157
+msgid "Web Pentest (OWASP)"
+msgstr ""
+
+#: templates/register.html:158
+msgid "API Security \\& REST"
+msgstr ""
+
+#: templates/register.html:159
+msgid "CTF Machines \\& Root"
+msgstr ""
+
+#: templates/register.html:160 templates/submissions/submit.html:50
+msgid "Privilege Escalation"
+msgstr ""
+
+#: templates/pages/about.html:150 templates/register.html:161
+msgid "Reverse Engineering"
+msgstr ""
+
+#: templates/register.html:162
+msgid "Network Recon \\& Scan"
+msgstr ""
+
+#: templates/register.html:163
+msgid "DUNO Kids \\& Linux CRT"
+msgstr ""
+
+#: templates/register.html:178
+msgid "Configure sua Identidade de Jogador"
+msgstr ""
+
+#: templates/register.html:179
+msgid "Defina como seu perfil será exibido nas soluções e rankings de CTF."
+msgstr ""
+
+#: templates/register.html:183
+msgid "Nome de Exibição / Handle"
+msgstr ""
+
+#: templates/register.html:184
+msgid "ex: Dione Lima"
+msgstr ""
+
+#: templates/register.html:188
+msgid "País para o Ranking"
+msgstr ""
+
+#: templates/register.html:190
+msgid "🇧🇷 Brasil (BR)"
+msgstr ""
+
+#: templates/register.html:191
+msgid "🇵🇹 Portugal (PT)"
+msgstr ""
+
+#: templates/register.html:192
+msgid "🇺🇸 Estados Unidos (US)"
+msgstr ""
+
+#: templates/register.html:193
+msgid "🇪🇸 Espanha (ES)"
+msgstr ""
+
+#: templates/register.html:194
+msgid "🌐 Internacional (Outro)"
+msgstr ""
+
+#: templates/register.html:201
+msgid "Escolha seu Avatar Inicial:"
+msgstr ""
+
+#: templates/register.html:205
+msgid "Robot (DUNO)"
+msgstr ""
+
+#: templates/register.html:213
+msgid "Ghost Net"
+msgstr ""
+
+#: templates/register.html:217
+msgid "Tux Penguin"
+msgstr ""
+
+#: templates/register.html:224
+msgid "Privacidade e Ranking:"
+msgstr ""
+
+#: templates/register.html:232
+msgid "Perfil Público de CTF"
+msgstr ""
+
+#: templates/register.html:233
+msgid ""
+"Participe do leaderboard global, exiba seus badges e máquinas "
+"conquistadas."
+msgstr ""
+
+#: templates/register.html:243
+msgid "Modo Anônimo / Treino"
+msgstr ""
+
+#: templates/register.html:244
+#, python-format
+msgid ""
+"Mantenha seu progresso 100%% privado. Suas flags não aparecem no ranking "
+"público."
+msgstr ""
+
+#: templates/register.html:254
+msgid "Voltar"
+msgstr ""
+
+#: templates/kids/quiz.html:357 templates/register.html:258
+#: templates/register.html:337
+msgid "Continuar"
+msgstr ""
+
+#: templates/register.html:335
+msgid "Criar Perfil & Entrar"
+msgstr ""
+
+#: templates/register.html:457
+msgid "Criando perfil..."
+msgstr ""
+
+#: templates/admin/audit.html:11 templates/admin/machines_list.html:11
+#: templates/admin/published_machines.html:11
+msgid "DUNO // ADMIN PIPELINE"
+msgstr ""
+
+#: templates/admin/audit.html:14 templates/admin/machines_list.html:14
+#: templates/admin/published_machines.html:14
+msgid "← Voltar ao Painel"
+msgstr ""
+
+#: templates/admin/audit.html:20
+msgid "Log de Auditoria da Esteira"
+msgstr ""
+
+#: templates/admin/audit.html:21
+msgid ""
+"Rastreabilidade completa de todas as operações, submissões, transições de"
+" estado, scans e decisões de publicação."
+msgstr ""
+
+#: templates/admin/audit.html:29
+msgid "Filtrar por ação (ex: TRANSITION, SUBMIT, APPROVE, BUILD...)"
+msgstr ""
+
+#: templates/admin/audit.html:32 templates/admin/machines_list.html:75
+msgid "Filtrar"
+msgstr ""
+
+#: templates/admin/audit.html:36 templates/admin/machines_list.html:78
+msgid "Limpar"
+msgstr ""
+
+#: templates/admin/audit.html:46
+msgid "Data / Hora"
+msgstr ""
+
+#: templates/admin/audit.html:47 templates/admin/dashboard.html:128
+#: templates/admin/machine_review.html:350
+#: templates/admin/machines_list.html:96
+msgid "Ação"
+msgstr ""
+
+#: templates/admin/audit.html:48
+msgid "Operador"
+msgstr ""
+
+#: templates/admin/audit.html:49
+msgid "Máquina ID"
+msgstr ""
+
+#: templates/admin/audit.html:50 templates/pages/settings.html:437
+msgid "IP"
+msgstr ""
+
+#: templates/admin/audit.html:51
+msgid "Detalhes do Evento"
+msgstr ""
+
+#: templates/admin/audit.html:87
+msgid "Nenhum registro de auditoria encontrado."
+msgstr ""
+
+#: templates/admin/dashboard.html:9
+msgid "DUNO // ADMIN OPERATIONS // PIPELINE"
+msgstr ""
+
+#: templates/admin/dashboard.html:14
+msgid "Painel de Revisão de Máquinas"
+msgstr ""
+
+#: templates/admin/dashboard.html:15
+msgid ""
+"Controle operacional da esteira de submissão, análise estática de "
+"segurança e publicação de laboratórios."
+msgstr ""
+
+#: templates/admin/dashboard.html:19
+msgid "Fila de Revisão Completa →"
+msgstr ""
+
+#: templates/admin/dashboard.html:32
+msgid "Aguardando Triagem"
+msgstr ""
+
+#: templates/admin/dashboard.html:38
+msgid "Submetidas recentemente"
+msgstr ""
+
+#: templates/admin/dashboard.html:45
+msgid "Em Build / Teste"
+msgstr ""
+
+#: templates/admin/dashboard.html:51
+msgid "Processando no worker"
+msgstr ""
+
+#: templates/admin/dashboard.html:58 templates/admin/machine_review.html:74
+msgid "Segurança"
+msgstr ""
+
+#: templates/admin/dashboard.html:71
+msgid "Ajustes Solicitados"
+msgstr ""
+
+#: templates/admin/dashboard.html:77
+msgid "Com os autores"
+msgstr ""
+
+#: templates/admin/dashboard.html:84
+msgid "Publicadas Ativas"
+msgstr ""
+
+#: templates/admin/dashboard.html:90
+msgid "No catálogo comunitário"
+msgstr ""
+
+#: templates/admin/dashboard.html:112
+msgid "ÚLTIMAS SUBMISSÕES NA ESTEIRA"
+msgstr ""
+
+#: templates/admin/dashboard.html:122 templates/admin/machines_list.html:89
+msgid "ID / Máquina"
+msgstr ""
+
+#: templates/admin/dashboard.html:123 templates/admin/machines_list.html:91
+#: templates/admin/published_machines.html:33
+msgid "Autor"
+msgstr ""
+
+#: templates/admin/dashboard.html:124 templates/admin/machines_list.html:92
+#: templates/admin/published_machines.html:34
+#: templates/submissions/contributions.html:39
+msgid "Categoria / SO"
+msgstr ""
+
+#: templates/admin/dashboard.html:125 templates/admin/machines_list.html:54
+#: templates/admin/machines_list.html:93
+#: templates/admin/published_machines.html:35
+#: templates/components/challenge_card.html:88
+#: templates/submissions/contributions.html:40
+#: templates/submissions/submission_detail.html:128
+msgid "Dificuldade"
+msgstr ""
+
+#: templates/admin/dashboard.html:126 templates/admin/machine_review.html:289
+#: templates/admin/machine_review.html:466
+#: templates/admin/machines_list.html:35 templates/admin/machines_list.html:94
+#: templates/admin/published_machines.html:36
+#: templates/submissions/contributions.html:41
+msgid "Status"
+msgstr ""
+
+#: templates/admin/dashboard.html:127 templates/admin/machines_list.html:95
+#: templates/submissions/contributions.html:42
+msgid "Atualizado"
+msgstr ""
+
+#: templates/admin/dashboard.html:161
+msgid "Revisar →"
+msgstr ""
+
+#: templates/admin/dashboard.html:168
+msgid "Nenhuma submissão registrada no sistema."
+msgstr ""
+
+#: templates/admin/machine_review.html:11
+msgid "DUNO // MÁQUINAS"
+msgstr ""
+
+#: templates/admin/machine_review.html:15
+msgid "← Voltar à Fila"
+msgstr ""
+
+#: templates/admin/machine_review.html:23
+msgid "Container / Máquina Virtual"
+msgstr ""
+
+#: templates/admin/machine_review.html:28
+msgid "Opções da máquina"
+msgstr ""
+
+#: templates/admin/machine_review.html:36
+msgid "✓ Todos os Gates Validados"
+msgstr ""
+
+#: templates/admin/machine_review.html:40
+msgid "Gates Pendentes"
+msgstr ""
+
+#: templates/admin/machine_review.html:44
+msgid "Decisão / Parecer →"
+msgstr ""
+
+#: templates/admin/machine_review.html:51
+msgid "1. Visão Geral"
+msgstr ""
+
+#: templates/admin/machine_review.html:52
+msgid "2. Arquivos"
+msgstr ""
+
+#: templates/admin/machine_review.html:53
+msgid "3. Build"
+msgstr ""
+
+#: templates/admin/machine_review.html:54
+msgid "4. Segurança"
+msgstr ""
+
+#: templates/admin/machine_review.html:55
+msgid "9. Decisão &amp; Scorecard"
+msgstr ""
+
+#: templates/admin/machine_review.html:62
+#: templates/pages/academy_lesson.html:98
+msgid "Overview"
+msgstr ""
+
+#: templates/admin/machine_review.html:66
+msgid "Arquivos"
+msgstr ""
+
+#: templates/admin/machine_review.html:70
+msgid "Build"
+msgstr ""
+
+#: templates/admin/machine_review.html:81
+msgid "Runtime"
+msgstr ""
+
+#: templates/admin/machine_review.html:85
+msgid "Testes"
+msgstr ""
+
+#: templates/admin/machine_review.html:93
+msgid "Didática"
+msgstr ""
+
+#: templates/admin/machine_review.html:97
+msgid "Parecer"
+msgstr ""
+
+#: templates/admin/machine_review.html:101
+msgid "Histórico"
+msgstr ""
+
+#: templates/admin/machine_review.html:109
+msgid "Status:"
+msgstr ""
+
+#: templates/admin/machine_review.html:114
+msgid "Autor:"
+msgstr ""
+
+#: templates/admin/machine_review.html:119
+msgid "Categoria:"
+msgstr ""
+
+#: templates/admin/machine_review.html:124
+msgid "SO:"
+msgstr ""
+
+#: templates/admin/machine_review.html:129
+msgid "Dificuldade:"
+msgstr ""
+
+#: templates/admin/machine_review.html:134
+msgid "Versão:"
+msgstr ""
+
+#: templates/admin/machine_review.html:139
+msgid "Slug:"
+msgstr ""
+
+#: templates/admin/machine_review.html:152
+msgid "Descrição e Escopo do Laboratório"
+msgstr ""
+
+#: templates/admin/machine_review.html:159
+#: templates/submissions/submission_detail.html:124
+msgid "Categoria"
+msgstr ""
+
+#: templates/admin/machine_review.html:163
+msgid "Dificuldade Autor"
+msgstr ""
+
+#: templates/admin/machine_review.html:167
+msgid "Dificuldade Oficial"
+msgstr ""
+
+#: templates/admin/machine_review.html:171
+#: templates/admin/machines_list.html:65
+#: templates/submissions/submission_detail.html:132
+msgid "Sistema Operacional"
+msgstr ""
+
+#: templates/admin/machine_review.html:179
+msgid "Serviços e Portas Declaradas"
+msgstr ""
+
+#: templates/admin/machine_review.html:193
+msgid "Autor do Desafio"
+msgstr ""
+
+#: templates/admin/machine_review.html:211
+msgid "Calibrar Dificuldade Oficial"
+msgstr ""
+
+#: templates/admin/machine_review.html:213
+msgid "Como revisor, você pode definir a dificuldade oficial da plataforma."
+msgstr ""
+
+#: templates/admin/machine_review.html:217 templates/submissions/submit.html:64
+msgid "Easy (Fácil)"
+msgstr ""
+
+#: templates/admin/machine_review.html:218 templates/submissions/submit.html:65
+msgid "Medium (Médio)"
+msgstr ""
+
+#: templates/admin/machine_review.html:219 templates/submissions/submit.html:66
+msgid "Hard (Difícil)"
+msgstr ""
+
+#: templates/admin/machine_review.html:220 templates/submissions/submit.html:67
+msgid "Insane (Extremo)"
+msgstr ""
+
+#: templates/admin/machine_review.html:223
+msgid "Salvar Dificuldade Oficial"
+msgstr ""
+
+#: templates/admin/machine_review.html:248
+msgid "Nenhum arquivo no pacote."
+msgstr ""
+
+#: templates/admin/machine_review.html:257
+msgid "Selecione um arquivo para inspecionar"
+msgstr ""
+
+#: templates/admin/machine_review.html:275
+msgid "Compilação Isolada do Contêiner"
+msgstr ""
+
+#: templates/admin/machine_review.html:277
+msgid ""
+"O build roda em ambiente estritamente isolado sem acesso à rede do host e"
+" sem permissões privilegiadas."
+msgstr ""
+
+#: templates/admin/machine_review.html:282
+msgid "Iniciar Build Isolado"
+msgstr ""
+
+#: templates/admin/machine_review.html:295
+msgid "Image Tag"
+msgstr ""
+
+#: templates/admin/machine_review.html:299
+#: templates/admin/machine_review.html:467
+msgid "Duração"
+msgstr ""
+
+#: templates/admin/machine_review.html:303
+msgid "Data de Execução"
+msgstr ""
+
+#: templates/admin/machine_review.html:309
+msgid "Terminal de Logs de Build"
+msgstr ""
+
+#: templates/admin/machine_review.html:316
+msgid ""
+"Nenhum build executado para esta versão ainda. Clique em \"Iniciar Build "
+"Isolado\" acima."
+msgstr ""
+
+#: templates/admin/machine_review.html:329
+msgid "Scan Estático &amp; Detecção de Segredos"
+msgstr ""
+
+#: templates/admin/machine_review.html:331
+msgid ""
+"Análise de configurações perigosas de Docker/Compose e credenciais "
+"hardcoded."
+msgstr ""
+
+#: templates/admin/machine_review.html:336
+#: templates/admin/machine_review.html:975
+#: templates/admin/machine_review.html:980
+msgid "Executar Scan de Segurança"
+msgstr ""
+
+#: templates/admin/machine_review.html:345
+msgid "Severidade"
+msgstr ""
+
+#: templates/admin/machine_review.html:346
+msgid "Regra / Tipo"
+msgstr ""
+
+#: templates/admin/machine_review.html:347
+msgid "Arquivo : Linha"
+msgstr ""
+
+#: templates/admin/machine_review.html:348
+msgid "Descrição"
+msgstr ""
+
+#: templates/admin/machine_review.html:349
+msgid "Classificação"
+msgstr ""
+
+#: templates/admin/machine_review.html:380
+msgid "✓ Vuln do Lab (Esperada)"
+msgstr ""
+
+#: templates/admin/machine_review.html:384
+msgid "⚠ Risco Não-Esperado"
+msgstr ""
+
+#: templates/admin/machine_review.html:400
+msgid ""
+"Nenhum finding registrado. Clique em \"Executar Scan de Segurança\" para "
+"analisar o pacote."
+msgstr ""
+
+#: templates/admin/machine_review.html:411
+msgid "Parâmetros de Segurança de Runtime"
+msgstr ""
+
+#: templates/admin/machine_review.html:415
+msgid "Isolamento de Rede"
+msgstr ""
+
+#: templates/admin/machine_review.html:416
+msgid "Internal Bridge"
+msgstr ""
+
+#: templates/admin/machine_review.html:417
+msgid "Sem acesso à rede local do host ou à internet externa."
+msgstr ""
+
+#: templates/admin/machine_review.html:421
+msgid "Privilégios de Container"
+msgstr ""
+
+#: templates/admin/machine_review.html:422
+msgid "Non-Privileged"
+msgstr ""
+
+#: templates/admin/machine_review.html:423
+msgid "Privileged mode e capacidades perigosas desativadas."
+msgstr ""
+
+#: templates/admin/machine_review.html:427
+msgid "Limite de Memória"
+msgstr ""
+
+#: templates/admin/machine_review.html:428
+msgid "512 MB (Max)"
+msgstr ""
+
+#: templates/admin/machine_review.html:429
+msgid "Prevenção contra esgotamento de recursos do nó."
+msgstr ""
+
+#: templates/admin/machine_review.html:433
+msgid "Limite de CPU"
+msgstr ""
+
+#: templates/admin/machine_review.html:434
+msgid "1.0 Core"
+msgstr ""
+
+#: templates/admin/machine_review.html:435
+msgid "Restrição rigorosa de threads e ciclos de clock."
+msgstr ""
+
+#: templates/admin/machine_review.html:448
+msgid "Bateria de Testes Funcionais"
+msgstr ""
+
+#: templates/admin/machine_review.html:450
+msgid ""
+"Verificação de inicialização correta, portas abertas e integridade de "
+"resposta HTTP."
+msgstr ""
+
+#: templates/admin/machine_review.html:455
+#: templates/admin/machine_review.html:997
+#: templates/admin/machine_review.html:1002
+msgid "Executar Bateria de Testes"
+msgstr ""
+
+#: templates/admin/machine_review.html:464
+msgid "Nome do Teste"
+msgstr ""
+
+#: templates/admin/machine_review.html:465
+#: templates/admin/machine_review.html:509
+msgid "Tipo"
+msgstr ""
+
+#: templates/admin/machine_review.html:468
+msgid "Detalhes"
+msgstr ""
+
+#: templates/admin/machine_review.html:492
+msgid ""
+"Nenhum teste executado ainda. Clique em \"Executar Bateria de Testes\" "
+"acima."
+msgstr ""
+
+#: templates/admin/machine_review.html:503
+msgid "Flags Cadastradas no Desafio"
+msgstr ""
+
+#: templates/admin/machine_review.html:510
+msgid "Valor / Localização"
+msgstr ""
+
+#: templates/admin/machine_review.html:511
+#: templates/components/challenge_card.html:58
+msgid "Pontos"
+msgstr ""
+
+#: templates/admin/machine_review.html:512
+msgid "SHA256 Hash"
+msgstr ""
+
+#: templates/admin/machine_review.html:529
+msgid "Nenhuma flag cadastrada no manifesto."
+msgstr ""
+
+#: templates/admin/machine_review.html:543
+msgid "Avaliação do Conteúdo Pedagógico"
+msgstr ""
+
+#: templates/admin/machine_review.html:547
+msgid "Objetivos de Aprendizagem"
+msgstr ""
+
+#: templates/admin/machine_review.html:552
+msgid "Nenhum objetivo cadastrado."
+msgstr ""
+
+#: templates/admin/machine_review.html:558
+msgid "Pré-requisitos Recomendados"
+msgstr ""
+
+#: templates/admin/machine_review.html:563
+msgid "Nenhum pré-requisito cadastrado."
+msgstr ""
+
+#: templates/admin/machine_review.html:570
+msgid "Dicas Pedagógicas &amp; Custos"
+msgstr ""
+
+#: templates/admin/machine_review.html:578
+msgid "Nenhuma dica cadastrada."
+msgstr ""
+
+#: templates/admin/machine_review.html:584
+msgid "Walkthrough do Autor (View Walkthrough)"
+msgstr ""
+
+#: templates/admin/machine_review.html:591
+msgid "Nenhum walkthrough enviado — o botão View Walkthrough ficará desabilitado."
+msgstr ""
+
+#: templates/admin/machine_review.html:603
+msgid "Scorecard de Validação para Publicação"
+msgstr ""
+
+#: templates/admin/machine_review.html:607
+msgid "Metadados Básicos"
+msgstr ""
+
+#: templates/admin/machine_review.html:612
+msgid "Build Isolado"
+msgstr ""
+
+#: templates/admin/machine_review.html:617
+msgid "Gate de Segurança"
+msgstr ""
+
+#: templates/admin/machine_review.html:622
+msgid "Testes Funcionais"
+msgstr ""
+
+#: templates/admin/machine_review.html:627
+msgid "Flags Válidas"
+msgstr ""
+
+#: templates/admin/machine_review.html:632
+msgid "Didática &amp; Objetivos"
+msgstr ""
+
+#: templates/admin/machine_review.html:638
+msgid "Parecer do Revisor"
+msgstr ""
+
+#: templates/admin/machine_review.html:640
+msgid "Notas Técnicas / Feedback para o Autor"
+msgstr ""
+
+#: templates/admin/machine_review.html:641
+msgid ""
+"Descreva os pontos positivos, vulnerabilidades encontradas ou os ajustes "
+"necessários..."
+msgstr ""
+
+#: templates/admin/machine_review.html:647
+msgid "✓ Aprovar e Publicar Máquina"
+msgstr ""
+
+#: templates/admin/machine_review.html:650
+msgid "⚠ Solicitar Ajustes ao Autor"
+msgstr ""
+
+#: templates/admin/machine_review.html:653
+msgid "✕ Rejeitar Submissão"
+msgstr ""
+
+#: templates/admin/machine_review.html:665
+msgid "Trilha de Auditoria &amp; Transições de Estado"
+msgstr ""
+
+#: templates/admin/machine_review.html:684
+msgid "Nenhum evento registrado no histórico."
+msgstr ""
+
+#: templates/admin/machine_review.html:964
+msgid "Executando scan..."
+msgstr ""
+
+#: templates/admin/machine_review.html:987
+msgid "Testando contêiner..."
+msgstr ""
+
+#: templates/admin/machines_list.html:20
+msgid "Fila de Revisão de Máquinas"
+msgstr ""
+
+#: templates/admin/machines_list.html:21
+msgid ""
+"Gerenciamento centralizado de todas as submissões, filtrando por estado "
+"do pipeline, sistema operacional e dificuldade."
+msgstr ""
+
+#: templates/admin/machines_list.html:30
+msgid "Buscar Máquina / Slug"
+msgstr ""
+
+#: templates/admin/machines_list.html:31
+msgid "Ex: matrix, web, sql..."
+msgstr ""
+
+#: templates/admin/machines_list.html:37
+msgid "Todos os status"
+msgstr ""
+
+#: templates/admin/machines_list.html:38
+msgid "DRAFT"
+msgstr ""
+
+#: templates/admin/machines_list.html:39
+msgid "SUBMITTED"
+msgstr ""
+
+#: templates/admin/machines_list.html:40
+msgid "TRIAGE"
+msgstr ""
+
+#: templates/admin/machines_list.html:41
+msgid "BUILDING"
+msgstr ""
+
+#: templates/admin/machines_list.html:42
+msgid "SECURITY_REVIEW"
+msgstr ""
+
+#: templates/admin/machines_list.html:43
+msgid "FUNCTIONAL_TEST"
+msgstr ""
+
+#: templates/admin/machines_list.html:44
+msgid "CONTENT_REVIEW"
+msgstr ""
+
+#: templates/admin/machines_list.html:45
+msgid "APPROVED"
+msgstr ""
+
+#: templates/admin/machines_list.html:46
+msgid "PUBLISHED"
+msgstr ""
+
+#: templates/admin/machines_list.html:47
+msgid "CHANGES_REQUESTED"
+msgstr ""
+
+#: templates/admin/machines_list.html:48
+msgid "REJECTED"
+msgstr ""
+
+#: templates/admin/machines_list.html:49
+msgid "UNPUBLISHED"
+msgstr ""
+
+#: templates/admin/machines_list.html:56
+msgid "Todas"
+msgstr ""
+
+#: templates/admin/machines_list.html:57 templates/pages/challenges.html:75
+msgid "Easy"
+msgstr ""
+
+#: templates/admin/machines_list.html:58 templates/pages/challenges.html:78
+msgid "Medium"
+msgstr ""
+
+#: templates/admin/machines_list.html:59 templates/pages/challenges.html:81
+msgid "Hard"
+msgstr ""
+
+#: templates/admin/machines_list.html:60
+msgid "Insane"
+msgstr ""
+
+#: templates/admin/machines_list.html:90
+#: templates/submissions/contributions.html:38
+msgid "Versão"
+msgstr ""
+
+#: templates/admin/machines_list.html:134
+msgid "Abrir Revisão →"
+msgstr ""
+
+#: templates/admin/machines_list.html:141
+msgid "Nenhuma máquina encontrada para os filtros selecionados."
+msgstr ""
+
+#: templates/admin/published_machines.html:20
+msgid "Máquinas Publicadas"
+msgstr ""
+
+#: templates/admin/published_machines.html:21
+msgid ""
+"Controle de catálogo das máquinas ativas na plataforma DUNO, histórico de"
+" versões em produção e despublicação."
+msgstr ""
+
+#: templates/admin/published_machines.html:31
+msgid "Máquina / Slug"
+msgstr ""
+
+#: templates/admin/published_machines.html:32
+msgid "Versão Publicada"
+msgstr ""
+
+#: templates/admin/published_machines.html:37
+msgid "Publicado em"
+msgstr ""
+
+#: templates/admin/published_machines.html:38
+#: templates/submissions/contributions.html:43
+msgid "Ações"
+msgstr ""
+
+#: templates/admin/published_machines.html:84
+msgid "Bancada"
+msgstr ""
+
+#: templates/admin/published_machines.html:88
+msgid "Despublicar"
+msgstr ""
+
+#: templates/admin/published_machines.html:97
+msgid "Nenhuma máquina aprovada e publicada no catálogo ativo até o momento."
+msgstr ""
+
+#: templates/components/challenge_card.html:22
+msgid "Máquina desenvolvida pela comunidade"
+msgstr ""
+
+#: templates/components/challenge_card.html:25
+msgid "Criador da máquina"
+msgstr ""
+
+#: templates/components/challenge_card.html:32
+msgid "NOVA MÁQUINA"
+msgstr ""
+
+#: templates/components/challenge_card.html:47
+#: templates/pages/challenge_detail.html:78
+msgid "DESCRIPTION"
+msgstr ""
+
+#: templates/components/challenge_card.html:59
+#: templates/pages/challenge_detail.html:177
+msgid "POINTS"
+msgstr ""
+
+#: templates/components/challenge_card.html:67
+msgid "Total de XP"
+msgstr ""
+
+#: templates/components/challenge_card.html:68 templates/kids/base_kids.html:42
+#: templates/pages/challenge_detail.html:185
+msgid "XP"
+msgstr ""
+
+#: templates/components/challenge_card.html:76
+msgid "Sistema Operacional e IP"
+msgstr ""
+
+#: templates/components/challenge_card.html:77
+#: templates/pages/challenge_detail.html:193
+msgid "MACHINE"
+msgstr ""
+
+#: templates/components/challenge_card.html:89
+#: templates/pages/challenge_detail.html:214
+msgid "DIFFICULTY"
+msgstr ""
+
+#: templates/components/challenge_card.html:111
+msgid "Quantidade de flags e acesso root"
+msgstr ""
+
+#: templates/components/challenge_card.html:112
+msgid "FLAGS"
+msgstr ""
+
+#: templates/components/challenge_card.html:133
+msgid "Tempo estimado para iniciar"
+msgstr ""
+
+#: templates/components/challenge_card.html:149
+#: templates/pages/walkthrough.html:68
+msgid "Alvo ativo"
+msgstr ""
+
+#: templates/components/challenge_card.html:154
+msgid "Copiar endereço IP puro do alvo (sem porta)"
+msgstr ""
+
+#: templates/components/challenge_card.html:159
+msgid "Abrir alvo no navegador"
+msgstr ""
+
+#: templates/components/challenge_card.html:174
+msgid "Walkthrough em desenvolvimento"
+msgstr ""
+
+#: templates/components/challenge_card.html:180
+msgid "Etapas de exploração"
+msgstr ""
+
+#: templates/components/challenge_card.html:182
+msgid "EXPLORE / ROOT"
+msgstr ""
+
+#: templates/components/countdown_central.html:8
+msgid "DUNO // LAB RUNNER"
+msgstr ""
+
+#: templates/components/countdown_central.html:11
+msgid "Copiar status do terminal"
+msgstr ""
+
+#: templates/components/countdown_central.html:14
+msgid "Fechar"
+msgstr ""
+
+#: templates/components/countdown_central.html:22
+msgid "MACHINE STARTING"
+msgstr ""
+
+#: templates/components/countdown_central.html:24
+msgid "seconds remaining"
+msgstr ""
+
+#: templates/components/countdown_central.html:34
+msgid "Initializing environment..."
+msgstr ""
+
+#: templates/components/countdown_central.html:46
+msgid "ENDEREÇO IP DO ALVO"
+msgstr ""
+
+#: templates/components/countdown_central.html:49
+msgid "10.10.15.xx"
+msgstr ""
+
+#: templates/components/countdown_central.html:56
+msgid "Copiar somente o IP puro (sem porta) para ping, nmap, etc."
+msgstr ""
+
+#: templates/components/countdown_central.html:57
+msgid "[ COPIAR IP ]"
+msgstr ""
+
+#: templates/components/countdown_central.html:59
+msgid "Copiar URL completa com porta para navegador"
+msgstr ""
+
+#: templates/components/countdown_central.html:60
+msgid "[ COPIAR URL ]"
+msgstr ""
+
+#: templates/components/countdown_central.html:63
+msgid "[ ABRIR MÁQUINA ]"
+msgstr ""
+
+#: templates/components/countdown_central.html:70
+msgid "Concluir e ir ao laboratório"
+msgstr ""
+
+#: templates/components/countdown_central.html:78
+msgid "INICIALIZAÇÃO INTERROMPIDA"
+msgstr ""
+
+#: templates/components/countdown_central.html:81
+msgid "Falha ao inicializar container."
+msgstr ""
+
+#: templates/components/countdown_central.html:85
+msgid "[ FECHAR ]"
+msgstr ""
+
+#: templates/components/tux_companion.html:5 templates/kids/quiz.html:66
+msgid "TUX GUIA:"
+msgstr ""
+
+#: templates/components/tux_companion.html:7
+msgid "Estou aqui com você! Qualquer dúvida, clique em mim para uma dica."
+msgstr ""
+
+#: templates/components/tux_companion.html:11
+msgid "Conversar com o Guia / Nova Dica"
+msgstr ""
+
+#: templates/components/tux_mascot.html:4
+msgid "Vamos aprender juntos?"
+msgstr ""
+
+#: templates/kids/base_kids.html:15 templates/pages/about.html:209
+#: templates/pages/academy_hub.html:9 templates/pages/challenge_detail.html:9
+#: templates/pages/challenges.html:9
+msgid "DUNO"
+msgstr ""
+
+#: templates/kids/base_kids.html:17
+msgid "Kids"
+msgstr ""
+
+#: templates/kids/base_kids.html:26 templates/kids/dashboard.html:7
+#: templates/kids/dashboard.html:75 templates/kids/quiz.html:7
+msgid "Trilha"
+msgstr ""
+
+#: templates/kids/base_kids.html:30 templates/kids/quests.html:7
+msgid "Missões"
+msgstr ""
+
+#: templates/kids/base_kids.html:34 templates/kids/leaderboard.html:7
+msgid "Ranking"
+msgstr ""
+
+#: templates/kids/base_kids.html:39
+msgid "Pontos de Experiência"
+msgstr ""
+
+#: templates/kids/base_kids.html:45
+msgid "Vidas Restantes para Quizzes"
+msgstr ""
+
+#: templates/kids/base_kids.html:50
+msgid "Ofensiva diária de estudos"
+msgstr ""
+
+#: templates/kids/base_kids.html:55
+msgid "Moedas DUNO"
+msgstr ""
+
+#: templates/kids/dashboard.html:3
+msgid "Trilha de Ensino — Kids"
+msgstr ""
+
+#: templates/kids/dashboard.html:16
+msgid "TRILHA"
+msgstr ""
+
+#: templates/kids/dashboard.html:16 templates/kids/dashboard.html:79
+msgid "INICIANTE"
+msgstr ""
+
+#: templates/kids/dashboard.html:18
+msgid "Aprenda Tecnologia e Segurança."
+msgstr ""
+
+#: templates/kids/dashboard.html:20
+msgid ""
+"Desvende o funcionamento dos computadores com desafios interativos, "
+"analogias lúdicas e o Tux te guiando!"
+msgstr ""
+
+#: templates/kids/dashboard.html:23
+msgid "Explorar Lições"
+msgstr ""
+
+#: templates/kids/dashboard.html:48
+msgid "100% CONCLUÍDO"
+msgstr ""
+
+#: templates/kids/dashboard.html:50
+msgid "Ponte para a DUNO Academy"
+msgstr ""
+
+#: templates/kids/dashboard.html:54
+#, python-format
+msgid "Você dominou a Trilha de %(module)s!"
+msgstr ""
+
+#: templates/kids/dashboard.html:57
+msgid ""
+"O conhecimento teórico foi validado. Agora é hora de testar suas "
+"habilidades em um laboratório real da plataforma."
+msgstr ""
+
+#: templates/kids/dashboard.html:74
+msgid "Módulo"
+msgstr ""
+
+#: templates/kids/dashboard.html:124
+msgid "BLOQUEADO"
+msgstr ""
+
+#: templates/kids/dashboard.html:141
+msgid "Revisar Lição"
+msgstr ""
+
+#: templates/kids/dashboard.html:141
+#, fuzzy
+msgid "Iniciar Desafio"
+msgstr "Desafios"
+
+#: templates/kids/dashboard.html:146
+msgid "Conclua a anterior"
+msgstr ""
+
+#: templates/kids/dashboard.html:168
+msgid "NÍVEL"
+msgstr ""
+
+#: templates/kids/dashboard.html:174
+msgid "Progresso da Trilha"
+msgstr ""
+
+#: templates/kids/dashboard.html:186
+msgid "Missões Diárias"
+msgstr ""
+
+#: templates/kids/dashboard.html:188
+msgid "Ver todas →"
+msgstr ""
+
+#: templates/kids/dashboard.html:209
+msgid "Resgatado ✓"
+msgstr ""
+
+#: templates/kids/dashboard.html:212
+msgid "Resgatar"
+msgstr ""
+
+#: templates/kids/dashboard.html:215
+msgid "Em progresso"
+msgstr ""
+
+#: templates/kids/dashboard.html:221
+msgid "Nenhuma missão disponível hoje."
+msgstr ""
+
+#: templates/kids/dashboard.html:231
+msgid "Dica do Tux"
+msgstr ""
+
+#: templates/kids/dashboard.html:234
+msgid ""
+"No Linux, tudo é arquivo ou processo. Domine o terminal e você terá o "
+"controle total do sistema!"
+msgstr ""
+
+#: templates/kids/leaderboard.html:16
+msgid "COMPETIÇÃO ACADÊMICA & LIGAS"
+msgstr ""
+
+#: templates/kids/leaderboard.html:18
+msgid "Tabela de Líderes"
+msgstr ""
+
+#: templates/kids/leaderboard.html:20
+msgid ""
+"Acumule XP respondendo quizzes, completando lições na Trilha e mantendo "
+"sua sequência diária ativa."
+msgstr ""
+
+#: templates/kids/leaderboard.html:26
+msgid "Liga: Bronze"
+msgstr ""
+
+#: templates/kids/leaderboard.html:34
+msgid "Liga Bronze"
+msgstr ""
+
+#: templates/kids/leaderboard.html:35
+msgid "Atual"
+msgstr ""
+
+#: templates/kids/leaderboard.html:39
+msgid "Liga Prata"
+msgstr ""
+
+#: templates/kids/leaderboard.html:43
+msgid "Liga Ouro"
+msgstr ""
+
+#: templates/kids/leaderboard.html:47
+msgid "Liga Esmeralda"
+msgstr ""
+
+#: templates/kids/leaderboard.html:51
+msgid "Liga Diamante"
+msgstr ""
+
+#: templates/kids/leaderboard.html:60
+msgid "Pos"
+msgstr ""
+
+#: templates/kids/leaderboard.html:61
+msgid "Aluno"
+msgstr ""
+
+#: templates/kids/leaderboard.html:62
+msgid "Nível"
+msgstr ""
+
+#: templates/kids/leaderboard.html:63 templates/kids/quests.html:26
+msgid "Ofensiva"
+msgstr ""
+
+#: templates/kids/leaderboard.html:64
+msgid "Total XP"
+msgstr ""
+
+#: templates/kids/leaderboard.html:91
+msgid "VOCÊ"
+msgstr ""
+
+#: templates/kids/quests.html:3
+msgid "Missões Diárias & Cofres — Kids"
+msgstr ""
+
+#: templates/kids/quests.html:16
+msgid "OBJETIVOS DIÁRIOS & RECOMPENSAS"
+msgstr ""
+
+#: templates/kids/quests.html:18
+msgid "Missões & Cofres de Segurança"
+msgstr ""
+
+#: templates/kids/quests.html:20
+msgid ""
+"Conclua objetivos pedagógicos todos os dias para acumular moedas, pontos "
+"de experiência e desbloquear baús de recompensa."
+msgstr ""
+
+#: templates/kids/quests.html:26
+msgid "dias"
+msgstr ""
+
+#: templates/kids/quests.html:33
+msgid "Cofre de Baús da Aventura"
+msgstr ""
+
+#: templates/kids/quests.html:42
+msgid "Cofre de Bronze"
+msgstr ""
+
+#: templates/kids/quests.html:43
+msgid "Conclua 1 lição ou missão diária"
+msgstr ""
+
+#: templates/kids/quests.html:46 templates/kids/quests.html:59
+#: templates/kids/quests.html:72
+msgid "MOEDAS"
+msgstr ""
+
+#: templates/kids/quests.html:55
+msgid "Cofre de Prata"
+msgstr ""
+
+#: templates/kids/quests.html:56
+msgid "Conclua 2 lições consecutivas"
+msgstr ""
+
+#: templates/kids/quests.html:68
+msgid "Cofre Dourado"
+msgstr ""
+
+#: templates/kids/quests.html:69
+msgid "Mantenha ofensiva de 3 dias"
+msgstr ""
+
+#: templates/kids/quests.html:81
+msgid "Missões de Hoje"
+msgstr ""
+
+#: templates/kids/quests.html:84
+msgid "Renovação à meia-noite"
+msgstr ""
+
+#: templates/kids/quests.html:96
+msgid "Moedas"
+msgstr ""
+
+#: templates/kids/quests.html:112
+msgid "Resgatado"
+msgstr ""
+
+#: templates/kids/quests.html:116
+msgid "Resgatar Recompensa"
+msgstr ""
+
+#: templates/kids/quests.html:121
+msgid "Em andamento"
+msgstr ""
+
+#: templates/kids/quests.html:128
+msgid "Nenhuma missão pendente para hoje. Bom trabalho!"
+msgstr ""
+
+#: templates/kids/quiz.html:18 templates/kids/quiz.html:394
+msgid "Voltar para a Trilha"
+msgstr ""
+
+#: templates/kids/quiz.html:31
+msgid "Teoria com o Tux"
+msgstr ""
+
+#: templates/kids/quiz.html:36
+msgid "Laboratório Prático"
+msgstr ""
+
+#: templates/kids/quiz.html:41
+msgid "Desafio Checkpoint"
+msgstr ""
+
+#: templates/kids/quiz.html:46
+msgid "Progresso da Missão"
+msgstr ""
+
+#: templates/kids/quiz.html:49
+msgid "Vidas restantes"
+msgstr ""
+
+#: templates/kids/quiz.html:116
+msgid "VISUALIZAÇÃO / EXEMPLO"
+msgstr ""
+
+#: templates/kids/quiz.html:133
+msgid "Próximo Conceito"
+msgstr ""
+
+#: templates/kids/quiz.html:138
+msgid "Ir para o Laboratório Prático"
+msgstr ""
+
+#: templates/kids/quiz.html:180
+msgid "aluno@duno-kids: ~/laboratorio (bash)"
+msgstr ""
+
+#: templates/kids/quiz.html:181 templates/pages/settings.html:31
+msgid "ONLINE"
+msgstr ""
+
+#: templates/kids/quiz.html:185
+msgid "Bem-vindo ao Shell Interativo DUNO Kids!"
+msgstr ""
+
+#: templates/kids/quiz.html:186
+msgid "Digite o comando indicado ou clique nos atalhos rápidos abaixo."
+msgstr ""
+
+#: templates/kids/quiz.html:188 templates/kids/quiz.html:194
+msgid "aluno@duno-kids"
+msgstr ""
+
+#: templates/kids/quiz.html:189
+msgid "# Aguardando sua instrução..."
+msgstr ""
+
+#: templates/kids/quiz.html:198
+msgid "Digite o comando aqui..."
+msgstr ""
+
+#: templates/kids/quiz.html:202
+msgid "Executar ↵"
+msgstr ""
+
+#: templates/kids/quiz.html:208
+msgid "Comandos rápidos:"
+msgstr ""
+
+#: templates/kids/quiz.html:222
+msgid "Monte os passos na ordem de execução correta:"
+msgstr ""
+
+#: templates/kids/quiz.html:224
+msgid "Clique nas opções para adicioná-las à sequência planejada."
+msgstr ""
+
+#: templates/kids/quiz.html:229
+msgid "Clique nos blocos abaixo na ordem desejada..."
+msgstr ""
+
+#: templates/kids/quiz.html:243
+msgid "Recomeçar Ordem"
+msgstr ""
+
+#: templates/kids/quiz.html:244
+msgid "Verificar Sequência"
+msgstr ""
+
+#: templates/kids/quiz.html:252
+msgid "Inspecione as opções e selecione o alvo correto:"
+msgstr ""
+
+#: templates/kids/quiz.html:269
+msgid "Laboratório Concluído com Sucesso!"
+msgstr ""
+
+#: templates/kids/quiz.html:270
+msgid "O Tux aprovou suas habilidades práticas."
+msgstr ""
+
+#: templates/kids/quiz.html:274
+msgid "Avançar para o Desafio Checkpoint"
+msgstr ""
+
+#: templates/kids/quiz.html:296
+msgid "TUX SEMPRE COM VOCÊ:"
+msgstr ""
+
+#: templates/kids/quiz.html:298
+msgid "Chegou a hora de validar o que você aprendeu! Leia a questão com calma."
+msgstr ""
+
+#: templates/kids/quiz.html:320
+msgid "A"
+msgstr ""
+
+#: templates/kids/quiz.html:325 templates/pages/about.html:39
+msgid "B"
+msgstr ""
+
+#: templates/kids/quiz.html:330
+msgid "C"
+msgstr ""
+
+#: templates/kids/quiz.html:335
+msgid "D"
+msgstr ""
+
+#: templates/kids/quiz.html:350
+msgid "Muito bem!"
+msgstr ""
+
+#: templates/kids/quiz.html:352
+msgid "Explicação técnica da resposta."
+msgstr ""
+
+#: templates/kids/quiz.html:374
+msgid "Missão Concluída!"
+msgstr ""
+
+#: templates/modules/api_security.html:7
+#: templates/modules/api_versioning.html:7 templates/modules/auth_bypass.html:7
+#: templates/modules/brute_force.html:7 templates/modules/captcha.html:7
+#: templates/modules/command_injection.html:7 templates/modules/crypto.html:7
+#: templates/modules/csp_bypass.html:7 templates/modules/csrf.html:7
+#: templates/modules/file_inclusion.html:7 templates/modules/file_upload.html:7
+#: templates/modules/js_attacks.html:7 templates/modules/mass_assignment.html:7
+#: templates/modules/open_redirect.html:7 templates/modules/sqli.html:7
+#: templates/modules/sqli_blind.html:7 templates/modules/weak_session.html:7
+#: templates/modules/xss_dom.html:7 templates/modules/xss_reflected.html:7
+#: templates/modules/xss_stored.html:7 templates/pages/api.html:8
+#: templates/pages/docs.html:8 templates/pages/learning.html:8
+#: templates/pages/modules.html:8
+msgid "Dashboard"
+msgstr ""
+
+#: templates/modules/api_security.html:9
+msgid "#20 API Security"
+msgstr ""
+
+#: templates/modules/api_security.html:14 templates/pages/about.html:188
+#: templates/pages/api.html:19
+msgid "API Security"
+msgstr ""
+
+#: templates/modules/api_security.html:15
+msgid "Laboratório de segurança de API REST — IDOR, JWT, Rate Limit"
+msgstr ""
+
+#: templates/modules/api_security.html:21
+#: templates/modules/api_versioning.html:21
+#: templates/modules/auth_bypass.html:21 templates/modules/brute_force.html:20
+#: templates/modules/captcha.html:21
+#: templates/modules/command_injection.html:21 templates/modules/crypto.html:21
+#: templates/modules/csp_bypass.html:21 templates/modules/csrf.html:21
+#: templates/modules/file_inclusion.html:21
+#: templates/modules/file_upload.html:21 templates/modules/js_attacks.html:21
+#: templates/modules/mass_assignment.html:21
+#: templates/modules/open_redirect.html:21 templates/modules/sqli.html:21
+#: templates/modules/sqli_blind.html:21 templates/modules/weak_session.html:21
+#: templates/modules/xss_dom.html:21 templates/modules/xss_reflected.html:21
+#: templates/modules/xss_stored.html:21
+msgid "&lt;/&gt; View Source"
+msgstr ""
+
+#: templates/modules/api_security.html:37
+msgid "User ID alvo"
+msgstr ""
+
+#: templates/modules/api_security.html:41
+msgid "Consultar"
+msgstr ""
+
+#: templates/modules/api_security.html:54
+#: templates/modules/api_versioning.html:65
+#: templates/modules/auth_bypass.html:50 templates/modules/captcha.html:53
+#: templates/modules/command_injection.html:48 templates/modules/crypto.html:52
+#: templates/modules/csp_bypass.html:58 templates/modules/csrf.html:51
+#: templates/modules/file_inclusion.html:49
+#: templates/modules/file_upload.html:48 templates/modules/js_attacks.html:59
+#: templates/modules/mass_assignment.html:51
+#: templates/modules/open_redirect.html:49 templates/modules/sqli.html:62
+#: templates/modules/sqli_blind.html:49 templates/modules/weak_session.html:47
+#: templates/modules/xss_dom.html:58 templates/modules/xss_reflected.html:55
+#: templates/modules/xss_stored.html:69
+msgid "Como funciona"
+msgstr ""
+
+#: templates/modules/api_security.html:62
+msgid "Endpoints REST disponíveis (via API Security module):"
+msgstr ""
+
+#: templates/modules/api_security.html:64
+msgid "GET /api/users/&lt;id&gt; — IDOR"
+msgstr ""
+
+#: templates/modules/api_security.html:65
+msgid "POST /api/login — JWT"
+msgstr ""
+
+#: templates/modules/api_security.html:66
+msgid "GET /api/secrets — dados sensíveis"
+msgstr ""
+
+#: templates/modules/api_versioning.html:9
+msgid "#18 API Versioning"
+msgstr ""
+
+#: templates/modules/api_versioning.html:14
+msgid "API Versioning"
+msgstr ""
+
+#: templates/modules/api_versioning.html:15
+msgid "Acesso a dados sensíveis via versão de API obsoleta"
+msgstr ""
+
+#: templates/modules/api_versioning.html:37
+msgid "Versão da API"
+msgstr ""
+
+#: templates/modules/api_versioning.html:40
+msgid "v1 (legada)"
+msgstr ""
+
+#: templates/modules/api_versioning.html:41
+msgid "v2 (atual)"
+msgstr ""
+
+#: templates/modules/api_versioning.html:48 templates/modules/sqli.html:45
+msgid "ID"
+msgstr ""
+
+#: templates/modules/api_versioning.html:48 templates/modules/sqli.html:37
+#: templates/modules/sqli_blind.html:38
+msgid "User ID"
+msgstr ""
+
+#: templates/modules/api_versioning.html:48
+msgid "Token"
+msgstr ""
+
+#: templates/modules/api_versioning.html:48
+msgid "Version"
+msgstr ""
+
+#: templates/modules/auth_bypass.html:9
+msgid "#15 Authorisation Bypass"
+msgstr ""
+
+#: templates/modules/auth_bypass.html:14
+msgid "Authorisation Bypass"
+msgstr ""
+
+#: templates/modules/auth_bypass.html:15
+msgid "Acesso indevido a área administrativa"
+msgstr ""
+
+#: templates/modules/auth_bypass.html:37
+msgid "CONCEDIDO"
+msgstr ""
+
+#: templates/modules/auth_bypass.html:43
+msgid "NEGADO"
+msgstr ""
+
+#: templates/modules/brute_force.html:9 templates/modules/brute_force.html:14
+msgid "Brute Force"
+msgstr ""
+
+#: templates/modules/brute_force.html:15
+msgid ""
+"Quebra de autenticação por força bruta — ataque de dicionário contra "
+"formulário de login."
+msgstr ""
+
+#: templates/modules/brute_force.html:29
+msgid "Laboratório"
+msgstr ""
+
+#: templates/modules/brute_force.html:45
+msgid "password"
+msgstr ""
+
+#: templates/modules/brute_force.html:50
+msgid "Login"
+msgstr ""
+
+#: templates/modules/brute_force.html:63
+msgid "Sem rate limit, sem lockout, sem delay. Automatize com hydra ou ffuf."
+msgstr ""
+
+#: templates/modules/brute_force.html:65
+msgid ""
+"Sleep de 2s após falha. Mitiga velocidade — brute-force lento ainda "
+"funciona."
+msgstr ""
+
+#: templates/modules/brute_force.html:67
+msgid ""
+"Token CSRF exigido. Sem lockout — automatização com extração de token "
+"ainda funciona."
+msgstr ""
+
+#: templates/modules/brute_force.html:69
+msgid ""
+"Lockout após 3 tentativas em 15min + audit log por IP. Brute-force "
+"inviável."
+msgstr ""
+
+#: templates/modules/brute_force.html:73
+msgid "Usuários disponíveis no lab:"
+msgstr ""
+
+#: templates/modules/captcha.html:9
+msgid "#6 Insecure CAPTCHA"
+msgstr ""
+
+#: templates/modules/captcha.html:14
+msgid "Insecure CAPTCHA"
+msgstr ""
+
+#: templates/modules/captcha.html:15
+msgid "Bypass de mecanismo de CAPTCHA"
+msgstr ""
+
+#: templates/modules/captcha.html:37
+msgid "Desafio"
+msgstr ""
+
+#: templates/modules/captcha.html:42
+msgid "Resposta"
+msgstr ""
+
+#: templates/modules/captcha.html:43
+msgid "Ex: 7"
+msgstr ""
+
+#: templates/modules/captcha.html:45 templates/modules/sqli_blind.html:41
+msgid "Verificar"
+msgstr ""
+
+#: templates/modules/command_injection.html:9
+msgid "#2 Command Injection"
+msgstr ""
+
+#: templates/modules/command_injection.html:14
+msgid "Command Injection"
+msgstr ""
+
+#: templates/modules/command_injection.html:15
+msgid "Injeção de comandos via entrada controlada"
+msgstr ""
+
+#: templates/modules/command_injection.html:37
+msgid "Comando / Host"
+msgstr ""
+
+#: templates/modules/command_injection.html:40
+msgid "Executar"
+msgstr ""
+
+#: templates/modules/crypto.html:9
+msgid "#17 Cryptography"
+msgstr ""
+
+#: templates/modules/crypto.html:14 templates/submissions/submit.html:53
+msgid "Cryptography"
+msgstr ""
+
+#: templates/modules/crypto.html:15
+msgid "Dados considerados protegidos — estude as fraquezas de cada abordagem"
+msgstr ""
+
+#: templates/modules/crypto.html:37
+msgid "Chave (secret key)"
+msgstr ""
+
+#: templates/modules/crypto.html:39
+msgid "flag"
+msgstr ""
+
+#: templates/modules/crypto.html:40
+msgid "admin_password"
+msgstr ""
+
+#: templates/modules/crypto.html:41
+msgid "api_key"
+msgstr ""
+
+#: templates/modules/crypto.html:44
+msgid "Decodificar"
+msgstr ""
+
+#: templates/modules/csp_bypass.html:9
+msgid "#13 CSP Bypass"
+msgstr ""
+
+#: templates/modules/csp_bypass.html:14
+msgid "CSP Bypass"
+msgstr ""
+
+#: templates/modules/csp_bypass.html:15
+msgid "Bypass de Content Security Policy"
+msgstr ""
+
+#: templates/modules/csp_bypass.html:37
+msgid "Payload"
+msgstr ""
+
+#: templates/modules/csp_bypass.html:41
+msgid "Testar"
+msgstr ""
+
+#: templates/modules/csrf.html:9
+msgid "#3 CSRF"
+msgstr ""
+
+#: templates/modules/csrf.html:14
+msgid "CSRF"
+msgstr ""
+
+#: templates/modules/csrf.html:15
+msgid "Cross-Site Request Forgery — requisição forjada entre sites"
+msgstr ""
+
+#: templates/modules/csrf.html:37
+msgid "Novo username"
+msgstr ""
+
+#: templates/modules/csrf.html:38
+msgid "novo_nome"
+msgstr ""
+
+#: templates/modules/csrf.html:43
+msgid "Alterar"
+msgstr ""
+
+#: templates/modules/file_inclusion.html:9
+msgid "#4 File Inclusion"
+msgstr ""
+
+#: templates/modules/file_inclusion.html:14
+msgid "File Inclusion"
+msgstr ""
+
+#: templates/modules/file_inclusion.html:15
+msgid "Leitura de arquivos via parâmetro — Local File Inclusion"
+msgstr ""
+
+#: templates/modules/file_inclusion.html:37
+#: templates/modules/file_upload.html:37
+#: templates/submissions/submission_detail.html:149
+msgid "Arquivo"
+msgstr ""
+
+#: templates/modules/file_inclusion.html:39
+msgid "about.txt"
+msgstr ""
+
+#: templates/modules/file_inclusion.html:41
+msgid "Carregar"
+msgstr ""
+
+#: templates/modules/file_upload.html:9
+msgid "#5 File Upload"
+msgstr ""
+
+#: templates/modules/file_upload.html:14
+msgid "File Upload"
+msgstr ""
+
+#: templates/modules/file_upload.html:15
+msgid "Upload inseguro — envie arquivos arbitrários ao servidor"
+msgstr ""
+
+#: templates/modules/file_upload.html:40
+#: templates/modules/mass_assignment.html:41 templates/modules/xss_dom.html:40
+#: templates/modules/xss_reflected.html:41
+msgid "Enviar"
+msgstr ""
+
+#: templates/modules/js_attacks.html:9
+msgid "#14 JavaScript Attacks"
+msgstr ""
+
+#: templates/modules/js_attacks.html:14
+msgid "JavaScript Attacks"
+msgstr ""
+
+#: templates/modules/js_attacks.html:15
+msgid "Manipulação de valores client-side"
+msgstr ""
+
+#: templates/modules/js_attacks.html:37
+msgid "Produto"
+msgstr ""
+
+#: templates/modules/js_attacks.html:39
+msgid "Produto A — R$ 99,90"
+msgstr ""
+
+#: templates/modules/js_attacks.html:40
+msgid "Produto B — R$ 199,90"
+msgstr ""
+
+#: templates/modules/js_attacks.html:41
+msgid "Produto C — R$ 49,90"
+msgstr ""
+
+#: templates/modules/js_attacks.html:46
+msgid "Preço (client-side)"
+msgstr ""
+
+#: templates/modules/js_attacks.html:51
+msgid "Comprar"
+msgstr ""
+
+#: templates/modules/mass_assignment.html:9
+msgid "#19 Mass Assignment"
+msgstr ""
+
+#: templates/modules/mass_assignment.html:14 templates/pages/api.html:92
+msgid "Mass Assignment"
+msgstr ""
+
+#: templates/modules/mass_assignment.html:15
+msgid "Manipulação de campos via JSON — elevação de privilégio"
+msgstr ""
+
+#: templates/modules/mass_assignment.html:37
+msgid "JSON Payload"
+msgstr ""
+
+#: templates/modules/open_redirect.html:9
+msgid "#16 Open HTTP Redirect"
+msgstr ""
+
+#: templates/modules/open_redirect.html:14
+msgid "Open HTTP Redirect"
+msgstr ""
+
+#: templates/modules/open_redirect.html:15
+msgid "Redirecionamento controlado pelo usuário"
+msgstr ""
+
+#: templates/modules/open_redirect.html:37
+msgid "URL destino"
+msgstr ""
+
+#: templates/modules/open_redirect.html:39
+msgid "https://example.com"
+msgstr ""
+
+#: templates/modules/open_redirect.html:41
+msgid "Redirecionar"
+msgstr ""
+
+#: templates/modules/open_redirect.html:44
+msgid ""
+"O servidor irá redirecionar para a URL informada (observe o comportamento"
+" em cada nível)."
+msgstr ""
+
+#: templates/modules/sqli.html:9
+msgid "#7 SQL Injection"
+msgstr ""
+
+#: templates/modules/sqli.html:14
+msgid "SQL Injection"
+msgstr ""
+
+#: templates/modules/sqli.html:15
+msgid "Manipulação de consultas SQL via entrada controlada"
+msgstr ""
+
+#: templates/modules/sqli.html:40
+msgid "Buscar"
+msgstr ""
+
+#: templates/modules/sqli.html:45
+msgid "Username"
+msgstr ""
+
+#: templates/modules/sqli.html:45
+msgid "Role"
+msgstr ""
+
+#: templates/modules/sqli.html:45
+msgid "Extra"
+msgstr ""
+
+#: templates/modules/sqli_blind.html:9
+msgid "#8 SQL Injection (Blind)"
+msgstr ""
+
+#: templates/modules/sqli_blind.html:14
+msgid "SQL Injection (Blind)"
+msgstr ""
+
+#: templates/modules/sqli_blind.html:15
+msgid "Boolean-based e time-based blind SQL Injection"
+msgstr ""
+
+#: templates/modules/weak_session.html:9
+msgid "#9 Weak Session IDs"
+msgstr ""
+
+#: templates/modules/weak_session.html:14
+msgid "Weak Session IDs"
+msgstr ""
+
+#: templates/modules/weak_session.html:15
+msgid "Geração de IDs de sessão previsíveis ou manipuláveis"
+msgstr ""
+
+#: templates/modules/weak_session.html:36
+msgid "ID gerado para esta requisição:"
+msgstr ""
+
+#: templates/modules/weak_session.html:42
+msgid "Gerar novo ID"
+msgstr ""
+
+#: templates/modules/xss_dom.html:9
+msgid "#10 XSS (DOM)"
+msgstr ""
+
+#: templates/modules/xss_dom.html:14
+msgid "XSS (DOM)"
+msgstr ""
+
+#: templates/modules/xss_dom.html:15
+msgid "Cross-Site Scripting via manipulação do DOM"
+msgstr ""
+
+#: templates/modules/xss_dom.html:37 templates/modules/xss_reflected.html:37
+#: templates/modules/xss_stored.html:37 templates/modules/xss_stored.html:51
+msgid "Nome"
+msgstr ""
+
+#: templates/modules/xss_dom.html:44
+msgid "Output (DOM):"
+msgstr ""
+
+#: templates/modules/xss_reflected.html:9
+msgid "#11 XSS (Reflected)"
+msgstr ""
+
+#: templates/modules/xss_reflected.html:14
+msgid "XSS (Reflected)"
+msgstr ""
+
+#: templates/modules/xss_reflected.html:15
+msgid "XSS refletido via parâmetros HTTP"
+msgstr ""
+
+#: templates/modules/xss_stored.html:9
+msgid "#12 XSS (Stored)"
+msgstr ""
+
+#: templates/modules/xss_stored.html:14
+msgid "XSS (Stored)"
+msgstr ""
+
+#: templates/modules/xss_stored.html:15
+msgid "XSS persistido no guestbook"
+msgstr ""
+
+#: templates/modules/xss_stored.html:38
+msgid "Seu nome"
+msgstr ""
+
+#: templates/modules/xss_stored.html:41 templates/modules/xss_stored.html:51
+msgid "Mensagem"
+msgstr ""
+
+#: templates/modules/xss_stored.html:42
+msgid "Sua mensagem..."
+msgstr ""
+
+#: templates/modules/xss_stored.html:44
+msgid "Postar"
+msgstr ""
+
+#: templates/modules/xss_stored.html:48
+msgid "Entradas do guestbook:"
+msgstr ""
+
+#: templates/modules/xss_stored.html:63
+msgid "Sem entradas ainda."
+msgstr ""
+
+#: templates/pages/about.html:15
+msgid "DL"
+msgstr ""
+
+#: templates/pages/about.html:25
+msgid "Dione Lima"
+msgstr ""
+
+#: templates/pages/about.html:30
+msgid "An Offensive Security Specialist &amp; Red Teamer based in Brazil 🇧🇷."
+msgstr ""
+
+#: templates/pages/about.html:32
+msgid ""
+"I specialize in penetration testing, vulnerability research, exploit "
+"development, and building robust offensive &amp; defensive security "
+"tooling with Python, Linux, and modern systems."
+msgstr ""
+
+#: templates/pages/about.html:33
+msgid ""
+"If you need a security specialist or developer to test, break, or harden "
+"your infrastructure, I'm here to help."
+msgstr ""
+
+#: templates/pages/about.html:40
+msgid "Book a call"
+msgstr ""
+
+#: templates/pages/about.html:43
+msgid "E"
+msgstr ""
+
+#: templates/pages/about.html:44
+msgid "Send an email"
+msgstr ""
+
+#: templates/pages/about.html:51
+msgid "Available for new projects, let's talk!"
+msgstr ""
+
+#: templates/pages/about.html:56
+msgid "TECH STACK"
+msgstr ""
+
+#: templates/pages/about.html:57
+msgid "The tech stack I use for my personal and client work:"
+msgstr ""
+
+#: templates/pages/about.html:66
+msgid "Python"
+msgstr ""
+
+#: templates/pages/about.html:88
+msgid "Bash / Shell"
+msgstr ""
+
+#: templates/pages/about.html:111
+msgid "Flask"
+msgstr ""
+
+#: templates/pages/about.html:121
+msgid "SQLite &amp; Postgres"
+msgstr ""
+
+#: templates/pages/about.html:133
+msgid "Red Team &amp; Pentest"
+msgstr ""
+
+#: templates/pages/about.html:159
+msgid "TypeScript / JS"
+msgstr ""
+
+#: templates/pages/about.html:168
+msgid "HTML5 &amp; CSS3"
+msgstr ""
+
+#: templates/pages/about.html:176
+msgid "Git &amp; GitHub"
+msgstr ""
+
+#: templates/pages/about.html:195
+msgid "PROJECTS"
+msgstr ""
+
+#: templates/pages/about.html:196
+msgid "These are my personal projects, both past and ongoing:"
+msgstr ""
+
+#: templates/pages/about.html:211 templates/pages/about.html:228
+#: templates/pages/about.html:245 templates/pages/about.html:261
+#: templates/pages/about.html:278 templates/pages/about.html:295
+msgid "Active"
+msgstr ""
+
+#: templates/pages/about.html:214
+msgid ""
+"Designed Unsecure Network Operations — Laboratório deliberadamente "
+"vulnerável com 20 módulos práticos, 4 níveis de evasão e Academy técnica."
+msgstr ""
+
+#: templates/pages/about.html:226
+msgid "JWT-Fox"
+msgstr ""
+
+#: templates/pages/about.html:231
+msgid ""
+"Ferramenta focada em testes de segurança, validação criptográfica e "
+"análise de tokens JSON Web Tokens (JWT)."
+msgstr ""
+
+#: templates/pages/about.html:243
+msgid "unix_crack"
+msgstr ""
+
+#: templates/pages/about.html:248
+msgid ""
+"Quebrador de hash Unix de alta precisão para extração, auditoria e quebra"
+" no formato shadow."
+msgstr ""
+
+#: templates/pages/about.html:259
+msgid "hash_dec"
+msgstr ""
+
+#: templates/pages/about.html:264
+msgid ""
+"Decodificador de hash composto com pipeline multi-etapas MD5 → Base64 → "
+"SHA1."
+msgstr ""
+
+#: templates/pages/about.html:276
+msgid "banner_grab"
+msgstr ""
+
+#: templates/pages/about.html:281
+msgid ""
+"Utilitário leve para identificação de serviços, reconhecimento de portas "
+"e captura de banners em redes."
+msgstr ""
+
+#: templates/pages/about.html:293
+msgid "whois_tool"
+msgstr ""
+
+#: templates/pages/about.html:298
+msgid ""
+"Ferramenta de consulta WHOIS com suporte a automação para análise de "
+"listas múltiplas de domínios."
+msgstr ""
+
+#: templates/pages/about.html:307
+msgid "FIND ME ON"
+msgstr ""
+
+#: templates/pages/about.html:308
+msgid "You can find me on the following social platforms:"
+msgstr ""
+
+#: templates/pages/about.html:324
+msgid "LinkedIn"
+msgstr ""
+
+#: templates/pages/about.html:332
+msgid "X/Twitter"
+msgstr ""
+
+#: templates/pages/about.html:340
+msgid "YouTube"
+msgstr ""
+
+#: templates/pages/about.html:347
+msgid "SECURITY LABS, CTF &amp; APPLIED HACKING"
+msgstr ""
+
+#: templates/pages/about.html:348
+msgid ""
+"Ambientes e plataformas práticas onde aprimoro técnicas de exploração, "
+"pivoting e quebra de premissas:"
+msgstr ""
+
+#: templates/pages/about.html:360
+msgid "Hack The Box"
+msgstr ""
+
+#: templates/pages/about.html:362
+msgid "Pwning &amp; AD"
+msgstr ""
+
+#: templates/pages/about.html:365
+msgid ""
+"Resolução contínua de máquinas Linux e Windows. Exploração encadeada de "
+"vetores web, escalação local de privilégios e ataques em domínios "
+"corporativos Active Directory."
+msgstr ""
+
+#: templates/pages/about.html:376
+msgid "TryHackMe"
+msgstr ""
+
+#: templates/pages/about.html:378
+msgid "Hands-On Labs"
+msgstr ""
+
+#: templates/pages/about.html:381
+msgid ""
+"Prática intensiva em trilhas ofensivas de Web Exploitation, Red Teaming, "
+"evasão de defesas e consolidação de metodologias aplicadas em cenários "
+"realistas."
+msgstr ""
+
+#: templates/pages/about.html:394
+msgid "VulnHub"
+msgstr ""
+
+#: templates/pages/about.html:396
+msgid "Boot2Root Lover"
+msgstr ""
+
+#: templates/pages/about.html:399
+msgid ""
+"Apreciação profunda por máquinas virtuais standalone e auditorias "
+"boot2root locais. A cultura hacker investigativa do VulnHub serviu como "
+"principal inspiração para a concepção do DUNO."
+msgstr ""
+
+#: templates/pages/about.html:411
+msgid "CTF Competitions"
+msgstr ""
+
+#: templates/pages/about.html:413
+msgid "Web &amp; Exploit"
+msgstr ""
+
+#: templates/pages/about.html:416
+msgid ""
+"Competições de Capture The Flag e análise de vulnerabilidades em código "
+"real. Foco em Web Hacking, criptoanálise, engenharia reversa e "
+"desenvolvimento de ferramentas de auditoria."
+msgstr ""
+
+#: templates/pages/about.html:426
+msgid ""
+"Disponível para testes de intrusão, simulações Red Team e projetos de "
+"engenharia."
+msgstr ""
+
+#: templates/pages/about.html:431
+msgid "eudionelima@gmail.com"
+msgstr ""
+
+#: templates/pages/about.html:435
+msgid "github.com/eudionelima"
+msgstr ""
+
+#: templates/pages/about.html:443
+msgid "© 2026 Built with ❤️ by Dione Lima"
+msgstr ""
+
+#: templates/pages/about.html:444
+msgid "open-source ⑂"
+msgstr ""
+
+#: templates/pages/academy_hub.html:11
+msgid "Academy"
+msgstr ""
+
+#: templates/pages/academy_hub.html:18
+msgid "SECURITY KNOWLEDGE & DEFENSIVE CRAFT"
+msgstr ""
+
+#: templates/pages/academy_hub.html:20
+msgid "DUNO ACADEMY"
+msgstr ""
+
+#: templates/pages/academy_hub.html:22
+msgid "Understand the vulnerability. Break the assumption. Build the defense."
+msgstr ""
+
+#: templates/pages/academy_hub.html:25
+msgid ""
+"Uma base de conhecimento técnica e didática que conecta a teoria à "
+"prática real.\n"
+"      Aprenda o conceito, analise o código-fonte, teste seus "
+"conhecimentos com quizzes interativos e explore a defesa em 20 cenários "
+"reais."
+msgstr ""
+
+#: templates/pages/academy_hub.html:30
+msgid "START LEARNING"
+msgstr ""
+
+#: templates/pages/academy_hub.html:34
+msgid "PRATICAR NOS LABS →"
+msgstr ""
+
+#: templates/pages/academy_hub.html:43
+msgid "STUDENT PROGRESS"
+msgstr ""
+
+#: templates/pages/academy_hub.html:44
+msgid "Seu Progresso na Academy"
+msgstr ""
+
+#: templates/pages/academy_hub.html:46
+msgid ""
+"Complete as lições e responda aos quizzes técnicos para desbloquear "
+"maestria conceitual."
+msgstr ""
+
+#: templates/pages/academy_hub.html:64
+msgid "CURATED PATHS"
+msgstr ""
+
+#: templates/pages/academy_hub.html:65
+msgid "Trilhas de Aprendizado"
+msgstr ""
+
+#: templates/pages/academy_hub.html:66
+msgid ""
+"Caminhos estruturados para dominar as superfícies de ataque da web "
+"moderna."
+msgstr ""
+
+#: templates/pages/academy_hub.html:129
+msgid "KNOWLEDGE REPOSITORY"
+msgstr ""
+
+#: templates/pages/academy_hub.html:130
+msgid "Grade Completa de Conteúdo"
+msgstr ""
+
+#: templates/pages/academy_hub.html:131
+msgid ""
+"20 capítulos pedagógicos dissecando causas, anatomia, código real e "
+"defesas."
+msgstr ""
+
+#: templates/pages/academy_hub.html:138
+msgid "Visualização em Grade"
+msgstr ""
+
+#: templates/pages/academy_hub.html:140
+msgid "Grade"
+msgstr ""
+
+#: templates/pages/academy_hub.html:142
+msgid "Quadro de Estudos Drag & Drop"
+msgstr ""
+
+#: templates/pages/academy_hub.html:144
+msgid "Quadro de Estudos"
+msgstr ""
+
+#: templates/pages/academy_hub.html:145
+msgid "Novo: Quadro Interativo"
+msgstr ""
+
+#: templates/pages/academy_hub.html:155
+msgid "SINALIZADOR TÁTICO · GUIA"
+msgstr ""
+
+#: templates/pages/academy_hub.html:160
+msgid "Organize sua Rota com o Quadro de Estudos"
+msgstr ""
+
+#: templates/pages/academy_hub.html:161
+msgid "Acompanhe seu domínio prático em cibersegurança de forma interativa:"
+msgstr ""
+
+#: templates/pages/academy_hub.html:167
+msgid ""
+"<strong>Modo Kanban:</strong> Alterne para o <em>Quadro de Estudos</em> "
+"para enxergar seus módulos por colunas de status."
+msgstr ""
+
+#: templates/pages/academy_hub.html:173
+msgid ""
+"<strong>Drag & Drop:</strong> Segure os cards pelo ícone <code class"
+"=\"tour-code-handle\">⋮⋮</code> e mova entre <em>A Estudar</em>, <em>Em "
+"Progresso</em> e <em>Dominado</em>."
+msgstr ""
+
+#: templates/pages/academy_hub.html:179
+msgid ""
+"<strong>Evolução em Tempo Real:</strong> Cada módulo arrastado para "
+"<em>Dominado</em> atualiza a barra de progresso do aluno automaticamente."
+msgstr ""
+
+#: templates/pages/academy_hub.html:186
+msgid "Testar Quadro Agora"
+msgstr ""
+
+#: templates/pages/academy_hub.html:190
+msgid "Entendi, continuar na grade"
+msgstr ""
+
+#: templates/pages/academy_hub.html:196
+msgid "Como funciona o Quadro de Estudos"
+msgstr ""
+
+#: templates/pages/academy_hub.html:198
+msgid "Dica do Quadro"
+msgstr ""
+
+#: templates/pages/academy_hub.html:206
+msgid "Filtrar por conceito (ex: SQL, XSS, RCE, CSRF)..."
+msgstr ""
+
+#: templates/pages/academy_hub.html:213 templates/pages/modules.html:57
+msgid "Todos (20)"
+msgstr ""
+
+#: templates/pages/academy_hub.html:214 templates/pages/modules.html:58
+msgid "Injeção & DB (5)"
+msgstr ""
+
+#: templates/pages/academy_hub.html:215
+msgid "Autenticação & Sessão (4)"
+msgstr ""
+
+#: templates/pages/academy_hub.html:216
+msgid "Client-Side & Browser (5)"
+msgstr ""
+
+#: templates/pages/academy_hub.html:217 templates/pages/modules.html:61
+msgid "Acesso & Cripto (3)"
+msgstr ""
+
+#: templates/pages/academy_hub.html:218
+msgid "APIs & Lógica (3)"
+msgstr ""
+
+#: templates/pages/academy_hub.html:232
+msgid "Arrastar módulo"
+msgstr ""
+
+#: templates/pages/academy_hub.html:236
+msgid "○ PENDENTE"
+msgstr ""
+
+#: templates/pages/academy_hub.html:264
+msgid "LER CAPÍTULO COMPLETO"
+msgstr ""
+
+#: templates/pages/academy_hub.html:267
+msgid "Ir direto para o laboratório prático"
+msgstr ""
+
+#: templates/pages/academy_hub.html:268
+msgid "LAB"
+msgstr ""
+
+#: templates/pages/academy_hub.html:282
+msgid "A ESTUDAR"
+msgstr ""
+
+#: templates/pages/academy_hub.html:294
+msgid "EM PROGRESSO"
+msgstr ""
+
+#: templates/pages/academy_hub.html:306
+msgid "DOMINADO (CONCLUÍDO)"
+msgstr ""
+
+#: templates/pages/academy_hub.html:514
+msgid "Arrastar para outra coluna"
+msgstr ""
+
+#: templates/pages/academy_hub.html:520
+msgid "Estudar →"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:9
+msgid "← Academy"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:24
+msgid "← Voltar à Academy"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:41
+msgid "ÍNDICE DO CAPÍTULO"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:42
+msgid "01 Overview"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:43
+msgid "02 Por que acontece"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:44
+msgid "03 Como funciona"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:45
+msgid "04 Anatomia"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:46
+msgid "05 Como reconhecer"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:47
+msgid "06 Conceito de ataque"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:48
+msgid "07 Código vulnerável"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:49
+msgid "08 Níveis de segurança"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:50
+msgid "09 Before & After"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:51
+msgid "10 Defesa e correção"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:52
+msgid "11 Erros comuns"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:53
+msgid "12 Quiz do capítulo"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:54
+msgid "13 O que dominar"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:55
+msgid "14 Praticar no Lab"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:64
+msgid "Marcar como Concluído"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:109
+msgid "Por que acontece?"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:120
+msgid "Como funciona tecnicamente"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:127
+msgid "FLUXO DE EXECUÇÃO DA VULNERABILIDADE"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:148
+msgid "Anatomia do Padrão Vulnerável"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:151
+msgid ""
+"Dissecando o ciclo de dados para que você reconheça este padrão em "
+"qualquer codebase:"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:167
+msgid "Como reconhecer a vulnerabilidade"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:178
+msgid "Conceito de Exploração no Laboratório"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:189
+msgid "Código-Fonte Vulnerável"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:192
+msgid "Trecho real do controller implementado no laboratório correspondente:"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:198
+#: templates/pages/academy_lesson.html:280
+msgid "Copiar"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:210
+msgid "Comportamento nos 4 Níveis de Segurança"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:236
+msgid "Before & After (Inseguro vs Seguro)"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:239
+msgid ""
+"A anatomia da diferença entre um código que assume premissas e um código "
+"resiliente:"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:245
+msgid "✕ BEFORE (VULNERÁVEL)"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:250
+msgid ""
+"Concatenação e premissas frágeis permitem injeção direta de sintaxe pelo "
+"cliente."
+msgstr ""
+
+#: templates/pages/academy_lesson.html:256
+msgid "✓ AFTER (SEGURO)"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:261
+msgid "Separação estrita entre instruções de código e dados dinâmicos do usuário."
+msgstr ""
+
+#: templates/pages/academy_lesson.html:271
+msgid "Defesa & Implementação Segura"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:292
+msgid "Erros Comuns de Implementação"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:317
+msgid "Check Your Knowledge"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:321
+msgid "TESTE DE FIXAÇÃO TÉCNICA"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:336
+msgid "VERIFICAR RESPOSTA"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:345
+msgid "EXERCÍCIO TÁTICO • ARRASTAR E SOLTAR"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:346
+msgid "Reconstituição da Cadeia de Exploração"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:348
+msgid ""
+"Arraste e solte os 4 passos abaixo para ordenar a sequência cronológica "
+"correta do fluxo de ataque:"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:357
+msgid "Arrastar para reordenar"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:367
+msgid "VALIDAR SEQUÊNCIA TÁTICA"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:370
+msgid "EMBARALHAR NOVAMENTE"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:383
+msgid "O que você deve dominar"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:401
+msgid "Prática no Laboratório"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:405
+msgid "CYCLE: ACADEMY → LAB → CODE"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:406
+msgid "Pronto para colocar em prática?"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:423
+msgid "← Lição Anterior"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:432
+msgid "Próxima Lição →"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:525
+msgid "✓ RESPOSTA CORRETA"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:533
+msgid "✕ NÃO EXATAMENTE"
+msgstr ""
+
+#: templates/pages/academy_lesson.html:534
+msgid ""
+"Revise as seções \"Como funciona\" e \"Defesa & Implementação Segura\" "
+"acima para consolidar a fundamentação correta."
+msgstr ""
+
+#: templates/pages/api.html:10
+msgid "API Security Reference"
+msgstr ""
+
+#: templates/pages/api.html:17
+msgid "OWASP API Security Top 10 • Blueprint /api/*"
+msgstr ""
+
+#: templates/pages/api.html:21
+msgid ""
+"As APIs representam a principal superfície de ataque em aplicações web e "
+"microsserviços modernos.\n"
+"      Explore os 7 vetores críticos de falhas em APIs REST e aprenda a "
+"validar seus endpoints contra abusos."
+msgstr ""
+
+#: templates/pages/api.html:28
+msgid "Lab BOLA / IDOR →"
+msgstr ""
+
+#: templates/pages/api.html:32
+msgid "Lab Versioning →"
+msgstr ""
+
+#: templates/pages/api.html:36
+msgid "Lab Mass Assignment →"
+msgstr ""
+
+#: templates/pages/api.html:46
+msgid "API02"
+msgstr ""
+
+#: templates/pages/api.html:47
+msgid "Authentication"
+msgstr ""
+
+#: templates/pages/api.html:50
+msgid ""
+"Mecanismos de autenticação de API implementados de forma deficiente "
+"permitem que atacantes comprometam tokens de autenticação ou explorem "
+"falhas de implementação para assumir a identidade de outros usuários."
+msgstr ""
+
+#: templates/pages/api.html:61
+msgid "JWT SEC"
+msgstr ""
+
+#: templates/pages/api.html:62
+msgid "JSON Web Tokens (JWT)"
+msgstr ""
+
+#: templates/pages/api.html:76
+msgid "API01 — TOP 1"
+msgstr ""
+
+#: templates/pages/api.html:77
+msgid "BOLA / IDOR"
+msgstr ""
+
+#: templates/pages/api.html:91
+msgid "API06"
+msgstr ""
+
+#: templates/pages/api.html:106
+msgid "API04"
+msgstr ""
+
+#: templates/pages/api.html:107
+msgid "Rate Limiting & Throttling"
+msgstr ""
+
+#: templates/pages/api.html:110
+msgid ""
+"Ausência de restrições quanto ao número de requisições que um cliente "
+"pode disparar em determinado intervalo de tempo. Viabiliza ataques de "
+"força bruta, raspagem de dados em massa (scraping) e negação de serviço."
+msgstr ""
+
+#: templates/pages/api.html:121
+msgid "API09"
+msgstr ""
+
+#: templates/pages/api.html:122
+msgid "Improper Versioning"
+msgstr ""
+
+#: templates/pages/api.html:136
+msgid "API03"
+msgstr ""
+
+#: templates/pages/api.html:137
+msgid "Secrets & Data Leakage"
+msgstr ""
+
+#: templates/pages/api.html:140
+msgid ""
+"Respostas de API que expõem inadvertidamente segredos operacionais, "
+"tokens de provedores externos, campos confidenciais de usuários (CPF, "
+"senhas hasheadas) ou detalhes internos de depuração do sistema."
+msgstr ""
+
+#: templates/pages/api.html:152
+msgid "Exemplo de Ataque Prático via Terminal (cURL)"
+msgstr ""
+
+#: templates/pages/api.html:153
+msgid "REST POC"
+msgstr ""
+
+#: templates/pages/api.html:156
+msgid ""
+"Você pode interagir diretamente com os endpoints de API do DUNO através "
+"do seu terminal ou Postman:"
+msgstr ""
+
+#: templates/pages/api.html:161
+msgid "1. Exploração BOLA / IDOR (#20)"
+msgstr ""
+
+#: templates/pages/api.html:168
+msgid "2. Exploração de Versão Legada (#18)"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:39
+msgid "sql-injection"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:40
+msgid "auth-bypass"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:42
+msgid "xss"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:43
+msgid "cookie-theft"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:45
+msgid "jwt"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:46
+msgid "token-forge"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:48
+msgid "ssrf"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:49
+msgid "cloud-metadata"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:51
+msgid "idor"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:52
+msgid "access-control"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:54
+msgid "cve"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:55
+#: templates/pages/challenge_detail.html:70
+msgid "exploit"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:57
+msgid "dfir"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:58
+msgid "memory-dump"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:60
+msgid "crypto"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:61
+msgid "decode"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:63
+msgid "ssti"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:64
+msgid "rce"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:66
+msgid "graphql"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:67
+msgid "introspection"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:69
+msgid "pentest"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:106
+#: templates/pages/walkthrough.html:134
+msgid "Time to Start"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:115
+msgid "Alvo Ativo:"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:121
+msgid "TTL: ~60m"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:129
+msgid "FLAG SUBMISSION"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:134
+msgid "Desafio Concluído!"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:148
+msgid "VALIDAR"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:164
+msgid "EXPLORE"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:165
+msgid "RECON"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:166
+msgid "EXPLOIT"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:167
+msgid "FLAG"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:247
+msgid "SOLVES"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:256
+msgid "WALKTHROUGH"
+msgstr ""
+
+#: templates/pages/challenge_detail.html:273
+msgid "← Voltar aos Desafios"
+msgstr ""
+
+#: templates/pages/challenges.html:18
+msgid "LABORATÓRIO CTF • EVERSEC GRAVEYARD"
+msgstr ""
+
+#: templates/pages/challenges.html:20
+msgid "DESAFIOS CTF"
+msgstr ""
+
+#: templates/pages/challenges.html:22
+msgid "Ataque prático em alvos reais isolados em containers Docker dedicados."
+msgstr ""
+
+#: templates/pages/challenges.html:25
+msgid ""
+"Pratique exploração ofensiva em cenários completos importados do ctf-"
+"challenge. Cada desafio inicializa\n"
+"      um ambiente vulnerável sob demanda com portas dedicadas, isolamento"
+" de rede e guia prático em anexo (PDF)."
+msgstr ""
+
+#: templates/pages/challenges.html:32
+msgid "CATÁLOGO"
+msgstr ""
+
+#: templates/pages/challenges.html:33
+msgid "Desafios"
+msgstr "Desafios"
+
+#: templates/pages/challenges.html:36
+msgid "TOTAL DE XP"
+msgstr ""
+
+#: templates/pages/challenges.html:45
+msgid "ISOLAMENTO"
+msgstr ""
+
+#: templates/pages/challenges.html:46
+msgid "Docker Single-Container"
+msgstr ""
+
+#: templates/pages/challenges.html:49
+msgid "TTL INSTÂNCIA"
+msgstr ""
+
+#: templates/pages/challenges.html:50
+msgid "60 minutos"
+msgstr ""
+
+#: templates/pages/challenges.html:66
+msgid "Filtrar por nome, ID ou técnica (ex: IDOR, XXE, API, Recon)..."
+msgstr ""
+
+#: templates/pages/challenges.html:96
+msgid "Nenhum desafio disponível no catálogo"
+msgstr ""
+
+#: templates/pages/challenges.html:97
+msgid ""
+"Nenhum ambiente de desafio foi publicado ainda. Execute o validador de "
+"registro para sincronizar."
+msgstr ""
+
+#: templates/pages/challenges.html:118
+msgid "Nenhum desafio encontrado"
+msgstr ""
+
+#: templates/pages/challenges.html:119
+msgid "Tente ajustar seus termos de busca ou remover os filtros de dificuldade."
+msgstr ""
+
+#: templates/pages/challenges.html:131
+msgid "AVISO CTF • SPOILER DA SOLUÇÃO"
+msgstr ""
+
+#: templates/pages/challenges.html:137
+msgid "Tem certeza que deseja ver o passo a passo?"
+msgstr ""
+
+#: templates/pages/challenges.html:146
+msgid "PRÉ-REQUISITOS RECOMENDADOS"
+msgstr ""
+
+#: templates/pages/challenges.html:148
+msgid "Módulo: SQL Injection (SQLi)"
+msgstr ""
+
+#: templates/pages/challenges.html:150
+msgid ""
+"Estude os conceitos de injeção em queries, autenticação bypass e extração"
+" via UNION na DUNO Academy antes de invadir o alvo."
+msgstr ""
+
+#: templates/pages/challenges.html:165
+msgid "Ver o Passo a Passo Mesmo Assim →"
+msgstr ""
+
+#: templates/pages/docs.html:17
+msgid "Documentação Oficial • Engenharia & Arquitetura"
+msgstr ""
+
+#: templates/pages/docs.html:19
+msgid "Documentação DUNO"
+msgstr ""
+
+#: templates/pages/docs.html:21
+msgid ""
+"Guia técnico completo sobre arquitetura, inicialização, desenvolvimento "
+"de novos módulos e testes automatizados da plataforma."
+msgstr ""
+
+#: templates/pages/docs.html:29
+msgid "VISÃO GERAL"
+msgstr ""
+
+#: templates/pages/docs.html:30
+msgid "Getting Started"
+msgstr ""
+
+#: templates/pages/docs.html:31
+msgid "Arquitetura & Stack"
+msgstr ""
+
+#: templates/pages/docs.html:32
+msgid "Estrutura de Pastas"
+msgstr ""
+
+#: templates/pages/docs.html:36
+msgid "OPERAÇÃO & DESENVOLVIMENTO"
+msgstr ""
+
+#: templates/pages/docs.html:37
+msgid "Níveis de Segurança"
+msgstr ""
+
+#: templates/pages/docs.html:38
+msgid "Criando Novos Módulos"
+msgstr ""
+
+#: templates/pages/docs.html:39
+msgid "Testes & Verificação"
+msgstr ""
+
+#: templates/pages/docs.html:40
+msgid "Reset Global do Banco"
+msgstr ""
+
+#: templates/pages/docs.html:47
+msgid "1. Getting Started"
+msgstr ""
+
+#: templates/pages/docs.html:49
+msgid ""
+"O DUNO é executado de forma totalmente autônoma dentro de containers "
+"Docker. Não há necessidade de instalar Python, SQLite ou dependências no "
+"sistema hospedeiro."
+msgstr ""
+
+#: templates/pages/docs.html:52
+msgid "Pré-requisitos"
+msgstr ""
+
+#: templates/pages/docs.html:54
+msgid "Docker Engine 24+"
+msgstr ""
+
+#: templates/pages/docs.html:55
+msgid "Docker Compose v2+"
+msgstr ""
+
+#: templates/pages/docs.html:58
+msgid "Inicialização Rápida"
+msgstr ""
+
+#: templates/pages/docs.html:59
+msgid "No terminal, clone o repositório e execute:"
+msgstr ""
+
+#: templates/pages/docs.html:71
+msgid "2. Arquitetura & Stack"
+msgstr ""
+
+#: templates/pages/docs.html:73
+msgid ""
+"O sistema utiliza um modelo modular baseado em Flask Blueprints. Cada "
+"vulnerabilidade opera como uma unidade isolada contendo suas próprias "
+"rotas, regras de negócio e os 4 arquivos de código-fonte graduais."
+msgstr ""
+
+#: templates/pages/docs.html:79
+msgid "Camada"
+msgstr ""
+
+#: templates/pages/docs.html:80
+msgid "Tecnologia"
+msgstr ""
+
+#: templates/pages/docs.html:81
+msgid "Propósito"
+msgstr ""
+
+#: templates/pages/docs.html:87
+msgid "Python 3.11-slim"
+msgstr ""
+
+#: templates/pages/docs.html:88
+msgid "Backend assíncrono e serviços do lab"
+msgstr ""
+
+#: templates/pages/docs.html:92
+msgid "Flask 3.x"
+msgstr ""
+
+#: templates/pages/docs.html:93
+msgid "Roteamento modular via Blueprints"
+msgstr ""
+
+#: templates/pages/docs.html:97
+msgid "SQLite3"
+msgstr ""
+
+#: templates/pages/docs.html:102
+msgid "Vanilla HTML5 / CSS3 / JS"
+msgstr ""
+
+#: templates/pages/docs.html:103
+msgid "Design system puro inspirado em Walkie, sem Tailwind ou frameworks pesados"
+msgstr ""
+
+#: templates/pages/docs.html:107
+msgid "Docker Compose"
+msgstr ""
+
+#: templates/pages/docs.html:108
+msgid "Isolamento do ambiente de laboratório"
+msgstr ""
+
+#: templates/pages/docs.html:116
+msgid "3. Estrutura de Pastas"
+msgstr ""
+
+#: templates/pages/docs.html:150
+msgid "4. Níveis de Segurança & Persistência"
+msgstr ""
+
+#: templates/pages/docs.html:169
+msgid "5. Como Criar um Novo Módulo"
+msgstr ""
+
+#: templates/pages/docs.html:191
+msgid "6. Testes & Verificação"
+msgstr ""
+
+#: templates/pages/docs.html:201
+msgid "7. Reset Global do Banco"
+msgstr ""
+
+#: templates/pages/docs.html:203
+msgid ""
+"Como os laboratórios sofrem ataques reais de injeção SQL, inserção de "
+"scripts no guestbook e manipulação de credenciais, o DUNO possui uma "
+"rotina de reset idempotente."
+msgstr ""
+
+#: templates/pages/docs_hub.html:14
+msgid "How can we help?"
+msgstr ""
+
+#: templates/pages/docs_hub.html:20
+msgid "Assistente DUNO Docs"
+msgstr ""
+
+#: templates/pages/docs_hub.html:30
+msgid "Ask anything about DUNO and get instant answers..."
+msgstr ""
+
+#: templates/pages/docs_hub.html:75 templates/pages/docs_reader.html:31
+msgid "What's new"
+msgstr ""
+
+#: templates/pages/docs_hub.html:77
+msgid "Ver histórico completo"
+msgstr ""
+
+#: templates/pages/docs_reader.html:16
+msgid "Voltar ao Hub de Docs"
+msgstr ""
+
+#: templates/pages/docs_reader.html:35
+msgid "Changelog & Lançamentos"
+msgstr ""
+
+#: templates/pages/docs_reader.html:76
+msgid "← Artigo Anterior"
+msgstr ""
+
+#: templates/pages/docs_reader.html:85
+msgid "Próximo Artigo →"
+msgstr ""
+
+#: templates/pages/docs_reader.html:95
+msgid "Nesta Página"
+msgstr ""
+
+#: templates/pages/learning.html:10
+msgid "Metodologia de Aprendizado"
+msgstr ""
+
+#: templates/pages/learning.html:17
+msgid "Metodologia Pedagógica • Engenharia Ofensiva & Defensiva"
+msgstr ""
+
+#: templates/pages/learning.html:19
+msgid "Como o DUNO Funciona"
+msgstr ""
+
+#: templates/pages/learning.html:21
+msgid ""
+"O DUNO foi arquitetado para ir além de um repositório estático de "
+"vulnerabilidades.\n"
+"      A plataforma permite dissecar a anatomia de cada falha através de "
+"uma progressão de 4 níveis de segurança e inspeção direta de código-"
+"fonte."
+msgstr ""
+
+#: templates/pages/learning.html:28
+msgid "PROGRESSÃO DE SEGURANÇA"
+msgstr ""
+
+#: templates/pages/learning.html:29
+msgid "A Metodologia dos Quatro Níveis"
+msgstr ""
+
+#: templates/pages/learning.html:31
+msgid ""
+"Cada um dos 20 módulos implementa quatro versões independentes do mesmo "
+"fluxo.\n"
+"      Isso permite comparar diretamente o comportamento do sistema à "
+"medida que camadas de controle são introduzidas."
+msgstr ""
+
+#: templates/pages/learning.html:38
+msgid "NÍVEL 01"
+msgstr ""
+
+#: templates/pages/learning.html:39
+msgid "LOW"
+msgstr ""
+
+#: templates/pages/learning.html:40
+msgid "Código Vulnerável por Padrão"
+msgstr ""
+
+#: templates/pages/learning.html:42
+msgid ""
+"Ausência total de defesas. Concatenação direta de strings, execução pura "
+"de comandos, sessões estáticas."
+msgstr ""
+
+#: templates/pages/learning.html:52
+msgid "NÍVEL 02"
+msgstr ""
+
+#: templates/pages/learning.html:53
+msgid "MEDIUM"
+msgstr ""
+
+#: templates/pages/learning.html:54
+msgid "Mitigação Ingênua (Bypass)"
+msgstr ""
+
+#: templates/pages/learning.html:66
+msgid "NÍVEL 03"
+msgstr ""
+
+#: templates/pages/learning.html:67
+msgid "HIGH"
+msgstr ""
+
+#: templates/pages/learning.html:68
+msgid "Defesa Avançada com Falha Lógica"
+msgstr ""
+
+#: templates/pages/learning.html:70
+msgid ""
+"Controles mais sofisticados implementados, mas com brechas de desenho, "
+"suposições incorretas de ambiente ou edge cases."
+msgstr ""
+
+#: templates/pages/learning.html:80
+msgid "NÍVEL 04"
+msgstr ""
+
+#: templates/pages/learning.html:81
+msgid "IMPOSSIBLE"
+msgstr ""
+
+#: templates/pages/learning.html:82
+msgid "Implementação Blindada & Padrão Seguro"
+msgstr ""
+
+#: templates/pages/learning.html:84
+msgid ""
+"Aplicação das melhores práticas da indústria: Prepared Statements, "
+"tokenização criptográfica, tipagem estrita e sandboxing."
+msgstr ""
+
+#: templates/pages/learning.html:95
+msgid "Estudo de Caso Prático: Evolução de Defesa em SQL Injection"
+msgstr ""
+
+#: templates/pages/learning.html:96
+msgid "CÓDIGO PYTHON REAL"
+msgstr ""
+
+#: templates/pages/learning.html:100
+msgid "LOW — Concatenação Direta"
+msgstr ""
+
+#: templates/pages/learning.html:106
+msgid "MEDIUM — Blacklist Ingênua"
+msgstr ""
+
+#: templates/pages/learning.html:113
+msgid "HIGH — Cast sem Prepared Statement"
+msgstr ""
+
+#: templates/pages/learning.html:122
+msgid "IMPOSSIBLE — Parameterized Query Completo"
+msgstr ""
+
+#: templates/pages/learning.html:137
+msgid "⚔️ Attack Concepts (Engenharia Ofensiva)"
+msgstr ""
+
+#: templates/pages/learning.html:142
+msgid ""
+"Fontes de dados controladas pelo usuário (parâmetros de URL, headers "
+"HTTP, cookies) fluindo para pontos de execução crítica (eval, queries "
+"SQL, DOM, shell do SO)."
+msgstr ""
+
+#: templates/pages/learning.html:146
+msgid ""
+"Rastreamento do caminho percorrido por uma entrada não confiável através "
+"das camadas da aplicação até o consumo final."
+msgstr ""
+
+#: templates/pages/learning.html:150
+msgid ""
+"Forçar o interpretador (HTML, SQL, Shell, JSON) a transitar do modo "
+"\"dado\" para o modo \"código/instrução executável\"."
+msgstr ""
+
+#: templates/pages/learning.html:154
+msgid ""
+"Uso de encodings (URL, HTML Entities, Base64, Hexadecimal) e variação de "
+"sintaxe para burlar mecanismos de inspeção e WAFs."
+msgstr ""
+
+#: templates/pages/learning.html:162
+msgid "🛡️ Defensive Concepts (Engenharia Defensiva)"
+msgstr ""
+
+#: templates/pages/learning.html:167
+msgid ""
+"O motor do banco de dados pré-compila a estrutura da consulta antes de "
+"associar os valores, tornando impossível a alteração da lógica SQL."
+msgstr ""
+
+#: templates/pages/learning.html:171
+msgid ""
+"Codificação de caracteres especiais de acordo com o contexto em que são "
+"renderizados (HTML Body, Atributo, Script, CSS, URL)."
+msgstr ""
+
+#: templates/pages/learning.html:175
+msgid ""
+"A aplicação e o usuário do banco de dados operam estritamente com as "
+"permissões indispensáveis à sua função, limitando o raio de explosão."
+msgstr ""
+
+#: templates/pages/learning.html:179
+msgid ""
+"Combinação de validação estrita no servidor, cabeçalhos de segurança "
+"(CSP, HSTS, X-Content-Type-Options) e sandboxing isolado."
+msgstr ""
+
+#: templates/pages/learning.html:188
+msgid "FLUXO DE TRABALHO"
+msgstr ""
+
+#: templates/pages/learning.html:189
+msgid "Metodologia Recomendada para o Laboratório"
+msgstr ""
+
+#: templates/pages/learning.html:194
+msgid "Reconhecimento"
+msgstr ""
+
+#: templates/pages/learning.html:196
+msgid ""
+"Interaja com o laboratório no navegador. Observe os formulários, métodos "
+"HTTP, parâmetros transmitidos e códigos de status retornados."
+msgstr ""
+
+#: templates/pages/learning.html:201
+msgid "Exploração (PoC)"
+msgstr ""
+
+#: templates/pages/learning.html:203
+msgid ""
+"Formule uma hipótese de vulnerabilidade e construa uma Prova de Conceito "
+"(PoC) controlada para confirmar o comportamento anômalo."
+msgstr ""
+
+#: templates/pages/learning.html:208
+msgid "Code Review"
+msgstr ""
+
+#: templates/pages/learning.html:215
+msgid "Comparação & Blindagem"
+msgstr ""
+
+#: templates/pages/modules.html:10
+msgid "Catálogo de Módulos"
+msgstr ""
+
+#: templates/pages/modules.html:17
+msgid "Catálogo Completo • 20 Vulnerabilidades Mapeadas"
+msgstr ""
+
+#: templates/pages/modules.html:19
+msgid "Catálogo de Módulos DUNO"
+msgstr ""
+
+#: templates/pages/modules.html:21
+msgid ""
+"Visão abrangente e técnica de todos os 20 laboratórios de segurança "
+"ofensiva e defensiva.\n"
+"      Cada módulo oferece 4 implementações graduais de código-fonte (Low "
+"a Impossible) com análise ao vivo."
+msgstr ""
+
+#: templates/pages/modules.html:29
+msgid "Módulos Práticos"
+msgstr ""
+
+#: templates/pages/modules.html:33
+msgid "Implementações de Código"
+msgstr ""
+
+#: templates/pages/modules.html:37
+msgid "Níveis de Proteção"
+msgstr ""
+
+#: templates/pages/modules.html:41
+msgid "OWASP Top 10 Aligned"
+msgstr ""
+
+#: templates/pages/modules.html:53
+msgid "Filtrar catálogo (ex: SQL, XSS, BOLA, JWT)..."
+msgstr ""
+
+#: templates/pages/modules.html:59
+msgid "Autenticação (4)"
+msgstr ""
+
+#: templates/pages/modules.html:60
+msgid "Client-Side (5)"
+msgstr ""
+
+#: templates/pages/modules.html:62
+msgid "APIs REST (3)"
+msgstr ""
+
+#: templates/pages/modules.html:111
+msgid "Nível Ativo:"
+msgstr ""
+
+#: templates/pages/modules.html:116
+msgid "4 Níveis: Low • Medium • High • Impossible"
+msgstr ""
+
+#: templates/pages/modules.html:121
+msgid "&lt;/&gt; Source"
+msgstr ""
+
+#: templates/pages/modules.html:124
+msgid "Acessar Lab →"
+msgstr ""
+
+#: templates/pages/settings.html:15
+msgid "DUNO // COMMAND CENTER"
+msgstr ""
+
+#: templates/pages/settings.html:22
+msgid ""
+"Centro integrado de operações: controle de máquinas da comunidade, "
+"parâmetros de segurança, governança e telemetria."
+msgstr ""
+
+#: templates/pages/settings.html:30
+msgid "AMBIENTE"
+msgstr ""
+
+#: templates/pages/settings.html:34
+msgid "BASELINE"
+msgstr ""
+
+#: templates/pages/settings.html:38
+msgid "SUAS MÁQUINAS"
+msgstr ""
+
+#: templates/pages/settings.html:43
+msgid "FILA DE REVISÃO"
+msgstr ""
+
+#: templates/pages/settings.html:56
+msgid "Visão Geral"
+msgstr ""
+
+#: templates/pages/settings.html:60
+msgid "Máquinas &amp; Contribuições"
+msgstr ""
+
+#: templates/pages/settings.html:68
+msgid "Moderação &amp; Auditoria"
+msgstr ""
+
+#: templates/pages/settings.html:76
+msgid "Sistema &amp; Segurança"
+msgstr ""
+
+#: templates/pages/settings.html:80
+msgid "Dados &amp; Manutenção"
+msgstr ""
+
+#: templates/pages/settings.html:93
+msgid "MÁQUINAS"
+msgstr ""
+
+#: templates/pages/settings.html:95
+msgid "Enviar Nova Máquina"
+msgstr ""
+
+#: templates/pages/settings.html:96
+msgid "Empacote desafios com Dockerfile, flags e manifest.yml para a comunidade."
+msgstr ""
+
+#: templates/pages/settings.html:99
+msgid "+ Enviar Máquina"
+msgstr ""
+
+#: templates/pages/settings.html:108
+msgid "CONTRIBUIÇÕES"
+msgstr ""
+
+#: templates/pages/settings.html:110
+#: templates/submissions/contributions.html:14
+msgid "Minhas Contribuições"
+msgstr ""
+
+#: templates/pages/settings.html:117
+msgid "Ver Minhas Máquinas"
+msgstr ""
+
+#: templates/pages/settings.html:127
+msgid "ADMINISTRAÇÃO"
+msgstr ""
+
+#: templates/pages/settings.html:129
+msgid "Fila de Moderação"
+msgstr ""
+
+#: templates/pages/settings.html:135
+msgid "Acessar Moderação"
+msgstr ""
+
+#: templates/pages/settings.html:144
+msgid "SEGURANÇA"
+msgstr ""
+
+#: templates/pages/settings.html:146
+msgid "Nível do Laboratório"
+msgstr ""
+
+#: templates/pages/settings.html:152
+msgid "Alterar Parâmetros"
+msgstr ""
+
+#: templates/pages/settings.html:165
+msgid "OPERADOR DO SISTEMA"
+msgstr ""
+
+#: templates/pages/settings.html:170
+msgid "Operador de Laboratório Autenticado"
+msgstr ""
+
+#: templates/pages/settings.html:176
+msgid "Identificador"
+msgstr ""
+
+#: templates/pages/settings.html:180
+msgid "Privilégios"
+msgstr ""
+
+#: templates/pages/settings.html:190
+msgid "Escopo de Execução"
+msgstr ""
+
+#: templates/pages/settings.html:191
+msgid "Sandbox Isolado com Docker Engine &amp; Rede Challenge-Net"
+msgstr ""
+
+#: templates/pages/settings.html:202
+msgid "LOG DE ATIVIDADES DO LABORATÓRIO"
+msgstr ""
+
+#: templates/pages/settings.html:229
+msgid "MINHAS MÁQUINAS &amp; DESAFIOS"
+msgstr ""
+
+#: templates/pages/settings.html:231
+msgid ""
+"Crie, teste em sandbox e envie desafios no formato de container para a "
+"comunidade do DUNO."
+msgstr ""
+
+#: templates/pages/settings.html:236
+msgid "+ Enviar Nova Máquina"
+msgstr ""
+
+#: templates/pages/settings.html:246
+msgid "MÁQUINA / SLUG"
+msgstr ""
+
+#: templates/pages/settings.html:247
+msgid "VERSÃO"
+msgstr ""
+
+#: templates/pages/settings.html:248 templates/pages/settings.html:372
+msgid "DIFICULDADE"
+msgstr ""
+
+#: templates/pages/settings.html:249 templates/pages/settings.html:436
+msgid "STATUS"
+msgstr ""
+
+#: templates/pages/settings.html:250
+msgid "CRIADA EM"
+msgstr ""
+
+#: templates/pages/settings.html:251 templates/pages/settings.html:375
+msgid "AÇÕES"
+msgstr ""
+
+#: templates/pages/settings.html:283
+msgid "Ver Pipeline"
+msgstr ""
+
+#: templates/pages/settings.html:295
+#: templates/submissions/contributions.html:94
+msgid "Nenhuma máquina submetida ainda"
+msgstr ""
+
+#: templates/pages/settings.html:302
+msgid "Enviar sua Primeira Máquina"
+msgstr ""
+
+#: templates/pages/settings.html:315
+msgid "ESTRUTURA DO PACOTE DE MÁQUINA"
+msgstr ""
+
+#: templates/pages/settings.html:318
+msgid "O pacote enviado passa por 5 etapas automatizadas antes da aprovação:"
+msgstr ""
+
+#: templates/pages/settings.html:337
+msgid "GOVERNANÇA &amp; REVISÃO DE MÁQUINAS"
+msgstr ""
+
+#: templates/pages/settings.html:339
+msgid ""
+"Fila de revisão para aprovação de desafios comunitários, inspeção de "
+"builds e logs de auditoria."
+msgstr ""
+
+#: templates/pages/settings.html:344
+msgid "Painel Completo de Moderação →"
+msgstr ""
+
+#: templates/pages/settings.html:347
+msgid "Log Completo de Auditoria →"
+msgstr ""
+
+#: templates/pages/settings.html:360
+msgid "Zerar"
+msgstr ""
+
+#: templates/pages/settings.html:370
+msgid "MÁQUINA"
+msgstr ""
+
+#: templates/pages/settings.html:371
+msgid "AUTOR"
+msgstr ""
+
+#: templates/pages/settings.html:373
+msgid "STATUS ATUAL"
+msgstr ""
+
+#: templates/pages/settings.html:374
+msgid "DATA"
+msgstr ""
+
+#: templates/pages/settings.html:403
+msgid "Revisar &amp; Inspecionar →"
+msgstr ""
+
+#: templates/pages/settings.html:414
+msgid ""
+"Fila de moderação em dia. Nenhuma submissão aguardando revisão manual no "
+"momento."
+msgstr ""
+
+#: templates/pages/settings.html:424
+msgid "LOGS RECENTES DE AUDITORIA DE MÁQUINAS"
+msgstr ""
+
+#: templates/pages/settings.html:432
+msgid "DATA/HORA"
+msgstr ""
+
+#: templates/pages/settings.html:433
+msgid "OPERADOR"
+msgstr ""
+
+#: templates/pages/settings.html:434
+msgid "AÇÃO"
+msgstr ""
+
+#: templates/pages/settings.html:435
+msgid "RECURSO"
+msgstr ""
+
+#: templates/pages/settings.html:459
+msgid "Nenhum registro de auditoria gerado ainda."
+msgstr ""
+
+#: templates/pages/settings.html:471
+msgid "PARÂMETROS DO LABORATÓRIO"
+msgstr ""
+
+#: templates/pages/settings.html:477
+msgid "Ambiente de Execução"
+msgstr ""
+
+#: templates/pages/settings.html:478
+msgid "Local Sandbox Containerized"
+msgstr ""
+
+#: templates/pages/settings.html:481
+msgid "Estado Operacional"
+msgstr ""
+
+#: templates/pages/settings.html:487
+msgid "Motor de Banco de Dados"
+msgstr ""
+
+#: templates/pages/settings.html:488
+msgid "SQLite 3 (WAL Mode &amp; PARSE_DECLTYPES)"
+msgstr ""
+
+#: templates/pages/settings.html:491
+msgid "Plataforma"
+msgstr ""
+
+#: templates/pages/settings.html:492
+msgid "DUNO Core v2.4"
+msgstr ""
+
+#: templates/pages/settings.html:499
+msgid "Nível Padrão Global de Segurança"
+msgstr ""
+
+#: templates/pages/settings.html:501
+msgid ""
+"Define o nível de proteção baseline para todos os 20 módulos práticos e "
+"desafios do laboratório. Alterar este valor sincroniza simultaneamente "
+"todos os módulos do operador."
+msgstr ""
+
+#: templates/pages/settings.html:536
+msgid "TELEMETRIA DA BASE DE DADOS"
+msgstr ""
+
+#: templates/pages/settings.html:542
+msgid "Arquivo de Persistência"
+msgstr ""
+
+#: templates/pages/settings.html:546
+msgid "Espaço Alocado em Disco"
+msgstr ""
+
+#: templates/pages/settings.html:550
+msgid "Tabelas Ativas no Schema"
+msgstr ""
+
+#: templates/pages/settings.html:554
+msgid "Último Reset / Seed"
+msgstr ""
+
+#: templates/pages/settings.html:566
+msgid "ZONA DE PERIGO (DANGER ZONE)"
+msgstr ""
+
+#: templates/pages/settings.html:572
+msgid "Redefinir Base de Dados do Laboratório"
+msgstr ""
+
+#: templates/pages/settings.html:574
+msgid ""
+"Restaura o banco de dados para os seeds iniciais da instalação. Limpa "
+"payloads injetados, sessões de teste e restaura as credenciais padrão do "
+"sistema."
+msgstr ""
+
+#: templates/pages/settings.html:580
+msgid "[ Reset Database ]"
+msgstr ""
+
+#: templates/pages/walkthrough.html:76
+msgid "Copiar IP do alvo"
+msgstr ""
+
+#: templates/pages/walkthrough.html:84
+msgid "Abrir alvo em nova aba"
+msgstr ""
+
+#: templates/pages/walkthrough.html:95
+msgid "TEMPO RESTANTE"
+msgstr ""
+
+#: templates/pages/walkthrough.html:97
+msgid "Adicionar +1 hora de laboratório"
+msgstr ""
+
+#: templates/pages/walkthrough.html:99
+msgid "+1 Hora"
+msgstr ""
+
+#: templates/pages/walkthrough.html:105
+msgid "LIVE"
+msgstr ""
+
+#: templates/pages/walkthrough.html:113
+msgid "+1 hora adicionada ao laboratório!"
+msgstr ""
+
+#: templates/pages/walkthrough.html:140
+msgid "Estudar Autenticação na Academy"
+msgstr ""
+
+#: templates/pages/walkthrough.html:144
+msgid "Acesse o módulo de Autenticação na DUNO Academy para dominar a base."
+msgstr ""
+
+#: templates/pages/walkthrough.html:149
+msgid "Estudar SQL Injection na Academy"
+msgstr ""
+
+#: templates/pages/walkthrough.html:153
+msgid "Acesse o módulo de SQLi na DUNO Academy para dominar a base."
+msgstr ""
+
+#: templates/pages/walkthrough.html:197
+msgid "Sobre este walkthrough"
+msgstr ""
+
+#: templates/pages/walkthrough.html:198
+msgid "Guia oficial enviado pelo autor da máquina e revisado pela equipe DUNO."
+msgstr ""
+
+#: templates/pages/walkthrough.html:200
+msgid "Atalhos"
+msgstr ""
+
+#: templates/pages/walkthrough.html:203
+msgid "Copie o IP pelo botão da barra de alvo."
+msgstr ""
+
+#: templates/pages/walkthrough.html:204
+msgid "Submeta as flags na página do desafio."
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:3
+#: templates/pages/walkthroughs/bravo_aside.html:3
+msgid "Progresso"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:6
+#: templates/pages/walkthroughs/bravo_aside.html:6
+msgid "Ir para Reconhecimento"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:8
+#: templates/pages/walkthroughs/bravo_aside.html:8
+msgid "Recon"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:13
+msgid "Ir para Auth Bypass (Flag 1)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:15
+msgid "SQLi"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:20
+msgid "Ir para UNION & Admin (Flag 2/3)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:22
+#: templates/pages/walkthroughs/bravo_aside.html:22
+msgid "Admin"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:27
+msgid "Ir para RCE (Flag 4)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:29
+msgid "RCE"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:34
+msgid "Ir para Escalada Root (Flag 5)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:36
+#: templates/pages/walkthroughs/bravo_aside.html:36
+msgid "Root"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:62
+msgid "Abrir Módulo de SQLi"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:63
+msgid "DUNO Academy — Módulo SQLi"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:66
+#: templates/pages/walkthroughs/bravo_aside.html:66
+msgid "Abrir GTFOBins"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:67
+#: templates/pages/walkthroughs/bravo_aside.html:67
+msgid "GTFOBins — PrivEsc Reference"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:70
+msgid "Guia PortSwigger SQLi"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:71
+msgid "PortSwigger SQL Injection Cheat Sheet"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:80
+msgid "The best secrets aren't always hidden, sometimes they're just forgotten."
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_aside.html:81
+msgid "— CTF Community"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:5
+msgid "Alpha — SQLi Basics: Guia Definitivo"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:16
+msgid "Parte 0 — Entendendo o Terreno Antes de Atacar"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:28
+msgid "FLAG 1 (SQLi Bypass)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:31
+msgid "Autentica colaboradores e funcionários no portal."
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:45
+msgid "FLAGS 2 & 3 (UNION SQLi)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:48
+msgid "Busca registros e informações de colaboradores no banco SQLite."
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:62
+msgid "FLAG 4 (Reuso de Senha)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:65
+msgid "Painel restrito a administradores para gestão de ferramentas de suporte."
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:79
+msgid "FLAG 5 ROOT (RCE)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:82
+msgid "Utilitário administrativo de diagnóstico de conectividade de rede."
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:96
+msgid ""
+"SQLi acontece quando dados de entrada do usuário são concatenados "
+"diretamente na query sem validação ou sanitização:"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:100
+msgid "Python (Vulnerável):"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:114
+msgid "Etapa 1 — Reconhecimento (Recon)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:115
+msgid ""
+"Inicie a máquina pelo card ou botão lateral e acesse a URL do laboratório"
+" ativo. Inspecione os formulários, rotas públicas e cabeçalhos HTTP."
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:119
+msgid "Terminal:"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:140
+msgid "Etapa 2 — Bypass de Autenticação (FLAG 1)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:142
+msgid ""
+"No formulário de login principal, vamos quebrar a lógica de validação de "
+"senha utilizando o payload clássico de injeção SQL booleana."
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:147
+msgid "Campo Username:"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:157
+msgid "Campo Password:"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:181
+msgid "Etapa 3 — Extração de Dados com UNION (FLAG 2)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:189
+#: templates/pages/walkthroughs/alpha_content.html:200
+#: templates/pages/walkthroughs/alpha_content.html:212
+msgid "Search:"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:234
+msgid "Etapa 4 — Acesso ao Painel Admin (FLAG 3)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:241
+msgid "Login Admin:"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:263
+msgid "Etapa 5 — Command Injection / RCE (FLAG 4)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:271
+msgid "Host to ping:"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:293
+msgid "Etapa 6 — Escalada de Privilégios até Root (FLAG 5)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:301
+msgid "Payload Ping:"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:313
+msgid "Payload Final:"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:335
+msgid "Script Python Automatizado (solve.py)"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:336
+msgid ""
+"Script completo em Python vanilla pronto para executar e extrair todas as"
+" 5 flags em sequência:"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:340
+msgid "Python 3 (solve.py):"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:391
+msgid "Dicionário do Pentester & Melhores Práticas"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:392
+msgid "Termos fundamentais aplicados nesta exploração:"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:398
+msgid "Termo"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:399
+msgid "Conceito"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:400
+msgid "Defesa Recomendada"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:406
+msgid "Concatenação indevida de dados do usuário em queries SQL"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:407
+msgid "Prepared Statements / Parametrização obrigatória"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:411
+msgid "Operador que anexa registros de outra tabela ao resultado"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:412
+msgid "Sanitização de tipos e schemas restritos"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:416
+msgid "Execução remota de comandos no sistema operacional"
+msgstr ""
+
+#: templates/pages/walkthroughs/alpha_content.html:421
+msgid "Catálogo de binários de sistema exploráveis para PrivEsc"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:13
+msgid "Ir para Forja de JWT (alg: none)"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:15
+msgid "JWT"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:20
+msgid "Ir para Painel Admin (Flag 1)"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:27
+msgid "Ir para SSTI & RCE (Flag 2)"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:29
+msgid "SSTI"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:34
+msgid "Ir para Escalada Root (Flag 3)"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:62
+msgid "Abrir Módulo de Autenticação"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:63
+msgid "DUNO Academy — Auth Bypass"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:70
+msgid "Guia PortSwigger JWT"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:71
+msgid "PortSwigger JWT Attacks Guide"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:80
+msgid "Trust, but verify. And never trust alg: none."
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_aside.html:81
+msgid "— AppSec Guidelines"
+msgstr ""
+
+#: templates/pages/walkthroughs/bravo_content.html:5
+msgid "Bravo — Weak JWT & SSTI: Guia Definitivo"
+msgstr ""
+
+#: templates/submissions/contributions.html:9
+msgid "DUNO // COMMUNITY LABS"
+msgstr ""
+
+#: templates/submissions/contributions.html:15
+msgid ""
+"Gerencie suas submissões de máquinas executáveis e acompanhe o pipeline "
+"de revisão."
+msgstr ""
+
+#: templates/submissions/contributions.html:29
+msgid "SUAS MÁQUINAS SUBMETIDAS"
+msgstr ""
+
+#: templates/submissions/contributions.html:37
+msgid "Máquina"
+msgstr ""
+
+#: templates/submissions/contributions.html:74
+msgid "⚠ Ajustes solicitados"
+msgstr ""
+
+#: templates/submissions/contributions.html:83
+msgid "Ver Detalhes →"
+msgstr ""
+
+#: templates/submissions/contributions.html:96
+msgid ""
+"Você pode criar e compartilhar máquinas para a comunidade DUNO. Empacote "
+"com Dockerfile ou Docker Compose e envie para nossa esteira de validação."
+msgstr ""
+
+#: templates/submissions/contributions.html:99
+msgid "Criar Primeira Submissão →"
+msgstr ""
+
+#: templates/submissions/contributions.html:110
+msgid "COMO FUNCIONA O PIPELINE DE MÁQUINAS"
+msgstr ""
+
+#: templates/submissions/contributions.html:115
+msgid "Submissão &amp; Validação"
+msgstr ""
+
+#: templates/submissions/contributions.html:120
+msgid "Scan de Segurança"
+msgstr ""
+
+#: templates/submissions/contributions.html:121
+msgid ""
+"Análise estática identifica segredos expostos, mounts de socket perigosos"
+" e permissões root desnecessárias."
+msgstr ""
+
+#: templates/submissions/contributions.html:125
+msgid "Build &amp; Teste Isolado"
+msgstr ""
+
+#: templates/submissions/contributions.html:126
+msgid ""
+"A imagem é construída em ambiente isolado (sem acesso à rede do host) e "
+"os testes funcionais são executados."
+msgstr ""
+
+#: templates/submissions/contributions.html:130
+msgid "Revisão Humana &amp; Publicação"
+msgstr ""
+
+#: templates/submissions/contributions.html:131
+msgid ""
+"Revisores avaliam a didática e jogabilidade. Uma vez aprovada, a máquina "
+"é publicada no catálogo oficial."
+msgstr ""
+
+#: templates/submissions/submission_detail.html:11
+msgid "DUNO // MINHAS CONTRIBUIÇÕES"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:14
+msgid "← Voltar para lista"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:44
+msgid "Fase Atual no Pipeline de Publicação"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:95
+msgid "⚠ Ajustes Solicitados pela Equipe de Revisão"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:98
+msgid ""
+"Revise os comentários abaixo, efetue as alterações no pacote e envie uma "
+"nova versão atualizada."
+msgstr ""
+
+#: templates/submissions/submission_detail.html:103
+msgid "Enviar Nova Versão ↑"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:116
+msgid "Metadados Educacionais"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:118
+msgid "Descrição do Cenário"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:136
+msgid "Tempo Estimado"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:144
+msgid "Arquivos do Pacote (Versão Atual)"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:150
+msgid "Tamanho"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:151
+msgid "SHA256"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:165
+msgid "Nenhum arquivo indexado."
+msgstr ""
+
+#: templates/submissions/submission_detail.html:175
+msgid "Comunicação com Revisores"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:187
+msgid "Nenhum comentário na thread de revisão até o momento."
+msgstr ""
+
+#: templates/submissions/submission_detail.html:193
+msgid "Envie uma mensagem ou tire dúvidas com os revisores..."
+msgstr ""
+
+#: templates/submissions/submission_detail.html:196
+msgid "Enviar Comentário"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:205
+msgid "Enviar Nova Versão do Pacote"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:207
+msgid ""
+"Selecione o arquivo atualizado com as correções solicitadas pela equipe. "
+"Uma nova versão será criada e submetida à validação."
+msgstr ""
+
+#: templates/submissions/submission_detail.html:211
+msgid "Descreva brevemente as alterações feitas nesta versão..."
+msgstr ""
+
+#: templates/submissions/submission_detail.html:214
+msgid "Submeter Nova Versão ↑"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:227
+msgid "Histórico de Transições"
+msgstr ""
+
+#: templates/submissions/submission_detail.html:249
+msgid "Nenhum histórico registrado."
+msgstr ""
+
+#: templates/submissions/submit.html:9
+msgid "DUNO // MACHINE PIPELINE"
+msgstr ""
+
+#: templates/submissions/submit.html:13
+msgid "Submeter Nova Máquina"
+msgstr ""
+
+#: templates/submissions/submit.html:14
+msgid ""
+"Publique sua máquina vulnerável para a comunidade DUNO. Preencha os "
+"metadados e anexe o pacote com Dockerfile/Compose."
+msgstr ""
+
+#: templates/submissions/submit.html:26
+msgid "1. IDENTIFICAÇÃO DA MÁQUINA"
+msgstr ""
+
+#: templates/submissions/submit.html:31
+msgid "Nome da Máquina *"
+msgstr ""
+
+#: templates/submissions/submit.html:33
+msgid "Ex: Matrix Portal"
+msgstr ""
+
+#: templates/submissions/submit.html:38
+msgid "Slug (Identificador Único) *"
+msgstr ""
+
+#: templates/submissions/submit.html:40
+msgid "matrix-portal"
+msgstr ""
+
+#: templates/submissions/submit.html:41
+msgid "Apenas letras minúsculas, números e hífens."
+msgstr ""
+
+#: templates/submissions/submit.html:46
+msgid "Categoria *"
+msgstr ""
+
+#: templates/submissions/submit.html:49
+msgid "Web Exploitation"
+msgstr ""
+
+#: templates/submissions/submit.html:51
+msgid "Network & Services"
+msgstr ""
+
+#: templates/submissions/submit.html:52
+msgid "Binary & Pwn"
+msgstr ""
+
+#: templates/submissions/submit.html:54
+msgid "Cloud & Containers"
+msgstr ""
+
+#: templates/submissions/submit.html:55
+msgid "Miscellaneous"
+msgstr ""
+
+#: templates/submissions/submit.html:61
+msgid "Dificuldade Sugerida *"
+msgstr ""
+
+#: templates/submissions/submit.html:73
+msgid "Sistema Operacional *"
+msgstr ""
+
+#: templates/submissions/submit.html:78
+msgid "Outro"
+msgstr ""
+
+#: templates/submissions/submit.html:87
+msgid "2. INFORMAÇÕES EDUCACIONAIS"
+msgstr ""
+
+#: templates/submissions/submit.html:92
+msgid "Descrição Curta *"
+msgstr ""
+
+#: templates/submissions/submit.html:94
+msgid "Resumo do cenário e vetor de ataque pedagógico..."
+msgstr ""
+
+#: templates/submissions/submit.html:100
+msgid "Nome do Autor / Handle"
+msgstr ""
+
+#: templates/submissions/submit.html:102
+msgid "Seu nome ou nick"
+msgstr ""
+
+#: templates/submissions/submit.html:106
+msgid "Perfil / URL do Autor"
+msgstr ""
+
+#: templates/submissions/submit.html:108
+msgid "https://github.com/..."
+msgstr ""
+
+#: templates/submissions/submit.html:115
+msgid "Objetivos de Aprendizagem (um por linha)"
+msgstr ""
+
+#: templates/submissions/submit.html:117
+msgid ""
+"Explorar injeção de comando&#10;Identificar SUID vulnerável&#10;Efetuar "
+"escape de shell"
+msgstr ""
+
+#: templates/submissions/submit.html:121
+msgid "Pré-requisitos Recomendados (um por linha)"
+msgstr ""
+
+#: templates/submissions/submit.html:123
+msgid "Básico de comandos Linux&#10;Conhecimento de requisições HTTP"
+msgstr ""
+
+#: templates/submissions/submit.html:132
+msgid "3. FLAGS &amp; DICAS DE APOIO"
+msgstr ""
+
+#: templates/submissions/submit.html:137
+msgid "User Flag (Opção 1)"
+msgstr ""
+
+#: templates/submissions/submit.html:144
+msgid "Root / Admin Flag *"
+msgstr ""
+
+#: templates/submissions/submit.html:151
+msgid "Dicas (uma por linha, formato: Dica | Custo de Pontos)"
+msgstr ""
+
+#: templates/submissions/submit.html:153
+msgid ""
+"Verifique os comentários HTML da página de login | 5&#10;Inspecione os "
+"binários no diretório /opt | 10"
+msgstr ""
+
+#: templates/submissions/submit.html:158
+msgid "Walkthrough do Autor (Markdown — opcional)"
+msgstr ""
+
+#: templates/submissions/submit.html:160
+msgid ""
+"# Minha Máquina — Walkthrough&#10;&#10;## "
+"Reconhecimento&#10;```bash&#10;nmap -sCV -p22,80 "
+"$TARGET&#10;```&#10;&#10;Passo a passo da solução..."
+msgstr ""
+
+#: templates/submissions/submit.html:169
+msgid "4. PACOTE DA MÁQUINA (.ZIP OU .TAR.GZ) *"
+msgstr ""
+
+#: templates/submissions/submit.html:174
+msgid "Selecione o arquivo da máquina"
+msgstr ""
+
+#: templates/submissions/submit.html:180
+msgid "Estrutura obrigatória dentro do arquivo:"
+msgstr ""
+
+#: templates/submissions/submit.html:194
+msgid "Cancelar"
+msgstr ""
+
+#: templates/submissions/submit.html:197
+msgid "Enviar Máquina para Validação →"
+msgstr ""
+
+#: templates/submissions/submit.html:260
+msgid "Ver submissão existente &rarr;"
+msgstr ""
+
+#~ msgid ""
+#~ "Distribuição ISO bootável em desenvolvimento"
+#~ " para instalação direta em bare-"
+#~ "metal, Proxmox, VMware ou VirtualBox —"
+#~ "\n"
+#~ "      ambiente de pentest 100% isolado de rede."
+#~ msgstr ""
+
+#~ msgid "••••••••\" autocomplete="
+#~ msgstr ""
+
+#~ msgid "••••••••\" required minlength="
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Mantenha seu progresso 100% privado. "
+#~ "Suas flags não aparecem no ranking "
+#~ "público."
+#~ msgstr ""
+
+#~ msgid "1\" value="
+#~ msgstr ""
+
+#~ msgid "127.0.0.1\" value="
+#~ msgstr ""
+
+#~ msgid "99.90\" step="
+#~ msgstr ""
+
+#~ msgid "' + num + '"
+#~ msgstr ""
+
+#~ msgid "' + title + '"
+#~ msgstr ""
+
+#~ msgid "' + desc + '"
+#~ msgstr ""
+
+#~ msgid "' + pathName + '"
+#~ msgstr ""
+

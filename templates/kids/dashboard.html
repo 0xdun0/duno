@@ -1,10 +1,10 @@
 {% extends "kids/base_kids.html" %}
 
-{% block kids_title %}Trilha de Ensino — Kids{% endblock %}
+{% block kids_title %}{{ _('Trilha de Ensino — Kids') }}{% endblock %}
 
 {% block kids_breadcrumb %}
 <span class="breadcrumb-sep">›</span>
-<span>{{ current_module.name if current_module else 'Trilha' }}</span>
+<span>{{ _(current_module.name) if current_module else _('Trilha') }}</span>
 {% endblock %}
 
 {% block kids_content %}
@@ -13,14 +13,14 @@
   <div class="kids-hero-text">
     <div class="kids-hero-kicker">
       <i class="nf {{ current_module.icon if current_module else 'nf-md-shield_check' }}" aria-hidden="true"></i>
-      <span>TRILHA 0{{ current_module.order_idx if current_module else 1 }} • {{ current_module.name if current_module else 'INICIANTE' }}</span>
+      <span>{{ _('TRILHA') }} 0{{ current_module.order_idx if current_module else 1 }} • {{ _(current_module.name) if current_module else _('INICIANTE') }}</span>
     </div>
-    <h1 class="kids-hero-title">Aprenda Tecnologia e Segurança.</h1>
+    <h1 class="kids-hero-title">{{ _('Aprenda Tecnologia e Segurança.') }}</h1>
     <p class="kids-hero-desc">
-      {{ current_module.description if current_module else 'Desvende o funcionamento dos computadores com desafios interativos, analogias lúdicas e o Tux te guiando!' }}
+      {{ _(current_module.description) if current_module else _('Desvende o funcionamento dos computadores com desafios interativos, analogias lúdicas e o Tux te guiando!') }}
     </p>
     <a href="#skill-tree-section" class="btn btn-primary">
-      <span>Explorar Lições</span>
+      <span>{{ _('Explorar Lições') }}</span>
       <span class="btn-arrow">↓</span>
     </a>
   </div>
@@ -35,7 +35,7 @@
     <a href="{{ url_for('kids.dashboard', module=m.id) }}" 
        class="kids-track-pill {% if m.id == active_module_id %}active{% endif %}">
       <i class="nf {{ m.icon }}" aria-hidden="true"></i>
-      <span>{{ m.name }}</span>
+      <span>{{ _(m.name) }}</span>
     </a>
   {% endfor %}
 </nav>
@@ -45,20 +45,20 @@
 <section class="kids-academy-funnel-card">
   <div class="kids-academy-funnel-info">
     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-      <span class="pill-badge-orange">100% CONCLUÍDO</span>
+      <span class="pill-badge-orange">{{ _('100% CONCLUÍDO') }}</span>
       <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--orange); font-weight: 700;">
-        Ponte para a DUNO Academy
+        {{ _('Ponte para a DUNO Academy') }}
       </span>
     </div>
     <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--ink); margin: 0 0 6px 0;">
-      Você dominou a Trilha de {{ current_module.name }}!
+      {% if current_module %}{{ _('Você dominou a Trilha de %(module)s!', module=_(current_module.name)) }}{% endif %}
     </h3>
     <p style="font-size: 0.9rem; color: var(--ink-2); margin: 0; line-height: 1.5;">
-      {{ academy_funnel.desc }} O conhecimento teórico foi validado. Agora é hora de testar suas habilidades em um laboratório real da plataforma.
+      {{ _(academy_funnel.desc) }} {{ _('O conhecimento teórico foi validado. Agora é hora de testar suas habilidades em um laboratório real da plataforma.') }}
     </p>
   </div>
   <a href="{{ academy_funnel.url }}" class="btn btn-primary btn-lg" style="white-space: nowrap;">
-    <span>{{ academy_funnel.name }}</span>
+    <span>{{ _(academy_funnel.name) }}</span>
     <span class="btn-arrow">→</span>
   </a>
 </section>
@@ -71,12 +71,12 @@
   <div class="kids-tree-wrap">
     <div class="kids-tree-header">
       <div>
-        <span class="card-category-tag">Módulo 0{{ current_module.order_idx if current_module else 1 }}</span>
-        <h2 class="kids-tree-header-title" style="margin-top: 4px;">{{ current_module.name if current_module else 'Trilha' }}</h2>
+        <span class="card-category-tag">{{ _('Módulo') }} 0{{ current_module.order_idx if current_module else 1 }}</span>
+        <h2 class="kids-tree-header-title" style="margin-top: 4px;">{{ _(current_module.name) if current_module else _('Trilha') }}</h2>
       </div>
       <span class="level-badge level-low">
         <span class="level-dot"></span>
-        INICIANTE
+        {{ _('INICIANTE') }}
       </span>
     </div>
 
@@ -86,8 +86,8 @@
       {% for item in skill_tree %}
       <div class="kids-node-row js-tree-node"
            data-lesson-id="{{ item.id }}"
-           data-title="{{ item.title }}"
-           data-desc="{{ item.subtitle }}"
+           data-title="{{ _(item.title) }}"
+           data-desc="{{ _(item.subtitle) }}"
            data-status="{{ item.status }}"
            data-xp="{{ item.xp_reward }}"
            data-coins="{{ item.coins_reward }}"
@@ -96,7 +96,7 @@
 
         <button type="button" 
                 class="kids-node-btn {{ item.status }}"
-                aria-label="{{ item.title }} ({{ item.status }})"
+                aria-label="{{ _(item.title) }} ({{ item.status }})"
                 {% if item.status == 'locked' %}disabled{% endif %}>
           {% if item.status == 'completed' %}
             <i class="nf nf-md-check" aria-hidden="true"></i>
@@ -108,7 +108,7 @@
         </button>
 
         <div class="kids-node-meta">
-          <div class="kids-node-title">{{ item.title }}</div>
+          <div class="kids-node-title">{{ _(item.title) }}</div>
           {% if item.status == 'completed' %}
             <div class="kids-node-stars">
               {% for s in range(item.stars or 3) %}
@@ -117,19 +117,19 @@
             </div>
           {% elif item.status == 'available' %}
             <div style="font-size: 0.72rem; color: var(--orange); font-family: var(--font-mono); font-weight: 700;">
-              DISPONÍVEL
+              {{ _('DISPONÍVEL') }}
             </div>
           {% else %}
             <div style="font-size: 0.72rem; color: var(--ink-3); font-family: var(--font-mono);">
-              BLOQUEADO
+              {{ _('BLOQUEADO') }}
             </div>
           {% endif %}
         </div>
 
         <!-- Popover interativo do nó (mostrado via JS ao clicar) -->
         <div class="kids-popover js-node-popover" style="display: none;">
-          <h4 class="kids-popover-title">{{ item.title }}</h4>
-          <p class="kids-popover-desc">{{ item.subtitle }}</p>
+          <h4 class="kids-popover-title">{{ _(item.title) }}</h4>
+          <p class="kids-popover-desc">{{ _(item.subtitle) }}</p>
 
           <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 12px; font-size: 0.75rem; font-family: var(--font-mono); color: var(--ink-2);">
             <span><i class="nf nf-md-lightning_bolt" style="color: var(--orange);"></i> +{{ item.xp_reward }} XP</span>
@@ -138,12 +138,12 @@
 
           {% if item.status != 'locked' %}
             <a href="{{ url_for('kids.quiz_view', lesson_id=item.id) }}" class="btn btn-primary btn-sm btn-full">
-              <span>{{ 'Revisar Lição' if item.status == 'completed' else 'Iniciar Desafio' }}</span>
+              <span>{{ _('Revisar Lição') if item.status == 'completed' else _('Iniciar Desafio') }}</span>
               <span class="btn-arrow">→</span>
             </a>
           {% else %}
             <button type="button" class="btn btn-outline btn-sm btn-full" disabled style="opacity: 0.6;">
-              <i class="nf nf-md-lock"></i> Conclua a anterior
+              <i class="nf nf-md-lock"></i> {{ _('Conclua a anterior') }}
             </button>
           {% endif %}
         </div>
@@ -165,13 +165,13 @@
         <div>
           <div class="kids-user-name">{{ user.username }}</div>
           <div style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--orange); font-weight: 700;">
-            NÍVEL {{ stats.level if stats else 1 }} • {{ stats.xp if stats else 0 }} XP
+            {{ _('NÍVEL') }} {{ stats.level if stats else 1 }} • {{ stats.xp if stats else 0 }} XP
           </div>
         </div>
       </div>
 
       <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-family: var(--font-mono); color: var(--ink-2); margin-bottom: 4px;">
-        <span>Progresso da Trilha</span>
+        <span>{{ _('Progresso da Trilha') }}</span>
         <span>{{ completed_count }}/{{ total_count }}</span>
       </div>
       <div class="kids-meter-track">
@@ -183,16 +183,16 @@
     <div class="kids-panel-card">
       <div class="kids-panel-header">
         <h3 class="kids-panel-title">
-          <i class="nf nf-md-target" aria-hidden="true"></i> Missões Diárias
+          <i class="nf nf-md-target" aria-hidden="true"></i> {{ _('Missões Diárias') }}
         </h3>
-        <a href="{{ url_for('kids.quests_view') }}" class="kids-panel-link">Ver todas →</a>
+        <a href="{{ url_for('kids.quests_view') }}" class="kids-panel-link">{{ _('Ver todas →') }}</a>
       </div>
 
       <div class="kids-quest-list">
         {% for q in quests %}
           <div class="kids-quest-item">
             <div class="kids-quest-row">
-              <span>{{ q.title }}</span>
+              <span>{{ _(q.title) }}</span>
               <span class="kids-quest-reward">+{{ q.reward_xp }} XP</span>
             </div>
 
@@ -206,19 +206,19 @@
                 {{ q.current_count }}/{{ q.target_count }}
               </span>
               {% if q.claimed %}
-                <span class="kids-quest-btn claimed">Resgatado ✓</span>
+                <span class="kids-quest-btn claimed">{{ _('Resgatado ✓') }}</span>
               {% elif q.current_count >= q.target_count %}
                 <button type="button" class="kids-quest-btn js-claim-quest-btn" data-quest-id="{{ q.id }}">
-                  Resgatar
+                  {{ _('Resgatar') }}
                 </button>
               {% else %}
-                <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--ink-3);">Em progresso</span>
+                <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--ink-3);">{{ _('Em progresso') }}</span>
               {% endif %}
             </div>
           </div>
         {% else %}
           <div style="font-size: 0.85rem; color: var(--ink-3); text-align: center; padding: 1rem 0;">
-            Nenhuma missão disponível hoje.
+            {{ _('Nenhuma missão disponível hoje.') }}
           </div>
         {% endfor %}
       </div>
@@ -228,10 +228,10 @@
     <div class="kids-panel-card" style="background: var(--bg-card-subtle);">
       <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: var(--orange);">
         <i class="nf nf-md-lightbulb_outline"></i>
-        <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Dica do Tux</span>
+        <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">{{ _('Dica do Tux') }}</span>
       </div>
       <p style="font-size: 0.82rem; color: var(--ink-2); line-height: 1.5; margin: 0;">
-        No Linux, tudo é arquivo ou processo. Domine o terminal e você terá o controle total do sistema!
+        {{ _('No Linux, tudo é arquivo ou processo. Domine o terminal e você terá o controle total do sistema!') }}
       </p>
     </div>
 

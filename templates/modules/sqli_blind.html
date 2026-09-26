@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#8 SQL Injection (Blind)</span>
+    <span>{{ _('#8 SQL Injection (Blind)') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">SQL Injection (Blind)</h1>
-      <p class="module-desc">Boolean-based e time-based blind SQL Injection</p>
+      <h1 class="module-title">{{ _('SQL Injection (Blind)') }}</h1>
+      <p class="module-desc">{{ _('Boolean-based e time-based blind SQL Injection') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('sqli_blind', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -35,10 +35,10 @@
       </p>
       <form method="POST" action="/sqli_blind" id="blind-form">
         <div class="form-group">
-          <label for="blind-id">User ID</label>
+          <label for="blind-id">{{ _('User ID') }}</label>
           <input type="text" id="blind-id" name="user_id" class="form-control" placeholder="1" />
         </div>
-        <button type="submit" class="btn btn-primary">Verificar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Verificar') }}</button>
       </form>
       {% if result %}
       <div class="result-box {% if 'existe' in result %}success{% else %}error{% endif %}">{{ result }}</div>
@@ -46,7 +46,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Boolean-based — diferença entre true/false permite enumeração{% endif %}
         {% if level == 'medium' %}Remove aspas — injeção numérica ainda funciona{% endif %}

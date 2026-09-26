@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="DUNO — Cadastro de Jogador e Criação de Perfil CTF" />
+  <title>{{ _('Cadastrar-se — DUNO CTF Profile') }}</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/duno.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/onboarding.css') }}" />
+</head>
+<body class="onboarding-page">
+
+  <div class="onboarding-layout">
+
+    <!-- ═══ PAINEL ESQUERDO: CONTATOS, IDENTIDADE E SOCIAL (ESTILO UNTITLED UI) ═══ -->
+    <aside class="onboarding-aside">
+      <div>
+        <a href="{{ url_for('index') }}" class="aside-brand" title="{{ _('Voltar para a Home') }}">
+          <img src="{{ url_for('static', filename='img/duno-logo.svg') }}" class="aside-brand-logo" alt="duno" height="30" />
+          <span class="aside-brand-tag">{{ _('CTF LABS') }}</span>
+        </a>
+
+        <!-- Bloco de Suporte e Comunidade -->
+        <div class="aside-contact-list">
+          <div class="aside-contact-item">
+            <span class="contact-label">{{ _('Comunidade Discord') }}</span>
+            <span class="contact-desc">{{ _('Converse com outros pesquisadores e compartilhe writeups.') }}</span>
+            <div class="contact-value-row">
+              <a href="https://discord.gg" target="_blank" class="contact-value">{{ _('discord.gg/duno-ctf') }}</a>
+              <span class="contact-badge-status">{{ _('Online') }}</span>
+            </div>
+          </div>
+
+          <div class="aside-contact-item">
+            <span class="contact-label">{{ _('Documentação Técnica') }}</span>
+            <span class="contact-desc">{{ _('Especificações, manifest.yml e tutoriais da plataforma.') }}</span>
+            <div class="contact-value-row">
+              <a href="{{ url_for('documentation') }}" class="contact-value">{{ _('docs.duno.local') }}</a>
+            </div>
+          </div>
+
+          <div class="aside-contact-item">
+            <span class="contact-label">{{ _('Suporte a Desafios') }}</span>
+            <span class="contact-desc">{{ _('Dúvidas sobre runners e flags? Consulte os instrutores.') }}</span>
+            <div class="contact-value-row">
+              <span class="contact-value">{{ _('support@duno.local') }}</span>
+            </div>
+          </div>
+
+          <div class="aside-contact-item">
+            <span class="contact-label">{{ _('Já possui uma conta?') }}</span>
+            <span class="contact-desc">{{ _('Acesse diretamente seus laboratórios e desafios ativos.') }}</span>
+            <div class="contact-value-row" style="margin-top: 6px;">
+              <a href="{{ url_for('login') }}" class="btn-back-step" style="padding: 5px 14px; font-size: 0.8rem;">
+                {{ _('Entrar no DUNO →') }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Links Sociais do Rodapé -->
+      <div class="aside-social-row">
+        <a href="https://github.com/eudionelima/duno" target="_blank" class="aside-social-link" title="{{ _('GitHub') }}"><i class="nf nf-dev-github_badge"></i></a>
+        <a href="#" class="aside-social-link" title="{{ _('Discord') }}"><i class="nf nf-md-discord"></i></a>
+        <a href="#" class="aside-social-link" title="{{ _('Terminal') }}"><i class="nf nf-oct-terminal"></i></a>
+        <a href="#" class="aside-social-link" title="{{ _('Docs') }}"><i class="nf nf-md-book_open_page_variant"></i></a>
+      </div>
+    </aside>
+
+    <!-- ═══ PAINEL DIREITO: MULTI-STEP WIZARD (ESTILO UNTITLED UI) ═══ -->
+    <main class="onboarding-main">
+
+      <!-- Barra de Progresso e Indicador de Passos -->
+      <div class="step-header-row">
+        <div class="step-indicator-pill" id="step-indicator-label">
+          <i class="nf nf-md-shield_account"></i>
+          <span>{{ _('PASSO 1 DE 3 • ACESSO') }}</span>
+        </div>
+        <div class="step-dots">
+          <div class="step-dot active" id="dot-1"></div>
+          <div class="step-dot" id="dot-2"></div>
+          <div class="step-dot" id="dot-3"></div>
+        </div>
+      </div>
+
+      <!-- Caixa de Erro Dinâmica -->
+      <div id="onboarding-error" class="onboarding-error-box" style="display: none;">
+        <i class="nf nf-md-alert_circle"></i>
+        <span id="error-message-text"></span>
+      </div>
+
+      <!-- FORMULÁRIO MULTI-STEP -->
+      <form id="onboarding-form" method="POST" action="{{ url_for('register') }}" autocomplete="off">
+
+        <!-- ═══ PASSO 1: CREDENCIAIS BÁSICAS ═══ -->
+        <div class="step-pane active" id="pane-step-1">
+          <div class="step-title-icon-wrap">
+            <i class="nf nf-fa-user_plus"></i>
+          </div>
+          <h1 class="step-title">{{ _('Crie sua Conta no DUNO') }}</h1>
+          <p class="step-subtitle">{{ _('Defina suas credenciais para acessar os 20 laboratórios e a arena de desafios CTF.') }}</p>
+
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label class="field-label" for="username">{{ _('Username no CTF *') }}</label>
+              <input type="text" id="username" name="username" class="field-input" placeholder="{{ _('ex: shadow_runner') }}" required autofocus />
+              <div class="field-hint">{{ _('Seu identificador no leaderboard (3 a 25 caracteres, a-z, 0-9, _, -).') }}</div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="email">{{ _('E-mail (opcional)') }}</label>
+              <input type="email" id="email" name="email" class="field-input" placeholder="{{ _('seu@email.com') }}" />
+              <div class="field-hint">{{ _('Para notificações e recuperação da conta.') }}</div>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label class="field-label" for="password">{{ _('Senha de Acesso *') }}</label>
+              <input type="password" id="password" name="password" class="field-input" placeholder="••••••••" required minlength="6" />
+              <div class="field-hint">{{ _('Mínimo de 6 caracteres.') }}</div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="password_confirm">{{ _('Confirmar Senha *') }}</label>
+              <input type="password" id="password_confirm" name="password_confirm" class="field-input" placeholder="••••••••" required minlength="6" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ PASSO 2: EXPERIÊNCIA & ÁREAS DE INTERESSE (ESTILO PRINT 2) ═══ -->
+        <div class="step-pane" id="pane-step-2">
+          <div class="step-title-icon-wrap">
+            <i class="nf nf-md-compass_rose"></i>
+          </div>
+          <h2 class="step-title">{{ _('Qual é a sua trilha de segurança?') }}</h2>
+          <p class="step-subtitle">{{ _('Personalizamos recomendações de laboratórios e desafios de acordo com sua experiência.') }}</p>
+
+          <!-- Slider de Nível (Estilo Print 2) -->
+          <div class="slider-container">
+            <div class="field-label">{{ _('Seu nível de familiaridade em Pentest \& Cybersecurity:') }}</div>
+            <div class="slider-value-display" id="exp-slider-text">{{ _('1. Iniciante / Estudante') }}</div>
+            <input type="range" min="1" max="4" value="1" class="custom-slider" id="exp-slider" />
+            <input type="hidden" name="experience_level" id="experience_level_input" value="iniciante" />
+          </div>
+
+          <!-- Tags de Interesse (Pills Selecionáveis como no Print 2) -->
+          <div class="field-group">
+            <label class="field-label">{{ _('Selecione suas áreas de interesse favoritas (clique para marcar):') }}</label>
+            <div class="pills-select-wrap" id="interests-pill-wrap">
+              <div class="pill-option selected" data-value="web-pentest">{{ _('Web Pentest (OWASP)') }}</div>
+              <div class="pill-option selected" data-value="api-security">{{ _('API Security \& REST') }}</div>
+              <div class="pill-option" data-value="ctf-machines">{{ _('CTF Machines \& Root') }}</div>
+              <div class="pill-option" data-value="privesc">{{ _('Privilege Escalation') }}</div>
+              <div class="pill-option" data-value="reversing">{{ _('Reverse Engineering') }}</div>
+              <div class="pill-option" data-value="network-recon">{{ _('Network Recon \& Scan') }}</div>
+              <div class="pill-option" data-value="kids-edu">{{ _('DUNO Kids \& Linux CRT') }}</div>
+            </div>
+            <!-- Hidden inputs para enviar no form -->
+            <div id="hidden-interests-inputs">
+              <input type="hidden" name="interests" value="web-pentest" />
+              <input type="hidden" name="interests" value="api-security" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ PASSO 3: AVATAR & VISIBILIDADE DO JOGADOR (ESTILO PRINT 1) ═══ -->
+        <div class="step-pane" id="pane-step-3">
+          <div class="step-title-icon-wrap">
+            <i class="nf nf-fa-trophy"></i>
+          </div>
+          <h2 class="step-title">{{ _('Configure sua Identidade de Jogador') }}</h2>
+          <p class="step-subtitle">{{ _('Defina como seu perfil será exibido nas soluções e rankings de CTF.') }}</p>
+
+          <div class="form-grid-2" style="margin-bottom: 1.5rem;">
+            <div class="field-group">
+              <label class="field-label" for="display_name">{{ _('Nome de Exibição / Handle') }}</label>
+              <input type="text" id="display_name" name="display_name" class="field-input" placeholder="{{ _('ex: Dione Lima') }}" />
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="country">{{ _('País para o Ranking') }}</label>
+              <select id="country" name="country" class="field-input" style="cursor: pointer;">
+                <option value="BR" selected>{{ _('🇧🇷 Brasil (BR)') }}</option>
+                <option value="PT">{{ _('🇵🇹 Portugal (PT)') }}</option>
+                <option value="US">{{ _('🇺🇸 Estados Unidos (US)') }}</option>
+                <option value="ES">{{ _('🇪🇸 Espanha (ES)') }}</option>
+                <option value="GLOBAL">{{ _('🌐 Internacional (Outro)') }}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Seleção de Avatar -->
+          <div class="field-group">
+            <label class="field-label">{{ _('Escolha seu Avatar Inicial:') }}</label>
+            <div class="avatar-selection-grid">
+              <div class="avatar-choice-card selected" data-avatar="robot">
+                <div class="avatar-choice-icon"><i class="nf nf-fa-robot"></i></div>
+                <span class="avatar-choice-name">{{ _('Robot (DUNO)') }}</span>
+              </div>
+              <div class="avatar-choice-card" data-avatar="terminal">
+                <div class="avatar-choice-icon"><i class="nf nf-oct-terminal"></i></div>
+                <span class="avatar-choice-name">{{ _('Terminal') }}</span>
+              </div>
+              <div class="avatar-choice-card" data-avatar="hacker">
+                <div class="avatar-choice-icon"><i class="nf nf-fa-user_secret"></i></div>
+                <span class="avatar-choice-name">{{ _('Ghost Net') }}</span>
+              </div>
+              <div class="avatar-choice-card" data-avatar="tux">
+                <div class="avatar-choice-icon"><i class="nf nf-fa-linux"></i></div>
+                <span class="avatar-choice-name">{{ _('Tux Penguin') }}</span>
+              </div>
+            </div>
+            <input type="hidden" name="avatar" id="avatar_input" value="robot" />
+          </div>
+
+          <!-- Cards de Visibilidade (Estilo Print 1: Website design, dev...) -->
+          <div class="field-label" style="margin-bottom: 8px;">{{ _('Privacidade e Ranking:') }}</div>
+          <div class="options-card-grid">
+            <div class="option-card selected" id="card-privacy-public" data-privacy="1">
+              <div class="option-card-top">
+                <div class="option-icon-box"><i class="nf nf-md-earth"></i></div>
+                <div class="option-radio"></div>
+              </div>
+              <div>
+                <div class="option-title">{{ _('Perfil Público de CTF') }}</div>
+                <div class="option-desc">{{ _('Participe do leaderboard global, exiba seus badges e máquinas conquistadas.') }}</div>
+              </div>
+            </div>
+
+            <div class="option-card" id="card-privacy-private" data-privacy="0">
+              <div class="option-card-top">
+                <div class="option-icon-box"><i class="nf nf-md-shield_lock"></i></div>
+                <div class="option-radio"></div>
+              </div>
+              <div>
+                <div class="option-title">{{ _('Modo Anônimo / Treino') }}</div>
+                <div class="option-desc">{{ _('Mantenha seu progresso 100%% privado. Suas flags não aparecem no ranking público.') }}</div>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="profile_public" id="profile_public_input" value="1" />
+        </div>
+
+        <!-- ═══ BOTÕES DE NAVEGAÇÃO ENTRE PASSOS (FOOTER) ═══ -->
+        <div class="step-actions-footer">
+          <button type="button" class="btn-back-step" id="btn-step-back" disabled>
+            ← {{ _('Voltar') }}
+          </button>
+          
+          <button type="button" class="btn-continue-step" id="btn-step-next">
+            <span>{{ _('Continuar') }}</span>
+            <i class="nf nf-md-arrow_right"></i>
+          </button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <!-- ── JAVASCRIPT DO MULTI-STEP WIZARD ──────────────────────────────── -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentStep = 1;
+      const totalSteps = 3;
+
+      const pane1 = document.getElementById('pane-step-1');
+      const pane2 = document.getElementById('pane-step-2');
+      const pane3 = document.getElementById('pane-step-3');
+      const panes = [pane1, pane2, pane3];
+
+      const dot1 = document.getElementById('dot-1');
+      const dot2 = document.getElementById('dot-2');
+      const dot3 = document.getElementById('dot-3');
+      const dots = [dot1, dot2, dot3];
+
+      const stepIndicator = document.getElementById('step-indicator-label');
+      const btnBack = document.getElementById('btn-step-back');
+      const btnNext = document.getElementById('btn-step-next');
+      const form = document.getElementById('onboarding-form');
+      const errorBox = document.getElementById('onboarding-error');
+      const errorMsg = document.getElementById('error-message-text');
+
+      function showError(msg) {
+        errorMsg.textContent = msg;
+        errorBox.style.display = 'flex';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function clearError() {
+        errorBox.style.display = 'none';
+        errorMsg.textContent = '';
+      }
+
+      function updateUI() {
+        clearError();
+
+        // Alterna panes
+        panes.forEach((p, idx) => {
+          if (idx === currentStep - 1) {
+            p.classList.add('active');
+          } else {
+            p.classList.remove('active');
+          }
+        });
+
+        // Alterna dots
+        dots.forEach((d, idx) => {
+          d.className = 'step-dot';
+          if (idx < currentStep - 1) {
+            d.classList.add('completed');
+          } else if (idx === currentStep - 1) {
+            d.classList.add('active');
+          }
+        });
+
+        // Labels
+        const labels = [
+          'PASSO 1 DE 3 • ACESSO',
+          'PASSO 2 DE 3 • TRILHA DE PENTEST',
+          'PASSO 3 DE 3 • IDENTIDADE CTF'
+        ];
+        stepIndicator.querySelector('span').textContent = labels[currentStep - 1];
+
+        // Botão Voltar
+        btnBack.disabled = (currentStep === 1);
+
+        // Botão Avançar / Finalizar
+        if (currentStep === totalSteps) {
+          btnNext.innerHTML = `<span>{{ _('Criar Perfil & Entrar') }}</span> <i class="nf nf-md-check_all"></i>`;
+        } else {
+          btnNext.innerHTML = `<span>{{ _('Continuar') }}</span> <i class="nf nf-md-arrow_right"></i>`;
+        }
+      }
+
+      // Validação do Passo 1
+      function validateStep1() {
+        const username = document.getElementById('username').value.trim();
+        const pass = document.getElementById('password').value;
+        const passConf = document.getElementById('password_confirm').value;
+
+        if (!username) {
+          showError('Por favor, informe seu nome de usuário no CTF.');
+          return false;
+        }
+        if (username.length < 3 || username.length > 25) {
+          showError('O nome de usuário deve ter entre 3 e 25 caracteres.');
+          return false;
+        }
+        if (!/^[a-z0-9_\-]+$/i.test(username)) {
+          showError('O nome de usuário só pode conter letras, números, _ ou -.');
+          return false;
+        }
+        if (!pass || pass.length < 6) {
+          showError('A senha deve ter no mínimo 6 caracteres.');
+          return false;
+        }
+        if (pass !== passConf) {
+          showError('As senhas digitadas não coincidem.');
+          return false;
+        }
+        return true;
+      }
+
+      // Slider de Nível (Print 2)
+      const expSlider = document.getElementById('exp-slider');
+      const expText = document.getElementById('exp-slider-text');
+      const expInput = document.getElementById('experience_level_input');
+      const expLevels = [
+        { key: 'iniciante', label: '1. Iniciante / Estudante (Foco em Fundamentos)' },
+        { key: 'desenvolvedor', label: '2. Desenvolvedor / Blue Team (Foco em Mitigação)' },
+        { key: 'pentester', label: '3. Pentester / Red Team (Foco em Exploração Prática)' },
+        { key: 'expert', label: '4. Pesquisador Avançado / Exploit Dev (Foco em RCE e Kernel)' }
+      ];
+
+      expSlider.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value) - 1;
+        expText.textContent = expLevels[val].label;
+        expInput.value = expLevels[val].key;
+      });
+
+      // Pills Multi-select (Print 2)
+      const pillWrap = document.getElementById('interests-pill-wrap');
+      const hiddenInputs = document.getElementById('hidden-interests-inputs');
+
+      pillWrap.querySelectorAll('.pill-option').forEach(pill => {
+        pill.addEventListener('click', () => {
+          pill.classList.toggle('selected');
+          updateHiddenInterests();
+        });
+      });
+
+      function updateHiddenInterests() {
+        hiddenInputs.innerHTML = '';
+        pillWrap.querySelectorAll('.pill-option.selected').forEach(pill => {
+          const inp = document.createElement('input');
+          inp.type = 'hidden';
+          inp.name = 'interests';
+          inp.value = pill.getAttribute('data-value');
+          hiddenInputs.appendChild(inp);
+        });
+      }
+
+      // Seleção de Avatar
+      const avatarCards = document.querySelectorAll('.avatar-choice-card');
+      const avatarInput = document.getElementById('avatar_input');
+      avatarCards.forEach(card => {
+        card.addEventListener('click', () => {
+          avatarCards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          avatarInput.value = card.getAttribute('data-avatar');
+        });
+      });
+
+      // Cards de Visibilidade (Print 1)
+      const cardPublic = document.getElementById('card-privacy-public');
+      const cardPrivate = document.getElementById('card-privacy-private');
+      const privacyInput = document.getElementById('profile_public_input');
+
+      cardPublic.addEventListener('click', () => {
+        cardPublic.classList.add('selected');
+        cardPrivate.classList.remove('selected');
+        privacyInput.value = '1';
+      });
+
+      cardPrivate.addEventListener('click', () => {
+        cardPrivate.classList.add('selected');
+        cardPublic.classList.remove('selected');
+        privacyInput.value = '0';
+      });
+
+      // Botão Voltar
+      btnBack.addEventListener('click', () => {
+        if (currentStep > 1) {
+          currentStep--;
+          updateUI();
+        }
+      });
+
+      // Botão Avançar / Enviar
+      btnNext.addEventListener('click', async () => {
+        if (currentStep === 1) {
+          if (!validateStep1()) return;
+          currentStep++;
+          updateUI();
+        } else if (currentStep === 2) {
+          currentStep++;
+          updateUI();
+        } else if (currentStep === 3) {
+          // Submissão final do formulário
+          btnNext.disabled = true;
+          btnNext.innerHTML = `<span>{{ _('Criando perfil...') }}</span> <i class="nf nf-fa-spinner nf-spin"></i>`;
+
+          const formData = new FormData(form);
+
+          try {
+            const res = await fetch(form.action, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+              }
+            });
+
+            const data = await res.json();
+            if (data.success) {
+              window.location.href = data.redirect || '/';
+            } else {
+              showError(data.error || 'Erro ao processar o cadastro.');
+              btnNext.disabled = false;
+              updateUI();
+            }
+          } catch (err) {
+            // Fallback para envio tradicional se falhar AJAX
+            form.submit();
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

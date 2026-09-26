@@ -6,7 +6,7 @@
 
   <!-- Mobile Top Stepper Navigation -->
   <div class="lesson-mobile-bar">
-    <a href="{{ url_for('academy_hub') }}" class="mobile-back">← Academy</a>
+    <a href="{{ url_for('academy_hub') }}" class="mobile-back">{{ _('← Academy') }}</a>
     <span class="mobile-cur-lesson">#{{ lesson.num }} {{ lesson.title }}</span>
     <span class="mobile-read-time">
       <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -21,7 +21,7 @@
     <aside class="lesson-sidebar" id="lesson-sidebar">
       <div class="sidebar-inner">
         <a href="{{ url_for('academy_hub') }}" class="sidebar-back-link">
-          <span>← Voltar à Academy</span>
+          <span>{{ _('← Voltar à Academy') }}</span>
         </a>
 
         <div class="sidebar-lesson-info">
@@ -38,21 +38,21 @@
 
         <!-- Table of Contents Links -->
         <nav class="sidebar-toc" id="sidebar-toc">
-          <span class="toc-heading">ÍNDICE DO CAPÍTULO</span>
-          <a href="#sec-overview" class="toc-item active" data-sec="sec-overview">01 Overview</a>
-          <a href="#sec-why" class="toc-item" data-sec="sec-why">02 Por que acontece</a>
-          <a href="#sec-how" class="toc-item" data-sec="sec-how">03 Como funciona</a>
-          <a href="#sec-anatomy" class="toc-item" data-sec="sec-anatomy">04 Anatomia</a>
-          <a href="#sec-recognition" class="toc-item" data-sec="sec-recognition">05 Como reconhecer</a>
-          <a href="#sec-attack" class="toc-item" data-sec="sec-attack">06 Conceito de ataque</a>
-          <a href="#sec-source" class="toc-item" data-sec="sec-source">07 Código vulnerável</a>
-          <a href="#sec-levels" class="toc-item" data-sec="sec-levels">08 Níveis de segurança</a>
-          <a href="#sec-compare" class="toc-item" data-sec="sec-compare">09 Before & After</a>
-          <a href="#sec-defense" class="toc-item" data-sec="sec-defense">10 Defesa e correção</a>
-          <a href="#sec-mistakes" class="toc-item" data-sec="sec-mistakes">11 Erros comuns</a>
-          <a href="#sec-quiz" class="toc-item" data-sec="sec-quiz">12 Quiz do capítulo</a>
-          <a href="#sec-checklist" class="toc-item" data-sec="sec-checklist">13 O que dominar</a>
-          <a href="#sec-practice" class="toc-item" data-sec="sec-practice">14 Praticar no Lab</a>
+          <span class="toc-heading">{{ _('ÍNDICE DO CAPÍTULO') }}</span>
+          <a href="#sec-overview" class="toc-item active" data-sec="sec-overview">{{ _('01 Overview') }}</a>
+          <a href="#sec-why" class="toc-item" data-sec="sec-why">{{ _('02 Por que acontece') }}</a>
+          <a href="#sec-how" class="toc-item" data-sec="sec-how">{{ _('03 Como funciona') }}</a>
+          <a href="#sec-anatomy" class="toc-item" data-sec="sec-anatomy">{{ _('04 Anatomia') }}</a>
+          <a href="#sec-recognition" class="toc-item" data-sec="sec-recognition">{{ _('05 Como reconhecer') }}</a>
+          <a href="#sec-attack" class="toc-item" data-sec="sec-attack">{{ _('06 Conceito de ataque') }}</a>
+          <a href="#sec-source" class="toc-item" data-sec="sec-source">{{ _('07 Código vulnerável') }}</a>
+          <a href="#sec-levels" class="toc-item" data-sec="sec-levels">{{ _('08 Níveis de segurança') }}</a>
+          <a href="#sec-compare" class="toc-item" data-sec="sec-compare">{{ _('09 Before & After') }}</a>
+          <a href="#sec-defense" class="toc-item" data-sec="sec-defense">{{ _('10 Defesa e correção') }}</a>
+          <a href="#sec-mistakes" class="toc-item" data-sec="sec-mistakes">{{ _('11 Erros comuns') }}</a>
+          <a href="#sec-quiz" class="toc-item" data-sec="sec-quiz">{{ _('12 Quiz do capítulo') }}</a>
+          <a href="#sec-checklist" class="toc-item" data-sec="sec-checklist">{{ _('13 O que dominar') }}</a>
+          <a href="#sec-practice" class="toc-item" data-sec="sec-practice">{{ _('14 Praticar no Lab') }}</a>
         </nav>
 
         <div class="sidebar-divider"></div>
@@ -61,7 +61,7 @@
         <div class="sidebar-actions">
           <button type="button" class="btn-toggle-completion" id="btn-toggle-completion">
             <span class="check-icon">○</span>
-            <span class="btn-text">Marcar como Concluído</span>
+            <span class="btn-text">{{ _('Marcar como Concluído') }}</span>
           </button>
           <a href="{{ url_for(lesson.lab_endpoint) }}" class="btn-sidebar-lab">
             <span>ABRIR LABORATÓRIO #{{ lesson.num }}</span>
@@ -95,7 +95,7 @@
       <section class="lesson-block" id="sec-overview">
         <div class="block-header">
           <span class="block-index">01</span>
-          <h2 class="block-title">Overview</h2>
+          <h2 class="block-title">{{ _('Overview') }}</h2>
         </div>
         <div class="block-body">
           <p class="prose-lead">{{ lesson.overview }}</p>
@@ -106,7 +106,7 @@
       <section class="lesson-block" id="sec-why">
         <div class="block-header">
           <span class="block-index">02</span>
-          <h2 class="block-title">Por que acontece?</h2>
+          <h2 class="block-title">{{ _('Por que acontece?') }}</h2>
         </div>
         <div class="block-body">
           <p class="prose">{{ lesson.why_it_happens }}</p>
@@ -117,14 +117,14 @@
       <section class="lesson-block" id="sec-how">
         <div class="block-header">
           <span class="block-index">03</span>
-          <h2 class="block-title">Como funciona tecnicamente</h2>
+          <h2 class="block-title">{{ _('Como funciona tecnicamente') }}</h2>
         </div>
         <div class="block-body">
           <p class="prose">{{ lesson.how_it_works }}</p>
 
           <!-- Minimalist HTML/CSS Diagram Box -->
           <div class="diagram-flow-box">
-            <div class="diagram-header">FLUXO DE EXECUÇÃO DA VULNERABILIDADE</div>
+            <div class="diagram-header">{{ _('FLUXO DE EXECUÇÃO DA VULNERABILIDADE') }}</div>
             <div class="diagram-steps-row">
               {% for step in lesson.diagram_steps %}
               <div class="diagram-step">
@@ -145,10 +145,10 @@
       <section class="lesson-block" id="sec-anatomy">
         <div class="block-header">
           <span class="block-index">04</span>
-          <h2 class="block-title">Anatomia do Padrão Vulnerável</h2>
+          <h2 class="block-title">{{ _('Anatomia do Padrão Vulnerável') }}</h2>
         </div>
         <div class="block-body">
-          <p class="prose">Dissecando o ciclo de dados para que você reconheça este padrão em qualquer codebase:</p>
+          <p class="prose">{{ _('Dissecando o ciclo de dados para que você reconheça este padrão em qualquer codebase:') }}</p>
           <div class="anatomy-grid">
             {% for item in lesson.anatomy %}
             <div class="anatomy-card">
@@ -164,7 +164,7 @@
       <section class="lesson-block" id="sec-recognition">
         <div class="block-header">
           <span class="block-index">05</span>
-          <h2 class="block-title">Como reconhecer a vulnerabilidade</h2>
+          <h2 class="block-title">{{ _('Como reconhecer a vulnerabilidade') }}</h2>
         </div>
         <div class="block-body">
           <div class="prose formatted-text">{{ lesson.recognition | replace('\n', '<br>') | safe }}</div>
@@ -175,7 +175,7 @@
       <section class="lesson-block" id="sec-attack">
         <div class="block-header">
           <span class="block-index">06</span>
-          <h2 class="block-title">Conceito de Exploração no Laboratório</h2>
+          <h2 class="block-title">{{ _('Conceito de Exploração no Laboratório') }}</h2>
         </div>
         <div class="block-body">
           <div class="prose formatted-text">{{ lesson.attack_concept | replace('\n', '<br>') | safe }}</div>
@@ -186,16 +186,16 @@
       <section class="lesson-block" id="sec-source">
         <div class="block-header">
           <span class="block-index">07</span>
-          <h2 class="block-title">Código-Fonte Vulnerável</h2>
+          <h2 class="block-title">{{ _('Código-Fonte Vulnerável') }}</h2>
         </div>
         <div class="block-body">
-          <p class="prose">Trecho real do controller implementado no laboratório correspondente:</p>
+          <p class="prose">{{ _('Trecho real do controller implementado no laboratório correspondente:') }}</p>
 
           <div class="code-surface">
             <div class="code-surface-bar">
               <span class="code-file-tag">modules/{{ lesson.slug }}/views.py (LOW)</span>
               <button type="button" class="btn-copy-code" onclick="copySnippet('vuln-code-snippet')">
-                <span id="copy-text-vuln">Copiar</span>
+                <span id="copy-text-vuln">{{ _('Copiar') }}</span>
               </button>
             </div>
             <pre class="line-numbers"><code id="vuln-code-snippet" class="language-python">{{ lesson.vulnerable_code }}</code></pre>
@@ -207,7 +207,7 @@
       <section class="lesson-block" id="sec-levels">
         <div class="block-header">
           <span class="block-index">08</span>
-          <h2 class="block-title">Comportamento nos 4 Níveis de Segurança</h2>
+          <h2 class="block-title">{{ _('Comportamento nos 4 Níveis de Segurança') }}</h2>
         </div>
         <div class="block-body">
           <p class="prose">
@@ -233,32 +233,32 @@
       <section class="lesson-block" id="sec-compare">
         <div class="block-header">
           <span class="block-index">09</span>
-          <h2 class="block-title">Before & After (Inseguro vs Seguro)</h2>
+          <h2 class="block-title">{{ _('Before & After (Inseguro vs Seguro)') }}</h2>
         </div>
         <div class="block-body">
-          <p class="prose">A anatomia da diferença entre um código que assume premissas e um código resiliente:</p>
+          <p class="prose">{{ _('A anatomia da diferença entre um código que assume premissas e um código resiliente:') }}</p>
 
           <div class="before-after-grid">
             <!-- Before Card -->
             <div class="comparison-card comp-vulnerable">
               <div class="comp-header">
-                <span class="comp-badge-danger">✕ BEFORE (VULNERÁVEL)</span>
+                <span class="comp-badge-danger">{{ _('✕ BEFORE (VULNERÁVEL)') }}</span>
               </div>
               <div class="comp-code">
                 <pre><code class="language-python">{{ lesson.before_after.vulnerable }}</code></pre>
               </div>
-              <p class="comp-note">Concatenação e premissas frágeis permitem injeção direta de sintaxe pelo cliente.</p>
+              <p class="comp-note">{{ _('Concatenação e premissas frágeis permitem injeção direta de sintaxe pelo cliente.') }}</p>
             </div>
 
             <!-- After Card -->
             <div class="comparison-card comp-secure">
               <div class="comp-header">
-                <span class="comp-badge-success">✓ AFTER (SEGURO)</span>
+                <span class="comp-badge-success">{{ _('✓ AFTER (SEGURO)') }}</span>
               </div>
               <div class="comp-code">
                 <pre><code class="language-python">{{ lesson.before_after.secure }}</code></pre>
               </div>
-              <p class="comp-note">Separação estrita entre instruções de código e dados dinâmicos do usuário.</p>
+              <p class="comp-note">{{ _('Separação estrita entre instruções de código e dados dinâmicos do usuário.') }}</p>
             </div>
           </div>
         </div>
@@ -268,7 +268,7 @@
       <section class="lesson-block" id="sec-defense">
         <div class="block-header">
           <span class="block-index">10</span>
-          <h2 class="block-title">Defesa & Implementação Segura</h2>
+          <h2 class="block-title">{{ _('Defesa & Implementação Segura') }}</h2>
         </div>
         <div class="block-body">
           <div class="prose formatted-text">{{ lesson.defense | replace('\n', '<br>') | safe }}</div>
@@ -277,7 +277,7 @@
             <div class="code-surface-bar">
               <span class="code-file-tag">modules/{{ lesson.slug }}/secure_patch.py (IMPOSSIBLE)</span>
               <button type="button" class="btn-copy-code" onclick="copySnippet('sec-code-snippet')">
-                <span id="copy-text-sec">Copiar</span>
+                <span id="copy-text-sec">{{ _('Copiar') }}</span>
               </button>
             </div>
             <pre class="line-numbers"><code id="sec-code-snippet" class="language-python">{{ lesson.secure_code }}</code></pre>
@@ -289,7 +289,7 @@
       <section class="lesson-block" id="sec-mistakes">
         <div class="block-header">
           <span class="block-index">11</span>
-          <h2 class="block-title">Erros Comuns de Implementação</h2>
+          <h2 class="block-title">{{ _('Erros Comuns de Implementação') }}</h2>
         </div>
         <div class="block-body">
           <div class="mistakes-list">
@@ -314,11 +314,11 @@
       <section class="lesson-block" id="sec-quiz">
         <div class="block-header">
           <span class="block-index">12</span>
-          <h2 class="block-title">Check Your Knowledge</h2>
+          <h2 class="block-title">{{ _('Check Your Knowledge') }}</h2>
         </div>
         <div class="block-body">
           <div class="quiz-card" id="quiz-card">
-            <div class="quiz-badge">TESTE DE FIXAÇÃO TÉCNICA</div>
+            <div class="quiz-badge">{{ _('TESTE DE FIXAÇÃO TÉCNICA') }}</div>
             <h3 class="quiz-question">{{ lesson.quiz.question }}</h3>
 
             <div class="quiz-options-list" id="quiz-options">
@@ -333,7 +333,7 @@
 
             <div class="quiz-actions">
               <button type="button" class="btn-check-answer" id="btn-submit-quiz">
-                VERIFICAR RESPOSTA
+                {{ _('VERIFICAR RESPOSTA') }}
               </button>
             </div>
 
@@ -342,10 +342,10 @@
 
           <!-- Exercício Interativo Drag & Drop: Reconstituição da Cadeia de Exploração -->
           <div class="sequence-puzzle-card" id="sequence-puzzle-card">
-            <div class="puzzle-badge">EXERCÍCIO TÁTICO • ARRASTAR E SOLTAR</div>
-            <h3 class="puzzle-title">Reconstituição da Cadeia de Exploração</h3>
+            <div class="puzzle-badge">{{ _('EXERCÍCIO TÁTICO • ARRASTAR E SOLTAR') }}</div>
+            <h3 class="puzzle-title">{{ _('Reconstituição da Cadeia de Exploração') }}</h3>
             <p class="puzzle-desc">
-              Arraste e solte os 4 passos abaixo para ordenar a sequência cronológica correta do fluxo de ataque:
+              {{ _('Arraste e solte os 4 passos abaixo para ordenar a sequência cronológica correta do fluxo de ataque:') }}
             </p>
 
             <div class="puzzle-slots-container" id="puzzle-slots-container">
@@ -354,7 +354,7 @@
                    draggable="true" 
                    data-correct-step="{{ step.step }}"
                    data-step-name="{{ step.name }}">
-                <span class="step-handle" title="Arrastar para reordenar">⋮⋮</span>
+                <span class="step-handle" title="{{ _('Arrastar para reordenar') }}">⋮⋮</span>
                 <span class="step-slot-num">0{{ loop.index }}</span>
                 <strong class="step-title-text">{{ step.name }}</strong>
                 <span class="step-desc-text">{{ step.desc }}</span>
@@ -364,10 +364,10 @@
 
             <div class="puzzle-actions">
               <button type="button" class="btn-validate-puzzle" id="btn-validate-sequence">
-                VALIDAR SEQUÊNCIA TÁTICA
+                {{ _('VALIDAR SEQUÊNCIA TÁTICA') }}
               </button>
               <button type="button" class="btn-shuffle-puzzle" id="btn-shuffle-sequence">
-                EMBARALHAR NOVAMENTE
+                {{ _('EMBARALHAR NOVAMENTE') }}
               </button>
             </div>
 
@@ -380,7 +380,7 @@
       <section class="lesson-block" id="sec-checklist">
         <div class="block-header">
           <span class="block-index">13</span>
-          <h2 class="block-title">O que você deve dominar</h2>
+          <h2 class="block-title">{{ _('O que você deve dominar') }}</h2>
         </div>
         <div class="block-body">
           <div class="checklist-box">
@@ -398,12 +398,12 @@
       <section class="lesson-block" id="sec-practice">
         <div class="block-header">
           <span class="block-index">14</span>
-          <h2 class="block-title">Prática no Laboratório</h2>
+          <h2 class="block-title">{{ _('Prática no Laboratório') }}</h2>
         </div>
         <div class="block-body">
           <div class="ready-practice-card">
-            <div class="practice-kicker">CYCLE: ACADEMY → LAB → CODE</div>
-            <h3 class="practice-title">Pronto para colocar em prática?</h3>
+            <div class="practice-kicker">{{ _('CYCLE: ACADEMY → LAB → CODE') }}</div>
+            <h3 class="practice-title">{{ _('Pronto para colocar em prática?') }}</h3>
             <p class="practice-desc">
               Você compreendeu a teoria, analisou a anatomia e entendeu a correção segura.
               Agora teste estes conceitos dentro do ambiente controlado do laboratório DUNO #{{ lesson.num }}.
@@ -420,7 +420,7 @@
       <footer class="lesson-footer-nav">
         {% if prev_lesson %}
         <a href="{{ url_for('academy_lesson', slug=prev_lesson.slug) }}" class="pager-link pager-prev">
-          <span class="pager-dir">← Lição Anterior</span>
+          <span class="pager-dir">{{ _('← Lição Anterior') }}</span>
           <strong class="pager-name">#{{ prev_lesson.num }} {{ prev_lesson.title }}</strong>
         </a>
         {% else %}
@@ -429,7 +429,7 @@
 
         {% if next_lesson %}
         <a href="{{ url_for('academy_lesson', slug=next_lesson.slug) }}" class="pager-link pager-next">
-          <span class="pager-dir">Próxima Lição →</span>
+          <span class="pager-dir">{{ _('Próxima Lição →') }}</span>
           <strong class="pager-name">#{{ next_lesson.num }} {{ next_lesson.title }}</strong>
         </a>
         {% endif %}
@@ -522,7 +522,7 @@
       if (chosenIdx === CORRECT_INDEX) {
         quizFeedback.className = 'quiz-feedback feedback-correct';
         quizFeedback.innerHTML = `
-          <div class="feedback-title">✓ RESPOSTA CORRETA</div>
+          <div class="feedback-title">{{ _('✓ RESPOSTA CORRETA') }}</div>
           <div class="feedback-body">${EXPLANATION}</div>
         `;
         // Marca lição como concluída automaticamente ao acertar o quiz
@@ -530,8 +530,8 @@
       } else {
         quizFeedback.className = 'quiz-feedback feedback-incorrect';
         quizFeedback.innerHTML = `
-          <div class="feedback-title">✕ NÃO EXATAMENTE</div>
-          <div class="feedback-body">Revise as seções "Como funciona" e "Defesa & Implementação Segura" acima para consolidar a fundamentação correta.</div>
+          <div class="feedback-title">{{ _('✕ NÃO EXATAMENTE') }}</div>
+          <div class="feedback-body">{{ _('Revise as seções "Como funciona" e "Defesa & Implementação Segura" acima para consolidar a fundamentação correta.') }}</div>
         `;
       }
     });

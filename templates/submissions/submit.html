@@ -6,12 +6,12 @@
   <div class="settings-container" style="max-width:900px;">
 
     <!-- Top Breadcrumb / Kicker -->
-    <div class="settings-kicker-brand">DUNO // MACHINE PIPELINE</div>
+    <div class="settings-kicker-brand">{{ _('DUNO // MACHINE PIPELINE') }}</div>
 
     <!-- Hero Header -->
     <header class="settings-hero">
-      <h1 class="settings-title">Submeter Nova Máquina</h1>
-      <p class="settings-subtitle">Publique sua máquina vulnerável para a comunidade DUNO. Preencha os metadados e anexe o pacote com Dockerfile/Compose.</p>
+      <h1 class="settings-title">{{ _('Submeter Nova Máquina') }}</h1>
+      <p class="settings-subtitle">{{ _('Publique sua máquina vulnerável para a comunidade DUNO. Preencha os metadados e anexe o pacote com Dockerfile/Compose.') }}</p>
     </header>
 
     <div class="settings-divider"></div>
@@ -23,59 +23,59 @@
       <!-- SEÇÃO 1: IDENTIFICAÇÃO BÁSICA -->
       <section class="settings-section" style="margin-bottom:2rem;">
         <div class="settings-section-header" style="margin-bottom:1rem;">
-          <h2 class="settings-section-title">1. IDENTIFICAÇÃO DA MÁQUINA</h2>
+          <h2 class="settings-section-title">{{ _('1. IDENTIFICAÇÃO DA MÁQUINA') }}</h2>
         </div>
         <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; box-shadow:var(--shadow-sm); display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
           <div style="grid-column:1 / -1;">
             <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-              Nome da Máquina *
+              {{ _('Nome da Máquina *') }}
             </label>
-            <input type="text" name="name" id="field-name" required placeholder="Ex: Matrix Portal" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);" />
+            <input type="text" name="name" id="field-name" required placeholder="{{ _('Ex: Matrix Portal') }}" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);" />
           </div>
 
           <div>
             <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-              Slug (Identificador Único) *
+              {{ _('Slug (Identificador Único) *') }}
             </label>
-            <input type="text" name="slug" id="field-slug" required pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$" placeholder="matrix-portal" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; font-family:var(--font-mono); color:var(--ink);" />
-            <span style="font-size:0.75rem; color:var(--ink-3);">Apenas letras minúsculas, números e hífens.</span>
+            <input type="text" name="slug" id="field-slug" required pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$" placeholder="{{ _('matrix-portal') }}" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; font-family:var(--font-mono); color:var(--ink);" />
+            <span style="font-size:0.75rem; color:var(--ink-3);">{{ _('Apenas letras minúsculas, números e hífens.') }}</span>
           </div>
 
           <div>
             <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-              Categoria *
+              {{ _('Categoria *') }}
             </label>
             <select name="category" id="field-category" required style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);">
-              <option value="Web">Web Exploitation</option>
-              <option value="PrivEsc">Privilege Escalation</option>
-              <option value="Network">Network & Services</option>
-              <option value="Binary">Binary & Pwn</option>
-              <option value="Crypto">Cryptography</option>
-              <option value="Cloud">Cloud & Containers</option>
-              <option value="Misc">Miscellaneous</option>
+              <option value="Web">{{ _('Web Exploitation') }}</option>
+              <option value="PrivEsc">{{ _('Privilege Escalation') }}</option>
+              <option value="Network">{{ _('Network & Services') }}</option>
+              <option value="Binary">{{ _('Binary & Pwn') }}</option>
+              <option value="Crypto">{{ _('Cryptography') }}</option>
+              <option value="Cloud">{{ _('Cloud & Containers') }}</option>
+              <option value="Misc">{{ _('Miscellaneous') }}</option>
             </select>
           </div>
 
           <div>
             <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-              Dificuldade Sugerida *
+              {{ _('Dificuldade Sugerida *') }}
             </label>
             <select name="author_difficulty" id="field-difficulty" required style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);">
-              <option value="Easy">Easy (Fácil)</option>
-              <option value="Medium" selected>Medium (Médio)</option>
-              <option value="Hard">Hard (Difícil)</option>
-              <option value="Insane">Insane (Extremo)</option>
+              <option value="Easy">{{ _('Easy (Fácil)') }}</option>
+              <option value="Medium" selected>{{ _('Medium (Médio)') }}</option>
+              <option value="Hard">{{ _('Hard (Difícil)') }}</option>
+              <option value="Insane">{{ _('Insane (Extremo)') }}</option>
             </select>
           </div>
 
           <div>
             <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-              Sistema Operacional *
+              {{ _('Sistema Operacional *') }}
             </label>
             <select name="os_type" id="field-os" required style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);">
-              <option value="Linux" selected>Linux</option>
-              <option value="Windows">Windows</option>
-              <option value="Other">Outro</option>
+              <option value="Linux" selected>{{ _('Linux') }}</option>
+              <option value="Windows">{{ _('Windows') }}</option>
+              <option value="Other">{{ _('Outro') }}</option>
             </select>
           </div>
         </div>
@@ -84,43 +84,43 @@
       <!-- SEÇÃO 2: METADADOS EDUCATIVOS -->
       <section class="settings-section" style="margin-bottom:2rem;">
         <div class="settings-section-header" style="margin-bottom:1rem;">
-          <h2 class="settings-section-title">2. INFORMAÇÕES EDUCACIONAIS</h2>
+          <h2 class="settings-section-title">{{ _('2. INFORMAÇÕES EDUCACIONAIS') }}</h2>
         </div>
         <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:1.25rem;">
           <div>
             <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-              Descrição Curta *
+              {{ _('Descrição Curta *') }}
             </label>
-            <textarea name="short_desc" id="field-desc" required rows="3" placeholder="Resumo do cenário e vetor de ataque pedagógico..." style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);"></textarea>
+            <textarea name="short_desc" id="field-desc" required rows="3" placeholder="{{ _('Resumo do cenário e vetor de ataque pedagógico...') }}" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);"></textarea>
           </div>
 
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
             <div>
               <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-                Nome do Autor / Handle
+                {{ _('Nome do Autor / Handle') }}
               </label>
-              <input type="text" name="author_name" value="{{ user.username }}" placeholder="Seu nome ou nick" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);" />
+              <input type="text" name="author_name" value="{{ user.username }}" placeholder="{{ _('Seu nome ou nick') }}" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);" />
             </div>
             <div>
               <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-                Perfil / URL do Autor
+                {{ _('Perfil / URL do Autor') }}
               </label>
-              <input type="url" name="author_url" placeholder="https://github.com/..." style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);" />
+              <input type="url" name="author_url" placeholder="{{ _('https://github.com/...') }}" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);" />
             </div>
           </div>
 
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
             <div>
               <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-                Objetivos de Aprendizagem (um por linha)
+                {{ _('Objetivos de Aprendizagem (um por linha)') }}
               </label>
-              <textarea name="objectives" rows="3" placeholder="Explorar injeção de comando&#10;Identificar SUID vulnerável&#10;Efetuar escape de shell" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);"></textarea>
+              <textarea name="objectives" rows="3" placeholder="{{ _('Explorar injeção de comando&#10;Identificar SUID vulnerável&#10;Efetuar escape de shell') }}" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);"></textarea>
             </div>
             <div>
               <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-                Pré-requisitos Recomendados (um por linha)
+                {{ _('Pré-requisitos Recomendados (um por linha)') }}
               </label>
-              <textarea name="prerequisites" rows="3" placeholder="Básico de comandos Linux&#10;Conhecimento de requisições HTTP" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);"></textarea>
+              <textarea name="prerequisites" rows="3" placeholder="{{ _('Básico de comandos Linux&#10;Conhecimento de requisições HTTP') }}" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);"></textarea>
             </div>
           </div>
         </div>
@@ -129,28 +129,36 @@
       <!-- SEÇÃO 3: FLAGS E DICAS -->
       <section class="settings-section" style="margin-bottom:2rem;">
         <div class="settings-section-header" style="margin-bottom:1rem;">
-          <h2 class="settings-section-title">3. FLAGS &amp; DICAS DE APOIO</h2>
+          <h2 class="settings-section-title">{{ _('3. FLAGS &amp; DICAS DE APOIO') }}</h2>
         </div>
         <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; box-shadow:var(--shadow-sm); display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
           <div>
             <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-              User Flag (Opção 1)
+              {{ _('User Flag (Opção 1)') }}
             </label>
             <input type="text" name="user_flag" placeholder="DUNO{user_flag_aqui}" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; font-family:var(--font-mono); color:var(--ink);" />
           </div>
 
           <div>
             <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-              Root / Admin Flag *
+              {{ _('Root / Admin Flag *') }}
             </label>
             <input type="text" name="root_flag" required placeholder="DUNO{root_flag_aqui}" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; font-family:var(--font-mono); color:var(--ink);" />
           </div>
 
           <div style="grid-column:1 / -1;">
             <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
-              Dicas (uma por linha, formato: Dica | Custo de Pontos)
+              {{ _('Dicas (uma por linha, formato: Dica | Custo de Pontos)') }}
             </label>
-            <textarea name="hints" rows="3" placeholder="Verifique os comentários HTML da página de login | 5&#10;Inspecione os binários no diretório /opt | 10" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);"></textarea>
+            <textarea name="hints" rows="3" placeholder="{{ _('Verifique os comentários HTML da página de login | 5&#10;Inspecione os binários no diretório /opt | 10') }}" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; color:var(--ink);"></textarea>
+          </div>
+
+          <div style="grid-column:1 / -1;">
+            <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; color:var(--ink-2); margin-bottom:0.4rem;">
+              {{ _('Walkthrough do Autor (Markdown — opcional)') }}
+            </label>
+            <textarea name="walkthrough_md" rows="6" placeholder="{{ _('# Minha Máquina — Walkthrough&#10;&#10;## Reconhecimento&#10;```bash&#10;nmap -sCV -p22,80 $TARGET&#10;```&#10;&#10;Passo a passo da solução...') }}" style="width:100%; padding:0.65rem 0.85rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.9rem; font-family:var(--font-mono); color:var(--ink);"></textarea>
+            <div style="font-size:0.78rem; color:var(--ink-3); margin-top:0.35rem;">Publicado na página da máquina como <strong>View Walkthrough</strong> após aprovação. Vale também incluir <code>walkthrough.md</code> na raiz do pacote — o conteúdo do campo tem prioridade.</div>
           </div>
         </div>
       </section>
@@ -158,22 +166,23 @@
       <!-- SEÇÃO 4: PACOTE DE ARQUIVOS -->
       <section class="settings-section" style="margin-bottom:2.5rem;">
         <div class="settings-section-header" style="margin-bottom:1rem;">
-          <h2 class="settings-section-title">4. PACOTE DA MÁQUINA (.ZIP OU .TAR.GZ) *</h2>
+          <h2 class="settings-section-title">{{ _('4. PACOTE DA MÁQUINA (.ZIP OU .TAR.GZ) *') }}</h2>
         </div>
         <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.5rem; box-shadow:var(--shadow-sm);">
           <div style="border:2px dashed var(--line); border-radius:var(--r-sm); padding:2rem 1.5rem; text-align:center; background:var(--bg-card-subtle);">
             <div style="font-size:2rem; margin-bottom:0.5rem;">📁</div>
-            <div style="font-weight:600; color:var(--ink); margin-bottom:0.25rem;">Selecione o arquivo da máquina</div>
+            <div style="font-weight:600; color:var(--ink); margin-bottom:0.25rem;">{{ _('Selecione o arquivo da máquina') }}</div>
             <div style="font-size:0.8rem; color:var(--ink-3); margin-bottom:1rem;">Formatos aceitos: <code>.zip</code>, <code>.tar.gz</code> • Tamanho máximo: 50MB</div>
             <input type="file" name="package" id="field-package" required accept=".zip,.tar.gz,.tgz" style="display:block; margin:0 auto; font-size:0.875rem;" />
           </div>
 
           <div style="margin-top:1.25rem; background:var(--bg-subtle); border-radius:var(--r-xs); padding:0.9rem 1.1rem; font-size:0.8rem; color:var(--ink-2);">
-            <div style="font-weight:700; margin-bottom:0.35rem; color:var(--ink);">Estrutura obrigatória dentro do arquivo:</div>
+            <div style="font-weight:700; margin-bottom:0.35rem; color:var(--ink);">{{ _('Estrutura obrigatória dentro do arquivo:') }}</div>
             <ul style="margin-left:1.25rem; line-height:1.6;">
               <li><code>manifest.yml</code> (configuração e metadados)</li>
               <li><code>Dockerfile</code> ou <code>docker-compose.yml</code> (ambiente isolado da máquina)</li>
               <li><code>README.md</code> (writeup, solução esperada e guia de teste)</li>
+              <li><code>walkthrough.md</code> (opcional — vira o View Walkthrough da máquina)</li>
             </ul>
           </div>
         </div>
@@ -182,10 +191,10 @@
       <!-- AÇÕES -->
       <div style="display:flex; justify-content:flex-end; align-items:center; gap:1rem; padding-top:1rem; border-top:1px solid var(--line);">
         <a href="{{ url_for('submissions.contributions') }}" class="btn-subtle" style="text-decoration:none; padding:0.65rem 1.25rem; border-radius:var(--r-sm); border:1px solid var(--line); color:var(--ink-2); background:var(--bg-card);">
-          Cancelar
+          {{ _('Cancelar') }}
         </a>
         <button type="submit" id="btn-submit" class="btn btn-primary" style="padding:0.65rem 1.75rem; font-weight:700; border-radius:var(--r-sm); cursor:pointer;">
-          Enviar Máquina para Validação →
+          {{ _('Enviar Máquina para Validação →') }}
         </button>
       </div>
 
@@ -202,10 +211,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function showAlert(msg, isError) {
     alertBox.style.display = 'block';
-    alertBox.style.background = isError ? 'rgba(239, 68, 68, 0.1)' : 'rgba(34, 197, 94, 0.1)';
+    alertBox.style.background = isError ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 197, 94, 0.15)';
     alertBox.style.border = isError ? '1px solid #ef4444' : '1px solid #22c55e';
-    alertBox.style.color = isError ? '#b91c1c' : '#15803d';
-    alertBox.textContent = msg;
+    alertBox.style.color = isError ? '#f87171' : '#4ade80';
+    alertBox.innerHTML = msg;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -239,13 +248,17 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       const res = await resp.json();
-      if (resp.ok && res.status === 'success') {
+      if (resp.ok && (res.status === 'success' || res.success)) {
         showAlert('Máquina enviada com sucesso! Redirecionando para acompanhamento...', false);
+        const targetUrl = res.redirect_url || ('/machines/submissions/' + res.submission_id);
         setTimeout(() => {
-          window.location.href = '/machines/submissions/' + res.submission_id;
-        }, 1200);
+          window.location.href = targetUrl;
+        }, 1000);
       } else {
-        const errorMsg = res.errors ? res.errors.join(' | ') : (res.error || 'Falha ao submeter máquina.');
+        let errorMsg = res.errors ? res.errors.join(' | ') : (res.error || 'Falha ao submeter máquina.');
+        if (res.redirect_url) {
+          errorMsg += ` &nbsp;<a href="${res.redirect_url}" class="underline font-bold text-white hover:text-emerald-400">{{ _('Ver submissão existente &rarr;') }}</a>`;
+        }
         showAlert('Erro na submissão: ' + errorMsg, true);
         submitBtn.disabled = false;
         submitBtn.innerText = 'Enviar Máquina para Validação →';

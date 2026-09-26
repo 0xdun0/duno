@@ -34,3 +34,20 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Dynamic extracted machine challenges
+challenges/machine-*/
+
+# Local symlinks for IDE LSP resolution
+/flask
+/werkzeug
+/jinja2
+/click
+/itsdangerous
+/blinker
+/yaml
+/jwt
+/markdown
+/PIL
+/pytest
+/_pytest

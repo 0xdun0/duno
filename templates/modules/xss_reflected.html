@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#11 XSS (Reflected)</span>
+    <span>{{ _('#11 XSS (Reflected)') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">XSS (Reflected)</h1>
-      <p class="module-desc">XSS refletido via parâmetros HTTP</p>
+      <h1 class="module-title">{{ _('XSS (Reflected)') }}</h1>
+      <p class="module-desc">{{ _('XSS refletido via parâmetros HTTP') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('xss_reflected', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,11 +34,11 @@
       </p>
       <form method="POST" action="/xss_reflected" id="xss-r-form">
         <div class="form-group">
-          <label for="xss-name">Nome</label>
+          <label for="xss-name">{{ _('Nome') }}</label>
           <input type="text" id="xss-name" name="name" class="form-control"
                  placeholder="<script>alert(1)</script>" />
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Enviar') }}</button>
       </form>
       {% if result is not none %}
       <div class="result-box" style="margin-top:1rem">
@@ -52,7 +52,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Markup() sem escape — <code>&lt;script&gt;</code> executado diretamente{% endif %}
         {% if level == 'medium' %}Remove &lt;script&gt; case-insensitive — bypassável com &lt;ScRiPt&gt; ou eventos{% endif %}

@@ -6,32 +6,32 @@
 
   <!-- Breadcrumb -->
   <nav class="breadcrumb" aria-label="Navegação">
-    <a href="{{ url_for('index') }}">DUNO</a>
+    <a href="{{ url_for('index') }}">{{ _('DUNO') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>Academy</span>
+    <span>{{ _('Academy') }}</span>
   </nav>
 
   <!-- Editorial Hero Section -->
   <section class="academy-hero">
     <div class="academy-kicker">
       <span class="academy-kicker-dot"></span>
-      <span>SECURITY KNOWLEDGE & DEFENSIVE CRAFT</span>
+      <span>{{ _('SECURITY KNOWLEDGE & DEFENSIVE CRAFT') }}</span>
     </div>
-    <h1 class="academy-headline">DUNO ACADEMY</h1>
+    <h1 class="academy-headline">{{ _('DUNO ACADEMY') }}</h1>
     <p class="academy-tagline">
-      Understand the vulnerability. Break the assumption. Build the defense.
+      {{ _('Understand the vulnerability. Break the assumption. Build the defense.') }}
     </p>
     <p class="academy-subtext">
-      Uma base de conhecimento técnica e didática que conecta a teoria à prática real.
-      Aprenda o conceito, analise o código-fonte, teste seus conhecimentos com quizzes interativos e explore a defesa em 20 cenários reais.
+      {{ _('Uma base de conhecimento técnica e didática que conecta a teoria à prática real.
+      Aprenda o conceito, analise o código-fonte, teste seus conhecimentos com quizzes interativos e explore a defesa em 20 cenários reais.') }}
     </p>
     <div class="academy-hero-actions">
       <a href="#curriculum" class="btn-academy-primary" id="btn-start-learning">
-        <span>START LEARNING</span>
+        <span>{{ _('START LEARNING') }}</span>
         <span class="btn-arrow">↓</span>
       </a>
       <a href="{{ url_for('index') }}" class="btn-academy-outline">
-        <span>PRATICAR NOS LABS →</span>
+        <span>{{ _('PRATICAR NOS LABS →') }}</span>
       </a>
     </div>
   </section>
@@ -40,10 +40,10 @@
   <section class="academy-progress-section">
     <div class="academy-progress-card">
       <div class="progress-card-left">
-        <div class="progress-badge">STUDENT PROGRESS</div>
-        <h3 class="progress-title">Seu Progresso na Academy</h3>
+        <div class="progress-badge">{{ _('STUDENT PROGRESS') }}</div>
+        <h3 class="progress-title">{{ _('Seu Progresso na Academy') }}</h3>
         <p class="progress-desc">
-          Complete as lições e responda aos quizzes técnicos para desbloquear maestria conceitual.
+          {{ _('Complete as lições e responda aos quizzes técnicos para desbloquear maestria conceitual.') }}
         </p>
       </div>
       <div class="progress-card-right">
@@ -61,9 +61,9 @@
   <!-- Learning Paths Section -->
   <section class="academy-paths-section">
     <div class="section-header">
-      <div class="section-kicker">CURATED PATHS</div>
-      <h2 class="section-title">Trilhas de Aprendizado</h2>
-      <p class="section-desc">Caminhos estruturados para dominar as superfícies de ataque da web moderna.</p>
+      <div class="section-kicker">{{ _('CURATED PATHS') }}</div>
+      <h2 class="section-title">{{ _('Trilhas de Aprendizado') }}</h2>
+      <p class="section-desc">{{ _('Caminhos estruturados para dominar as superfícies de ataque da web moderna.') }}</p>
     </div>
 
     <div class="paths-grid">
@@ -126,23 +126,23 @@
   <section class="academy-curriculum-section" id="curriculum">
     <div class="curriculum-header">
       <div>
-        <div class="section-kicker">KNOWLEDGE REPOSITORY</div>
-        <h2 class="section-title">Grade Completa de Conteúdo</h2>
-        <p class="section-desc">20 capítulos pedagógicos dissecando causas, anatomia, código real e defesas.</p>
+        <div class="section-kicker">{{ _('KNOWLEDGE REPOSITORY') }}</div>
+        <h2 class="section-title">{{ _('Grade Completa de Conteúdo') }}</h2>
+        <p class="section-desc">{{ _('20 capítulos pedagógicos dissecando causas, anatomia, código real e defesas.') }}</p>
       </div>
 
       <!-- Controls: View Switcher & Live Search -->
       <div class="curriculum-header-controls">
         <div class="view-switcher-wrap">
           <div class="view-switcher" role="group" aria-label="Modo de Visualização">
-            <button type="button" class="view-switch-btn active" id="btn-view-grid" title="Visualização em Grade">
+            <button type="button" class="view-switch-btn active" id="btn-view-grid" title="{{ _('Visualização em Grade') }}">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-              <span>Grade</span>
+              <span>{{ _('Grade') }}</span>
             </button>
-            <button type="button" class="view-switch-btn" id="btn-view-board" title="Quadro de Estudos Drag & Drop">
+            <button type="button" class="view-switch-btn" id="btn-view-board" title="{{ _('Quadro de Estudos Drag & Drop') }}">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="4" height="18" rx="1"></rect><rect x="10" y="3" width="4" height="18" rx="1"></rect><rect x="16" y="3" width="4" height="18" rx="1"></rect></svg>
-              <span>Quadro de Estudos</span>
-              <span class="view-btn-beacon" id="view-btn-beacon" title="Novo: Quadro Interativo" aria-hidden="true"></span>
+              <span>{{ _('Quadro de Estudos') }}</span>
+              <span class="view-btn-beacon" id="view-btn-beacon" title="{{ _('Novo: Quadro Interativo') }}" aria-hidden="true"></span>
             </button>
           </div>
 
@@ -152,50 +152,50 @@
             <div class="popover-header">
               <div class="popover-badge">
                 <span class="radar-pulse-dot"></span>
-                <span>SINALIZADOR TÁTICO · GUIA</span>
+                <span>{{ _('SINALIZADOR TÁTICO · GUIA') }}</span>
               </div>
               <button type="button" class="popover-close-btn" id="btn-tour-close" aria-label="Fechar dica">×</button>
             </div>
             
-            <h4 class="popover-title" id="tour-title">Organize sua Rota com o Quadro de Estudos</h4>
-            <p class="popover-desc">Acompanhe seu domínio prático em cibersegurança de forma interativa:</p>
+            <h4 class="popover-title" id="tour-title">{{ _('Organize sua Rota com o Quadro de Estudos') }}</h4>
+            <p class="popover-desc">{{ _('Acompanhe seu domínio prático em cibersegurança de forma interativa:') }}</p>
             
             <div class="popover-steps">
               <div class="popover-step">
                 <span class="step-badge">01</span>
                 <div class="step-text">
-                  <strong>Modo Kanban:</strong> Alterne para o <em>Quadro de Estudos</em> para enxergar seus módulos por colunas de status.
+                  {{ _('<strong>Modo Kanban:</strong> Alterne para o <em>Quadro de Estudos</em> para enxergar seus módulos por colunas de status.') }}
                 </div>
               </div>
               <div class="popover-step">
                 <span class="step-badge">02</span>
                 <div class="step-text">
-                  <strong>Drag & Drop:</strong> Segure os cards pelo ícone <code class="tour-code-handle">⋮⋮</code> e mova entre <em>A Estudar</em>, <em>Em Progresso</em> e <em>Dominado</em>.
+                  {{ _('<strong>Drag & Drop:</strong> Segure os cards pelo ícone <code class="tour-code-handle">⋮⋮</code> e mova entre <em>A Estudar</em>, <em>Em Progresso</em> e <em>Dominado</em>.') }}
                 </div>
               </div>
               <div class="popover-step">
                 <span class="step-badge">03</span>
                 <div class="step-text">
-                  <strong>Evolução em Tempo Real:</strong> Cada módulo arrastado para <em>Dominado</em> atualiza a barra de progresso do aluno automaticamente.
+                  {{ _('<strong>Evolução em Tempo Real:</strong> Cada módulo arrastado para <em>Dominado</em> atualiza a barra de progresso do aluno automaticamente.') }}
                 </div>
               </div>
             </div>
 
             <div class="popover-actions">
               <button type="button" class="btn-popover-action" id="btn-tour-try-board">
-                <span>Testar Quadro Agora</span>
+                <span>{{ _('Testar Quadro Agora') }}</span>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </button>
               <button type="button" class="btn-popover-dismiss" id="btn-tour-dismiss">
-                Entendi, continuar na grade
+                {{ _('Entendi, continuar na grade') }}
               </button>
             </div>
           </div>
         </div>
 
-        <button type="button" class="btn-tour-help" id="btn-reopen-tour" title="Como funciona o Quadro de Estudos">
+        <button type="button" class="btn-tour-help" id="btn-reopen-tour" title="{{ _('Como funciona o Quadro de Estudos') }}">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          <span>Dica do Quadro</span>
+          <span>{{ _('Dica do Quadro') }}</span>
         </button>
 
         <div class="curriculum-search-box">
@@ -203,19 +203,19 @@
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-          <input type="text" id="academy-search-input" placeholder="Filtrar por conceito (ex: SQL, XSS, RCE, CSRF)..." autocomplete="off" />
+          <input type="text" id="academy-search-input" placeholder="{{ _('Filtrar por conceito (ex: SQL, XSS, RCE, CSRF)...') }}" autocomplete="off" />
         </div>
       </div>
     </div>
 
     <!-- Category Filter Pills -->
     <div class="curriculum-filters" id="academy-filters">
-      <button class="filter-pill active" data-filter="all">Todos (20)</button>
-      <button class="filter-pill" data-filter="injection">Injeção & DB (5)</button>
-      <button class="filter-pill" data-filter="auth">Autenticação & Sessão (4)</button>
-      <button class="filter-pill" data-filter="client">Client-Side & Browser (5)</button>
-      <button class="filter-pill" data-filter="access">Acesso & Cripto (3)</button>
-      <button class="filter-pill" data-filter="api">APIs & Lógica (3)</button>
+      <button class="filter-pill active" data-filter="all">{{ _('Todos (20)') }}</button>
+      <button class="filter-pill" data-filter="injection">{{ _('Injeção & DB (5)') }}</button>
+      <button class="filter-pill" data-filter="auth">{{ _('Autenticação & Sessão (4)') }}</button>
+      <button class="filter-pill" data-filter="client">{{ _('Client-Side & Browser (5)') }}</button>
+      <button class="filter-pill" data-filter="access">{{ _('Acesso & Cripto (3)') }}</button>
+      <button class="filter-pill" data-filter="api">{{ _('APIs & Lógica (3)') }}</button>
     </div>
 
     <!-- Lessons Grid -->
@@ -229,11 +229,11 @@
            data-desc="{{ item.desc | lower }}">
         <div class="curriculum-card-top">
           <div class="card-num-wrap">
-            <span class="card-drag-handle" title="Arrastar módulo">⋮⋮</span>
+            <span class="card-drag-handle" title="{{ _('Arrastar módulo') }}">⋮⋮</span>
             <span class="curriculum-num">#{{ item.num }}</span>
             <span class="curriculum-path-tag">{{ item.path_name }}</span>
           </div>
-          <span class="curriculum-status-pill" id="status-{{ item.slug }}">○ PENDENTE</span>
+          <span class="curriculum-status-pill" id="status-{{ item.slug }}">{{ _('○ PENDENTE') }}</span>
         </div>
 
         <h3 class="curriculum-card-title">{{ item.title }}</h3>
@@ -261,11 +261,11 @@
 
         <div class="curriculum-card-actions">
           <a href="{{ url_for('academy_lesson', slug=item.slug) }}" class="btn-read-lesson">
-            <span>LER CAPÍTULO COMPLETO</span>
+            <span>{{ _('LER CAPÍTULO COMPLETO') }}</span>
             <span class="arrow">→</span>
           </a>
-          <a href="{{ url_for(item.slug + '.index') }}" class="btn-lab-shortcut" title="Ir direto para o laboratório prático">
-            LAB
+          <a href="{{ url_for(item.slug + '.index') }}" class="btn-lab-shortcut" title="{{ _('Ir direto para o laboratório prático') }}">
+            {{ _('LAB') }}
           </a>
         </div>
       </div>
@@ -279,7 +279,7 @@
         <div class="kanban-col-header">
           <div class="col-title-wrap">
             <span class="col-indicator todo"></span>
-            <h3 class="col-title">A ESTUDAR</h3>
+            <h3 class="col-title">{{ _('A ESTUDAR') }}</h3>
           </div>
           <span class="col-count" id="count-todo">0</span>
         </div>
@@ -291,7 +291,7 @@
         <div class="kanban-col-header">
           <div class="col-title-wrap">
             <span class="col-indicator in-progress"></span>
-            <h3 class="col-title">EM PROGRESSO</h3>
+            <h3 class="col-title">{{ _('EM PROGRESSO') }}</h3>
           </div>
           <span class="col-count" id="count-in-progress">0</span>
         </div>
@@ -303,7 +303,7 @@
         <div class="kanban-col-header">
           <div class="col-title-wrap">
             <span class="col-indicator done"></span>
-            <h3 class="col-title">DOMINADO (CONCLUÍDO)</h3>
+            <h3 class="col-title">{{ _('DOMINADO (CONCLUÍDO)') }}</h3>
           </div>
           <span class="col-count" id="count-done">0</span>
         </div>
@@ -511,13 +511,13 @@
       kCard.innerHTML = 
         '<div class="kanban-card-top">' +
           '<span class="curriculum-num">' + num + '</span>' +
-          '<span class="card-drag-handle" title="Arrastar para outra coluna">⋮⋮</span>' +
+          '<span class="card-drag-handle" title="{{ _("Arrastar para outra coluna") }}">⋮⋮</span>' +
         '</div>' +
         '<h4 class="kanban-card-title">' + title + '</h4>' +
         '<p class="kanban-card-desc">' + desc + '</p>' +
         '<div class="kanban-card-footer">' +
           '<span class="curriculum-path-tag">' + pathName + '</span>' +
-          '<a href="/academy/' + slug + '" class="kanban-card-link">Estudar →</a>' +
+          '<a href="/academy/' + slug + '" class="kanban-card-link">{{ _("Estudar →") }}</a>' +
         '</div>';
 
       // Eventos de arrasto no Kanban card

@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#16 Open HTTP Redirect</span>
+    <span>{{ _('#16 Open HTTP Redirect') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">Open HTTP Redirect</h1>
-      <p class="module-desc">Redirecionamento controlado pelo usuário</p>
+      <h1 class="module-title">{{ _('Open HTTP Redirect') }}</h1>
+      <p class="module-desc">{{ _('Redirecionamento controlado pelo usuário') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('open_redirect', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,19 +34,19 @@
       </p>
       <form method="GET" action="/open_redirect" id="redirect-form">
         <div class="form-group">
-          <label for="url-input">URL destino</label>
+          <label for="url-input">{{ _('URL destino') }}</label>
           <input type="text" id="url-input" name="url" class="form-control"
-                 placeholder="https://example.com" value="{{ request.args.get('url', '') }}" />
+                 placeholder="{{ _('https://example.com') }}" value="{{ request.args.get('url', '') }}" />
         </div>
-        <button type="submit" class="btn btn-primary">Redirecionar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Redirecionar') }}</button>
       </form>
       <div style="margin-top:1rem;font-size:0.82rem;color:var(--text-muted)">
-        O servidor irá redirecionar para a URL informada (observe o comportamento em cada nível).
+        {{ _('O servidor irá redirecionar para a URL informada (observe o comportamento em cada nível).') }}
       </div>
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Qualquer URL aceita — phishing via link legítimo{% endif %}
         {% if level == 'medium' %}Bloqueia <code>http://</code> — bypassável com <code>https://</code>{% endif %}

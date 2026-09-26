@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- DUNO mark — recriado a partir da identidade (sólido + contorno, simétrico) -->
+  <g stroke="currentColor" stroke-linecap="butt" stroke-linejoin="round">
+    <!-- contorno externo superior -->
+    <path d="M30 24 H66 Q82 24 90 40 L97 51" stroke-width="4.5"/>
+    <!-- barra sólida superior -->
+    <path d="M12 42 H58 L73 54" stroke-width="14"/>
+    <!-- barra sólida inferior -->
+    <path d="M12 78 H58 L73 66" stroke-width="14"/>
+    <!-- contorno externo inferior -->
+    <path d="M30 96 H66 Q82 96 90 80 L97 69" stroke-width="4.5"/>
+  </g>
+</svg>

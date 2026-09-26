@@ -6,34 +6,34 @@
 
   <!-- Breadcrumb -->
   <nav class="breadcrumb" aria-label="Navegação">
-    <a href="{{ url_for('index') }}">DUNO</a>
+    <a href="{{ url_for('index') }}">{{ _('DUNO') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>Desafios CTF</span>
+    <span>{{ _('Desafios CTF') }}</span>
   </nav>
 
   <!-- Editorial Hero Section -->
   <section class="challenges-hero">
     <div class="challenges-kicker">
       <span class="challenges-kicker-dot"></span>
-      <span>LABORATÓRIO CTF • EVERSEC GRAVEYARD</span>
+      <span>{{ _('LABORATÓRIO CTF • EVERSEC GRAVEYARD') }}</span>
     </div>
-    <h1 class="challenges-headline">DESAFIOS CTF</h1>
+    <h1 class="challenges-headline">{{ _('DESAFIOS CTF') }}</h1>
     <p class="challenges-tagline">
-      Ataque prático em alvos reais isolados em containers Docker dedicados.
+      {{ _('Ataque prático em alvos reais isolados em containers Docker dedicados.') }}
     </p>
     <p class="challenges-subtext">
-      Pratique exploração ofensiva em cenários completos importados do ctf-challenge. Cada desafio inicializa
-      um ambiente vulnerável sob demanda com portas dedicadas, isolamento de rede e guia prático em anexo (PDF).
+      {{ _('Pratique exploração ofensiva em cenários completos importados do ctf-challenge. Cada desafio inicializa
+      um ambiente vulnerável sob demanda com portas dedicadas, isolamento de rede e guia prático em anexo (PDF).') }}
     </p>
 
     <!-- Quick Stats Bar -->
     <div class="challenges-stats-bar">
       <div class="stat-pill">
-        <span class="stat-label">CATÁLOGO</span>
-        <span class="stat-val" id="stat-total-challenges">{{ challenges | length }} Desafios</span>
+        <span class="stat-label">{{ _('CATÁLOGO') }}</span>
+        <span class="stat-val" id="stat-total-challenges">{{ challenges | length }} {{ _('Desafios') }}</span>
       </div>
       <div class="stat-pill">
-        <span class="stat-label">TOTAL DE XP</span>
+        <span class="stat-label">{{ _('TOTAL DE XP') }}</span>
         <span class="stat-val xp-hero-val">
           <i class="nf nf-md-diamond_stone" aria-hidden="true"></i>
           {% set total_pts = namespace(value=0) %}
@@ -42,12 +42,12 @@
         </span>
       </div>
       <div class="stat-pill">
-        <span class="stat-label">ISOLAMENTO</span>
-        <span class="stat-val">Docker Single-Container</span>
+        <span class="stat-label">{{ _('ISOLAMENTO') }}</span>
+        <span class="stat-val">{{ _('Docker Single-Container') }}</span>
       </div>
       <div class="stat-pill">
-        <span class="stat-label">TTL INSTÂNCIA</span>
-        <span class="stat-val">60 minutos</span>
+        <span class="stat-label">{{ _('TTL INSTÂNCIA') }}</span>
+        <span class="stat-val">{{ _('60 minutos') }}</span>
       </div>
     </div>
   </section>
@@ -63,7 +63,7 @@
         <input type="text" 
                id="challenge-search-input" 
                class="challenge-search-input" 
-               placeholder="Filtrar por nome, ID ou técnica (ex: IDOR, XXE, API, Recon)..." 
+               placeholder="{{ _('Filtrar por nome, ID ou técnica (ex: IDOR, XXE, API, Recon)...') }}" 
                autocomplete="off" />
       </div>
 
@@ -72,13 +72,13 @@
           Todos <span class="pill-tag">{{ challenges | length }}</span>
         </button>
         <button type="button" class="filter-pill" data-difficulty="easy">
-          Easy
+          {{ _('Easy') }}
         </button>
         <button type="button" class="filter-pill" data-difficulty="medium">
-          Medium
+          {{ _('Medium') }}
         </button>
         <button type="button" class="filter-pill" data-difficulty="hard">
-          Hard
+          {{ _('Hard') }}
         </button>
       </div>
     </div>
@@ -93,8 +93,8 @@
       {% else %}
         <div class="empty-state" id="challenges-empty-state">
           <div class="empty-state-icon"><i class="nf nf-md-package_variant_closed" aria-hidden="true"></i></div>
-          <h3 class="empty-state-title">Nenhum desafio disponível no catálogo</h3>
-          <p class="empty-state-desc">Nenhum ambiente de desafio foi publicado ainda. Execute o validador de registro para sincronizar.</p>
+          <h3 class="empty-state-title">{{ _('Nenhum desafio disponível no catálogo') }}</h3>
+          <p class="empty-state-desc">{{ _('Nenhum ambiente de desafio foi publicado ainda. Execute o validador de registro para sincronizar.') }}</p>
         </div>
       {% endfor %}
     </div>
@@ -102,21 +102,21 @@
     <!-- Pagination Controls (9 cards per page) -->
     <div class="pagination-container" id="pagination-container">
       <button type="button" class="pagination-arrow" id="pagination-prev" disabled>
-        ← Anterior
+        {{ _('← Anterior') }}
       </button>
       <div class="pagination-numbers" id="pagination-numbers">
         <!-- Rendered via JS: [1] [2] [3] -->
       </div>
       <button type="button" class="pagination-arrow" id="pagination-next">
-        Próximo →
+        {{ _('Próximo →') }}
       </button>
     </div>
 
     <!-- Empty search state (hidden by default) -->
     <div class="empty-state" id="search-empty-state" style="display: none;">
       <div class="empty-state-icon"><i class="nf nf-md-magnify" aria-hidden="true"></i></div>
-      <h3 class="empty-state-title">Nenhum desafio encontrado</h3>
-      <p class="empty-state-desc">Tente ajustar seus termos de busca ou remover os filtros de dificuldade.</p>
+      <h3 class="empty-state-title">{{ _('Nenhum desafio encontrado') }}</h3>
+      <p class="empty-state-desc">{{ _('Tente ajustar seus termos de busca ou remover os filtros de dificuldade.') }}</p>
     </div>
   </section>
 
@@ -128,13 +128,13 @@
     <div class="wt-modal-header">
       <div class="wt-modal-kicker">
         <i class="nf nf-md-alert_decagram" aria-hidden="true"></i>
-        <span>AVISO CTF • SPOILER DA SOLUÇÃO</span>
+        <span>{{ _('AVISO CTF • SPOILER DA SOLUÇÃO') }}</span>
       </div>
       <button type="button" class="wt-modal-close" id="btn-close-wt-modal" aria-label="Fechar modal">×</button>
     </div>
 
     <div class="wt-modal-body">
-      <h3 class="wt-modal-title" id="wt-modal-title">Tem certeza que deseja ver o passo a passo?</h3>
+      <h3 class="wt-modal-title" id="wt-modal-title">{{ _('Tem certeza que deseja ver o passo a passo?') }}</h3>
       <p class="wt-modal-desc">
         O <strong>Walkthrough</strong> revela a resolução completa, todas as 5 flags e os payloads exatos. O ideal para você evoluir como pentester é tentar explorar o alvo por conta própria primeiro, sem cola!
       </p>
@@ -143,11 +143,11 @@
       <div class="wt-academy-card">
         <div class="wt-academy-badge">
           <i class="nf nf-md-school" aria-hidden="true"></i>
-          <span>PRÉ-REQUISITOS RECOMENDADOS</span>
+          <span>{{ _('PRÉ-REQUISITOS RECOMENDADOS') }}</span>
         </div>
-        <h4 class="wt-academy-title">Módulo: SQL Injection (SQLi)</h4>
+        <h4 class="wt-academy-title">{{ _('Módulo: SQL Injection (SQLi)') }}</h4>
         <p class="wt-academy-text">
-          Estude os conceitos de injeção em queries, autenticação bypass e extração via UNION na DUNO Academy antes de invadir o alvo.
+          {{ _('Estude os conceitos de injeção em queries, autenticação bypass e extração via UNION na DUNO Academy antes de invadir o alvo.') }}
         </p>
         <a href="/academy/sqli" class="btn btn-primary wt-academy-btn">
           <i class="nf nf-md-book_open_page_variant" aria-hidden="true"></i>
@@ -162,7 +162,7 @@
         Iniciar Máquina e Tentar Sozinho
       </button>
       <a href="/desafio/1/walkthrough" class="wt-modal-proceed-link" id="link-modal-proceed-wt">
-        Ver o Passo a Passo Mesmo Assim →
+        {{ _('Ver o Passo a Passo Mesmo Assim →') }}
       </a>
     </div>
   </div>

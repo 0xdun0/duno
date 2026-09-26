@@ -13,6 +13,8 @@ services:
       - ./data:/app/data
       - ./docs:/app/docs:ro
       - ./static/uploads:/app/static/uploads
+      - ./challenges:/app/challenges
+      - ./translations:/app/translations
     env_file:
       - .env
     environment:

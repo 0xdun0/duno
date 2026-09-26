@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#9 Weak Session IDs</span>
+    <span>{{ _('#9 Weak Session IDs') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">Weak Session IDs</h1>
-      <p class="module-desc">Geração de IDs de sessão previsíveis ou manipuláveis</p>
+      <h1 class="module-title">{{ _('Weak Session IDs') }}</h1>
+      <p class="module-desc">{{ _('Geração de IDs de sessão previsíveis ou manipuláveis') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('weak_session', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -33,18 +33,18 @@
         Preveja o próximo ID de sessão. Em low, é um contador simples.
       </p>
       <div style="margin:1rem 0">
-        <p style="color:var(--text-muted);font-size:0.82rem">ID gerado para esta requisição:</p>
+        <p style="color:var(--text-muted);font-size:0.82rem">{{ _('ID gerado para esta requisição:') }}</p>
         <div class="result-box info" style="margin-top:0.5rem;font-family:monospace;font-size:0.95rem">
           {{ new_sid }}
         </div>
       </div>
       <form method="GET" action="/weak_session" id="sid-form">
-        <button type="submit" class="btn btn-primary">Gerar novo ID</button>
+        <button type="submit" class="btn btn-primary">{{ _('Gerar novo ID') }}</button>
       </form>
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Sequencial — ID = 1, 2, 3… trivialmente previsível{% endif %}
         {% if level == 'medium' %}MD5(timestamp) — previsível se o atacante souber a hora{% endif %}

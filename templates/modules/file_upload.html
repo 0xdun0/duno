@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#5 File Upload</span>
+    <span>{{ _('#5 File Upload') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">File Upload</h1>
-      <p class="module-desc">Upload inseguro — envie arquivos arbitrários ao servidor</p>
+      <h1 class="module-title">{{ _('File Upload') }}</h1>
+      <p class="module-desc">{{ _('Upload inseguro — envie arquivos arbitrários ao servidor') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('file_upload', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,10 +34,10 @@
       </p>
       <form method="POST" action="/file_upload" enctype="multipart/form-data" id="upload-form">
         <div class="form-group">
-          <label for="file-input">Arquivo</label>
+          <label for="file-input">{{ _('Arquivo') }}</label>
           <input type="file" id="file-input" name="file" class="form-control" />
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary">{{ _('Enviar') }}</button>
       </form>
       {% if result %}
       <div class="result-box {% if 'salvo' in result or 'segurança' in result %}success{% else %}error{% endif %}">{{ result }}</div>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Qualquer arquivo aceito — envie <code>shell.php</code>{% endif %}
         {% if level == 'medium' %}Valida <code>Content-Type</code> — altere via Burp para <code>image/jpeg</code>{% endif %}

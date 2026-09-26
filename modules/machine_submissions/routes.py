@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 from core.decorators import login_required
 from core.auth import current_user
 from core.database import get_db
-from modules.machine_submissions.db import init_submissions_db, log_machine_audit
+from modules.machine_submissions.db import init_submissions_db, log_machine_audit, create_platform_notification
 from modules.machine_submissions.state_machine import transition_submission, StateTransitionError
 from modules.machine_submissions.validator import extract_package, validate_extracted_structure, ValidationError
 from modules.machine_submissions.worker import run_scan_job
@@ -20,6 +20,19 @@ bp = Blueprint("submissions", __name__)
 UPLOAD_DIR = Path("static/uploads/machine_submissions")
 SLUG_REGEX = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 MAX_PACKAGE_UPLOAD_BYTES = 50 * 1024 * 1024  # 50 MB
+MAX_WALKTHROUGH_CHARS = 200_000  # limite do walkthrough em Markdown (~200 KB)
+
+
+def _read_package_walkthrough(extract_dir) -> str:
+    """Lê walkthrough.md da raiz do pacote extraído (convenção p/ botão View Walkthrough)."""
+    try:
+        base = Path(extract_dir)
+        for cand in (base / "walkthrough.md", base / "WALKTHROUGH.md"):
+            if cand.is_file() and cand.stat().st_size <= MAX_WALKTHROUGH_CHARS:
+                return cand.read_text(encoding="utf-8", errors="replace").strip()
+    except Exception:
+        pass
+    return ""
 
 
 
@@ -94,6 +107,21 @@ def submission_detail(submission_id):
     if sub["user_id"] != user["id"] and user.get("role") != "admin":
         abort(403)
 
+    # Marca notificações como lidas para o usuário visualizador
+    try:
+        notifs = db.execute(
+            "SELECT id FROM platform_notifications WHERE target_id = ? OR link LIKE ?",
+            (str(submission_id), f"%/submissions/{submission_id}%")
+        ).fetchall()
+        for n in notifs:
+            db.execute(
+                "INSERT OR IGNORE INTO user_notification_reads (user_id, notification_id) VALUES (?, ?)",
+                (user["id"], n["id"])
+            )
+        db.commit()
+    except Exception:
+        pass
+
     # Versões
     versions = db.execute(
         "SELECT * FROM machine_versions WHERE submission_id = ? ORDER BY id DESC",
@@ -160,7 +188,7 @@ def api_submit_machine():
     os_type = request.form.get("os_type", "Linux").strip()
     os_distro = request.form.get("os_distro", "").strip()
     architecture = request.form.get("architecture", "amd64").strip()
-    difficulty = request.form.get("difficulty", "Medium").strip()
+    difficulty = (request.form.get("author_difficulty") or request.form.get("difficulty") or "Medium").strip()
     category = request.form.get("category", "Web").strip()
     version_str = request.form.get("version", "1.0").strip()
 
@@ -173,19 +201,25 @@ def api_submit_machine():
     references_raw = request.form.get("references", "").strip()
     user_flag = request.form.get("user_flag", "").strip()
     root_flag = request.form.get("root_flag", "").strip()
+    walkthrough_md = request.form.get("walkthrough_md", "").strip()
 
     if not name or not short_desc:
-        return jsonify({"error": "Nome e descrição curta são obrigatórios."}), 400
+        return jsonify({"status": "error", "error": "Nome e descrição curta são obrigatórios."}), 400
 
     if not slug:
         slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
     if not SLUG_REGEX.match(slug):
-        return jsonify({"error": "Slug inválido. Use apenas letras minúsculas, números e hífens."}), 400
+        return jsonify({"status": "error", "error": "Slug inválido. Use apenas letras minúsculas, números e hífens."}), 400
 
     # Verifica duplicidade de slug
     existing = db.execute("SELECT id FROM machine_submissions WHERE slug = ?", (slug,)).fetchone()
     if existing:
-        return jsonify({"error": f"Já existe uma máquina com o slug '{slug}'."}), 400
+        return jsonify({
+            "status": "error",
+            "error": f"Já existe uma máquina cadastrada com o slug '{slug}'. Escolha um novo slug ou acesse a submissão existente.",
+            "existing_submission_id": existing["id"],
+            "redirect_url": url_for("submissions.submission_detail", submission_id=existing["id"])
+        }), 400
 
     # Upload do arquivo
     file = request.files.get("package")
@@ -232,6 +266,10 @@ def api_submit_machine():
     hints_list = [h.strip() for h in hints_raw.splitlines() if h.strip()]
     ref_list = [r.strip() for r in references_raw.splitlines() if r.strip()]
 
+    # Walkthrough: campo do formulário tem prioridade; senão, importa walkthrough.md do pacote
+    if not walkthrough_md:
+        walkthrough_md = _read_package_walkthrough(extract_dir)
+
     # Cria submissão no banco
     cur = db.execute(
         """INSERT INTO machine_submissions (slug, name, user_id, status, current_version)
@@ -253,13 +291,13 @@ def api_submit_machine():
         """INSERT INTO machine_metadata (
                submission_id, version_id, short_desc, full_desc, os_type, os_distro,
                architecture, author_difficulty, category, objectives_json, prerequisites_json,
-               skills_developed, scenario_intro, hints_json, references_json, exposed_ports_json,
+               skills_developed, scenario_intro, hints_json, references_json, walkthrough_md, exposed_ports_json,
                cpu_limit, memory_limit_mb, disk_limit_mb
-           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (
             sub_id, ver_id, short_desc, full_desc, os_type, os_distro,
             architecture, difficulty, category, json.dumps(objectives_list), json.dumps(prereq_list),
-            skills_developed, scenario_intro, json.dumps(hints_list), json.dumps(ref_list),
+            skills_developed, scenario_intro, json.dumps(hints_list), json.dumps(ref_list), walkthrough_md or None,
             json.dumps(manifest.get("runtime", {}).get("exposed_ports", [80])),
             float(manifest.get("resources", {}).get("cpu", 1.0)),
             int(manifest.get("resources", {}).get("memory", 1024)),
@@ -308,8 +346,20 @@ def api_submit_machine():
     # Dispara scan estático preliminar automaticamente
     run_scan_job(db, ver_id)
 
+    # Notificação na plataforma para administradores
+    create_platform_notification(
+        db,
+        ntype="machine_submitted",
+        title=f"Nova Máquina Submetida: {name}",
+        message=f"A máquina '{name}' ({slug} v{version_str}) foi enviada por @{user['username']} e aguarda moderação.",
+        link=url_for("submissions_admin.machine_review_workspace", submission_id=sub_id),
+        target_id=str(sub_id),
+        target_role="admin"
+    )
+
     db.commit()
     return jsonify({
+        "status": "success",
         "success": True,
         "submission_id": sub_id,
         "slug": slug,
@@ -421,19 +471,23 @@ def api_resubmit_version(submission_id):
     ).fetchone()
 
     if old_meta:
+        # Walkthrough da nova versão: override do formulário > walkthrough.md do pacote > versão anterior
+        new_walkthrough = (request.form.get("walkthrough_md", "").strip()
+                           or _read_package_walkthrough(extract_dir)
+                           or old_meta["walkthrough_md"])
         db.execute(
             """INSERT INTO machine_metadata (
                    submission_id, version_id, short_desc, full_desc, os_type, os_distro,
                    architecture, author_difficulty, category, objectives_json, prerequisites_json,
-                   skills_developed, scenario_intro, hints_json, references_json, exposed_ports_json,
+                   skills_developed, scenario_intro, hints_json, references_json, walkthrough_md, exposed_ports_json,
                    cpu_limit, memory_limit_mb, disk_limit_mb
-               ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+               ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (
                 submission_id, ver_id, old_meta["short_desc"], old_meta["full_desc"],
                 old_meta["os_type"], old_meta["os_distro"], old_meta["architecture"],
                 old_meta["author_difficulty"], old_meta["category"], old_meta["objectives_json"],
                 old_meta["prerequisites_json"], old_meta["skills_developed"], old_meta["scenario_intro"],
-                old_meta["hints_json"], old_meta["references_json"], old_meta["exposed_ports_json"],
+                old_meta["hints_json"], old_meta["references_json"], new_walkthrough or None, old_meta["exposed_ports_json"],
                 old_meta["cpu_limit"], old_meta["memory_limit_mb"], old_meta["disk_limit_mb"]
             )
         )
@@ -455,6 +509,17 @@ def api_resubmit_version(submission_id):
 
     # Roda scan estático na nova versão
     run_scan_job(db, ver_id)
+
+    # Notificação na plataforma para administradores
+    create_platform_notification(
+        db,
+        ntype="machine_submitted",
+        title=f"Nova Versão Submetida: {sub['name']} (v{version_str})",
+        message=f"Uma nova versão da máquina '{sub['name']}' foi reenviada por @{user['username']} para revisão.",
+        link=url_for("submissions_admin.machine_review_workspace", submission_id=submission_id),
+        target_id=str(submission_id),
+        target_role="admin"
+    )
 
     db.commit()
     return jsonify({"success": True, "version": version_str, "status": "SUBMITTED"})

@@ -4,21 +4,21 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>#15 Authorisation Bypass</span>
+    <span>{{ _('#15 Authorisation Bypass') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">Authorisation Bypass</h1>
-      <p class="module-desc">Acesso indevido a área administrativa</p>
+      <h1 class="module-title">{{ _('Authorisation Bypass') }}</h1>
+      <p class="module-desc">{{ _('Acesso indevido a área administrativa') }}</p>
     </div>
     <div class="module-controls">
       {% set current_level = level %}
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('auth_bypass', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -34,20 +34,20 @@
       </p>
       <div class="result-box {% if access %}success{% else %}error{% endif %}" style="margin:1rem 0">
         {% if access %}
-        <span class="badge-status-access granted">CONCEDIDO</span> Acesso autorizado à área administrativa.
+        <span class="badge-status-access granted">{{ _('CONCEDIDO') }}</span> Acesso autorizado à área administrativa.
         <div style="margin-top:0.5rem;font-size:0.8rem">
           <strong>Dados sensíveis:</strong> DUNO{auth_bypass_success}<br/>
           Usuários cadastrados, tokens de API, logs de auditoria...
         </div>
         {% else %}
-        <span class="badge-status-access denied">NEGADO</span> Acesso negado. Você não possui privilégios de administrador.
+        <span class="badge-status-access denied">{{ _('NEGADO') }}</span> Acesso negado. Você não possui privilégios de administrador.
         {% endif %}
       </div>
       <p style="font-size:0.82rem;color:var(--text-muted)">Seu role atual: <code>{{ current_user.role }}</code></p>
     </div>
 
     <div class="panel">
-      <div class="panel-title">Como funciona</div>
+      <div class="panel-title">{{ _('Como funciona') }}</div>
       <div class="alert alert-{% if level == 'impossible' %}success{% elif level == 'high' %}warning{% else %}error{% endif %}">
         {% if level == 'low' %}Sem verificação — qualquer usuário tem acesso{% endif %}
         {% if level == 'medium' %}Verifica cookie <code>admin=1</code> — adicione via DevTools: Application → Cookies{% endif %}

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 120" fill="none">
+  <!-- DUNO logo horizontal — mark + wordmark -->
+  <g stroke="currentColor" stroke-linecap="butt" stroke-linejoin="round">
+    <path d="M30 24 H66 Q82 24 90 40 L97 51" stroke-width="4.5"/>
+    <path d="M12 42 H58 L73 54" stroke-width="14"/>
+    <path d="M12 78 H58 L73 66" stroke-width="14"/>
+    <path d="M30 96 H66 Q82 96 90 80 L97 69" stroke-width="4.5"/>
+  </g>
+  <text x="122" y="86" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="76" font-weight="600" letter-spacing="-3" fill="currentColor">duno</text>
+</svg>

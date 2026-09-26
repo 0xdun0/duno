@@ -1,0 +1,307 @@
+categories:
+- id: get-started
+  title: Comenzar
+  subtitle: Inicialización rápida, Docker Compose, credenciales predeterminadas y
+    primeros pasos en la plataforma.
+  icon: nf-md-rocket_launch
+  badge_color: var(--orange)
+  docs:
+  - quickstart
+  - architecture
+  - directory-structure
+- id: guides
+  title: Guías & Práctica
+  subtitle: Walkthroughs de pentest web, metodología de explotación y la Trilha lúdica
+    DUNO Kids.
+  icon: nf-md-book_open_page_variant
+  badge_color: '#3b82f6'
+  docs:
+  - kids-curriculum
+  - alpha-sqli-walkthrough
+  - module-development
+  - machine-submission-guide
+- id: manuals
+  title: Manuales & Arquitectura
+  subtitle: Topología de red tripartita, corredor de desafíos aislados, banco SQLite
+    y motor de envíos.
+  icon: nf-md-file_document_outline
+  badge_color: '#10b981'
+  docs:
+  - network-architecture
+  - challenges-engine
+  - database-schema
+  - security-policy
+  - runbook-rollback
+  - design-system
+- id: reference
+  title: Referencia Técnica
+  subtitle: Especificación del manifest.yml, APIs REST, catálogo de los 20 módulos
+    OWASP y graduación de los niveles.
+  icon: nf-oct-terminal
+  badge_color: '#8b5cf6'
+  docs:
+  - manifest-spec
+  - owasp-modules
+  - security-levels
+  - api-reference
+metadata:
+  quickstart:
+    title: Comenzando y Configuración Rápida
+    category: get-started
+    category_title: Get started
+    file: QUICKSTART.md
+    icon: nf-md-rocket_launch
+    tag: Setup
+    desc: Cómo subir el DUNO vía Docker Compose, puertos expuestos, credenciales de
+      acceso predeterminadas y primeras pruebas.
+    read_time: 4 min de leitura
+    date: 19 Set 2026
+  architecture:
+    title: Visión General de la Arquitectura del DUNO
+    category: get-started
+    category_title: Get started
+    file: ARCHITECTURE.md
+    icon: nf-md-server_network
+    tag: Architecture
+    desc: Arquitectura modular en Flask Blueprints, persistencia en SQLite, sistema
+      de diseño Walkie y subsistemas acoplados.
+    read_time: 6 min de leitura
+    date: 18 Set 2026
+  directory-structure:
+    title: Estructura de Directorios y Convenciones
+    category: get-started
+    category_title: Get started
+    file: DIRECTORY_STRUCTURE.md
+    icon: nf-md-folder_outline
+    tag: Layout
+    desc: Organización del código fuente en core, modules, challenges, templates,
+      static y políticas de nomenclatura.
+    read_time: 5 min de leitura
+    date: 17 Set 2026
+  kids-curriculum:
+    title: 'DUNO Kids: Currículo Completo & Terminal CRT'
+    category: guides
+    category_title: Guias & Prática
+    file: KIDS_CURRICULUM.md
+    icon: nf-linux-tux
+    tag: Duno Kids
+    desc: Las 5 Rutas pedagógicas (OS, Redes, Web, Criptografía, Defensa), simulador
+      de terminal CRT y puntos de control con la mascota Tux.
+    read_time: 12 min de leitura
+    date: 18 Set 2026
+  alpha-sqli-walkthrough:
+    title: 'Guía paso a paso de Pentest: Conceptos básicos de SQLi Alpha'
+    category: guides
+    category_title: Guias & Prática
+    file: WALKTHROUGH_ALPHA.md
+    icon: nf-md-target_account
+    tag: Walkthrough
+    desc: 'Paso a paso didáctico de exploración del portal corporativo EverSec: bypass
+      de login, extracción de datos y 5 banderas.'
+    read_time: 10 min de leitura
+    date: 17 Set 2026
+  module-development:
+    title: Cómo Desarrollar Nuevos Módulos de Vulnerabilidad
+    category: guides
+    category_title: Guias & Prática
+    file: DEVELOPMENT_GUIDE.md
+    icon: nf-fa-flask
+    tag: Development
+    desc: Paso a paso para implementar nuevos laboratorios OWASP graduales con los
+      4 archivos didácticos de código fuente.
+    read_time: 7 min de leitura
+    date: 16 Set 2026
+  machine-submission-guide:
+    title: Guía de Empaquetado y Envío de Máquinas
+    category: guides
+    category_title: Guias & Prática
+    file: MACHINE_SUBMISSIONS.md
+    icon: nf-md-package_variant_closed
+    tag: Submissions
+    desc: Cómo construir el paquete zip/tar de una máquina comunitaria, escribir el
+      manifest.yml y pasar por la cadena de auditoría.
+    read_time: 8 min de leitura
+    date: 19 Set 2026
+  network-architecture:
+    title: Topología de Redes & Segregación Tripartita
+    category: manuals
+    category_title: Manuais & Arquitetura
+    file: NETWORK_ARCHITECTURE.md
+    icon: nf-md-lan
+    tag: Networking
+    desc: Segregación estricta entre host físico, red de la plataforma duno-net y
+      subred aislada de desafíos duno-challenges-net.
+    read_time: 9 min de leitura
+    date: 17 Set 2026
+  challenges-engine:
+    title: Orquestación de Desafíos & Challenge Runner
+    category: manuals
+    category_title: Manuais & Arquitetura
+    file: CHALLENGES.md
+    icon: nf-fa-server
+    tag: Challenges
+    desc: Runner autónomo con socket de Docker restringido, expiración en 45 minutos,
+      proxy inverso dinámico y validación de flags.
+    read_time: 8 min de leitura
+    date: 16 Set 2026
+  database-schema:
+    title: Base de Datos SQLite & Esquema de la Plataforma
+    category: manuals
+    category_title: Manuais & Arquitetura
+    file: DATABASE_SCHEMA.md
+    icon: nf-md-database
+    tag: Database
+    desc: Estructura de tablas de SQLite (users, security_levels, machine_submissions,
+      audit_log) y rutina de reinicio atómico.
+    read_time: 6 min de leitura
+    date: 18 Set 2026
+  security-policy:
+    title: Política de Seguridad, Sandbox y Uso Responsable
+    category: manuals
+    category_title: Manuais & Arquitetura
+    file: SECURITY_POLICY.md
+    icon: nf-md-shield_check
+    tag: Security
+    desc: Directrices de confinamiento de procesos, mitigación de ZipSlip/ZipBomb,
+      ejecución sin root y bloqueo de egreso.
+    read_time: 6 min de leitura
+    date: 19 Set 2026
+  runbook-rollback:
+    title: Runbook de Operaciones & Reversión de Emergencia
+    category: manuals
+    category_title: Manuais & Arquitetura
+    file: RUNBOOK_ROLLBACK.md
+    icon: nf-fa-life_ring
+    tag: Operations
+    desc: Procedimientos de contingencia, Kill Switch de desafíos mediante feature
+      flag CHALLENGES_ENABLED=false y recuperación de estado.
+    read_time: 5 min de leitura
+    date: 16 Set 2026
+  design-system:
+    title: Identidad Visual & Sistema de Diseño DUNO
+    category: manuals
+    category_title: Manuais & Arquitetura
+    file: DESIGN_SYSTEM.md
+    icon: nf-md-palette
+    tag: UI / UX
+    desc: 'Principios de diseño inspirados en Walkie/Obsidian: paleta de colores,
+      tipografía Outfit/JetBrains, insignias y Nerd Fonts.'
+    read_time: 5 min de leitura
+    date: 18 Set 2026
+  manifest-spec:
+    title: Especificación Oficial del manifest.yml
+    category: reference
+    category_title: Referência Técnica
+    file: MANIFEST_SPEC.md
+    icon: nf-md-code_json
+    tag: Manifest
+    desc: Esquema detallado de campos obligatorios y opcionales para la presentación
+      de máquinas (machine, metadata, runtime, flags).
+    read_time: 7 min de leitura
+    date: 19 Set 2026
+  owasp-modules:
+    title: Catálogo de los 20 Módulos de Vulnerabilidad Web y API
+    category: reference
+    category_title: Referência Técnica
+    file: MODULES.md
+    icon: nf-oct-terminal
+    tag: Modules
+    desc: Tabla de referencia de los 20 laboratorios nativos con rutas, vectores de
+      inyección, fallos de sesión y protecciones modernas.
+    read_time: 8 min de leitura
+    date: 15 Set 2026
+  security-levels:
+    title: Graduación de los Niveles de Seguridad (Bajo a Imposible)
+    category: reference
+    category_title: Referência Técnica
+    file: SECURITY_LEVELS.md
+    icon: nf-md-gauge
+    tag: Levels
+    desc: Matriz conceptual y técnica diferenciando los 4 niveles de mitigación y
+      el uso del visualizador dinámico de código.
+    read_time: 5 min de leitura
+    date: 15 Set 2026
+  api-reference:
+    title: Referencia de APIs REST y Endpoints del Sistema
+    category: reference
+    category_title: Referência Técnica
+    file: API_REFERENCE.md
+    icon: nf-md-api
+    tag: API
+    desc: Especificación de rutas HTTP RESTful de challenges (/api/challenge/*), kids
+      (/kids/api/*) y envíos (/submissions/api/*).
+    read_time: 9 min de leitura
+    date: 19 Set 2026
+  changelog:
+    title: Novedades — Línea del Tiempo de Actualizaciones
+    category: whats-new
+    category_title: What's New
+    file: CHANGELOG_ES.md
+    icon: nf-fa-history
+    tag: Changelog
+    desc: Histórico cronológico de lanzamientos, funciones, correcciones de seguridad
+      y mejoras técnicas en la plataforma DUNO.
+    read_time: 5 min de lectura
+    date: 26 Set 2026
+timeline:
+- date: 26 Set
+  tag: i18n & Localización
+  tag_class: pill-blue
+  title: Soporte Multilingüe Nativo (PT, EN, ES) y Estandarización de Desafíos CTF
+  slug: changelog
+  summary: Internacionalización completa vía Flask-Babel, 100% de plantillas traducidas, hubs desacoplados en YAML, soporte i18n total en DUNO Kids y alineación fonética de máquinas ofensivas.
+- date: 19 Set
+  tag: Machine Submissions
+  tag_class: pill-orange
+  title: Pipeline de Envío y Auditoría de Máquinas de la Comunidad
+  slug: machine-submission-guide
+  summary: Cadena completa con carga de paquetes .zip/.tar.gz, validación estricta
+    de manifest.yml, escáner de vulnerabilidades en Dockerfile y Command Center integrado.
+- date: 19 Set
+  tag: Security Hardening
+  tag_class: pill-red
+  title: Blindaje Anti-ZipSlip, ZipBomb y Prohibición de Symlinks
+  slug: security-policy
+  summary: Inspección de magic bytes, contención vía pathlib.Path.relative_to, transmisión
+    con límite estricto de 100MB y bloqueo total de nodos de dispositivo.
+- date: 18 Set
+  tag: DUNO Kids
+  tag_class: pill-purple
+  title: Entorno Lúdico DUNO Kids & Terminal Linux CRT
+  slug: kids-curriculum
+  summary: 5 Rutas de aprendizaje interactivo con la mascota Tux, terminal retro con
+    comandos Linux reales emulados, analogías visuales y desafíos checkpoints.
+- date: 17 Set
+  tag: Challenges Engine
+  tag_class: pill-blue
+  title: Catálogo de 25 Máquinas Vulnerables & Orquestador Dinámico
+  slug: challenges-engine
+  summary: Ejecución aislada de contenedores CTF en la red duno-challenges-net, temporizador
+    regresivo de 45 minutos y envío validado de flags.
+- date: 17 Set
+  tag: Network Topology
+  tag_class: pill-green
+  title: Arquitectura de Segregación Tripartita Red Team
+  slug: network-architecture
+  summary: Separación completa entre la máquina anfitriona del operador, la aplicación
+    de gestión duno-app y la subred de ejecución de objetivos.
+- date: 15 Set
+  tag: OWASP Core
+  tag_class: pill-orange
+  title: 20 Módulos de Vulnerabilidades con 4 Niveles Graduados
+  slug: owasp-modules
+  summary: Entrenamiento en SQLi, Blind SQLi, XSS, CSRF, Carga de Archivos y Seguridad
+    de API con alternancia en tiempo real entre Low e Impossible.
+search:
+- label: ¿Cómo iniciar un laboratorio?
+  query: quickstart
+- label: ¿Cómo funciona el aislamiento Docker de los CTFs?
+  query: network-architecture
+- label: ¿Cómo enviar una máquina de la comunidad?
+  query: machine-submission-guide
+- label: ¿Cómo funciona el Duno Kids y el Terminal CRT?
+  query: kids-curriculum
+- label: ¿Cuáles son los 4 niveles de seguridad?
+  query: security-levels
+- label: ¿Qué es el manifest.yml?
+  query: manifest-spec

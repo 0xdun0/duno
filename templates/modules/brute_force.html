@@ -4,20 +4,20 @@
 {% block content %}
 <div class="module-page">
   <div class="breadcrumb">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>Brute Force</span>
+    <span>{{ _('Brute Force') }}</span>
   </div>
 
   <div class="module-header">
     <div class="module-title-row">
-      <h1 class="module-title">Brute Force</h1>
-      <p class="module-desc">Quebra de autenticação por força bruta — ataque de dicionário contra formulário de login.</p>
+      <h1 class="module-title">{{ _('Brute Force') }}</h1>
+      <p class="module-desc">{{ _('Quebra de autenticação por força bruta — ataque de dicionário contra formulário de login.') }}</p>
     </div>
     <div class="module-controls">
       {% include '_level_switch.html' with context %}
       <button class="btn btn-ghost btn-sm" onclick="openSourceModal('brute_force', '{{ level }}')">
-        &lt;/&gt; View Source
+        {{ _('&lt;/&gt; View Source') }}
       </button>
     </div>
   </div>
@@ -26,7 +26,7 @@
 
   <div class="module-body">
     <div class="panel">
-      <div class="panel-title">Laboratório</div>
+      <div class="panel-title">{{ _('Laboratório') }}</div>
 
       <p class="module-desc" style="margin-bottom:1rem;font-size:0.85rem;color:var(--text-secondary)">
         <strong style="color:var(--text-primary)">Objetivo:</strong>
@@ -35,19 +35,19 @@
 
       <form method="POST" action="/brute_force" id="brute-form">
         <div class="form-group">
-          <label for="bf-username">Usuário</label>
+          <label for="bf-username">{{ _('Usuário') }}</label>
           <input type="text" id="bf-username" name="username" class="form-control"
-                 placeholder="admin" value="admin" />
+                 placeholder="{{ _('admin') }}" value="admin" />
         </div>
         <div class="form-group">
-          <label for="bf-password">Senha</label>
+          <label for="bf-password">{{ _('Senha') }}</label>
           <input type="text" id="bf-password" name="password" class="form-control"
-                 placeholder="password" />
+                 placeholder="{{ _('password') }}" />
         </div>
         {% if level == 'high' %}
         <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
         {% endif %}
-        <button type="submit" class="btn btn-primary" id="brute-submit">Login</button>
+        <button type="submit" class="btn btn-primary" id="brute-submit">{{ _('Login') }}</button>
       </form>
 
       {% if result %}
@@ -60,17 +60,17 @@
     <div class="panel">
       <div class="panel-title">Comportamento — nível {{ level }}</div>
       {% if level == 'low' %}
-      <div class="alert alert-error">Sem rate limit, sem lockout, sem delay. Automatize com hydra ou ffuf.</div>
+      <div class="alert alert-error">{{ _('Sem rate limit, sem lockout, sem delay. Automatize com hydra ou ffuf.') }}</div>
       {% elif level == 'medium' %}
-      <div class="alert alert-warning">Sleep de 2s após falha. Mitiga velocidade — brute-force lento ainda funciona.</div>
+      <div class="alert alert-warning">{{ _('Sleep de 2s após falha. Mitiga velocidade — brute-force lento ainda funciona.') }}</div>
       {% elif level == 'high' %}
-      <div class="alert alert-warning">Token CSRF exigido. Sem lockout — automatização com extração de token ainda funciona.</div>
+      <div class="alert alert-warning">{{ _('Token CSRF exigido. Sem lockout — automatização com extração de token ainda funciona.') }}</div>
       {% else %}
-      <div class="alert alert-success">Lockout após 3 tentativas em 15min + audit log por IP. Brute-force inviável.</div>
+      <div class="alert alert-success">{{ _('Lockout após 3 tentativas em 15min + audit log por IP. Brute-force inviável.') }}</div>
       {% endif %}
 
       <div style="margin-top:1rem">
-        <p style="font-size:0.82rem;color:var(--text-muted)">Usuários disponíveis no lab:</p>
+        <p style="font-size:0.82rem;color:var(--text-muted)">{{ _('Usuários disponíveis no lab:') }}</p>
         <ul style="font-size:0.82rem;color:var(--text-secondary);margin-top:0.4rem;padding-left:1.2rem">
           <li><code>admin</code> / <code>password</code></li>
           <li><code>user</code> / <code>password</code></li>

@@ -13,6 +13,14 @@ from modules.machine_submissions.worker import run_build_job, run_scan_job, run_
 admin_bp = Blueprint("submissions_admin", __name__)
 
 
+def _require_admin_user() -> dict:
+    """Garante a autenticação administrativa e tipagem segura do usuário."""
+    user = current_user()
+    if not user:
+        abort(403)
+    return dict(user)
+
+
 @admin_bp.before_request
 def ensure_admin():
     db = get_db()
@@ -27,7 +35,7 @@ def ensure_admin():
 @admin_required
 def admin_dashboard():
     """Dashboard Administrativo global com indicadores de máquinas e segurança."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     # Contagem de submissões por status
@@ -80,7 +88,7 @@ def admin_dashboard():
 @admin_required
 def machines_list():
     """Lista de Máquinas e Submissões com filtros por status, dificuldade, OS e categoria."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     status_filter = request.args.get("status", "").strip()
@@ -134,10 +142,11 @@ def machines_list():
 
 
 @admin_bp.route("/admin/machines/<int:submission_id>")
+@admin_bp.route("/admin/machines/<int:submission_id>/review")
 @admin_required
 def machine_review_workspace(submission_id):
     """Página de Análise Administrativa com as 10 Abas especializadas."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     sub = db.execute(
@@ -150,6 +159,21 @@ def machine_review_workspace(submission_id):
 
     if not sub:
         abort(404)
+
+    # Marca automaticamente notificações dessa máquina como lidas para o revisor
+    try:
+        notifs = db.execute(
+            "SELECT id FROM platform_notifications WHERE target_id = ? OR link LIKE ?",
+            (str(submission_id), f"%/admin/machines/{submission_id}%")
+        ).fetchall()
+        for n in notifs:
+            db.execute(
+                "INSERT OR IGNORE INTO user_notification_reads (user_id, notification_id) VALUES (?, ?)",
+                (user["id"], n["id"])
+            )
+        db.commit()
+    except Exception:
+        pass
 
     # Versões
     versions = db.execute(
@@ -264,7 +288,7 @@ def machine_review_workspace(submission_id):
 @admin_required
 def published_machines():
     """Gerenciamento de máquinas publicadas no catálogo ativo."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     rows = db.execute(
@@ -287,7 +311,7 @@ def published_machines():
 @admin_required
 def audit_logs():
     """Tela de auditoria completa da esteira de submissão e revisão de máquinas."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     action_filter = request.args.get("action", "").strip()
@@ -345,16 +369,21 @@ def api_get_file_content(submission_id):
 
     try:
         content = target.read_text(encoding="utf-8", errors="replace")
-        return jsonify({"path": file_path, "content": content})
+        return jsonify({
+            "status": "success",
+            "path": file_path,
+            "content": content,
+            "size": target.stat().st_size
+        })
     except Exception as e:
-        return jsonify({"error": f"Erro ao ler arquivo: {e}"}), 500
+        return jsonify({"status": "error", "error": f"Erro ao ler arquivo: {e}"}), 500
 
 
 @admin_bp.route("/api/admin/machines/<int:submission_id>/build", methods=["POST"])
 @admin_required
 def api_trigger_build(submission_id):
     """Aciona o build isolado da versão atual da máquina."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     latest_ver = db.execute(
@@ -379,7 +408,7 @@ def api_trigger_build(submission_id):
 @admin_required
 def api_trigger_scan(submission_id):
     """Executa varredura estática de segurança e scanner de segredos."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     latest_ver = db.execute(
@@ -396,6 +425,9 @@ def api_trigger_scan(submission_id):
         pass
 
     result = run_scan_job(db, latest_ver["id"])
+    if isinstance(result, dict) and "error" not in result:
+        result["status"] = "success"
+        result["success"] = True
     return jsonify(result)
 
 
@@ -403,7 +435,7 @@ def api_trigger_scan(submission_id):
 @admin_required
 def api_trigger_tests(submission_id):
     """Executa os testes funcionais de runtime e integridade no sandbox."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     latest_ver = db.execute(
@@ -420,26 +452,38 @@ def api_trigger_tests(submission_id):
         pass
 
     result = run_test_job(db, latest_ver["id"])
+    if isinstance(result, dict) and "error" not in result:
+        result["status"] = "success"
+        result["success"] = True
     return jsonify(result)
 
 
 @admin_bp.route("/api/admin/machines/<int:submission_id>/finding/<int:finding_id>", methods=["POST"])
+@admin_bp.route("/api/admin/findings/<int:finding_id>/expected", methods=["POST"])
 @admin_required
-def api_update_finding(submission_id, finding_id):
+def api_update_finding(finding_id, submission_id=None):
     """Permite ao revisor classificar um finding como 'Expected' (esperado) e adicionar nota."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     data = request.get_json(silent=True) or {}
     is_expected = 1 if data.get("is_expected") in (True, 1, "1", "true") else 0
     admin_note = str(data.get("admin_note", "")).strip()
 
-    db.execute(
-        """UPDATE machine_findings 
-           SET is_expected = ?, admin_note = ?, status = 'acknowledged'
-           WHERE id = ? AND version_id IN (SELECT id FROM machine_versions WHERE submission_id = ?)""",
-        (is_expected, admin_note, finding_id, submission_id)
-    )
+    if submission_id:
+        db.execute(
+            """UPDATE machine_findings 
+               SET is_expected = ?, admin_note = ?, status = 'acknowledged'
+               WHERE id = ? AND version_id IN (SELECT id FROM machine_versions WHERE submission_id = ?)""",
+            (is_expected, admin_note, finding_id, submission_id)
+        )
+    else:
+        db.execute(
+            """UPDATE machine_findings 
+               SET is_expected = ?, admin_note = ?, status = 'acknowledged'
+               WHERE id = ?""",
+            (is_expected, admin_note, finding_id)
+        )
     db.commit()
 
     log_machine_audit(
@@ -447,14 +491,14 @@ def api_update_finding(submission_id, finding_id):
         "SUCCESS", request.remote_addr, {"is_expected": is_expected, "admin_note": admin_note}
     )
 
-    return jsonify({"success": True, "finding_id": finding_id, "is_expected": is_expected})
+    return jsonify({"status": "success", "success": True, "finding_id": finding_id, "is_expected": is_expected})
 
 
 @admin_bp.route("/api/admin/machines/<int:submission_id>/difficulty", methods=["POST"])
 @admin_required
 def api_update_difficulty(submission_id):
     """Permite ao revisor ajustar a dificuldade avaliada sem sobrescrever a do autor."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     data = request.get_json(silent=True) or {}
@@ -490,7 +534,7 @@ def api_update_difficulty(submission_id):
 @admin_required
 def api_request_changes(submission_id):
     """Revisor solicita alterações ao autor, com motivo obrigatório."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     data = request.get_json(silent=True) or {}
@@ -532,7 +576,7 @@ def api_request_changes(submission_id):
 @admin_required
 def api_reject_machine(submission_id):
     """Rejeita a submissão de máquina com categoria e motivo obrigatórios."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     data = request.get_json(silent=True) or {}
@@ -575,7 +619,7 @@ def api_reject_machine(submission_id):
 @admin_required
 def api_approve_and_publish(submission_id):
     """Aprova e publica a máquina no catálogo oficial."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     sub = db.execute("SELECT * FROM machine_submissions WHERE id = ?", (submission_id,)).fetchone()
@@ -583,7 +627,7 @@ def api_approve_and_publish(submission_id):
         return jsonify({"error": "Submissão não encontrada"}), 404
 
     latest_ver = db.execute(
-        "SELECT id, version_str FROM machine_versions WHERE submission_id = ? ORDER BY id DESC LIMIT 1",
+        "SELECT id, version_str, extracted_path, package_path FROM machine_versions WHERE submission_id = ? ORDER BY id DESC LIMIT 1",
         (submission_id,)
     ).fetchone()
 
@@ -592,6 +636,8 @@ def api_approve_and_publish(submission_id):
 
     ver_id = latest_ver["id"]
     ver_str = latest_ver["version_str"]
+    extracted_path = latest_ver["extracted_path"]
+    package_path = latest_ver["package_path"]
 
     # Registra aprovação
     db.execute(
@@ -600,8 +646,49 @@ def api_approve_and_publish(submission_id):
         (submission_id, ver_id, user["id"])
     )
 
-    # Publica na tabela published_machines
+    # 1. Implantação dos arquivos para o diretório de execução do Runner
     challenge_id = f"machine-{sub['slug']}"
+    target_dirs = [Path("challenges") / challenge_id]
+    env_root = os.environ.get("CHALLENGES_ROOT")
+    if env_root:
+        env_root_path = Path(env_root)
+        if env_root_path.exists():
+            target_dirs.append(env_root_path / challenge_id)
+
+    import shutil
+    for tdir in target_dirs:
+        try:
+            tdir.mkdir(parents=True, exist_ok=True)
+            if extracted_path and Path(extracted_path).is_dir():
+                shutil.copytree(extracted_path, tdir, dirs_exist_ok=True)
+            elif package_path and Path(package_path).is_file():
+                from modules.machine_submissions.validator import safe_extract_zip
+                safe_extract_zip(str(package_path), str(tdir))
+        except Exception as e:
+            print(f"[WARN] Erro ao copiar arquivos do desafio para {tdir}: {e}")
+
+    # 1b. Implanta o walkthrough do autor (fonte: metadados > walkthrough.md do pacote)
+    try:
+        meta_row = db.execute(
+            "SELECT walkthrough_md FROM machine_metadata WHERE version_id = ?",
+            (ver_id,)
+        ).fetchone()
+        wt_text = (meta_row["walkthrough_md"] or "").strip() if meta_row else ""
+        if not wt_text and extracted_path and Path(extracted_path).is_dir():
+            for cand in (Path(extracted_path) / "walkthrough.md", Path(extracted_path) / "WALKTHROUGH.md"):
+                if cand.is_file() and cand.stat().st_size <= 200_000:
+                    wt_text = cand.read_text(encoding="utf-8", errors="replace").strip()
+                    break
+        if wt_text:
+            for tdir in target_dirs:
+                try:
+                    (tdir / "walkthrough.md").write_text(wt_text + "\n", encoding="utf-8")
+                except Exception as e:
+                    print(f"[WARN] Erro ao gravar walkthrough em {tdir}: {e}")
+    except Exception as e:
+        print(f"[WARN] Erro ao implantar walkthrough: {e}")
+
+    # 2. Publica na tabela published_machines
     db.execute(
         """INSERT INTO published_machines (submission_id, challenge_id, published_version, is_active)
            VALUES (?, ?, ?, 1)
@@ -613,11 +700,29 @@ def api_approve_and_publish(submission_id):
         (submission_id, challenge_id, ver_str)
     )
 
-    # Transiciona estado para PUBLISHED
+    # 3. Transiciona estado para PUBLISHED
     try:
         transition_submission(db, submission_id, "PUBLISHED", user["id"], "Aprovada e publicada no catálogo oficial", request.remote_addr)
     except StateTransitionError as e:
         return jsonify({"error": str(e)}), 400
+
+    # 4. Cria notificação para a plataforma (acende o sino na barra)
+    from modules.machine_submissions.db import create_platform_notification
+    create_platform_notification(
+        db,
+        ntype="machine_published",
+        title=f"Nova Máquina: {sub['name']}",
+        message=f"A máquina {sub['name']} ({ver_str}) foi aprovada e adicionada ao laboratório de Desafios CTF!",
+        link="/challenges",
+        target_id=challenge_id
+    )
+
+    # 5. Invalida cache do catálogo em memória
+    try:
+        from modules.challenges.catalog import catalog
+        catalog.load_challenges(force_reload=True)
+    except Exception:
+        pass
 
     log_machine_audit(
         db, user["id"], "APPROVE_AND_PUBLISH", "published_machines", str(submission_id),
@@ -636,7 +741,7 @@ def api_approve_and_publish(submission_id):
 @admin_required
 def api_unpublish_machine(submission_id):
     """Despublica uma máquina ativa do catálogo."""
-    user = current_user()
+    user = _require_admin_user()
     db = get_db()
 
     db.execute(

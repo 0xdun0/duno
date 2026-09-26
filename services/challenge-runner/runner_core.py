@@ -337,6 +337,9 @@ class ChallengeRunnerCore:
         if self.dry_run or not container_ref:
             return
         try:
-            subprocess.run(["docker", "stop", "-t", "2", container_ref], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=10)
+            subprocess.run(["docker", "stop", "-t", "2", container_ref], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=4)
         except Exception:
-            pass
+            try:
+                subprocess.run(["docker", "rm", "-f", container_ref], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=2)
+            except Exception:
+                pass

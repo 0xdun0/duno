@@ -5,35 +5,35 @@
 <div class="page-container">
   <!-- Breadcrumb -->
   <nav class="breadcrumb" aria-label="Navegação">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>API Security Reference</span>
+    <span>{{ _('API Security Reference') }}</span>
   </nav>
 
   <!-- Page Header -->
   <header class="page-header">
     <div class="hero-pill-badge">
       <span class="hero-pill-dot"></span>
-      <span>OWASP API Security Top 10 • Blueprint /api/*</span>
+      <span>{{ _('OWASP API Security Top 10 • Blueprint /api/*') }}</span>
     </div>
-    <h1 class="page-title">API Security</h1>
+    <h1 class="page-title">{{ _('API Security') }}</h1>
     <p class="page-desc">
-      As APIs representam a principal superfície de ataque em aplicações web e microsserviços modernos.
-      Explore os 7 vetores críticos de falhas em APIs REST e aprenda a validar seus endpoints contra abusos.
+      {{ _('As APIs representam a principal superfície de ataque em aplicações web e microsserviços modernos.
+      Explore os 7 vetores críticos de falhas em APIs REST e aprenda a validar seus endpoints contra abusos.') }}
     </p>
 
     <div class="stats-pills-row">
       <a href="{{ url_for('api_security.index') }}" class="stat-pill clickable">
         <span class="stat-num">#20</span>
-        <span class="stat-label">Lab BOLA / IDOR →</span>
+        <span class="stat-label">{{ _('Lab BOLA / IDOR →') }}</span>
       </a>
       <a href="{{ url_for('api_versioning.index') }}" class="stat-pill clickable">
         <span class="stat-num">#18</span>
-        <span class="stat-label">Lab Versioning →</span>
+        <span class="stat-label">{{ _('Lab Versioning →') }}</span>
       </a>
       <a href="{{ url_for('mass_assignment.index') }}" class="stat-pill clickable">
         <span class="stat-num">#19</span>
-        <span class="stat-label">Lab Mass Assignment →</span>
+        <span class="stat-label">{{ _('Lab Mass Assignment →') }}</span>
       </a>
     </div>
   </header>
@@ -43,11 +43,11 @@
     <!-- 1. Authentication -->
     <div class="panel api-card">
       <div class="api-card-header">
-        <span class="api-badge">API02</span>
-        <h2 class="api-card-title">Authentication</h2>
+        <span class="api-badge">{{ _('API02') }}</span>
+        <h2 class="api-card-title">{{ _('Authentication') }}</h2>
       </div>
       <p class="api-card-desc">
-        Mecanismos de autenticação de API implementados de forma deficiente permitem que atacantes comprometam tokens de autenticação ou explorem falhas de implementação para assumir a identidade de outros usuários.
+        {{ _('Mecanismos de autenticação de API implementados de forma deficiente permitem que atacantes comprometam tokens de autenticação ou explorem falhas de implementação para assumir a identidade de outros usuários.') }}
       </p>
       <div class="api-bullet-points">
         <div><strong>Vulnerabilidade:</strong> Tokens estáticos sem expiração, falta de revogação e cabeçalhos desprotegidos.</div>
@@ -58,8 +58,8 @@
     <!-- 2. JWT -->
     <div class="panel api-card">
       <div class="api-card-header">
-        <span class="api-badge">JWT SEC</span>
-        <h2 class="api-card-title">JSON Web Tokens (JWT)</h2>
+        <span class="api-badge">{{ _('JWT SEC') }}</span>
+        <h2 class="api-card-title">{{ _('JSON Web Tokens (JWT)') }}</h2>
       </div>
       <p class="api-card-desc">
         Tokens JWT assinados com chaves fracas (vulneráveis a ataques de dicionário offline), aceitação do algoritmo <code>none</code> ou manipulação de cabeçalhos de chave (<code>kid</code>) para forjar claims sem permissão.
@@ -73,8 +73,8 @@
     <!-- 3. IDOR / BOLA -->
     <div class="panel api-card highlight-border">
       <div class="api-card-header">
-        <span class="api-badge orange">API01 — TOP 1</span>
-        <h2 class="api-card-title">BOLA / IDOR</h2>
+        <span class="api-badge orange">{{ _('API01 — TOP 1') }}</span>
+        <h2 class="api-card-title">{{ _('BOLA / IDOR') }}</h2>
       </div>
       <p class="api-card-desc">
         Broken Object Level Authorization é a vulnerabilidade mais severa em APIs REST. A API recebe o identificador do recurso (ex: <code>user_id</code>) e não valida se o usuário autenticado é o legítimo proprietário daquele registro.
@@ -88,8 +88,8 @@
     <!-- 4. Mass Assignment -->
     <div class="panel api-card">
       <div class="api-card-header">
-        <span class="api-badge">API06</span>
-        <h2 class="api-card-title">Mass Assignment</h2>
+        <span class="api-badge">{{ _('API06') }}</span>
+        <h2 class="api-card-title">{{ _('Mass Assignment') }}</h2>
       </div>
       <p class="api-card-desc">
         Ocorre quando o framework de backend faz o bind automático de todos os campos do payload JSON para o modelo de dados, permitindo que atacantes sobrescrevam propriedades protegidas (ex: <code>is_admin</code>, <code>balance</code>, <code>status</code>).
@@ -103,11 +103,11 @@
     <!-- 5. Rate Limiting -->
     <div class="panel api-card">
       <div class="api-card-header">
-        <span class="api-badge">API04</span>
-        <h2 class="api-card-title">Rate Limiting & Throttling</h2>
+        <span class="api-badge">{{ _('API04') }}</span>
+        <h2 class="api-card-title">{{ _('Rate Limiting & Throttling') }}</h2>
       </div>
       <p class="api-card-desc">
-        Ausência de restrições quanto ao número de requisições que um cliente pode disparar em determinado intervalo de tempo. Viabiliza ataques de força bruta, raspagem de dados em massa (scraping) e negação de serviço.
+        {{ _('Ausência de restrições quanto ao número de requisições que um cliente pode disparar em determinado intervalo de tempo. Viabiliza ataques de força bruta, raspagem de dados em massa (scraping) e negação de serviço.') }}
       </p>
       <div class="api-bullet-points">
         <div><strong>Vulnerabilidade:</strong> Enumeração automatizada de códigos de cupom, IDs de clientes ou senhas de acesso.</div>
@@ -118,8 +118,8 @@
     <!-- 6. Versioning -->
     <div class="panel api-card">
       <div class="api-card-header">
-        <span class="api-badge">API09</span>
-        <h2 class="api-card-title">Improper Versioning</h2>
+        <span class="api-badge">{{ _('API09') }}</span>
+        <h2 class="api-card-title">{{ _('Improper Versioning') }}</h2>
       </div>
       <p class="api-card-desc">
         APIs evoluem para novas versões mais seguras (ex: <code>/v2</code>), mas endpoints legados (<code>/v1</code>) permanecem ativos em produção sem os patches de segurança adequados, tornando-se portas dos fundos para atacantes.
@@ -133,11 +133,11 @@
     <!-- 7. Secrets & Data Leakage -->
     <div class="panel api-card">
       <div class="api-card-header">
-        <span class="api-badge">API03</span>
-        <h2 class="api-card-title">Secrets & Data Leakage</h2>
+        <span class="api-badge">{{ _('API03') }}</span>
+        <h2 class="api-card-title">{{ _('Secrets & Data Leakage') }}</h2>
       </div>
       <p class="api-card-desc">
-        Respostas de API que expõem inadvertidamente segredos operacionais, tokens de provedores externos, campos confidenciais de usuários (CPF, senhas hasheadas) ou detalhes internos de depuração do sistema.
+        {{ _('Respostas de API que expõem inadvertidamente segredos operacionais, tokens de provedores externos, campos confidenciais de usuários (CPF, senhas hasheadas) ou detalhes internos de depuração do sistema.') }}
       </p>
       <div class="api-bullet-points">
         <div><strong>Vulnerabilidade:</strong> Desenvolvedor confia que o front-end ocultará os dados confidenciais do usuário.</div>
@@ -149,23 +149,23 @@
   <!-- Interactive cURL Testing Sandbox -->
   <section class="panel" style="margin-top: 2.5rem;">
     <div class="panel-title">
-      <span>Exemplo de Ataque Prático via Terminal (cURL)</span>
-      <span class="badge-code">REST POC</span>
+      <span>{{ _('Exemplo de Ataque Prático via Terminal (cURL)') }}</span>
+      <span class="badge-code">{{ _('REST POC') }}</span>
     </div>
     <p style="font-size: 13.5px; color: var(--ink-2); margin-bottom: 1rem;">
-      Você pode interagir diretamente com os endpoints de API do DUNO através do seu terminal ou Postman:
+      {{ _('Você pode interagir diretamente com os endpoints de API do DUNO através do seu terminal ou Postman:') }}
     </p>
 
     <div class="code-compare-grid">
       <div class="code-compare-box">
-        <div class="compare-box-header">1. Exploração BOLA / IDOR (#20)</div>
+        <div class="compare-box-header">{{ _('1. Exploração BOLA / IDOR (#20)') }}</div>
         <pre><code class="language-bash"># Extração direta de dados de outro usuário via IDOR
 curl -X GET "http://localhost:2300/api_security?user_id=2" \
      -H "Cookie: session=&lt;sua_sessao&gt;"</code></pre>
       </div>
 
       <div class="code-compare-box">
-        <div class="compare-box-header">2. Exploração de Versão Legada (#18)</div>
+        <div class="compare-box-header">{{ _('2. Exploração de Versão Legada (#18)') }}</div>
         <pre><code class="language-bash"># Acessando endpoint obsoleto v1 desprotegido
 curl -X GET "http://localhost:2300/api_versioning?version=v1" \
      -H "Accept: application/json"</code></pre>

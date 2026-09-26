@@ -514,3 +514,90 @@ class TestFullAppRoutesIntegration(unittest.TestCase):
         self.assertIn("pane-machines", html)
         self.assertIn("pane-moderation", html)
 
+    def test_published_machine_appears_in_catalog_with_notification_and_new_badge(self):
+        """Valida se ao publicar máquina ela entra no catálogo, acende notificação e mostra selo NOVA MÁQUINA."""
+        # 1. Login como usuário normal e submete máquina
+        with self.client.session_transaction() as sess:
+            sess["user_id"] = 1
+            sess["username"] = "aluno_tester"
+            sess["role"] = "user"
+
+        zip_buf = create_sample_zip()
+        data = {
+            "name": "Datacenter Test Box",
+            "slug": "datacenter-test-box",
+            "author_difficulty": "Medium",
+            "category": "Web",
+            "os_type": "Linux",
+            "short_desc": "Desafio de teste de publicação",
+            "full_desc": "Descrição detalhada do laboratório",
+            "user_flag": "FLAG{user_flag_123}",
+            "root_flag": "FLAG{root_flag_999}",
+            "package": (zip_buf, "datacenter_test.zip")
+        }
+        res_sub = self.client.post("/api/machines/submit", data=data, content_type="multipart/form-data")
+        self.assertEqual(res_sub.status_code, 200)
+        sub_id = res_sub.get_json()["submission_id"]
+
+        # 2. Login como Admin e publica
+        with self.client.session_transaction() as sess:
+            sess["user_id"] = 2
+            sess["username"] = "admin_master"
+            sess["role"] = "admin"
+
+        res_pub = self.client.post(f"/api/admin/machines/{sub_id}/approve-publish", json={"reason": "Aprovada"})
+        self.assertEqual(res_pub.status_code, 200)
+        self.assertEqual(res_pub.get_json()["status"], "PUBLISHED")
+        ch_id = res_pub.get_json()["challenge_id"]
+
+        # 3. Verifica se a pasta do desafio foi criada para o Runner
+        ch_path = Path("challenges") / ch_id
+        self.assertTrue(ch_path.exists(), "Pasta challenges/machine-<slug> deve ser criada na publicação")
+
+        # 4. Login como usuário normal e consulta notificações
+        with self.client.session_transaction() as sess:
+            sess["user_id"] = 1
+            sess["username"] = "aluno_tester"
+            sess["role"] = "user"
+
+        res_notif = self.client.get("/api/notifications")
+        self.assertEqual(res_notif.status_code, 200)
+        notif_data = res_notif.get_json()
+        self.assertGreaterEqual(notif_data["unread_count"], 1)
+        self.assertTrue(any(n["target_id"] == ch_id for n in notif_data["notifications"]))
+
+        # 5. Acessa catálogo /challenges e confere se card aparece com NOVA MÁQUINA
+        res_cat = self.client.get("/challenges")
+        self.assertEqual(res_cat.status_code, 200)
+        cat_html = res_cat.get_data(as_text=True)
+        self.assertIn("Datacenter Test Box", cat_html)
+        self.assertIn("NOVA MÁQUINA", cat_html)
+
+        # 6. Acessa o desafio para marcar como visualizado
+        res_detail = self.client.get(f"/challenges/{ch_id}")
+        self.assertEqual(res_detail.status_code, 200)
+
+        # 7. Recarrega /challenges e o badge NOVA MÁQUINA não deve mais aparecer para este desafio
+        res_cat_again = self.client.get("/challenges")
+        cat_html_again = res_cat_again.get_data(as_text=True)
+        self.assertNotIn(f'id="badge-new-{ch_id}"', cat_html_again)
+
+        # 8. Marca notificações como lidas
+        res_mark = self.client.post("/api/notifications/mark-read")
+        self.assertEqual(res_mark.status_code, 200)
+        res_notif_after = self.client.get("/api/notifications")
+        self.assertEqual(res_notif_after.get_json()["unread_count"], 0)
+
+        # 9. Valida resolução de flag via solves_service
+        from modules.challenges.solves_service import solves_service
+        with self.app.app_context():
+            ok, status, pts, msg = solves_service.submit_flag(1, ch_id, "FLAG{user_flag_123}")
+            self.assertTrue(ok, f"Flag deve ser validada: {msg}")
+            self.assertEqual(status, "solved")
+
+        # Limpeza do diretório de teste
+        import shutil
+        if ch_path.exists():
+            shutil.rmtree(ch_path, ignore_errors=True)
+
+

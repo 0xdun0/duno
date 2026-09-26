@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS machine_metadata (
     scenario_intro TEXT,
     hints_json TEXT,            -- Array JSON de hints
     references_json TEXT,       -- Array JSON de referências
+    walkthrough_md TEXT,        -- Walkthrough/solução do autor em Markdown (opcional)
     exposed_ports_json TEXT,    -- Array JSON de portas expostas
     cpu_limit REAL DEFAULT 1.0,
     memory_limit_mb INTEGER DEFAULT 1024,
@@ -211,6 +212,38 @@ CREATE TABLE IF NOT EXISTS published_machines (
     FOREIGN KEY(submission_id) REFERENCES machine_submissions(id)
 );
 
+-- 15. Notificações globais da plataforma (Novas máquinas, avisos de sistema)
+CREATE TABLE IF NOT EXISTS platform_notifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    type TEXT NOT NULL DEFAULT 'machine_published',
+    title TEXT NOT NULL,
+    message TEXT NOT NULL,
+    link TEXT,
+    target_id TEXT,
+    target_role TEXT,
+    target_user_id INTEGER,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 16. Controle de leitura de notificações por usuário
+CREATE TABLE IF NOT EXISTS user_notification_reads (
+    user_id INTEGER NOT NULL,
+    notification_id INTEGER NOT NULL,
+    read_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(user_id, notification_id),
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY(notification_id) REFERENCES platform_notifications(id) ON DELETE CASCADE
+);
+
+-- 17. Registro de visualização de desafios por usuário (Para controle do badge NOVA MÁQUINA)
+CREATE TABLE IF NOT EXISTS user_challenge_views (
+    user_id INTEGER NOT NULL,
+    challenge_id TEXT NOT NULL,
+    viewed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(user_id, challenge_id),
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 -- Índices de performance e consulta
 CREATE INDEX IF NOT EXISTS idx_machine_sub_user ON machine_submissions(user_id);
 CREATE INDEX IF NOT EXISTS idx_machine_sub_status ON machine_submissions(status);
@@ -220,6 +253,7 @@ CREATE INDEX IF NOT EXISTS idx_machine_findings_ver ON machine_findings(version_
 CREATE INDEX IF NOT EXISTS idx_machine_findings_sev ON machine_findings(severity);
 CREATE INDEX IF NOT EXISTS idx_machine_comments_sub ON machine_review_comments(submission_id);
 CREATE INDEX IF NOT EXISTS idx_machine_audit_act ON machine_audit_logs(action);
+CREATE INDEX IF NOT EXISTS idx_notifs_created ON platform_notifications(created_at);
 """
 
 
@@ -227,9 +261,43 @@ def init_submissions_db(db: sqlite3.Connection):
     """Executa a DDL de submissão de máquinas no banco de dados SQLite."""
     try:
         db.executescript(SUBMISSIONS_DDL)
+        # Migração defensiva para colunas de role/user em platform_notifications
+        cols = [r[1] for r in db.execute("PRAGMA table_info(platform_notifications)").fetchall()]
+        if "target_role" not in cols:
+            db.execute("ALTER TABLE platform_notifications ADD COLUMN target_role TEXT")
+        if "target_user_id" not in cols:
+            db.execute("ALTER TABLE platform_notifications ADD COLUMN target_user_id INTEGER")
+        # Migração defensiva para o walkthrough do autor
+        meta_cols = [r[1] for r in db.execute("PRAGMA table_info(machine_metadata)").fetchall()]
+        if "walkthrough_md" not in meta_cols:
+            db.execute("ALTER TABLE machine_metadata ADD COLUMN walkthrough_md TEXT")
         db.commit()
     except Exception as e:
         print(f"[WARN] Erro inicializando tabelas de submissões: {e}")
+
+
+def create_platform_notification(
+    db: sqlite3.Connection,
+    ntype: str,
+    title: str,
+    message: str,
+    link: str | None = None,
+    target_id: str | None = None,
+    target_role: str | None = None,
+    target_user_id: int | None = None
+) -> int | None:
+    """Cria uma nova notificação do sistema para a plataforma ou escopo de usuário/role."""
+    try:
+        cur = db.execute(
+            """INSERT INTO platform_notifications (type, title, message, link, target_id, target_role, target_user_id)
+               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (ntype, title, message, link, target_id, target_role, target_user_id)
+        )
+        db.commit()
+        return cur.lastrowid
+    except Exception as e:
+        print(f"[WARN] Erro ao criar notificação: {e}")
+        return None
 
 
 def log_machine_audit(db: sqlite3.Connection, user_id: int | None, action: str, resource: str, resource_id: str | None = None, status: str = "SUCCESS", ip: str | None = None, metadata: dict | None = None):

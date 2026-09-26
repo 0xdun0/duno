@@ -9,9 +9,47 @@ DDL = """
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
+    email TEXT,
     password_hash TEXT NOT NULL,
+    display_name TEXT,
+    avatar TEXT DEFAULT 'robot',
+    bio TEXT,
+    country TEXT DEFAULT 'BR',
+    experience_level TEXT DEFAULT 'iniciante',
+    interests TEXT,
     role TEXT DEFAULT 'user',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS user_stats (
+    user_id INTEGER PRIMARY KEY,
+    xp INTEGER DEFAULT 0,
+    level INTEGER DEFAULT 1,
+    challenges_solved INTEGER DEFAULT 0,
+    machines_solved INTEGER DEFAULT 0,
+    current_streak INTEGER DEFAULT 0,
+    longest_streak INTEGER DEFAULT 0,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS user_preferences (
+    user_id INTEGER PRIMARY KEY,
+    theme TEXT DEFAULT 'dark',
+    accent_color TEXT DEFAULT 'orange',
+    compact_mode INTEGER DEFAULT 0,
+    animations_enabled INTEGER DEFAULT 1,
+    terminal_effects INTEGER DEFAULT 1,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS user_privacy (
+    user_id INTEGER PRIMARY KEY,
+    profile_public INTEGER DEFAULT 1,
+    show_country INTEGER DEFAULT 1,
+    show_activity INTEGER DEFAULT 1,
+    show_xp INTEGER DEFAULT 1,
+    show_ranking INTEGER DEFAULT 1,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS security_levels (

@@ -5,40 +5,40 @@
 <div class="page-container">
   <!-- Breadcrumb -->
   <nav class="breadcrumb" aria-label="Navegação">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>Catálogo de Módulos</span>
+    <span>{{ _('Catálogo de Módulos') }}</span>
   </nav>
 
   <!-- Page Header -->
   <header class="page-header">
     <div class="hero-pill-badge">
       <span class="hero-pill-dot"></span>
-      <span>Catálogo Completo • 20 Vulnerabilidades Mapeadas</span>
+      <span>{{ _('Catálogo Completo • 20 Vulnerabilidades Mapeadas') }}</span>
     </div>
-    <h1 class="page-title">Catálogo de Módulos DUNO</h1>
+    <h1 class="page-title">{{ _('Catálogo de Módulos DUNO') }}</h1>
     <p class="page-desc">
-      Visão abrangente e técnica de todos os 20 laboratórios de segurança ofensiva e defensiva.
-      Cada módulo oferece 4 implementações graduais de código-fonte (Low a Impossible) com análise ao vivo.
+      {{ _('Visão abrangente e técnica de todos os 20 laboratórios de segurança ofensiva e defensiva.
+      Cada módulo oferece 4 implementações graduais de código-fonte (Low a Impossible) com análise ao vivo.') }}
     </p>
 
     <!-- Summary Stats Bar -->
     <div class="stats-pills-row">
       <div class="stat-pill">
         <span class="stat-num">20</span>
-        <span class="stat-label">Módulos Práticos</span>
+        <span class="stat-label">{{ _('Módulos Práticos') }}</span>
       </div>
       <div class="stat-pill">
         <span class="stat-num">80</span>
-        <span class="stat-label">Implementações de Código</span>
+        <span class="stat-label">{{ _('Implementações de Código') }}</span>
       </div>
       <div class="stat-pill">
         <span class="stat-num">4</span>
-        <span class="stat-label">Níveis de Proteção</span>
+        <span class="stat-label">{{ _('Níveis de Proteção') }}</span>
       </div>
       <div class="stat-pill">
         <span class="stat-num">100%</span>
-        <span class="stat-label">OWASP Top 10 Aligned</span>
+        <span class="stat-label">{{ _('OWASP Top 10 Aligned') }}</span>
       </div>
     </div>
   </header>
@@ -50,16 +50,16 @@
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input type="text" id="catalog-search" class="command-input" placeholder="Filtrar catálogo (ex: SQL, XSS, BOLA, JWT)..." />
+      <input type="text" id="catalog-search" class="command-input" placeholder="{{ _('Filtrar catálogo (ex: SQL, XSS, BOLA, JWT)...') }}" />
     </div>
 
     <div class="hero-filters" id="catalog-filters" style="margin-top:0;">
-      <button class="filter-pill active" data-cat="all">Todos (20)</button>
-      <button class="filter-pill" data-cat="injection">Injeção & DB (5)</button>
-      <button class="filter-pill" data-cat="auth">Autenticação (4)</button>
-      <button class="filter-pill" data-cat="client">Client-Side (5)</button>
-      <button class="filter-pill" data-cat="access">Acesso & Cripto (3)</button>
-      <button class="filter-pill" data-cat="api">APIs REST (3)</button>
+      <button class="filter-pill active" data-cat="all">{{ _('Todos (20)') }}</button>
+      <button class="filter-pill" data-cat="injection">{{ _('Injeção & DB (5)') }}</button>
+      <button class="filter-pill" data-cat="auth">{{ _('Autenticação (4)') }}</button>
+      <button class="filter-pill" data-cat="client">{{ _('Client-Side (5)') }}</button>
+      <button class="filter-pill" data-cat="access">{{ _('Acesso & Cripto (3)') }}</button>
+      <button class="filter-pill" data-cat="api">{{ _('APIs REST (3)') }}</button>
     </div>
   </div>
 
@@ -108,20 +108,20 @@
 
       <div class="catalog-item-footer">
         <div class="catalog-levels-track">
-          <span class="levels-track-label">Nível Ativo:</span>
+          <span class="levels-track-label">{{ _('Nível Ativo:') }}</span>
           <span class="level-badge level-{{ lvl }}">
             <span class="level-dot"></span>
             {{ lvl }}
           </span>
-          <span class="levels-all-indicator">4 Níveis: Low • Medium • High • Impossible</span>
+          <span class="levels-all-indicator">{{ _('4 Níveis: Low • Medium • High • Impossible') }}</span>
         </div>
 
         <div class="catalog-actions">
           <button type="button" class="btn btn-outline btn-sm" onclick="openSourceModal('{{ slug }}', '{{ lvl }}')">
-            &lt;/&gt; Source
+            {{ _('&lt;/&gt; Source') }}
           </button>
           <a href="{{ url_for(slug + '.index') }}" class="btn btn-primary btn-sm">
-            Acessar Lab →
+            {{ _('Acessar Lab →') }}
           </a>
         </div>
       </div>

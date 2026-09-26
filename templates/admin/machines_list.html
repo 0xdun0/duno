@@ -8,17 +8,17 @@
     <!-- Top Breadcrumb / Kicker -->
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
       <div class="settings-kicker-brand">
-        <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="color:inherit; text-decoration:none;">DUNO // ADMIN PIPELINE</a> // FILA DE REVISÃO
+        <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="color:inherit; text-decoration:none;">{{ _('DUNO // ADMIN PIPELINE') }}</a> // FILA DE REVISÃO
       </div>
       <a href="{{ url_for('submissions_admin.admin_dashboard') }}" style="font-size:0.8rem; color:var(--ink-2); text-decoration:none;">
-        ← Voltar ao Painel
+        {{ _('← Voltar ao Painel') }}
       </a>
     </div>
 
     <!-- Hero Header -->
     <header class="settings-hero">
-      <h1 class="settings-title">Fila de Revisão de Máquinas</h1>
-      <p class="settings-subtitle">Gerenciamento centralizado de todas as submissões, filtrando por estado do pipeline, sistema operacional e dificuldade.</p>
+      <h1 class="settings-title">{{ _('Fila de Revisão de Máquinas') }}</h1>
+      <p class="settings-subtitle">{{ _('Gerenciamento centralizado de todas as submissões, filtrando por estado do pipeline, sistema operacional e dificuldade.') }}</p>
     </header>
 
     <div class="settings-divider"></div>
@@ -27,55 +27,55 @@
     <form method="GET" action="{{ url_for('submissions_admin.machines_list') }}" style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; margin-bottom:1.75rem; box-shadow:var(--shadow-sm);">
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; align-items:flex-end;">
         <div>
-          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">Buscar Máquina / Slug</label>
-          <input type="text" name="q" value="{{ search }}" placeholder="Ex: matrix, web, sql..." style="width:100%; padding:0.55rem 0.75rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.85rem;" />
+          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">{{ _('Buscar Máquina / Slug') }}</label>
+          <input type="text" name="q" value="{{ search }}" placeholder="{{ _('Ex: matrix, web, sql...') }}" style="width:100%; padding:0.55rem 0.75rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.85rem;" />
         </div>
 
         <div>
-          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">Status</label>
+          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">{{ _('Status') }}</label>
           <select name="status" style="width:100%; padding:0.55rem 0.75rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.85rem;">
-            <option value="">Todos os status</option>
-            <option value="DRAFT" {% if current_status == 'DRAFT' %}selected{% endif %}>DRAFT</option>
-            <option value="SUBMITTED" {% if current_status == 'SUBMITTED' %}selected{% endif %}>SUBMITTED</option>
-            <option value="TRIAGE" {% if current_status == 'TRIAGE' %}selected{% endif %}>TRIAGE</option>
-            <option value="BUILDING" {% if current_status == 'BUILDING' %}selected{% endif %}>BUILDING</option>
-            <option value="SECURITY_REVIEW" {% if current_status == 'SECURITY_REVIEW' %}selected{% endif %}>SECURITY_REVIEW</option>
-            <option value="FUNCTIONAL_TEST" {% if current_status == 'FUNCTIONAL_TEST' %}selected{% endif %}>FUNCTIONAL_TEST</option>
-            <option value="CONTENT_REVIEW" {% if current_status == 'CONTENT_REVIEW' %}selected{% endif %}>CONTENT_REVIEW</option>
-            <option value="APPROVED" {% if current_status == 'APPROVED' %}selected{% endif %}>APPROVED</option>
-            <option value="PUBLISHED" {% if current_status == 'PUBLISHED' %}selected{% endif %}>PUBLISHED</option>
-            <option value="CHANGES_REQUESTED" {% if current_status == 'CHANGES_REQUESTED' %}selected{% endif %}>CHANGES_REQUESTED</option>
-            <option value="REJECTED" {% if current_status == 'REJECTED' %}selected{% endif %}>REJECTED</option>
-            <option value="UNPUBLISHED" {% if current_status == 'UNPUBLISHED' %}selected{% endif %}>UNPUBLISHED</option>
+            <option value="">{{ _('Todos os status') }}</option>
+            <option value="DRAFT" {% if current_status == 'DRAFT' %}selected{% endif %}>{{ _('DRAFT') }}</option>
+            <option value="SUBMITTED" {% if current_status == 'SUBMITTED' %}selected{% endif %}>{{ _('SUBMITTED') }}</option>
+            <option value="TRIAGE" {% if current_status == 'TRIAGE' %}selected{% endif %}>{{ _('TRIAGE') }}</option>
+            <option value="BUILDING" {% if current_status == 'BUILDING' %}selected{% endif %}>{{ _('BUILDING') }}</option>
+            <option value="SECURITY_REVIEW" {% if current_status == 'SECURITY_REVIEW' %}selected{% endif %}>{{ _('SECURITY_REVIEW') }}</option>
+            <option value="FUNCTIONAL_TEST" {% if current_status == 'FUNCTIONAL_TEST' %}selected{% endif %}>{{ _('FUNCTIONAL_TEST') }}</option>
+            <option value="CONTENT_REVIEW" {% if current_status == 'CONTENT_REVIEW' %}selected{% endif %}>{{ _('CONTENT_REVIEW') }}</option>
+            <option value="APPROVED" {% if current_status == 'APPROVED' %}selected{% endif %}>{{ _('APPROVED') }}</option>
+            <option value="PUBLISHED" {% if current_status == 'PUBLISHED' %}selected{% endif %}>{{ _('PUBLISHED') }}</option>
+            <option value="CHANGES_REQUESTED" {% if current_status == 'CHANGES_REQUESTED' %}selected{% endif %}>{{ _('CHANGES_REQUESTED') }}</option>
+            <option value="REJECTED" {% if current_status == 'REJECTED' %}selected{% endif %}>{{ _('REJECTED') }}</option>
+            <option value="UNPUBLISHED" {% if current_status == 'UNPUBLISHED' %}selected{% endif %}>{{ _('UNPUBLISHED') }}</option>
           </select>
         </div>
 
         <div>
-          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">Dificuldade</label>
+          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">{{ _('Dificuldade') }}</label>
           <select name="difficulty" style="width:100%; padding:0.55rem 0.75rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.85rem;">
-            <option value="">Todas</option>
-            <option value="Easy" {% if current_diff == 'Easy' %}selected{% endif %}>Easy</option>
-            <option value="Medium" {% if current_diff == 'Medium' %}selected{% endif %}>Medium</option>
-            <option value="Hard" {% if current_diff == 'Hard' %}selected{% endif %}>Hard</option>
-            <option value="Insane" {% if current_diff == 'Insane' %}selected{% endif %}>Insane</option>
+            <option value="">{{ _('Todas') }}</option>
+            <option value="Easy" {% if current_diff == 'Easy' %}selected{% endif %}>{{ _('Easy') }}</option>
+            <option value="Medium" {% if current_diff == 'Medium' %}selected{% endif %}>{{ _('Medium') }}</option>
+            <option value="Hard" {% if current_diff == 'Hard' %}selected{% endif %}>{{ _('Hard') }}</option>
+            <option value="Insane" {% if current_diff == 'Insane' %}selected{% endif %}>{{ _('Insane') }}</option>
           </select>
         </div>
 
         <div>
-          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">Sistema Operacional</label>
+          <label style="display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-bottom:0.35rem;">{{ _('Sistema Operacional') }}</label>
           <select name="os" style="width:100%; padding:0.55rem 0.75rem; border:1px solid var(--line); border-radius:var(--r-xs); background:var(--bg-input); font-size:0.85rem;">
-            <option value="">Todos</option>
-            <option value="Linux" {% if current_os == 'Linux' %}selected{% endif %}>Linux</option>
-            <option value="Windows" {% if current_os == 'Windows' %}selected{% endif %}>Windows</option>
+            <option value="">{{ _('Todos') }}</option>
+            <option value="Linux" {% if current_os == 'Linux' %}selected{% endif %}>{{ _('Linux') }}</option>
+            <option value="Windows" {% if current_os == 'Windows' %}selected{% endif %}>{{ _('Windows') }}</option>
           </select>
         </div>
 
         <div style="display:flex; gap:0.5rem;">
           <button type="submit" class="btn btn-primary" style="flex:1; padding:0.55rem 1rem; font-size:0.85rem; border-radius:var(--r-xs);">
-            Filtrar
+            {{ _('Filtrar') }}
           </button>
           <a href="{{ url_for('submissions_admin.machines_list') }}" class="btn-subtle" style="padding:0.55rem 0.85rem; font-size:0.85rem; border-radius:var(--r-xs); border:1px solid var(--line); text-decoration:none; color:var(--ink-2); background:var(--bg-subtle);">
-            Limpar
+            {{ _('Limpar') }}
           </a>
         </div>
       </div>
@@ -86,14 +86,14 @@
       <table class="duno-table" style="width:100%; border-collapse:collapse; text-align:left;">
         <thead>
           <tr style="border-bottom:1px solid var(--line); background:var(--bg-card-subtle); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3);">
-            <th style="padding:0.9rem 1.25rem;">ID / Máquina</th>
-            <th style="padding:0.9rem 1rem;">Versão</th>
-            <th style="padding:0.9rem 1rem;">Autor</th>
-            <th style="padding:0.9rem 1rem;">Categoria / SO</th>
-            <th style="padding:0.9rem 1rem;">Dificuldade</th>
-            <th style="padding:0.9rem 1rem;">Status</th>
-            <th style="padding:0.9rem 1rem;">Atualizado</th>
-            <th style="padding:0.9rem 1.25rem; text-align:right;">Ação</th>
+            <th style="padding:0.9rem 1.25rem;">{{ _('ID / Máquina') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Versão') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Autor') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Categoria / SO') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Dificuldade') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Status') }}</th>
+            <th style="padding:0.9rem 1rem;">{{ _('Atualizado') }}</th>
+            <th style="padding:0.9rem 1.25rem; text-align:right;">{{ _('Ação') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -131,14 +131,14 @@
             </td>
             <td style="padding:1rem 1.25rem; text-align:right;">
               <a href="{{ url_for('submissions_admin.machine_review_workspace', submission_id=s.id) }}" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.35rem; padding:0.4rem 0.85rem; border-radius:var(--r-xs); font-size:0.8rem; text-decoration:none;">
-                Abrir Revisão →
+                {{ _('Abrir Revisão →') }}
               </a>
             </td>
           </tr>
           {% else %}
           <tr>
             <td colspan="8" style="padding:3rem; text-align:center; color:var(--ink-3);">
-              Nenhuma máquina encontrada para os filtros selecionados.
+              {{ _('Nenhuma máquina encontrada para os filtros selecionados.') }}
             </td>
           </tr>
           {% endfor %}

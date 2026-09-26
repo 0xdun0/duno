@@ -5,41 +5,41 @@
 <div class="page-container">
   <!-- Breadcrumb -->
   <nav class="breadcrumb" aria-label="Navegação">
-    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('index') }}">{{ _('Dashboard') }}</a>
     <span class="breadcrumb-sep">›</span>
-    <span>Metodologia de Aprendizado</span>
+    <span>{{ _('Metodologia de Aprendizado') }}</span>
   </nav>
 
   <!-- Page Header -->
   <header class="page-header">
     <div class="hero-pill-badge">
       <span class="hero-pill-dot"></span>
-      <span>Metodologia Pedagógica • Engenharia Ofensiva & Defensiva</span>
+      <span>{{ _('Metodologia Pedagógica • Engenharia Ofensiva & Defensiva') }}</span>
     </div>
-    <h1 class="page-title">Como o DUNO Funciona</h1>
+    <h1 class="page-title">{{ _('Como o DUNO Funciona') }}</h1>
     <p class="page-desc">
-      O DUNO foi arquitetado para ir além de um repositório estático de vulnerabilidades.
-      A plataforma permite dissecar a anatomia de cada falha através de uma progressão de 4 níveis de segurança e inspeção direta de código-fonte.
+      {{ _('O DUNO foi arquitetado para ir além de um repositório estático de vulnerabilidades.
+      A plataforma permite dissecar a anatomia de cada falha através de uma progressão de 4 níveis de segurança e inspeção direta de código-fonte.') }}
     </p>
   </header>
 
   <!-- Section 1: Security Levels Progression -->
   <section class="learning-section">
-    <div class="section-label">PROGRESSÃO DE SEGURANÇA</div>
-    <h2 class="section-title">A Metodologia dos Quatro Níveis</h2>
+    <div class="section-label">{{ _('PROGRESSÃO DE SEGURANÇA') }}</div>
+    <h2 class="section-title">{{ _('A Metodologia dos Quatro Níveis') }}</h2>
     <p class="section-lead">
-      Cada um dos 20 módulos implementa quatro versões independentes do mesmo fluxo.
-      Isso permite comparar diretamente o comportamento do sistema à medida que camadas de controle são introduzidas.
+      {{ _('Cada um dos 20 módulos implementa quatro versões independentes do mesmo fluxo.
+      Isso permite comparar diretamente o comportamento do sistema à medida que camadas de controle são introduzidas.') }}
     </p>
 
     <!-- Visual Stepper: Low -> Medium -> High -> Impossible -->
     <div class="levels-progression-track">
       <div class="progression-step low">
-        <div class="step-badge">NÍVEL 01</div>
-        <h3 class="step-title">LOW</h3>
-        <p class="step-role">Código Vulnerável por Padrão</p>
+        <div class="step-badge">{{ _('NÍVEL 01') }}</div>
+        <h3 class="step-title">{{ _('LOW') }}</h3>
+        <p class="step-role">{{ _('Código Vulnerável por Padrão') }}</p>
         <p class="step-desc">
-          Ausência total de defesas. Concatenação direta de strings, execução pura de comandos, sessões estáticas.
+          {{ _('Ausência total de defesas. Concatenação direta de strings, execução pura de comandos, sessões estáticas.') }}
         </p>
         <div class="step-objective">
           <strong>Objetivo Didático:</strong> Entender a raiz matemática e lógica da vulnerabilidade sem ruído.
@@ -49,9 +49,9 @@
       <div class="progression-arrow-sep">↓</div>
 
       <div class="progression-step medium">
-        <div class="step-badge">NÍVEL 02</div>
-        <h3 class="step-title">MEDIUM</h3>
-        <p class="step-role">Mitigação Ingênua (Bypass)</p>
+        <div class="step-badge">{{ _('NÍVEL 02') }}</div>
+        <h3 class="step-title">{{ _('MEDIUM') }}</h3>
+        <p class="step-role">{{ _('Mitigação Ingênua (Bypass)') }}</p>
         <p class="step-desc">
           Introdução de filtros por blacklist, remoção de caracteres específicos (ex: <code>&lt;script&gt;</code>) ou regex simplista.
         </p>
@@ -63,11 +63,11 @@
       <div class="progression-arrow-sep">↓</div>
 
       <div class="progression-step high">
-        <div class="step-badge">NÍVEL 03</div>
-        <h3 class="step-title">HIGH</h3>
-        <p class="step-role">Defesa Avançada com Falha Lógica</p>
+        <div class="step-badge">{{ _('NÍVEL 03') }}</div>
+        <h3 class="step-title">{{ _('HIGH') }}</h3>
+        <p class="step-role">{{ _('Defesa Avançada com Falha Lógica') }}</p>
         <p class="step-desc">
-          Controles mais sofisticados implementados, mas com brechas de desenho, suposições incorretas de ambiente ou edge cases.
+          {{ _('Controles mais sofisticados implementados, mas com brechas de desenho, suposições incorretas de ambiente ou edge cases.') }}
         </p>
         <div class="step-objective">
           <strong>Objetivo Didático:</strong> Desenvolver raciocínio crítico para identificar falhas sutis de arquitetura.
@@ -77,11 +77,11 @@
       <div class="progression-arrow-sep">↓</div>
 
       <div class="progression-step impossible">
-        <div class="step-badge">NÍVEL 04</div>
-        <h3 class="step-title">IMPOSSIBLE</h3>
-        <p class="step-role">Implementação Blindada & Padrão Seguro</p>
+        <div class="step-badge">{{ _('NÍVEL 04') }}</div>
+        <h3 class="step-title">{{ _('IMPOSSIBLE') }}</h3>
+        <p class="step-role">{{ _('Implementação Blindada & Padrão Seguro') }}</p>
         <p class="step-desc">
-          Aplicação das melhores práticas da indústria: Prepared Statements, tokenização criptográfica, tipagem estrita e sandboxing.
+          {{ _('Aplicação das melhores práticas da indústria: Prepared Statements, tokenização criptográfica, tipagem estrita e sandboxing.') }}
         </p>
         <div class="step-objective">
           <strong>Objetivo Didático:</strong> Servir como referência de engenharia segura para correção no mundo real.
@@ -92,25 +92,25 @@
     <!-- Practical Code Evolution Comparison -->
     <div class="panel" style="margin-top: 2rem;">
       <div class="panel-title">
-        <span>Estudo de Caso Prático: Evolução de Defesa em SQL Injection</span>
-        <span class="badge-code">CÓDIGO PYTHON REAL</span>
+        <span>{{ _('Estudo de Caso Prático: Evolução de Defesa em SQL Injection') }}</span>
+        <span class="badge-code">{{ _('CÓDIGO PYTHON REAL') }}</span>
       </div>
       <div class="code-compare-grid">
         <div class="code-compare-box">
-          <div class="compare-box-header low">LOW — Concatenação Direta</div>
+          <div class="compare-box-header low">{{ _('LOW — Concatenação Direta') }}</div>
           <pre><code># Vulnerável a UNION e OR 1=1
 query = f"SELECT * FROM users WHERE id = {user_id}"
 cursor.execute(query)</code></pre>
         </div>
         <div class="code-compare-box">
-          <div class="compare-box-header medium">MEDIUM — Blacklist Ingênua</div>
+          <div class="compare-box-header medium">{{ _('MEDIUM — Blacklist Ingênua') }}</div>
           <pre><code># Bypassável com UNION/**/SELECT ou case variation
 filtered = re.sub(r'(union|select)', '', user_id, flags=re.I)
 query = f"SELECT * FROM users WHERE id = {filtered}"
 cursor.execute(query)</code></pre>
         </div>
         <div class="code-compare-box">
-          <div class="compare-box-header high">HIGH — Cast sem Prepared Statement</div>
+          <div class="compare-box-header high">{{ _('HIGH — Cast sem Prepared Statement') }}</div>
           <pre><code># Resistente a SQLi, mas falha se o parâmetro puder ser string
 try:
     clean_id = int(user_id)
@@ -119,7 +119,7 @@ except ValueError:
 cursor.execute(f"SELECT * FROM users WHERE id = {clean_id}")</code></pre>
         </div>
         <div class="code-compare-box">
-          <div class="compare-box-header impossible">IMPOSSIBLE — Parameterized Query Completo</div>
+          <div class="compare-box-header impossible">{{ _('IMPOSSIBLE — Parameterized Query Completo') }}</div>
           <pre><code># Impossível de injetar: dados separados do comando
 cursor.execute("SELECT id, username, role FROM users WHERE id = ?", (user_id,))
 rows = cursor.fetchall()</code></pre>
@@ -134,24 +134,24 @@ rows = cursor.fetchall()</code></pre>
       <!-- Attack Concepts -->
       <div class="panel">
         <div class="panel-title">
-          <span>⚔️ Attack Concepts (Engenharia Ofensiva)</span>
+          <span>{{ _('⚔️ Attack Concepts (Engenharia Ofensiva)') }}</span>
         </div>
         <ul class="concepts-list">
           <li>
             <strong>Sinks & Sources:</strong>
-            <p>Fontes de dados controladas pelo usuário (parâmetros de URL, headers HTTP, cookies) fluindo para pontos de execução crítica (eval, queries SQL, DOM, shell do SO).</p>
+            <p>{{ _('Fontes de dados controladas pelo usuário (parâmetros de URL, headers HTTP, cookies) fluindo para pontos de execução crítica (eval, queries SQL, DOM, shell do SO).') }}</p>
           </li>
           <li>
             <strong>Taint Analysis:</strong>
-            <p>Rastreamento do caminho percorrido por uma entrada não confiável através das camadas da aplicação até o consumo final.</p>
+            <p>{{ _('Rastreamento do caminho percorrido por uma entrada não confiável através das camadas da aplicação até o consumo final.') }}</p>
           </li>
           <li>
             <strong>Context Injection:</strong>
-            <p>Forçar o interpretador (HTML, SQL, Shell, JSON) a transitar do modo "dado" para o modo "código/instrução executável".</p>
+            <p>{{ _('Forçar o interpretador (HTML, SQL, Shell, JSON) a transitar do modo "dado" para o modo "código/instrução executável".') }}</p>
           </li>
           <li>
             <strong>Defensive Evasion:</strong>
-            <p>Uso de encodings (URL, HTML Entities, Base64, Hexadecimal) e variação de sintaxe para burlar mecanismos de inspeção e WAFs.</p>
+            <p>{{ _('Uso de encodings (URL, HTML Entities, Base64, Hexadecimal) e variação de sintaxe para burlar mecanismos de inspeção e WAFs.') }}</p>
           </li>
         </ul>
       </div>
@@ -159,24 +159,24 @@ rows = cursor.fetchall()</code></pre>
       <!-- Defensive Concepts -->
       <div class="panel">
         <div class="panel-title">
-          <span>🛡️ Defensive Concepts (Engenharia Defensiva)</span>
+          <span>{{ _('🛡️ Defensive Concepts (Engenharia Defensiva)') }}</span>
         </div>
         <ul class="concepts-list">
           <li>
             <strong>Parameterized Queries (Prepared Statements):</strong>
-            <p>O motor do banco de dados pré-compila a estrutura da consulta antes de associar os valores, tornando impossível a alteração da lógica SQL.</p>
+            <p>{{ _('O motor do banco de dados pré-compila a estrutura da consulta antes de associar os valores, tornando impossível a alteração da lógica SQL.') }}</p>
           </li>
           <li>
             <strong>Context-Aware Encoding:</strong>
-            <p>Codificação de caracteres especiais de acordo com o contexto em que são renderizados (HTML Body, Atributo, Script, CSS, URL).</p>
+            <p>{{ _('Codificação de caracteres especiais de acordo com o contexto em que são renderizados (HTML Body, Atributo, Script, CSS, URL).') }}</p>
           </li>
           <li>
             <strong>Princípio do Menor Privilégio:</strong>
-            <p>A aplicação e o usuário do banco de dados operam estritamente com as permissões indispensáveis à sua função, limitando o raio de explosão.</p>
+            <p>{{ _('A aplicação e o usuário do banco de dados operam estritamente com as permissões indispensáveis à sua função, limitando o raio de explosão.') }}</p>
           </li>
           <li>
             <strong>Defesa em Profundidade:</strong>
-            <p>Combinação de validação estrita no servidor, cabeçalhos de segurança (CSP, HSTS, X-Content-Type-Options) e sandboxing isolado.</p>
+            <p>{{ _('Combinação de validação estrita no servidor, cabeçalhos de segurança (CSP, HSTS, X-Content-Type-Options) e sandboxing isolado.') }}</p>
           </li>
         </ul>
       </div>
@@ -185,34 +185,34 @@ rows = cursor.fetchall()</code></pre>
 
   <!-- Section 3: Lab Methodology (4 Steps) -->
   <section class="learning-section" style="margin-top: 3rem;">
-    <div class="section-label">FLUXO DE TRABALHO</div>
-    <h2 class="section-title">Metodologia Recomendada para o Laboratório</h2>
+    <div class="section-label">{{ _('FLUXO DE TRABALHO') }}</div>
+    <h2 class="section-title">{{ _('Metodologia Recomendada para o Laboratório') }}</h2>
 
     <div class="methodology-steps-grid">
       <div class="methodology-card">
         <div class="methodology-num">01</div>
-        <h3 class="methodology-title">Reconhecimento</h3>
+        <h3 class="methodology-title">{{ _('Reconhecimento') }}</h3>
         <p class="methodology-desc">
-          Interaja com o laboratório no navegador. Observe os formulários, métodos HTTP, parâmetros transmitidos e códigos de status retornados.
+          {{ _('Interaja com o laboratório no navegador. Observe os formulários, métodos HTTP, parâmetros transmitidos e códigos de status retornados.') }}
         </p>
       </div>
       <div class="methodology-card">
         <div class="methodology-num">02</div>
-        <h3 class="methodology-title">Exploração (PoC)</h3>
+        <h3 class="methodology-title">{{ _('Exploração (PoC)') }}</h3>
         <p class="methodology-desc">
-          Formule uma hipótese de vulnerabilidade e construa uma Prova de Conceito (PoC) controlada para confirmar o comportamento anômalo.
+          {{ _('Formule uma hipótese de vulnerabilidade e construa uma Prova de Conceito (PoC) controlada para confirmar o comportamento anômalo.') }}
         </p>
       </div>
       <div class="methodology-card">
         <div class="methodology-num">03</div>
-        <h3 class="methodology-title">Code Review</h3>
+        <h3 class="methodology-title">{{ _('Code Review') }}</h3>
         <p class="methodology-desc">
           Clique no botão <code>&lt;/&gt; View Source</code> para inspecionar exatamente a linha do Python que causou a vulnerabilidade no nível ativo.
         </p>
       </div>
       <div class="methodology-card">
         <div class="methodology-num">04</div>
-        <h3 class="methodology-title">Comparação & Blindagem</h3>
+        <h3 class="methodology-title">{{ _('Comparação & Blindagem') }}</h3>
         <p class="methodology-desc">
           Suba o nível para <strong>Impossible</strong> e compare as duas implementações para entender o padrão de remediação definitivo.
         </p>

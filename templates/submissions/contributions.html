@@ -6,13 +6,13 @@
   <div class="settings-container">
 
     <!-- Top Breadcrumb / Kicker -->
-    <div class="settings-kicker-brand">DUNO // COMMUNITY LABS</div>
+    <div class="settings-kicker-brand">{{ _('DUNO // COMMUNITY LABS') }}</div>
 
     <!-- Hero Header -->
     <header class="settings-hero" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
       <div>
-        <h1 class="settings-title">Minhas Contribuições</h1>
-        <p class="settings-subtitle">Gerencie suas submissões de máquinas executáveis e acompanhe o pipeline de revisão.</p>
+        <h1 class="settings-title">{{ _('Minhas Contribuições') }}</h1>
+        <p class="settings-subtitle">{{ _('Gerencie suas submissões de máquinas executáveis e acompanhe o pipeline de revisão.') }}</p>
       </div>
       <div style="align-self:center;">
         <a href="{{ url_for('submissions.submit_page') }}" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem; text-decoration:none; padding:0.65rem 1.25rem; font-weight:600; border-radius:var(--r-sm);">
@@ -26,7 +26,7 @@
     <!-- Lista de Submissões -->
     <section class="settings-section">
       <div class="settings-section-header" style="margin-bottom:1.5rem;">
-        <h2 class="settings-section-title">SUAS MÁQUINAS SUBMETIDAS</h2>
+        <h2 class="settings-section-title">{{ _('SUAS MÁQUINAS SUBMETIDAS') }}</h2>
       </div>
 
       {% if submissions %}
@@ -34,13 +34,13 @@
         <table class="duno-table" style="width:100%; border-collapse:collapse; text-align:left;">
           <thead>
             <tr style="border-bottom:1px solid var(--line); background:var(--bg-card-subtle); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3);">
-              <th style="padding:0.9rem 1.25rem;">Máquina</th>
-              <th style="padding:0.9rem 1rem;">Versão</th>
-              <th style="padding:0.9rem 1rem;">Categoria / SO</th>
-              <th style="padding:0.9rem 1rem;">Dificuldade</th>
-              <th style="padding:0.9rem 1rem;">Status</th>
-              <th style="padding:0.9rem 1rem;">Atualizado</th>
-              <th style="padding:0.9rem 1.25rem; text-align:right;">Ações</th>
+              <th style="padding:0.9rem 1.25rem;">{{ _('Máquina') }}</th>
+              <th style="padding:0.9rem 1rem;">{{ _('Versão') }}</th>
+              <th style="padding:0.9rem 1rem;">{{ _('Categoria / SO') }}</th>
+              <th style="padding:0.9rem 1rem;">{{ _('Dificuldade') }}</th>
+              <th style="padding:0.9rem 1rem;">{{ _('Status') }}</th>
+              <th style="padding:0.9rem 1rem;">{{ _('Atualizado') }}</th>
+              <th style="padding:0.9rem 1.25rem; text-align:right;">{{ _('Ações') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -71,7 +71,7 @@
                 </span>
                 {% if s.status == 'CHANGES_REQUESTED' and s.last_review_reason %}
                 <div style="margin-top:0.35rem; font-size:0.75rem; color:var(--orange);">
-                  ⚠ Ajustes solicitados
+                  {{ _('⚠ Ajustes solicitados') }}
                 </div>
                 {% endif %}
               </td>
@@ -80,7 +80,7 @@
               </td>
               <td style="padding:1rem 1.25rem; text-align:right;">
                 <a href="{{ url_for('submissions.submission_detail', submission_id=s.id) }}" class="btn-subtle" style="display:inline-flex; align-items:center; gap:0.35rem; padding:0.4rem 0.8rem; border-radius:var(--r-xs); font-size:0.8rem; text-decoration:none; border:1px solid var(--line); color:var(--ink-2); background:var(--bg-subtle);">
-                  Ver Detalhes →
+                  {{ _('Ver Detalhes →') }}
                 </a>
               </td>
             </tr>
@@ -91,12 +91,12 @@
       {% else %}
       <div style="text-align:center; padding:4rem 2rem; background:var(--bg-card); border:1px dashed var(--line); border-radius:var(--r-lg);">
         <div style="font-size:3rem; margin-bottom:1rem;">🛸</div>
-        <h3 style="font-size:1.15rem; font-weight:700; color:var(--ink); margin-bottom:0.5rem;">Nenhuma máquina submetida ainda</h3>
+        <h3 style="font-size:1.15rem; font-weight:700; color:var(--ink); margin-bottom:0.5rem;">{{ _('Nenhuma máquina submetida ainda') }}</h3>
         <p style="color:var(--ink-3); max-width:440px; margin:0 auto 1.5rem; font-size:0.9rem;">
-          Você pode criar e compartilhar máquinas para a comunidade DUNO. Empacote com Dockerfile ou Docker Compose e envie para nossa esteira de validação.
+          {{ _('Você pode criar e compartilhar máquinas para a comunidade DUNO. Empacote com Dockerfile ou Docker Compose e envie para nossa esteira de validação.') }}
         </p>
         <a href="{{ url_for('submissions.submit_page') }}" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem; text-decoration:none; padding:0.65rem 1.5rem; font-weight:600; border-radius:var(--r-sm);">
-          Criar Primeira Submissão →
+          {{ _('Criar Primeira Submissão →') }}
         </a>
       </div>
       {% endif %}
@@ -107,28 +107,28 @@
     <!-- Guia Rápido do Pipeline -->
     <section class="settings-section">
       <div class="settings-section-header">
-        <h2 class="settings-section-title">COMO FUNCIONA O PIPELINE DE MÁQUINAS</h2>
+        <h2 class="settings-section-title">{{ _('COMO FUNCIONA O PIPELINE DE MÁQUINAS') }}</h2>
       </div>
       <div class="settings-section-content" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.25rem; margin-top:1rem;">
         <div style="background:var(--bg-card); border:1px solid var(--line); padding:1.25rem; border-radius:var(--r-md);">
           <div style="font-size:1.5rem; margin-bottom:0.5rem;">1️⃣</div>
-          <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.25rem; color:var(--ink);">Submissão &amp; Validação</div>
+          <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.25rem; color:var(--ink);">{{ _('Submissão &amp; Validação') }}</div>
           <div style="font-size:0.8rem; color:var(--ink-3);">Envie seu pacote com <code>manifest.yml</code>, <code>Dockerfile</code> e <code>README.md</code>. O sistema valida integridade e hashes.</div>
         </div>
         <div style="background:var(--bg-card); border:1px solid var(--line); padding:1.25rem; border-radius:var(--r-md);">
           <div style="font-size:1.5rem; margin-bottom:0.5rem;">2️⃣</div>
-          <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.25rem; color:var(--ink);">Scan de Segurança</div>
-          <div style="font-size:0.8rem; color:var(--ink-3);">Análise estática identifica segredos expostos, mounts de socket perigosos e permissões root desnecessárias.</div>
+          <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.25rem; color:var(--ink);">{{ _('Scan de Segurança') }}</div>
+          <div style="font-size:0.8rem; color:var(--ink-3);">{{ _('Análise estática identifica segredos expostos, mounts de socket perigosos e permissões root desnecessárias.') }}</div>
         </div>
         <div style="background:var(--bg-card); border:1px solid var(--line); padding:1.25rem; border-radius:var(--r-md);">
           <div style="font-size:1.5rem; margin-bottom:0.5rem;">3️⃣</div>
-          <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.25rem; color:var(--ink);">Build &amp; Teste Isolado</div>
-          <div style="font-size:0.8rem; color:var(--ink-3);">A imagem é construída em ambiente isolado (sem acesso à rede do host) e os testes funcionais são executados.</div>
+          <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.25rem; color:var(--ink);">{{ _('Build &amp; Teste Isolado') }}</div>
+          <div style="font-size:0.8rem; color:var(--ink-3);">{{ _('A imagem é construída em ambiente isolado (sem acesso à rede do host) e os testes funcionais são executados.') }}</div>
         </div>
         <div style="background:var(--bg-card); border:1px solid var(--line); padding:1.25rem; border-radius:var(--r-md);">
           <div style="font-size:1.5rem; margin-bottom:0.5rem;">4️⃣</div>
-          <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.25rem; color:var(--ink);">Revisão Humana &amp; Publicação</div>
-          <div style="font-size:0.8rem; color:var(--ink-3);">Revisores avaliam a didática e jogabilidade. Uma vez aprovada, a máquina é publicada no catálogo oficial.</div>
+          <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.25rem; color:var(--ink);">{{ _('Revisão Humana &amp; Publicação') }}</div>
+          <div style="font-size:0.8rem; color:var(--ink-3);">{{ _('Revisores avaliam a didática e jogabilidade. Uma vez aprovada, a máquina é publicada no catálogo oficial.') }}</div>
         </div>
       </div>
     </section>

